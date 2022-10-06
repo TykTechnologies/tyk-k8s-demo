@@ -1,4 +1,4 @@
-# tyk-deploy
+# tyk-ks8-deploy
 <!-- Tell other people why your project is useful, what they can do with your project, and how they can use it.
 As explained in GitHub it typically includes information on:
 1. What the project does
