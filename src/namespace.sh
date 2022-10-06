@@ -1,10 +1,10 @@
 kubectl create ns $namespace
 
-redisSecurityContextArgs=""
-mongoSecurityContextArgs=""
-postgresSecurityContextArgs=""
-tykSecurityContextArgs=""
-postalSecurityContextArgs=""
+redisSecurityContextArgs=()
+mongoSecurityContextArgs=()
+postgresSecurityContextArgs=()
+tykSecurityContextArgs=()
+postalSecurityContextArgs=()
 
 if [ $flavor == "openshift" ]; then
 	sleep 1;
