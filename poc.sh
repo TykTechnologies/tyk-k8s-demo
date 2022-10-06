@@ -12,12 +12,17 @@ case "$@" in
     ;;
   'tyk-cp')
      echo "Installing tyk-cp in $flavor k8s environment"
+     # source src/tyk-cp.sh;
+     if [ portal ]; then source src/portal.sh; fi;
+     if [ operator ]; then source src/operator.sh; fi;
     ;;
   'tyk-hybrid')
      echo "Installing tyk-hybrid in $flavor k8s environment"
+     # source src/tyk-hybrid.sh;
     ;;
   'tyk-gateway')
      echo "Installing tyk-hybrid in $flavor k8s environment"
+     # source src/tyk-gateway.sh;
     ;;
   *) usage; exit 1 ;;
 esac

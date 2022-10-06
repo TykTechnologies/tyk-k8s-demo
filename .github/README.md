@@ -28,10 +28,29 @@ Minimizing the amount of effort you need to stand up you Tyk infra.
 - `tyk-edge`: Tyk hybrid edges
 - `tyk-gateway`: Tyk oss self-managed single region
 
-#### Flavors
-- `vanilla`: Vanilla k8s
-- `os`: OpenShift
-
 #### Add ons
 - `operator`: Tyk operator
 - `enterprise-portal`: Tyk enterprise portal
+
+#### Supported k8s Flavors
+- `vanilla`: Vanilla k8s
+- `os`: OpenShift
+
+
+#### Usage
+```
+Usage:
+  ./poc.sh [flags] [command]
+
+Available Commands:
+  tyk-pro
+  tyk-cp
+  tyk-hybrid
+  tyk-gateway
+
+Flags:
+  -f, --flavor    	enum   	 k8s environment flavor. This option can be set 'openshift' and defaults to 'vanilla'
+  -o, --operator  	bool   	 install the Tyk Operator
+  -p, --portal    	bool   	 install the Tyk Enterprise Portal
+  -n, --namespace 	string 	 namespace the tyk stack will be installed in, defaults to 'tyk'
+```

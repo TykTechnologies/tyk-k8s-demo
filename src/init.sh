@@ -1,7 +1,3 @@
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm repo add tyk-helm https://helm.tyk.io/public/helm/charts/
-helm repo update
-
 # Check for .env file, if found, load variables
 if [ -f .env ]; then
   export $(cat .env | xargs);
@@ -20,10 +16,10 @@ usage() {
   echo "  tyk-hybrid";
   echo "  tyk-gateway";
   echo -e "\nFlags:";
-  echo -e "  -f, --flavor    \tenum  \t k8s environment flavor. This option can be set 'openshift' and defaults to 'vanilla'";
-  echo -e "  -o, --operator  \tbool  \t install the Tyk Operator";
-  echo -e "  -p, --portal    \tbool  \t install the Tyk Enterprise Portal";
-  echo -e "  -n, --namespace \string \t namespace the tyk stack will be installed in, defaults to 'tyk'";
+  echo -e "  -f, --flavor    \tenum   \t k8s environment flavor. This option can be set 'openshift' and defaults to 'vanilla'";
+  echo -e "  -o, --operator  \tbool   \t install the Tyk Operator";
+  echo -e "  -p, --portal    \tbool   \t install the Tyk Enterprise Portal";
+  echo -e "  -n, --namespace \tstring \t namespace the tyk stack will be installed in, defaults to 'tyk'";
   exit 1;
 }
 
@@ -70,3 +66,7 @@ if [ $flavor != "vanilla" ] && [ $flavor != "openshift" ]; then
   usage;
   exit 1;
 fi
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add tyk-helm https://helm.tyk.io/public/helm/charts/
+helm repo update
