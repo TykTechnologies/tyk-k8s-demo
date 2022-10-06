@@ -54,7 +54,12 @@ do
     'h') usage; exit 0     ;;
     'f') flavor=$OPTARG    ;;
     'r') operator=true     ;;
-    'p') portal=true       ;;
+    'p')
+        portal=true;
+        echo "Warning: portal installtion is only available from the 'add-enterprise-portal'"\
+        "branch on the tyk-helm-chart repository and requires the 'TYK_HELM_CHART_PATH'"\
+        "value in .env to be set to the local repo location";
+        ;;
     'n') namespace=$OPTARG ;;
     '?') usage; exit 1     ;;
   esac

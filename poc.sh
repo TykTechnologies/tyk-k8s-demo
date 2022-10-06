@@ -6,7 +6,9 @@ source src/init.sh
 case "$@" in
   'tyk-pro')
      echo "Installing tyk-pro in $flavor k8s environment"
-     source src/tyk-pro.sh
+     source src/tyk-pro.sh;
+     if [ portal ]; then source src/portal.sh; fi;
+     if [ operator ]; then source src/operator.sh; fi;
     ;;
   'tyk-cp')
      echo "Installing tyk-cp in $flavor k8s environment"
