@@ -2,8 +2,7 @@ source src/namespace.sh;
 source src/redis.sh;
 source src/database.sh;
 
-tykArgs=(--set "redis.pass=topsecretpassword" \
-  --set "dash.license=$LICENSE" \
+tykArgs=(--set "dash.license=$LICENSE" \
   --set "dash.image.tag=$TYK_DASHBOARD_VERSION" \
   --set "dash.adminUser.password=topsecretpassword" \
   --set "gateway.image.tag=$TYK_GATEWAY_VERSION")
