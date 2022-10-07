@@ -4,6 +4,7 @@ redisSecurityContextArgs=()
 mongoSecurityContextArgs=()
 postgresSecurityContextArgs=()
 tykSecurityContextArgs=()
+mdcbSecurityContextArgs=()
 postalSecurityContextArgs=()
 
 if [ $flavor == "openshift" ]; then
@@ -32,6 +33,10 @@ if [ $flavor == "openshift" ]; then
 		--set "gateway.securityContext.runAsUser=$ID" \
 		--set "pump.securityContext.fsGroup=$ID" \
 		--set "pump.securityContext.runAsUser=$ID")
+
+	# Set MDCB args
+	mdcbSecurityContextArgs=(--set "mdcb.securityContext.fsGroup=$ID" \
+		--set "mdcb.securityContext.runAsUser=$ID")
 
 	# Set Portal args
 	potalSecurityContextArgs=(--set "enterprisePortal.securityContext.fsGroup=$ID" \
