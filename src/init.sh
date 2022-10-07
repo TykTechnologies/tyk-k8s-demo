@@ -20,6 +20,7 @@ usage() {
   echo -e "  -o, --operator  \tbool   \t install the Tyk Operator";
   echo -e "  -p, --portal    \tbool   \t install the Tyk Enterprise Portal";
   echo -e "  -n, --namespace \tstring \t namespace the tyk stack will be installed in, defaults to 'tyk'";
+  echo -e "  -d, --database  \enum    \t database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'";
   exit 1;
 }
 
@@ -31,7 +32,8 @@ for arg in "$@"; do
     '--operator')  set -- "$@" '-o'   ;;
     '--portal')    set -- "$@" '-p'   ;;
     '--namespace') set -- "$@" '-n'   ;;
-    *)            set -- "$@" "$arg" ;;
+    '--database')  set -- "$@" '-d'   ;;
+    *)             set -- "$@" "$arg" ;;
   esac
 done
 
@@ -40,11 +42,12 @@ flavor="vanilla";
 operator=false;
 portal=false;
 namespace="tyk";
+database="mongo";
 
 
 # Parse short options
 OPTIND=1
-while getopts "hf:opn:" opt
+while getopts "hf:opn:d:" opt
 do
   case "$opt" in
     'h') usage; exit 0     ;;
@@ -57,12 +60,22 @@ do
         "value in .env to be set to the local repo location";
         ;;
     'n') namespace=$OPTARG ;;
+    'd')
+        database=$OPTARG
+        echo "Warning: mdcb installtion does not currently support postgres database";
+        ;;
+    'd')  ;;
     '?') usage; exit 1     ;;
   esac
 done
 shift $((OPTIND - 1))
 
 if [ $flavor != "vanilla" ] && [ $flavor != "openshift" ]; then
+  usage;
+  exit 1;
+fi
+
+if [ $databse != "mongo" ] && [ $databse != "postgres" ]; then
   usage;
   exit 1;
 fi

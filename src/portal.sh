@@ -1,5 +1,5 @@
-databse=portal
-source src/pgsql.sh $databse;
+portalDB=portal
+source src/pgsql.sh $portalDB;
 
 set -x
 # Hack until code is merged
@@ -10,10 +10,11 @@ kubectl create secret -n $namespace generic tyk-enterprise-portal-conf \
 helm upgrade tyk-pro $TYK_HELM_CHART_PATH/tyk-pro \
   -n $namespace \
   "${tykArgs[@]}" \
+  "${tykDatabaseArgs[@]}" \
   "${tykSecurityContextArgs[@]}" \
   --set "enterprisePortal.license=$PORTAL_LICENSE" \
   --set "enterprisePortal.enabled=true" \
-  --set "enterprisePortal.storage.database.connectionString=host\=tyk-$databse-postgres-postgresql.$namespace.svc.cluster.local port\=5432 user\=postgres password\=topsecretpassword database\=$databse sslmode\=disable" \
+  --set "enterprisePortal.storage.database.connectionString=host\=tyk-$portalDB-postgres-postgresql.$namespace.svc.cluster.local port\=5432 user\=postgres password\=topsecretpassword database\=$portalDB sslmode\=disable" \
   "${potalSecurityContextArgs[@]}" \
   --wait
 set +x
