@@ -10,6 +10,7 @@ kubectl create secret -n $namespace generic tyk-enterprise-portal-conf \
 helm upgrade tyk-pro $TYK_HELM_CHART_PATH/tyk-pro \
   -n $namespace \
   "${tykArgs[@]}" \
+  "${tykRedisArgs[@]}" \
   "${tykDatabaseArgs[@]}" \
   "${tykSecurityContextArgs[@]}" \
   --set "enterprisePortal.license=$PORTAL_LICENSE" \

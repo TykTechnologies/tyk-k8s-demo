@@ -20,7 +20,8 @@ usage() {
   echo -e "  -o, --operator  \tbool   \t install the Tyk Operator";
   echo -e "  -p, --portal    \tbool   \t install the Tyk Enterprise Portal";
   echo -e "  -n, --namespace \tstring \t namespace the tyk stack will be installed in, defaults to 'tyk'";
-  echo -e "  -d, --database  \enum    \t database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'";
+  echo -e "  -d, --database  \tenum   \t database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'";
+  echo -e "  -r, --redis     \tenum   \t the redis mode that tyk stack will use. This option can be set 'redis-cluster' and defaults to 'redis'";
   exit 1;
 }
 
@@ -33,6 +34,7 @@ for arg in "$@"; do
     '--portal')    set -- "$@" '-p'   ;;
     '--namespace') set -- "$@" '-n'   ;;
     '--database')  set -- "$@" '-d'   ;;
+    '--redis')     set -- "$@" '-r'   ;;
     *)             set -- "$@" "$arg" ;;
   esac
 done
@@ -43,29 +45,30 @@ operator=false;
 portal=false;
 namespace="tyk";
 database="mongo";
+redis="redis";
 
 
 # Parse short options
 OPTIND=1
-while getopts "hf:opn:d:" opt
+while getopts "hf:opn:d:r:" opt
 do
   case "$opt" in
     'h') usage; exit 0     ;;
     'f') flavor=$OPTARG    ;;
-    'r') operator=true     ;;
+    'o') operator=true     ;;
+    'n') namespace=$OPTARG ;;
+    'r') redis=$OPTARG     ;;
     'p')
         portal=true;
         echo "Warning: portal installtion is only available from the 'add-enterprise-portal'"\
         "branch on the tyk-helm-chart repository and requires the 'TYK_HELM_CHART_PATH'"\
         "value in .env to be set to the local repo location";
         ;;
-    'n') namespace=$OPTARG ;;
     'd')
         database=$OPTARG
         echo "Warning: mdcb installtion does not currently support postgres database";
         ;;
-    'd')  ;;
-    '?') usage; exit 1     ;;
+    '?') usage; exit 1 ;;
   esac
 done
 shift $((OPTIND - 1))
@@ -75,7 +78,12 @@ if [ $flavor != "vanilla" ] && [ $flavor != "openshift" ]; then
   exit 1;
 fi
 
-if [ $databse != "mongo" ] && [ $databse != "postgres" ]; then
-  usage;
-  exit 1;
-fi
+# if [ $databse != "mongo" ] && [ $databse != "postgres" ]; then
+#   usage;
+#   exit 1;
+# fi
+
+# if [ $redis != "redis" ] && [ $redis != "redis-cluster" ]; then
+#   usage;
+#   exit 1;
+# fi
