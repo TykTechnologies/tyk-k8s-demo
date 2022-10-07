@@ -24,21 +24,13 @@ Minimizing the amount of effort you need to stand up you Tyk infra.
 
 #### Prerequisites
 - Helm
+- jq
 
 #### Possible deployments
 - `tyk-pro`: Tyk pro self-managed single region
 - `tyk-cp`: Tyk pro self-managed multi region control plane
 - `tyk-edge`: Tyk hybrid edges
 - `tyk-gateway`: Tyk oss self-managed single region
-
-#### Add ons
-- `operator`: Tyk operator
-- `portal`: Tyk enterprise portal
-
-#### Supported k8s Flavors
-- `vanilla`: Vanilla k8s
-- `openshift`: OpenShift
-
 
 #### Usage
 ```
@@ -56,4 +48,6 @@ Flags:
   -o, --operator  	bool   	 install the Tyk Operator
   -p, --portal    	bool   	 install the Tyk Enterprise Portal
   -n, --namespace 	string 	 namespace the tyk stack will be installed in, defaults to 'tyk'
+  -d, --database  	enum   	 database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'
+  -r, --redis     	enum   	 the redis mode that tyk stack will use. This option can be set 'redis-cluster' and defaults to 'redis'
 ```
