@@ -30,11 +30,11 @@ Minimizing the amount of effort you need to stand up you Tyk infra.
 
 #### Add ons
 - `operator`: Tyk operator
-- `enterprise-portal`: Tyk enterprise portal
+- `portal`: Tyk enterprise portal
 
 #### Supported k8s Flavors
 - `vanilla`: Vanilla k8s
-- `os`: OpenShift
+- `openshift`: OpenShift
 
 
 #### Usage
