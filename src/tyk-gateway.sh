@@ -2,6 +2,7 @@ source src/namespace.sh;
 source src/redis.sh;
 
 tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
+  --set "gateway.image.repository=tykio/tyk-gateway" \
   --set "gateway.kind=Deployment" \
   --set "gateway.service.port=8080")
 
