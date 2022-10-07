@@ -23,7 +23,7 @@ case "$@" in
     ;;
   'tyk-gateway')
      source src/update-helm.sh;
-     # source src/tyk-gateway.sh;
+     source src/tyk-gateway.sh;
     ;;
   *) usage; exit 1 ;;
 esac
