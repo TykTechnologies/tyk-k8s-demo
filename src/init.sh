@@ -47,7 +47,6 @@ namespace="tyk";
 database="mongo";
 redis="redis";
 
-
 # Parse short options
 OPTIND=1
 while getopts "hf:opn:d:r:" opt
@@ -78,7 +77,7 @@ if [ $flavor != "vanilla" ] && [ $flavor != "openshift" ]; then
   exit 1;
 fi
 
-if [ $databse != "mongo" ] && [ $databse != "postgres" ]; then
+if [ $database != "mongo" ] && [ $database != "postgres" ]; then
   usage;
   exit 1;
 fi

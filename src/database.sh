@@ -1,6 +1,6 @@
 tykDatabaseArgs=()
 
-if [ $databse == "mongo" ]; then
+if [ $database == "mongo" ]; then
   source src/mongo.sh;
   tykDatabaseArgs=(--set "mongo.mongoURL=mongodb://root:topsecretpassword@tyk-mongo-mongodb.$namespace.svc.cluster.local:27017/tyk_analytics?authSource=admin")
 else
