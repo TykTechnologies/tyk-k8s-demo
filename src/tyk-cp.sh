@@ -29,6 +29,5 @@ helm upgrade tyk-pro $TYK_HELM_CHART_PATH/tyk-pro \
   "${tykArgs[@]}" \
   "${mdcbArgs[@]}" \
   "${tykSecurityContextArgs[@]}" \
-  "${mdcbSecurityContextArgs[@]}" \
-  --wait
+  "${mdcbSecurityContextArgs[@]}"
 set +x
