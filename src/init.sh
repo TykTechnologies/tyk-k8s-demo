@@ -78,12 +78,12 @@ if [ $flavor != "vanilla" ] && [ $flavor != "openshift" ]; then
   exit 1;
 fi
 
-# if [ $databse != "mongo" ] && [ $databse != "postgres" ]; then
-#   usage;
-#   exit 1;
-# fi
+if [ $databse != "mongo" ] && [ $databse != "postgres" ]; then
+  usage;
+  exit 1;
+fi
 
-# if [ $redis != "redis" ] && [ $redis != "redis-cluster" ]; then
-#   usage;
-#   exit 1;
-# fi
+if [ $redis != "redis" ] && [ $redis != "redis-cluster" ]; then
+  usage;
+  exit 1;
+fi
