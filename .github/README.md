@@ -11,6 +11,9 @@ For more details check GitHub [doc](https://docs.github.com/en/repositories/mana
 PLEASE CHANGE THIS FILE NAME TO BE "README.md" so GitHub can automatically surface it to repository visitors.
 -->
 
+## Alpha
+This product is in Alpha mode - breaking changes could be introduced, the product is not battle-hardened yet.
+
 ## About
 Will allow you to deploy the entire Tyk stack for POC on helm and docker.
   
