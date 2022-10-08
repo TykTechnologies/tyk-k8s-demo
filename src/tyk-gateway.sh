@@ -11,6 +11,6 @@ helm install tyk-gateway $TYK_HELM_CHART_PATH/tyk-headless \
   -n $namespace \
   "${tykArgs[@]}" \
   "${tykRedisArgs[@]}" \
-  "${tykSecurityContextArgs[@]}" \
+  "${gatewaySecurityContextArgs[@]}" \
   --wait
 set +x
