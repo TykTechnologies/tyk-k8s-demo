@@ -24,7 +24,7 @@ helm install tyk-pro $TYK_HELM_CHART_PATH/tyk-pro \
   --wait
 set +x
 
-source src/update-hybrid.sh;
+source src/helpers/update-hybrid-org.sh;
 
 mdcbArgs=(--set "mdcb.enabled=true" \
 	--set "mdcb.license=$MDCB_LICENSE" \

@@ -2,6 +2,7 @@ tykDatabaseArgs=()
 
 if [ "postgres" == $database ]; then
   tykDB="database"
+  source src/helpers/pgsql-exists.sh $tykDB
   source src/pgsql.sh $tykDB;
   tykDatabaseArgs=(--set "backend=postgres" \
     --set "postgres.host=tyk-$tykDB-postgres-postgresql.$namespace.svc.cluster.local" \
