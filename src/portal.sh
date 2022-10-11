@@ -8,9 +8,9 @@ source src/pgsql.sh $portalDB;
 
 set -x
 # Hack until code is merged
-k create secret -n $namespace generic tyk-enterprise-portal-conf \
-  --from-literal "TYK_AUTH=$(k get secrets tyk-operator-conf -n $namespace -o=jsonpath='{.data.TYK_AUTH}' | base64 -d)" \
-  --from-literal "TYK_ORG=$(k get secrets tyk-operator-conf -n $namespace -o=jsonpath='{.data.TYK_ORG}' | base64 -d)"
+kubectl create secret -n $namespace generic tyk-enterprise-portal-conf \
+  --from-literal "TYK_AUTH=$(kubectl get secrets tyk-operator-conf -n $namespace -o=jsonpath='{.data.TYK_AUTH}' | base64 -d)" \
+  --from-literal "TYK_ORG=$(kubectl get secrets tyk-operator-conf -n $namespace -o=jsonpath='{.data.TYK_ORG}' | base64 -d)"
 
 helm upgrade tyk-pro $TYK_HELM_CHART_PATH/tyk-pro \
   -n $namespace \
