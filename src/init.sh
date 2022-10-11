@@ -17,7 +17,7 @@ fi
 # Print Usage for script
 usage() {
   echo "Usage:";
-  echo "  ./poc.sh [flags] [command]";
+  echo "  ./up.sh [flags] [command]";
   echo -e "\nAvailable Commands:";
   echo "  tyk-pro";
   echo "  tyk-cp";

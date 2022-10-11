@@ -1,4 +1,4 @@
-# tyk-k8s-poc
+# tyk-k8s-demo
 <!-- Tell other people why your project is useful, what they can do with your project, and how they can use it.
 As explained in GitHub it typically includes information on:
 1. What the project does
@@ -35,7 +35,7 @@ Minimizing the amount of effort you need to stand up you Tyk infra.
 #### Usage
 ```
 Usage:
-  ./poc.sh [flags] [command]
+  ./up.sh [flags] [command]
 
 Available Commands:
   tyk-pro
