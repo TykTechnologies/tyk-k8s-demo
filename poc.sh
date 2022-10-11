@@ -19,7 +19,7 @@ case "$@" in
     ;;
   'tyk-hybrid')
      source src/update-helm.sh;
-     # source src/tyk-hybrid.sh;
+     source src/tyk-hybrid.sh;
     ;;
   'tyk-gateway')
      source src/update-helm.sh;
