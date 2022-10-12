@@ -1,0 +1,138 @@
+name: Smoke Tests
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+
+      - name: Kind Cluster
+        uses: helm/kind-action@v1.4.0
+
+      - name: Install helm
+        uses: Azure/setup-helm@v1.1
+        with:
+          version: v3.5.3
+
+      #####################################################
+      # Basic                                             #
+      #####################################################
+      - name: Deploy basic tyk-pro
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: 3
+          timeout_minutes: 10
+          command: LICENSE="${{ secrets.DASH_LICENSE }}" ./up.sh --namespace tyk-pro tyk-pro
+
+      - name: Deploy basic tyk-cp
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: 3
+          timeout_minutes: 10
+          command: LICENSE="${{ secrets.DASH_LICENSE }}" MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" ./up.sh --namespace tyk-cp tyk-cp
+
+      - name: Deploy basic tyk-gateway
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: 3
+          timeout_minutes: 10
+          command: ./up.sh --namespace tyk-gateway tyk-gateway
+
+      #####################################################
+      # Portal                                            #
+      #####################################################
+      # TODO: Requires helm charts to support portal
+      # - name: Deploy tyk-pro with enterprise portal
+      #   run: LICENSE="${{ secrets.DASH_LICENSE }}" ./up.sh --portal --namespace tyk-pro-portal tyk-pro
+
+      # - name: Deploy basic tyk-cp
+      #   run: LICENSE="${{ secrets.DASH_LICENSE }}" MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" ./up.sh --portal --namespace tyk-cp-portal tyk-cp
+
+      #####################################################
+      # Basic with operator                               #
+      #####################################################
+      # - name: Deploy tyk-pro with operator
+      #   run: LICENSE="${{ secrets.DASH_LICENSE }}" ./up.sh --operator --namespace tyk-pro-operator tyk-pro
+
+      # - name: Deploy basic tyk-cp
+      #   run: LICENSE="${{ secrets.DASH_LICENSE }}" MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" ./up.sh --operator --namespace tyk-cp-operator tyk-cp
+
+      # - name: Deploy basic tyk-gateway
+      #   run: ./up.sh --operator --namespace tyk-gateway-operator tyk-gateway
+
+      #####################################################
+      # Basic with redis cluster                          #
+      #####################################################
+      - name: Deploy tyk-pro with a redis cluster
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: 3
+          timeout_minutes: 10
+          command: LICENSE="${{ secrets.DASH_LICENSE }}" ./up.sh --namespace tyk-pro-redis-cluster --redis redis-cluster tyk-pro
+
+      - name: Deploy tyk-cp with a redis cluster
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: 3
+          timeout_minutes: 10
+          command: LICENSE="${{ secrets.DASH_LICENSE }}" MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" ./up.sh --namespace tyk-cp-redis-cluster --redis redis-cluster tyk-cp
+
+      - name: Deploy tyk-gateway with a redis cluster
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: 3
+          timeout_minutes: 10
+          command: ./up.sh --namespace tyk-gateway-redis-cluster --redis redis-cluster tyk-gateway
+
+      #####################################################
+      # Basic with postgres                               #
+      #####################################################
+      - name: Deploy tyk-pro with postgres
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: 3
+          timeout_minutes: 10
+          command: ./up.sh --database postgres --namespace tyk-pro-postgres tyk-pro
+
+      # TODO: Requires helm charts to support postgres
+      # - name: Deploy tyk-cp with postgres
+      #   run: LICENSE="${{ secrets.DASH_LICENSE }}" MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" ./up.sh --database postgres --namespace tyk-cp-postgres tyk-cp
+
+      #####################################################
+      # OpenShift                                         #
+      #####################################################
+      # - name: Deploy OpenShift compatible tyk-pro
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     max_attempts: 3
+      #     timeout_minutes: 10
+      #     command: LICENSE="${{ secrets.DASH_LICENSE }}" ./up.sh --flavor openshift --redis redis-cluster --database postgres --namespace tyk-pro-os tyk-pro
+
+      # - name: Deploy OpenShift compatible tyk-cp
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     max_attempts: 3
+      #     timeout_minutes: 10
+      #     command: LICENSE="${{ secrets.DASH_LICENSE }}" MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" ./up.sh --flavor openshift --redis redis-cluster --namespace tyk-cp-os tyk-cp
+
+      # - name: Deploy OpenShift compatible tyk-gateway
+      #   uses: nick-invision/retry@v2
+      #   with:
+      #     max_attempts: 3
+      #     timeout_minutes: 10
+      #     command: ./up.sh --flavor openshift --redis redis-cluster --namespace tyk-gateway-os tyk-gateway

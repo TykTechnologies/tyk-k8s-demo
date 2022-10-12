@@ -9,7 +9,7 @@ PASSWORD=topsecretpassword
 
 # Check for .env file, if found, load variables
 if [ -f .env ]; then
-  export $(cat .env | xargs);
+  export $(sed -E '/^[A-Za-z_]+=$/d' .env | xargs);
 else
   echo "Warning: .env file not found.";
 fi
