@@ -1,10 +1,11 @@
-source src/helpers/mongo-exists.sh
+mongoReleaseName="tyk-mongo";
+checkHelmReleaseExists $mongoReleaseName;
 
-if $mongoExists; then
-  echo "Warning: tyk-mongo release already exists...skipping Mongo install."
+if $releaseExists; then
+  logger $INFO "$mongoReleaseName release already exists in $namespace namespace...skipping $mongoReleaseName install";
 else
   set -x
-  helm install tyk-mongo bitnami/mongodb --version 11.1.10 \
+  helm install $mongoReleaseName bitnami/mongodb --version 11.1.10 \
     -n $namespace \
     --set "auth.rootPassword=$PASSWORD" \
     --set "replicaSet.enabled=true" \

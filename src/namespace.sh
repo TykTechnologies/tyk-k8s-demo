@@ -1,7 +1,7 @@
-source src/helpers/namespace-exists.sh
+source src/helpers/namespace-exists.sh;
 
 if $namespaceExists; then
-  echo "Warning: namespace $namespace already exists...skipping namespace creation.";
+  logger $INFO "namespace $namespace already exists...skipping namespace creation";
 else
   kubectl create ns $namespace;
 fi
@@ -14,13 +14,13 @@ gatewaySecurityContextArgs=();
 mdcbSecurityContextArgs=();
 postalSecurityContextArgs=();
 
-if [ "openshift" == $flavor ]; then
+if [ OPENSHIFT == $flavor ]; then
   sleep 1;
 
   ID=$(kubectl get ns $namespace -o=jsonpath='{.metadata.annotations.openshift\.io\/sa\.scc\.uid-range}' | rev | cut -c7- | rev);
 
   # Set Redis args
-  if [ "redis-cluster" == $redis ]; then
+  if [ REDISCLUSTER == $redis ]; then
     redisSecurityContextArgs=(--set "podSecurityContext.runAsUser=$ID" \
       --set "podSecurityContext.fsGroup=$ID" \
       --set "containerSecurityContext.runAsUser=$ID");

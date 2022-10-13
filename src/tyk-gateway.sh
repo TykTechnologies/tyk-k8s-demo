@@ -4,10 +4,13 @@ source src/redis.sh;
 tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.image.repository=tykio/tyk-gateway" \
   --set "gateway.kind=Deployment" \
-  --set "gateway.service.port=8080")
+  --set "gateway.service.port=8080");
+
+tykReleaseName="tyk-gateway";
+checkTykRelease;
 
 set -x
-helm install tyk-gateway $TYK_HELM_CHART_PATH/tyk-headless \
+helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-headless \
   -n $namespace \
   "${tykArgs[@]}" \
   "${tykRedisArgs[@]}" \

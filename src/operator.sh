@@ -1,11 +1,12 @@
-source src/helpers/operator-exists.sh
+operatorReleaseName="tyk-operator"
+checkHelmReleaseExists $operatorReleaseName
 
-if $operatorExists; then
-  echo "Warning: tyk-operator release already exists...skipping Tyk Operator install."
+if $releaseExists; then
+  logger $INFO "$operatorReleaseName release already exists in $namespace namespace...skipping $operatorReleaseName install"
 else
   set -x
   kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.0/cert-manager.yaml
   sleep 1
-  helm install tyk-operator tyk-helm/tyk-operator -n $namespace
+  helm install $operatorReleaseName tyk-helm/tyk-operator -n $namespace
   set +x
 fi

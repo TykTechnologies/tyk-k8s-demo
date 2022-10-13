@@ -1,16 +1,9 @@
-if [[ -z "$PORTAL_LICENSE" ]]; then
-  echo "Please make sure the PORTAL_LICENSE variable is set in your .env file"
-  exit 0
-fi
-
-portalDB=portal
-source src/helpers/pgsql-exists.sh $portalDB
+portalDB=portal;
 source src/pgsql.sh $portalDB;
-
-source src/helpers/portal-exists.sh
+source src/helpers/portal-exists.sh;
 
 if $portalExists; then
-  echo "Warning: tyk-portal already exists...skipping Tyk Enterprise Portal install."
+  logger $INFO "tyk-portal already exists in $namespace namespace...skipping Tyk Enterprise Portal install";
 else
   set -x
   helm upgrade tyk-pro $TYK_HELM_CHART_PATH/tyk-pro \
