@@ -22,7 +22,7 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   --wait
 set +x
 
-source src/helpers/update-hybrid-org.sh;
+source src/helpers/update-hybrid-org.sh $tykReleaseName;
 
 mdcbArgs=(--set "mdcb.enabled=true" \
 	--set "mdcb.license=$MDCB_LICENSE" \

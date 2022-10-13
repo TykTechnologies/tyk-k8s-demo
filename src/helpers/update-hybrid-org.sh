@@ -5,15 +5,17 @@ orgID=$(kubectl get secrets tyk-operator-conf -n $namespace -o=jsonpath='{.data.
 domain=$(echo $dashURL | cut -d ':' -f1);
 port=$(echo $dashURL | cut -d ':' -f2);
 
-logger $DEBUG "Dashboard URL: $dashURL"
-logger $DEBUG "Organisation ID: $orgID"
+logger $DEBUG "Dashboard URL: $dashURL";
+logger $DEBUG "Organisation ID: $orgID";
 
-kubectl port-forward svc/dashboard-svc-tyk-pro -n $namespace $port > /dev/null 2>&1 &
+tykReleaseName=$1
+
+kubectl port-forward svc/dashboard-svc-$tykReleaseName-tyk-pro -n $namespace $port > /dev/null 2>&1 &
 
 pid=$!;
 
 set -x
-sleep 30;
+sleep 5;
 curl localhost:$port/admin/organisations/$orgID -H "Admin-Auth: 12345" > $ORG_FILENAME;
 
 tmp=$(mktemp)

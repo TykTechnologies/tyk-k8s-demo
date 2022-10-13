@@ -6,7 +6,7 @@ if $portalExists; then
   logger $INFO "tyk-portal already exists in $namespace namespace...skipping Tyk Enterprise Portal install";
 else
   set -x
-  helm upgrade tyk-pro $TYK_HELM_CHART_PATH/tyk-pro \
+  helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
     -n $namespace \
     "${tykArgs[@]}" \
     "${tykRedisArgs[@]}" \
