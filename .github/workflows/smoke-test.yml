@@ -93,9 +93,9 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           command: |
-            TYK_HYBRID_CONNECTIONSTRING=${{ secrets.HYBRID_MDCB_HOST }} \
-            TYK_HYBRID_ORGID=${{ secrets.HYBRID_RPC_KEY }} \
-            TYK_HYBRID_AUTHTOKEN=${{ secrets.HYBRID_API_KEY }} \
+            TYK_HYBRID_CONNECTIONSTRING="${{ secrets.HYBRID_MDCB_HOST }}" \
+            TYK_HYBRID_ORGID="${{ secrets.HYBRID_RPC_KEY }}" \
+            TYK_HYBRID_AUTHTOKEN="${{ secrets.HYBRID_API_KEY }}" \
             ./up.sh \
               --namespace tyk-hybrid \
               tyk-hybrid
@@ -106,9 +106,9 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           command: |
-            TYK_HYBRID_CONNECTIONSTRING=${{ secrets.HYBRID_MDCB_HOST }} \
-            TYK_HYBRID_ORGID=${{ secrets.HYBRID_RPC_KEY }} \
-            TYK_HYBRID_AUTHTOKEN=${{ secrets.HYBRID_API_KEY }} \
+            TYK_HYBRID_CONNECTIONSTRING="${{ secrets.HYBRID_MDCB_HOST }}" \
+            TYK_HYBRID_ORGID="${{ secrets.HYBRID_RPC_KEY }}" \
+            TYK_HYBRID_AUTHTOKEN="${{ secrets.HYBRID_API_KEY }}" \
             ./up.sh \
               --namespace tyk-hybrid-redis-cluster \
               --redis redis-cluster \
