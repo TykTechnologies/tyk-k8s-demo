@@ -11,7 +11,7 @@ For more details check GitHub [doc](https://docs.github.com/en/repositories/mana
 PLEASE CHANGE THIS FILE NAME TO BE "README.md" so GitHub can automatically surface it to repository visitors.
 -->
 
-[![.github/workflows/smoke-tests.yml](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/smoke-tests.yml/badge.svg)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/smoke-tests.yml)
+[![Smoke Tests](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/smoke-test.yml)
 
 ## Alpha
 This product is in Alpha mode - breaking changes could be introduced, the product is not battle-hardened yet.
