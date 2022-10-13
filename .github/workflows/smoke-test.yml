@@ -34,6 +34,7 @@ jobs:
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: kubectl delete ns ${{ matrix.mode }}
           command: |
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
@@ -46,6 +47,7 @@ jobs:
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: kubectl delete ns ${{ matrix.mode }}-redis-cluster
           command: |
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
@@ -73,6 +75,7 @@ jobs:
       fail-fast: false
       matrix:
         cluster: [v1.20.2, v1.19.7, v1.18.15, v1.17.17, v1.16.15]
+        mode: [tyk-hybrid]
     steps:
       - uses: actions/checkout@v2
 
@@ -87,32 +90,34 @@ jobs:
         with:
           version: v3.5.3
 
-      - name: Deploy basic tyk-hybrid
+      - name: Deploy basic ${{ matrix.mode }}
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: kubectl delete ns ${{ matrix.mode }}
           command: |
             TYK_HYBRID_CONNECTIONSTRING="${{ secrets.HYBRID_MDCB_HOST }}" \
             TYK_HYBRID_ORGID="${{ secrets.HYBRID_RPC_KEY }}" \
             TYK_HYBRID_AUTHTOKEN="${{ secrets.HYBRID_API_KEY }}" \
             ./up.sh \
-              --namespace tyk-hybrid \
-              tyk-hybrid
+              --namespace ${{ matrix.mode }} \
+              ${{ matrix.mode }}
 
-      - name: Deploy tyk-hybrid with a redis cluster
+      - name: Deploy ${{ matrix.mode }} with a redis cluster
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: kubectl delete ns ${{ matrix.mode }}-redis-cluster
           command: |
             TYK_HYBRID_CONNECTIONSTRING="${{ secrets.HYBRID_MDCB_HOST }}" \
             TYK_HYBRID_ORGID="${{ secrets.HYBRID_RPC_KEY }}" \
             TYK_HYBRID_AUTHTOKEN="${{ secrets.HYBRID_API_KEY }}" \
             ./up.sh \
-              --namespace tyk-hybrid-redis-cluster \
+              --namespace ${{ matrix.mode }}-redis-cluster \
               --redis redis-cluster \
-              tyk-hybrid
+              ${{ matrix.mode }}
 
   oss:
     runs-on: ubuntu-latest
@@ -120,6 +125,7 @@ jobs:
       fail-fast: false
       matrix:
         cluster: [v1.20.2, v1.19.7, v1.18.15, v1.17.17, v1.16.15]
+        mode: [tyk-gateway]
     steps:
       - uses: actions/checkout@v2
 
@@ -134,23 +140,25 @@ jobs:
         with:
           version: v3.5.3
 
-      - name: Deploy basic tyk-gateway
+      - name: Deploy basic ${{ matrix.mode }}
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: kubectl delete ns ${{ matrix.mode }}
           command: |
             ./up.sh \
-              --namespace tyk-gateway \
-              tyk-gateway
+              --namespace ${{ matrix.mode }} \
+              ${{ matrix.mode }}
 
-      - name: Deploy tyk-gateway with a redis cluster
+      - name: Deploy ${{ matrix.mode }} with a redis cluster
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: kubectl delete ns ${{ matrix.mode }}
           command: |
             ./up.sh \
-              --namespace tyk-gateway-redis-cluster \
+              --namespace ${{ matrix.mode }}-redis-cluster \
               --redis redis-cluster \
-              tyk-gateway
+              ${{ matrix.mode }}
