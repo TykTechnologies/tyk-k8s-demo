@@ -97,6 +97,9 @@ jobs:
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: kubectl delete ns ${{ matrix.mode }}
           command: |
+            echo "HYBRID_MDCB_HOST: ${{ secrets.HYBRID_MDCB_HOST }}" && \
+            echo "HYBRID_RPC_KEY: ${{ secrets.HYBRID_RPC_KEY }}" && \
+            echo "HYBRID_API_KEY: ${{ secrets.HYBRID_API_KEY }}" && \
             TYK_HYBRID_CONNECTIONSTRING="${{ secrets.HYBRID_MDCB_HOST }}" \
             TYK_HYBRID_ORGID="${{ secrets.HYBRID_RPC_KEY }}" \
             TYK_HYBRID_AUTHTOKEN="${{ secrets.HYBRID_API_KEY }}" \
