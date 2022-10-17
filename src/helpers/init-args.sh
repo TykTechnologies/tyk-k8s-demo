@@ -21,6 +21,7 @@ for arg in "$@"; do
   shift
   case "$arg" in
     '--help')      set -- "$@" '-h'   ;;
+    '--verbose')   set -- "$@" '-v'   ;;
     '--portal')    set -- "$@" '-p'   ;;
     '--operator')  set -- "$@" '-o'   ;;
     '--namespace') set -- "$@" '-n'   ;;
@@ -33,10 +34,11 @@ done
 
 # Parse short options
 OPTIND=1
-while getopts "hpon:f:r:d:" opt
+while getopts "hvpon:f:r:d:" opt
 do
   case "$opt" in
     'h') usage; exit 0     ;;
+    'v') LOGLEVEL=$DEBUG   ;;
     'p')
         portal=true;
         logger $INFO "Warning: Portal installtion is only available from the 'add-enterprise-portal'"\

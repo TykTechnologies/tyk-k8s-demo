@@ -27,7 +27,7 @@ exposePorts() {
   for service in "${services[@]}"; do
     getPort $service;
     logger $INFO "forwarding to http://localhost:$port \tfrom\t svc/$service:$port";
-    kubectl port-forward svc/$service -n $namespace $port > /dev/null 2>&1 &
+    kubectl port-forward svc/$service -n $namespace $port > /dev/null &
   done
 }
 
