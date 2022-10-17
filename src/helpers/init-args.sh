@@ -4,6 +4,7 @@ MONGO="mongo";
 POSTGRES="postgres";
 REDIS="redis";
 REDISCLUSTER="redis-cluster";
+REDISSENTINEL="redis-sentinel";
 DEFAULTNAMESPACE="tyk";
 LOGLEVEL=$INFO;
 
@@ -57,7 +58,7 @@ shift $((OPTIND - 1))
 
 if ([[ $VANILLA != $flavor   ]] && [[ $OPENSHIFT    != $flavor   ]]) || \
    ([[ $MONGO   != $database ]] && [[ $POSTGRES     != $database ]]) || \
-   ([[ $REDIS   != $redis    ]] && [[ $REDISCLUSTER != $redis    ]]); then
+   ([[ $REDIS   != $redis    ]] && [[ $REDISCLUSTER != $redis    ]]  && [[ $REDISSENTINEL != $redis ]]); then
   usage;
   exit 1;
 fi

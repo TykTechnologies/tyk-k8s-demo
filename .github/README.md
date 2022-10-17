@@ -51,5 +51,5 @@ Flags:
   -p, --portal    	bool   	 install the Tyk Enterprise Portal
   -n, --namespace 	string 	 namespace the tyk stack will be installed in, defaults to 'tyk'
   -d, --database  	enum   	 database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'
-  -r, --redis     	enum   	 the redis mode that tyk stack will use. This option can be set 'redis-cluster' and defaults to 'redis'
+  -r, --redis     	enum   	 the redis mode that tyk stack will use. This option can be set 'redis-cluster', 'redis-sentinel' and defaults to 'redis'
 ```

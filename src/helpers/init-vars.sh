@@ -8,7 +8,7 @@ TYK_HELM_CHART_PATH=tyk-helm
 PASSWORD=topsecretpassword
 
 # Check for .env file, if found, load variables
-if [ -f .env ]; then
+if [[ -f .env ]]; then
   export $(sed -E '/^[A-Za-z_]+=$/d' .env | xargs);
 else
   logger $INFO ".env file not found";

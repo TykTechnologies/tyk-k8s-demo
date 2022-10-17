@@ -1,6 +1,6 @@
 tykDatabaseArgs=()
 
-if [ POSTGRES == $database ]; then
+if [[ $POSTGRES == $database ]]; then
   tykDB="database";
   source src/pgsql.sh $tykDB;
   tykDatabaseArgs=(--set "backend=postgres" \
