@@ -8,7 +8,7 @@ usage() {
   echo "  tyk-hybrid";
   echo "  tyk-gateway";
   echo -e "\nFlags:";
-  echo -e "  -v, --verobose  \t       \t set log level to debug";
+  echo -e "  -v, --verbose   \tbool   \t set log level to debug";
   echo -e "  -p, --portal    \tbool   \t install the Tyk Enterprise Portal";
   echo -e "  -o, --operator  \tbool   \t install the Tyk Operator";
   echo -e "  -n, --namespace \tstring \t namespace the tyk stack will be installed in, defaults to 'tyk'";

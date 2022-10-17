@@ -34,6 +34,15 @@ Minimizing the amount of effort you need to stand up you Tyk infra.
 - `tyk-edge`: Tyk hybrid edges
 - `tyk-gateway`: Tyk oss self-managed single region
 
+### Redis Options
+- `redis`: Bitnami Redis deployment
+- `redis-cluster`: Bitnami Redis Cluster deployment
+- `redis-sentinel`: Bitnami Redis Sentinel deployment
+
+### Database Options
+- `mongo`: mongo database as a Tyk backend
+- `postgres`: postgres database as a Tyk backend
+
 #### Usage
 ```
 Usage:
@@ -46,10 +55,21 @@ Available Commands:
   tyk-gateway
 
 Flags:
-  -f, --flavor    	enum   	 k8s environment flavor. This option can be set 'openshift' and defaults to 'vanilla'
-  -o, --operator  	bool   	 install the Tyk Operator
+  -v, --verbose   	bool   	 set log level to debug
   -p, --portal    	bool   	 install the Tyk Enterprise Portal
+  -o, --operator  	bool   	 install the Tyk Operator
   -n, --namespace 	string 	 namespace the tyk stack will be installed in, defaults to 'tyk'
-  -d, --database  	enum   	 database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'
+  -f, --flavor    	enum   	 k8s environment flavor. This option can be set 'openshift' and defaults to 'vanilla'
   -r, --redis     	enum   	 the redis mode that tyk stack will use. This option can be set 'redis-cluster', 'redis-sentinel' and defaults to 'redis'
+  -d, --database  	enum   	 database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'
+```
+
+```
+Usage:
+  ./down.sh [flags]
+
+Flags:
+  -v, --verbose   	bool   	 set log level to debug
+  -n, --namespace 	string 	 namespace the tyk stack will be installed in, defaults to 'tyk'
+  -p, --ports     	bool   	 disconnect port connections only
 ```
