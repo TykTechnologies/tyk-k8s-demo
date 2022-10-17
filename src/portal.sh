@@ -1,5 +1,6 @@
-portalDB=portal;
-source src/pgsql.sh $portalDB;
+portalDBName=portal;
+portalDBPort=54321;
+source src/pgsql.sh $portalDBName $portalDBPort;
 source src/helpers/portal-exists.sh;
 
 addService "enterprise-portal-svc-$tykReleaseName";
@@ -17,7 +18,7 @@ else
     "${gatewaySecurityContextArgs[@]}" \
     --set "enterprisePortal.license=$PORTAL_LICENSE" \
     --set "enterprisePortal.enabled=true" \
-    --set "enterprisePortal.storage.database.connectionString=host\=tyk-$portalDB-postgres-postgresql.$namespace.svc.cluster.local port\=5432 user\=postgres password\=$PASSWORD database\=$portalDB sslmode\=disable" \
+    --set "enterprisePortal.storage.database.connectionString=host\=tyk-$portalDBName-postgres-postgresql.$namespace.svc.cluster.local port\=$portalDBPort user\=postgres password\=$PASSWORD database\=$portalDBName sslmode\=disable" \
     "${potalSecurityContextArgs[@]}" \
     --wait
   set +x

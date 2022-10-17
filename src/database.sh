@@ -1,12 +1,14 @@
 tykDatabaseArgs=()
 
 if [[ $POSTGRES == $database ]]; then
-  tykDB="database";
-  source src/pgsql.sh $tykDB;
+  tykDBName="database";
+  tykDBPort=5432;
+  source src/pgsql.sh $tykDBName $tykDBPort;
   tykDatabaseArgs=(--set "backend=postgres" \
-    --set "postgres.host=tyk-$tykDB-postgres-postgresql.$namespace.svc.cluster.local" \
+    --set "postgres.host=tyk-$tykDBName-postgres-postgresql.$namespace.svc.cluster.local" \
+    --set "postgres.port=$tykDBPort" \
     --set "postgres.password=$PASSWORD" \
-    --set "postgres.database=$tykDB" \
+    --set "postgres.database=$tykDBName" \
     --set "postgres.sslmode=disable");
 else
   source src/mongo.sh;
