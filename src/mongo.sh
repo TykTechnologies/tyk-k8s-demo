@@ -1,6 +1,8 @@
 mongoReleaseName="tyk-mongo";
 checkHelmReleaseExists $mongoReleaseName;
 
+addService "$mongoReleaseName-mongodb";
+
 if $releaseExists; then
   logger $INFO "$mongoReleaseName release already exists in $namespace namespace...skipping $mongoReleaseName install";
 else

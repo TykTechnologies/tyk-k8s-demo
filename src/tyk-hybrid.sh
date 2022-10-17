@@ -7,7 +7,7 @@ tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.rpc.apiKey=$TYK_HYBRID_AUTHTOKEN" \
   --set "gateway.service.port=8080");
 
-tykReleaseName="tyk-hybrid";
+tykReleaseName="tyk-hybrid-tyk-hybrid";
 checkTykRelease;
 
 set -x
@@ -18,3 +18,5 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-hybrid \
   "${gatewaySecurityContextArgs[@]}" \
   --wait
 set +x
+
+addService "gateway-svc-$tykReleaseName";

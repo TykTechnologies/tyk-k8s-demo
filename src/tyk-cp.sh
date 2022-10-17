@@ -8,7 +8,7 @@ tykArgs=(--set "dash.license=$LICENSE" \
   --set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "pump.image.tag=$TYK_PUMP_VERSION");
 
-tykReleaseName="tyk-cp";
+tykReleaseName="tyk-cp-tyk-pro";
 checkTykRelease;
 
 set -x
@@ -25,7 +25,8 @@ set +x
 source src/helpers/update-hybrid-org.sh $tykReleaseName;
 
 mdcbArgs=(--set "mdcb.enabled=true" \
-	--set "mdcb.license=$MDCB_LICENSE" \
+  --set "mdcb.license=$MDCB_LICENSE" \
+  --set "mdcb.service.type=NodePort" \
   --set "mdcb.image.tag=$TYK_MDCB_VERSION");
 
 set -x
@@ -39,3 +40,7 @@ helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   "${gatewaySecurityContextArgs[@]}" \
   "${mdcbSecurityContextArgs[@]}"
 set +x
+
+addService "dashboard-svc-$tykReleaseName";
+addService "gateway-svc-$tykReleaseName";
+addService "mdcb-svc-$tykReleaseName";

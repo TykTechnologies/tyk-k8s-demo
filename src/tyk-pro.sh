@@ -8,7 +8,7 @@ tykArgs=(--set "dash.license=$LICENSE" \
   --set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "pump.image.tag=$TYK_PUMP_VERSION");
 
-tykReleaseName="tyk-pro";
+tykReleaseName="tyk-pro-tyk-pro";
 checkTykRelease;
 
 set -x
@@ -21,3 +21,6 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   "${gatewaySecurityContextArgs[@]}" \
   --wait
 set +x
+
+addService "dashboard-svc-$tykReleaseName";
+addService "gateway-svc-$tykReleaseName";

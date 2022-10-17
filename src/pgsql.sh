@@ -1,6 +1,8 @@
 postgresReleaseName="tyk-$1-postgres";
 checkHelmReleaseExists $postgresReleaseName;
 
+addService "$postgresReleaseName-postgresql";
+
 if $releaseExists; then
   logger $INFO "$postgresReleaseName release already exists in $namespace namespace...skipping $postgresReleaseName install";
 else

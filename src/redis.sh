@@ -6,12 +6,18 @@ if [[ $REDISCLUSTER == $redis ]]; then
   tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName-redis-cluster.$namespace.svc.cluster.local:6379" \
     --set "redis.pass=$PASSWORD" \
     --set "redis.enableCluster=true");
+
+  addService "$redisReleaseName-redis-cluster";
 elif [[ $REDISSENTINEL == $redis ]]; then
   tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName.$namespace.svc.cluster.local:6379" \
     --set "redis.pass=$PASSWORD");
+
+  addService "$redisReleaseName";
 else
   tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName-master.$namespace.svc.cluster.local:6379" \
     --set "redis.pass=$PASSWORD");
+
+  addService "$redisReleaseName-master";
 fi
 
 if $releaseExists; then

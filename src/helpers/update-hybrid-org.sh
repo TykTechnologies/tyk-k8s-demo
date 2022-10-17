@@ -10,7 +10,7 @@ logger $DEBUG "Organisation ID: $orgID";
 
 tykReleaseName=$1
 
-kubectl port-forward svc/dashboard-svc-$tykReleaseName-tyk-pro -n $namespace $port > /dev/null 2>&1 &
+kubectl port-forward svc/dashboard-svc-$tykReleaseName -n $namespace $port > /dev/null 2>&1 &
 
 pid=$!;
 

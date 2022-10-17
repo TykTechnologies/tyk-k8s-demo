@@ -59,6 +59,5 @@ shift $((OPTIND - 1))
 if ([[ $VANILLA != $flavor   ]] && [[ $OPENSHIFT    != $flavor   ]]) || \
    ([[ $MONGO   != $database ]] && [[ $POSTGRES     != $database ]]) || \
    ([[ $REDIS   != $redis    ]] && [[ $REDISCLUSTER != $redis    ]]  && [[ $REDISSENTINEL != $redis ]]); then
-  usage;
-  exit 1;
+  usage; exit 1;
 fi

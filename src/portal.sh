@@ -2,6 +2,8 @@ portalDB=portal;
 source src/pgsql.sh $portalDB;
 source src/helpers/portal-exists.sh;
 
+addService "enterprise-portal-svc-$tykReleaseName";
+
 if $portalExists; then
   logger $INFO "tyk-portal already exists in $namespace namespace...skipping Tyk Enterprise Portal install";
 else
