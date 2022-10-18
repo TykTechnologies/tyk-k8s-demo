@@ -6,12 +6,12 @@ invalid=false
 if [[ $TYKPRO == $mode ]] || [[ $TYKCP == $mode ]]; then
 
   if [[ -z "$LICENSE" ]]; then
-    logger ERROR "Please make sure the LICENSE variable is set in your .env file";
+    logger $ERROR "Please make sure the LICENSE variable is set in your .env file";
     invalid=true
   else
     checkLicense $LICENSE
     if $expired; then
-      logger ERROR "Your Dashboard license has expired or is invalid. Please provide another license key";
+      logger $ERROR "Your Dashboard license has expired or is invalid. Please provide another license key";
       invalid=true
     fi
   fi
@@ -19,25 +19,12 @@ fi
 
 if [[ $TYKCP == $mode ]]; then
   if [[ -z "$MDCB_LICENSE" ]]; then
-    logger ERROR "Please make sure the MDCB_LICENSE variable is set in your .env file";
+    logger $ERROR "Please make sure the MDCB_LICENSE variable is set in your .env file";
     invalid=true
   else
     checkLicense $MDCB_LICENSE
     if $expired; then
-      logger ERROR "Your MDCB license has expired or is invalid. Please provide another license key";
-      invalid=true
-    fi
-  fi
-fi
-
-if $portal; then
-  if [[ -z "$PORTAL_LICENSE" ]]; then
-    logger ERROR "Please make sure the PORTAL_LICENSE variable is set in your .env file";
-    invalid=true
-  else
-    checkLicense $PORTAL_LICENSE
-    if $expired; then
-      logger ERROR "Your Enterprise Portal license has expired or is invalid. Please provide another license key";
+      logger $ERROR "Your MDCB license has expired or is invalid. Please provide another license key";
       invalid=true
     fi
   fi
@@ -45,15 +32,15 @@ fi
 
 if [[ $TYKHYBRID == $mode ]]; then
   if [[ -z "$TYK_HYBRID_CONNECTIONSTRING" ]]; then
-    logger ERROR "Please make sure TYK_HYBRID_CONNECTIONSTRING variable is set in your .env file"
+    logger $ERROR "Please make sure TYK_HYBRID_CONNECTIONSTRING variable is set in your .env file"
     invalid=true
   fi
   if [[ -z "$TYK_HYBRID_ORGID" ]]; then
-    logger ERROR "Please make sure TYK_HYBRID_ORGID variable is set in your .env file"
+    logger $ERROR "Please make sure TYK_HYBRID_ORGID variable is set in your .env file"
     invalid=true
   fi
   if [[ -z "$TYK_HYBRID_AUTHTOKEN" ]]; then
-    logger ERROR "Please make sure TYK_HYBRID_AUTHTOKEN variable is set in your .env file"
+    logger $ERROR "Please make sure TYK_HYBRID_AUTHTOKEN variable is set in your .env file"
     invalid=true
   fi
 fi
