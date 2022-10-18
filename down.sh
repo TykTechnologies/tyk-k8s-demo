@@ -9,6 +9,6 @@ source src/helpers/port-forward.sh;
 
 cleanPorts;
 
-if [[ ! $ports ]]; then
+if ! $ports; then
   kubectl delete namespace $namespace;
 fi
