@@ -13,9 +13,9 @@ getPort() {
 terminatePorts() {
   for service in "${services[@]}"; do
     getPort $service;
-    pid=$(ps | grep "kubectl port-forward svc/$service -n $namespace $port" | awk '{print $1}');
+    pid=$(ps | grep "kubectl port-forward svc/$service -n $namespace $port$" | awk '{print $1}');
 
-    if [[ ! -z $pid ]]; then
+    if ! [[ -z $pid ]]; then
       logger $DEBUG "terminating port-forwarding on port: $port";
       kill $pid > /dev/null 2>&1 &
     fi
