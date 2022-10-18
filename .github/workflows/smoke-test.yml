@@ -66,7 +66,7 @@ jobs:
       #       MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
       #       ./up.sh \
       #         --namespace ${{ matrix.mode }}-postgres \
-      #         --database postgres \
+      #         --storage postgres \
       #         ${{ matrix.mode }}
 
   hybrid:

@@ -39,9 +39,13 @@ Minimizing the amount of effort you need to stand up you Tyk infra.
 - `redis-cluster`: Bitnami Redis Cluster deployment
 - `redis-sentinel`: Bitnami Redis Sentinel deployment
 
-### Database Options
+### Storage Options
 - `mongo`: mongo database as a Tyk backend
 - `postgres`: postgres database as a Tyk backend
+
+### Deployments
+- `portal`
+- `operator`
 
 #### Usage
 ```
@@ -55,13 +59,12 @@ Available Commands:
   tyk-gateway
 
 Flags:
-  -v, --verbose   	bool   	 set log level to debug
-  -p, --portal    	bool   	 install the Tyk Enterprise Portal
-  -o, --operator  	bool   	 install the Tyk Operator
-  -n, --namespace 	string 	 namespace the tyk stack will be installed in, defaults to 'tyk'
-  -f, --flavor    	enum   	 k8s environment flavor. This option can be set 'openshift' and defaults to 'vanilla'
-  -r, --redis     	enum   	 the redis mode that tyk stack will use. This option can be set 'redis-cluster', 'redis-sentinel' and defaults to 'redis'
-  -d, --database  	enum   	 database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'
+  -v, --verbose     	bool   	 set log level to debug
+  -n, --namespace   	string 	 namespace the tyk stack will be installed in, defaults to 'tyk'
+  -f, --flavor      	enum   	 k8s environment flavor. This option can be set 'openshift' and defaults to 'vanilla'
+  -r, --redis       	enum   	 the redis mode that tyk stack will use. This option can be set 'redis-cluster', 'redis-sentinel' and defaults to 'redis'
+  -s, --storage     	enum   	 database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'
+  -d, --deployments 	string 	 comma separated list of deployments to launch
 ```
 
 ```
