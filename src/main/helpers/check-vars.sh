@@ -1,4 +1,4 @@
-source src/helpers/check-license-expiry.sh;
+source src/main/helpers/check-license-expiry.sh;
 
 logger $INFO "Checking variables...";
 

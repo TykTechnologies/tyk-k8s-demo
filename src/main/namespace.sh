@@ -1,4 +1,4 @@
-source src/helpers/namespace-exists.sh;
+source src/main/helpers/namespace-exists.sh;
 
 if $namespaceExists; then
   logger $INFO "namespace $namespace already exists...skipping namespace creation";

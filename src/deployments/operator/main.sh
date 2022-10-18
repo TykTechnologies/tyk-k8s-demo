@@ -1,3 +1,9 @@
+logger $DEBUG "Installing operator";
+
+if [[ $TYKPRO != $mode ]] && [[ $TYKCP != $mode ]] && [[ $TYKGATEWAY != $mode ]]; then
+  logger $INFO "you need a an operator secret to install the operator with the hybrid gateway";
+fi
+
 operatorReleaseName="tyk-operator"
 checkHelmReleaseExists $operatorReleaseName
 

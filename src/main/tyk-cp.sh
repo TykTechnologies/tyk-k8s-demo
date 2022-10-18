@@ -1,6 +1,6 @@
-source src/namespace.sh;
-source src/redis.sh;
-source src/database.sh;
+source src/main/namespace.sh;
+source src/main/redis.sh;
+source src/main/storage.sh;
 
 tykArgs=(--set "dash.license=$LICENSE" \
   --set "dash.adminUser.password=$PASSWORD" \
@@ -16,13 +16,13 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   -n $namespace \
   "${tykArgs[@]}" \
   "${tykRedisArgs[@]}" \
-  "${tykDatabaseArgs[@]}" \
+  "${tykStorageArgs[@]}" \
   "${tykSecurityContextArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
   --wait
 set +x
 
-source src/helpers/update-hybrid-org.sh $tykReleaseName;
+source src/main/helpers/update-hybrid-org.sh $tykReleaseName;
 
 mdcbArgs=(--set "mdcb.enabled=true" \
   --set "mdcb.license=$MDCB_LICENSE" \
@@ -34,7 +34,7 @@ helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   -n $namespace \
   "${tykArgs[@]}" \
   "${tykRedisArgs[@]}" \
-  "${tykDatabaseArgs[@]}" \
+  "${tykStorageArgs[@]}" \
   "${mdcbArgs[@]}" \
   "${tykSecurityContextArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \

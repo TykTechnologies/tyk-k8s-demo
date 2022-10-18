@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
 
-source src/helpers/logger.sh
-source src/helpers/check-deps.sh;
-source src/helpers/usage.sh;
-source src/helpers/init-vars.sh;
-source src/helpers/init-args.sh;
-source src/helpers/helm-release-exists.sh;
-source src/helpers/check-tyk-release.sh;
-source src/helpers/port-forward.sh;
+source src/main/helpers/logger.sh
+source src/main/helpers/check-deps.sh;
+source src/main/helpers/usage.sh;
+source src/main/helpers/init-vars.sh;
+source src/main/helpers/init-args.sh;
+source src/main/helpers/helm-release-exists.sh;
+source src/main/helpers/check-tyk-release.sh;
+source src/main/helpers/port-forward.sh;
 
 TYKPRO="tyk-pro";
 TYKCP="tyk-cp";
@@ -22,18 +22,18 @@ if [[ $TYKPRO != $mode ]] && [[ $TYKCP != $mode ]] && [[ $TYKHYBRID != $mode ]] 
 fi
 
 logger $INFO "Installing $mode in $flavor k8s environment";
-source src/helpers/update-helm.sh;
-source src/helpers/check-vars.sh;
-source "src/$mode.sh";
+source src/main/helpers/update-helm.sh;
+source src/main/helpers/check-vars.sh;
+source "src/main/$mode.sh";
 
-if $portal && ([[ $TYKPRO == $mode ]] || [[ $TYKCP == $mode ]]); then
-  logger $DEBUG "Installing enterprise portal";
-  source src/portal.sh;
-fi
-
-if $operator && ([[ $TYKPRO == $mode ]] || [[ $TYKCP == $mode ]] || [[ $TYKGATEWAY == $mode ]]); then
-  logger $DEBUG "Installing operator";
-  source src/operator.sh;
+if ! [[ -z $deployments ]]; then
+  for deployment in "${deployments[@]}"; do
+    if [[ -f "src/deployments/$deployment/main.sh" ]]; then
+      source "src/deployments/$deployment/main.sh";
+    else
+      logger $INFO "deployment $deployment not found...skipping";
+    fi
+  done
 fi
 
 exposePorts;

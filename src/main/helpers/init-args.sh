@@ -9,49 +9,43 @@ DEFAULTNAMESPACE="tyk";
 LOGLEVEL=$INFO;
 
 # Default values
-portal=false;
-operator=false;
 namespace=$DEFAULTNAMESPACE;
 flavor=$VANILLA;
 redis=$REDIS;
-database=$MONGO;
+storage=$MONGO;
+deployments=$();
 
 # Translate long argument flags into short ones.
 for arg in "$@"; do
   shift
   case "$arg" in
-    '--help')      set -- "$@" '-h'   ;;
-    '--verbose')   set -- "$@" '-v'   ;;
-    '--portal')    set -- "$@" '-p'   ;;
-    '--operator')  set -- "$@" '-o'   ;;
-    '--namespace') set -- "$@" '-n'   ;;
-    '--flavor')    set -- "$@" '-f'   ;;
-    '--redis')     set -- "$@" '-r'   ;;
-    '--database')  set -- "$@" '-d'   ;;
-    *)             set -- "$@" "$arg" ;;
+    '--help')        set -- "$@" '-h'   ;;
+    '--verbose')     set -- "$@" '-v'   ;;
+    '--namespace')   set -- "$@" '-n'   ;;
+    '--flavor')      set -- "$@" '-f'   ;;
+    '--redis')       set -- "$@" '-r'   ;;
+    '--storage')     set -- "$@" '-s'   ;;
+    '--deployments') set -- "$@" '-d'   ;;
+    *)               set -- "$@" "$arg" ;;
   esac
 done
 
 # Parse short options
 OPTIND=1
-while getopts "hvpon:f:r:d:" opt
+while getopts "hvn:f:r:s:d:" opt
 do
   case "$opt" in
     'h') usage; exit 0     ;;
     'v') LOGLEVEL=$DEBUG   ;;
-    'p')
-        portal=true;
-        logger $INFO "Warning: Portal installtion is only available from the 'add-enterprise-portal'"\
-        "branch on the tyk-helm-chart repository and requires the 'TYK_HELM_CHART_PATH'"\
-        "value in .env to be set to the local repo location";
-        ;;
-    'o') operator=true     ;;
     'n') namespace=$OPTARG ;;
     'f') flavor=$OPTARG    ;;
     'r') redis=$OPTARG     ;;
-    'd')
-        database=$OPTARG
+    's')
+        storage=$OPTARG
         logger $INFO "Warning: MDCB installtion does not currently support postgres database";
+        ;;
+    'd')
+        IFS=',' read -r -a deployments <<< "$OPTARG";
         ;;
     '?') usage; exit 1 ;;
   esac
@@ -59,7 +53,7 @@ done
 shift $((OPTIND - 1))
 
 if ([[ $VANILLA != $flavor   ]] && [[ $OPENSHIFT    != $flavor   ]]) || \
-   ([[ $MONGO   != $database ]] && [[ $POSTGRES     != $database ]]) || \
+   ([[ $MONGO   != $storage  ]] && [[ $POSTGRES     != $storage  ]]) || \
    ([[ $REDIS   != $redis    ]] && [[ $REDISCLUSTER != $redis    ]]  && [[ $REDISSENTINEL != $redis ]]); then
   usage; exit 1;
 fi

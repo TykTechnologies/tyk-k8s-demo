@@ -1,7 +1,14 @@
+logger $DEBUG "Installing enterprise portal";
+
+if [[ $TYKPRO != $mode ]] && [[ $TYKCP != $mode ]]; then
+  logger $ERROR "can only install the enterprise portal with a tyk-pro or a tyk-cp installation";
+  exit 1;
+fi
+
 portalDBName=portal;
 portalDBPort=54321;
-source src/pgsql.sh $portalDBName $portalDBPort;
-source src/helpers/portal-exists.sh;
+source src/main/pgsql.sh $portalDBName $portalDBPort;
+source src/main/helpers/portal-exists.sh;
 
 addService "enterprise-portal-svc-$tykReleaseName";
 
@@ -13,7 +20,7 @@ else
     -n $namespace \
     "${tykArgs[@]}" \
     "${tykRedisArgs[@]}" \
-    "${tykDatabaseArgs[@]}" \
+    "${tykStorageArgs[@]}" \
     "${tykSecurityContextArgs[@]}" \
     "${gatewaySecurityContextArgs[@]}" \
     --set "enterprisePortal.license=$PORTAL_LICENSE" \

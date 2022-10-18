@@ -1,6 +1,6 @@
-source src/namespace.sh;
-source src/redis.sh;
-source src/database.sh;
+source src/main/namespace.sh;
+source src/main/redis.sh;
+source src/main/storage.sh;
 
 tykArgs=(--set "dash.license=$LICENSE" \
   --set "dash.adminUser.password=$PASSWORD" \
@@ -16,7 +16,7 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   -n $namespace \
   "${tykArgs[@]}" \
   "${tykRedisArgs[@]}" \
-  "${tykDatabaseArgs[@]}" \
+  "${tykStorageArgs[@]}" \
   "${tykSecurityContextArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
   --wait
