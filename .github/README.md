@@ -13,9 +13,6 @@ PLEASE CHANGE THIS FILE NAME TO BE "README.md" so GitHub can automatically surfa
 
 [![Smoke Tests](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/smoke-test.yml)
 
-## Alpha
-This product is in Alpha mode - breaking changes could be introduced, the product is not battle-hardened yet.
-
 ## About
 Will allow you to deploy the entire Tyk stack for POC on helm and docker.
   
