@@ -26,7 +26,14 @@ addService "enterprise-portal-svc-$tykReleaseName";
 if $portalExists; then
   logger $INFO "tyk-portal already exists in $namespace namespace...skipping Tyk Enterprise Portal install";
 else
-  set -x
+
+  portalArgs=(--set "enterprisePortal.license=$PORTAL_LICENSE" \
+    --set "enterprisePortal.enabled=true" \
+    --set "enterprisePortal.storage.database.connectionString=host\=tyk-$portalDBName-postgres-postgresql.$namespace.svc.cluster.local port\=$portalDBPort user\=postgres password\=$PASSWORD database\=$portalDBName sslmode\=disable" \
+    "${potalSecurityContextArgs[@]}");
+
+  addDeploymentArgs "${portalArgs[@]}";
+
   helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
     -n $namespace \
     "${tykArgs[@]}" \
@@ -34,10 +41,6 @@ else
     "${tykStorageArgs[@]}" \
     "${tykSecurityContextArgs[@]}" \
     "${gatewaySecurityContextArgs[@]}" \
-    --set "enterprisePortal.license=$PORTAL_LICENSE" \
-    --set "enterprisePortal.enabled=true" \
-    --set "enterprisePortal.storage.database.connectionString=host\=tyk-$portalDBName-postgres-postgresql.$namespace.svc.cluster.local port\=$portalDBPort user\=postgres password\=$PASSWORD database\=$portalDBName sslmode\=disable" \
-    "${potalSecurityContextArgs[@]}" \
+    "${deploymentsArgs[@]}" \
     --wait
-  set +x
 fi
