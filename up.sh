@@ -9,6 +9,7 @@ source src/main/helpers/init-args.sh;
 source src/main/helpers/helm-release-exists.sh;
 source src/main/helpers/check-tyk-release.sh;
 source src/main/helpers/port-forward.sh;
+source src/main/helpers/deployments-args.sh;
 
 TYKPRO="tyk-pro";
 TYKCP="tyk-cp";
