@@ -21,32 +21,39 @@ else
 fi
 
 if $releaseExists; then
-  logger $INFO "$redisReleaseName release already exists in $namespace namespace...skipping Redis install"
+  logger $INFO "$redisReleaseName release already exists in $namespace namespace...skipping Redis install";
 else
+  logger $INFO "installing $redisReleaseName in $namespace";
   if [[ $REDISCLUSTER == $redis ]]; then
-    set -x
+    setVerbose;
     helm install $redisReleaseName bitnami/redis-cluster --version 7.6.4 \
       -n $namespace \
       --set "password=$PASSWORD" \
       "${redisSecurityContextArgs[@]}" \
-      --wait
-    set +x
+      --atomic \
+      --wait > /dev/null;
+    unsetVerbose;
+    logger $INFO "installed $redisReleaseName in $namespace";
   elif [[ $REDISSENTINEL == $redis ]]; then
-    set -x
+    setVerbose;
     helm install $redisReleaseName bitnami/redis --version 17.3.2 \
       -n $namespace \
       --set "auth.password=$PASSWORD" \
       --set "sentinel.enabled=true" \
       "${redisSecurityContextArgs[@]}" \
-      --wait
-    set +x
+      --atomic \
+      --wait > /dev/null;
+    unsetVerbose;
+    logger $INFO "installed $redisReleaseName in $namespace";
   else
-    set -x
+    setVerbose;
     helm install $redisReleaseName bitnami/redis --version 17.3.2 \
       -n $namespace \
       --set "auth.password=$PASSWORD" \
       "${redisSecurityContextArgs[@]}" \
-      --wait
-    set +x
+      --atomic \
+      --wait > /dev/null;
+    unsetVerbose;
+    logger $INFO "installed $redisReleaseName in $namespace";
   fi
 fi

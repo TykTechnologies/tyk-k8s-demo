@@ -10,13 +10,19 @@ tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
 tykReleaseName="tyk-hybrid-tyk-hybrid";
 checkTykRelease;
 
-set -x
+setVerbose;
 helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-hybrid \
   -n $namespace \
   "${tykArgs[@]}" \
   "${tykRedisArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
-  --wait
-set +x
+  --atomic \
+  --wait > /dev/null;
+unsetVerbose;
 
 addService "gateway-svc-$tykReleaseName";
+addSummary "\n\
+\tTyk Hybrid Gateway deployed\n
+\tMDCB connection: $TYK_HYBRID_CONNECTIONSTRING\n";
+
+logger $INFO "installed tyk in namespace $namespace";

@@ -13,6 +13,7 @@ namespace=$DEFAULTNAMESPACE;
 flavor=$VANILLA;
 redis=$REDIS;
 storage=$MONGO;
+dryRun=false;
 deployments=$();
 
 # Translate long argument flags into short ones.
@@ -26,13 +27,14 @@ for arg in "$@"; do
     '--redis')       set -- "$@" '-r'   ;;
     '--storage')     set -- "$@" '-s'   ;;
     '--deployments') set -- "$@" '-d'   ;;
+    '--dry-run')     set -- "$@" '-z'   ;;
     *)               set -- "$@" "$arg" ;;
   esac
 done
 
 # Parse short options
 OPTIND=1
-while getopts "hvn:f:r:s:d:" opt
+while getopts "hvn:f:r:s:d:z" opt
 do
   case "$opt" in
     'h') usage; exit 0     ;;
@@ -40,6 +42,7 @@ do
     'n') namespace=$OPTARG ;;
     'f') flavor=$OPTARG    ;;
     'r') redis=$OPTARG     ;;
+    'z') dryRun=true       ;;
     's')
         storage=$OPTARG
         logger $INFO "Warning: MDCB installtion does not currently support postgres database";
