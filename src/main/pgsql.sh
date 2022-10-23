@@ -6,7 +6,8 @@ addService "$postgresReleaseName-postgresql";
 if $releaseExists; then
   logger $INFO "$postgresReleaseName release already exists in $namespace namespace...skipping $postgresReleaseName install";
 else
-  set -x
+  logger $INFO "installing $postgresReleaseName in $namespace";
+  setVerbose;
   helm install $postgresReleaseName bitnami/postgresql --version 11.9.7 \
     -n $namespace \
     --set "auth.database=$1" \
@@ -14,6 +15,8 @@ else
     --set "containerPorts.postgresql=$2" \
     --set "primary.service.ports.postgresql=$2" \
     "${postgresSecurityContextArgs[@]}" \
-    --wait
-  set +x
+    --atomic \
+    --wait > /dev/null;
+  unsetVerbose;
+  logger $INFO "installed $postgresReleaseName in $namespace";
 fi

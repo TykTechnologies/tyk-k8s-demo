@@ -11,9 +11,10 @@ helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   "${tykSecurityContextArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
   "${deploymentsArgs[@]}" \
-  --wait
+  --atomic \
+  --wait > /dev/null;
 
-set -x
-kubectl apply -f src/deployments/operator-ingress/httpbin-deployment.yaml -n $namespace
-kubectl apply -f src/deployments/operator-ingress/http-ingress.yaml -n $namespace
-set +x
+setVerbose;
+kubectl apply -f src/deployments/operator-ingress/httpbin-deployment.yaml -n $namespace;
+kubectl apply -f src/deployments/operator-ingress/http-ingress.yaml -n $namespace;
+unsetVerbose;

@@ -11,7 +11,7 @@ tykArgs=(--set "dash.license=$LICENSE" \
 tykReleaseName="tyk-pro-tyk-pro";
 checkTykRelease;
 
-set -x
+setVerbose;
 helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   -n $namespace \
   "${tykArgs[@]}" \
@@ -19,8 +19,15 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   "${tykStorageArgs[@]}" \
   "${tykSecurityContextArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
-  --wait
-set +x
+  --atomic \
+  --wait > /dev/null;
+unsetVerbose;
 
 addService "dashboard-svc-$tykReleaseName";
 addService "gateway-svc-$tykReleaseName";
+addSummary "\n\
+\tTyk Pro deployed\n \
+\tDashboard username: default@example.com\n \
+\tDashboard password: $PASSWORD\n";
+
+logger $INFO "installed tyk in namespace $namespace";

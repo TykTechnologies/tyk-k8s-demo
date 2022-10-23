@@ -5,9 +5,9 @@ addService() {
 }
 
 getPort() {
-  set +e
+  set +e;
   port=$(kubectl get svc -n $namespace $1 -o jsonpath="{.spec.ports[0].port}");
-  set -e
+  set -e;
 }
 
 terminatePorts() {

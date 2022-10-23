@@ -1,6 +1,6 @@
 deploymentsArgs=();
 
 addDeploymentArgs() {
-  logger $DEBUG "addDeploymentArgs: passed args ${@}"
+  logger $DEBUG "addDeploymentArgs: passed args ${@}";
   deploymentsArgs+=("$@");
 }

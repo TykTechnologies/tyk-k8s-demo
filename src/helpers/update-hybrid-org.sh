@@ -8,13 +8,14 @@ port=$(echo $dashURL | cut -d ':' -f2);
 logger $DEBUG "Dashboard URL: $dashURL";
 logger $DEBUG "Organisation ID: $orgID";
 
-tykReleaseName=$1
+tykReleaseName=$1;
 
-kubectl port-forward svc/dashboard-svc-$tykReleaseName -n $namespace $port > /dev/null &
+kubectl port-forward svc/dashboard-svc-$tykReleaseName -n $namespace $port > /dev/null &;
 
 pid=$!;
 
-set -x
+
+setVerbose;
 sleep 5;
 curl localhost:$port/admin/organisations/$orgID -H "Admin-Auth: 12345" > $ORG_FILENAME;
 
@@ -30,7 +31,6 @@ jq '.hybrid_enabled = true | .event_options = {
 
 curl -X PUT localhost:$port/admin/organisations/$orgID -H "Admin-Auth: 12345" -d @$ORG_FILENAME;
 
-trap "kill $pid" EXIT
-rm $ORG_FILENAME
-
-set +x
+trap "kill $pid" EXIT;
+rm $ORG_FILENAME;
+unsetVerbose;

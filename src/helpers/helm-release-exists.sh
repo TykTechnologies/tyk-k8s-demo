@@ -1,11 +1,11 @@
 checkHelmReleaseExists() {
-  set +e
+  set +e;
   search=$(helm ls -n $namespace | awk '{print $1}' | grep -e "^$1$");
-  logger $DEBUG "checkHelmReleaseExists: search result $search"
-  set -e
+  logger $DEBUG "checkHelmReleaseExists: search result $search";
+  set -e;
 
-  releaseExists=true
+  releaseExists=true;
   if [[ -z $search ]]; then
-    releaseExists=false
+    releaseExists=false;
   fi
 }

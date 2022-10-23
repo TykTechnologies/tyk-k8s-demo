@@ -1,4 +1,4 @@
-tykStorageArgs=()
+tykStorageArgs=();
 
 if [[ $POSTGRES == $storage ]]; then
   tykDBName="storage";

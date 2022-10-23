@@ -1,15 +1,16 @@
 #!/bin/bash
 set -e
 
-source src/main/helpers/logger.sh
-source src/main/helpers/check-deps.sh;
-source src/main/helpers/usage.sh;
-source src/main/helpers/init-vars.sh;
-source src/main/helpers/init-args.sh;
-source src/main/helpers/helm-release-exists.sh;
-source src/main/helpers/check-tyk-release.sh;
-source src/main/helpers/port-forward.sh;
-source src/main/helpers/deployments-args.sh;
+source src/helpers/logger.sh
+source src/helpers/check-deps.sh;
+source src/helpers/usage.sh;
+source src/helpers/init-vars.sh;
+source src/helpers/init-args.sh;
+source src/helpers/helm-release-exists.sh;
+source src/helpers/check-tyk-release.sh;
+source src/helpers/port-forward.sh;
+source src/helpers/summary.sh;
+source src/helpers/deployments-args.sh;
 
 TYKPRO="tyk-pro";
 TYKCP="tyk-cp";
@@ -23,8 +24,8 @@ if [[ $TYKPRO != $mode ]] && [[ $TYKCP != $mode ]] && [[ $TYKHYBRID != $mode ]] 
 fi
 
 logger $INFO "Installing $mode in $flavor k8s environment";
-source src/main/helpers/update-helm.sh;
-source src/main/helpers/check-vars.sh;
+source src/helpers/update-helm.sh;
+source src/helpers/check-vars.sh;
 source "src/main/$mode.sh";
 
 if ! [[ -z $deployments ]]; then
@@ -38,3 +39,4 @@ if ! [[ -z $deployments ]]; then
 fi
 
 exposePorts;
+printSummaries;

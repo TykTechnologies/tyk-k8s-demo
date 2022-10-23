@@ -9,13 +9,18 @@ tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
 tykReleaseName="tyk-gateway-tyk-headless";
 checkTykRelease;
 
-set -x
+setVerbose;
 helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-headless \
   -n $namespace \
   "${tykArgs[@]}" \
   "${tykRedisArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
-  --wait
-set +x
+  --atomic \
+  --wait > /dev/null;
+unsetVerbose;
 
 addService "gateway-svc-$tykReleaseName";
+addSummary "\n\
+\tTyk Gateway deployed\n";
+
+logger $INFO "installed tyk in namespace $namespace";

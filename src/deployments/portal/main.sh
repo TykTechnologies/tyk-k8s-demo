@@ -19,7 +19,7 @@ fi
 portalDBName=portal;
 portalDBPort=54321;
 source src/main/pgsql.sh $portalDBName $portalDBPort;
-source src/main/helpers/portal-exists.sh;
+source src/helpers/portal-exists.sh;
 
 addService "enterprise-portal-svc-$tykReleaseName";
 
@@ -42,5 +42,6 @@ else
     "${tykSecurityContextArgs[@]}" \
     "${gatewaySecurityContextArgs[@]}" \
     "${deploymentsArgs[@]}" \
-    --wait
+    --atomic \
+    --wait > /dev/null
 fi

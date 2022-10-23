@@ -1,10 +1,11 @@
-source src/main/helpers/namespace-exists.sh;
+source src/helpers/namespace-exists.sh;
 
 if $namespaceExists; then
   logger $INFO "namespace $namespace already exists...skipping namespace creation";
 else
   logger $INFO "creating $namespace namespace...";
-  kubectl create ns $namespace;
+  kubectl create ns $namespace > /dev/null;
+  logger $INFO "namespace $namespace created";
 fi
 
 redisSecurityContextArgs=();

@@ -10,8 +10,7 @@ tykArgs=(--set "dash.license=$LICENSE" \
 
 tykReleaseName="tyk-cp-tyk-pro";
 checkTykRelease;
-
-set -x
+setVerbose;
 helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   -n $namespace \
   "${tykArgs[@]}" \
@@ -19,17 +18,22 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   "${tykStorageArgs[@]}" \
   "${tykSecurityContextArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
-  --wait
-set +x
+  --atomic \
+  --wait > /dev/null;
+unsetVerbose;
 
-source src/main/helpers/update-hybrid-org.sh $tykReleaseName;
+echo $dryRun
+
+if ! $dryRun; then
+  source src/helpers/update-hybrid-org.sh $tykReleaseName;
+fi
 
 mdcbArgs=(--set "mdcb.enabled=true" \
   --set "mdcb.license=$MDCB_LICENSE" \
   --set "mdcb.service.type=NodePort" \
   --set "mdcb.image.tag=$TYK_MDCB_VERSION");
 
-set -x
+setVerbose;
 helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   -n $namespace \
   "${tykArgs[@]}" \
@@ -38,9 +42,22 @@ helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   "${mdcbArgs[@]}" \
   "${tykSecurityContextArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
-  "${mdcbSecurityContextArgs[@]}"
-set +x
+  "${mdcbSecurityContextArgs[@]}" \
+  --atomic \
+  --wait > /dev/null;
+unsetVerbose;
 
 addService "dashboard-svc-$tykReleaseName";
 addService "gateway-svc-$tykReleaseName";
 addService "mdcb-svc-$tykReleaseName";
+
+addSummary "\n\
+\tTyk Control Plane deployed\n \
+\tDashboard username: default@example.com\n \
+\tDashboard password: $PASSWORD\n \
+\tMDCB connection string: \n \
+\tOrganisation ID: $orgID \n \
+\n\n You deploy a hybrid gateway and connect it to this Control Plane by running the following command: \n\n \
+\tTYK_HYBRID_CONNECTIONSTRING=$test TYK_HYBRID_ORGID=$test TYK_HYBRID_AUTHTOKEN=$test ./up.sh tyk-hybrid\n";
+
+logger $INFO "installed tyk in namespace $namespace";
