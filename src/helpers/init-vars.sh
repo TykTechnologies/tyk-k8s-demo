@@ -10,8 +10,13 @@ PASSWORD="topsecretpassword";
 if [[ -z $TYK_CP_RUNASLB ]]; then
   TYK_CP_RUNASLB=false;
 fi
+
 if [[ -z $TYK_HYBRID_USESSL ]]; then
   TYK_HYBRID_USESSL=true;
+fi
+
+if [[ -z $TYK_HYBRID_USESSL ]]; then
+  TYK_HYBRID_GW_PORT=8081;
 fi
 
 # Check for .env file, if found, load variables

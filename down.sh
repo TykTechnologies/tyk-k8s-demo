@@ -7,6 +7,10 @@ source src/helpers/down/usage.sh;
 source src/helpers/down/init-args.sh;
 source src/helpers/port-forward.sh;
 
+if $dryRun; then
+  source src/helpers/dry-run.sh;
+fi
+
 cleanPorts;
 
 if ! $ports; then

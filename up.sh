@@ -23,6 +23,10 @@ if [[ $TYKPRO != $mode ]] && [[ $TYKCP != $mode ]] && [[ $TYKHYBRID != $mode ]] 
   usage; exit 1;
 fi
 
+if $dryRun; then
+  source src/helpers/dry-run.sh;
+fi
+
 logger $INFO "Installing $mode in $flavor k8s environment";
 source src/helpers/update-helm.sh;
 source src/helpers/check-vars.sh;
@@ -38,7 +42,9 @@ if ! [[ -z $deployments ]]; then
   done
 fi
 
-sleep 10;
+if ! $dryRun; then
+  sleep 10;
+  exposePorts;
+fi
 
-exposePorts;
 printSummaries;
