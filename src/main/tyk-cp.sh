@@ -55,7 +55,9 @@ helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   --wait > /dev/null;
 unsetVerbose;
 
-source src/helpers/set-cp-args.sh;
+if ! $dryRun; then
+  source src/helpers/set-cp-args.sh;
+fi
 
 addSummary "\n\
 \tTyk Control Plane deployed\n \
