@@ -6,13 +6,13 @@ REDIS="redis";
 REDISCLUSTER="redis-cluster";
 REDISSENTINEL="redis-sentinel";
 DEFAULTNAMESPACE="tyk";
-LOGLEVEL=$INFO;
 
 # Default values
 namespace=$DEFAULTNAMESPACE;
 flavor=$VANILLA;
 redis=$REDIS;
 storage=$MONGO;
+isDebug=false;
 dryRun=false;
 deployments=$();
 
@@ -37,12 +37,12 @@ OPTIND=1
 while getopts "hvn:f:r:s:d:z" opt
 do
   case "$opt" in
-    'h') usage; exit 0     ;;
-    'v') LOGLEVEL=$DEBUG   ;;
-    'n') namespace=$OPTARG ;;
-    'f') flavor=$OPTARG    ;;
-    'r') redis=$OPTARG     ;;
-    'z') dryRun=true       ;;
+    'h') usage; exit 0                 ;;
+    'v') LOGLEVEL=$DEBUG; isDebug=true ;;
+    'n') namespace=$OPTARG             ;;
+    'f') flavor=$OPTARG                ;;
+    'r') redis=$OPTARG                 ;;
+    'z') dryRun=true                   ;;
     's')
         storage=$OPTARG
         logger $INFO "Warning: MDCB installtion does not currently support postgres database";
@@ -53,7 +53,7 @@ do
     '?') usage; exit 1 ;;
   esac
 done
-shift $((OPTIND - 1))
+shift $((OPTIND - 1));
 
 if ([[ $VANILLA != $flavor   ]] && [[ $OPENSHIFT    != $flavor   ]]) || \
    ([[ $MONGO   != $storage  ]] && [[ $POSTGRES     != $storage  ]]) || \

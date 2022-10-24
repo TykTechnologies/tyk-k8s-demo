@@ -32,6 +32,6 @@ exposePorts() {
 }
 
 cleanPorts() {
-  services=($(kubectl get svc -n tyk | awk 'NR > 1 {print $1}'));
+  services=($(kubectl get svc -n $namespace | awk 'NR > 1 {print $1}'));
   terminatePorts;
 }

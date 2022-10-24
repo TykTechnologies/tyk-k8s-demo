@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source src/helpers/logger.sh
+source src/helpers/logger.sh;
 source src/helpers/check-deps.sh;
 source src/helpers/down/usage.sh;
 source src/helpers/down/init-args.sh;
