@@ -1,9 +1,9 @@
 DEFAULTNAMESPACE="tyk";
-LOGLEVEL=$INFO;
 
 # Default values
 namespace=$DEFAULTNAMESPACE;
 ports=false;
+isDebug=false;
 
 # Translate long argument flags into short ones.
 for arg in "$@"; do
@@ -22,11 +22,11 @@ OPTIND=1
 while getopts "hvn:p" opt
 do
   case "$opt" in
-    'h') usage; exit 0     ;;
-    'v') LOGLEVEL=$DEBUG   ;;
-    'n') namespace=$OPTARG ;;
-    'p') ports=true        ;;
-    '?') usage; exit 1     ;;
+    'h') usage; exit 0                 ;;
+    'v') LOGLEVEL=$DEBUG; isDebug=true ;;
+    'n') namespace=$OPTARG             ;;
+    'p') ports=true                    ;;
+    '?') usage; exit 1                 ;;
   esac
 done
-shift $((OPTIND - 1))
+shift $((OPTIND - 1));

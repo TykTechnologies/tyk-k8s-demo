@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source src/helpers/logger.sh
+source src/helpers/logger.sh;
 source src/helpers/check-deps.sh;
 source src/helpers/usage.sh;
 source src/helpers/init-vars.sh;
@@ -37,6 +37,8 @@ if ! [[ -z $deployments ]]; then
     fi
   done
 fi
+
+sleep 10;
 
 exposePorts;
 printSummaries;

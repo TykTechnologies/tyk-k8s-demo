@@ -2,7 +2,6 @@ summaries=();
 SUMMARY_SEPARATOR="******************************************************************************************";
 
 addSummary() {
-  logger $DEBUG "addSummary: passed args ${@}";
   summaries+=("$@");
 }
 

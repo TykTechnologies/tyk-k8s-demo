@@ -5,7 +5,8 @@ tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.rpc.connString=$TYK_HYBRID_CONNECTIONSTRING" \
   --set "gateway.rpc.rpcKey=$TYK_HYBRID_ORGID" \
   --set "gateway.rpc.apiKey=$TYK_HYBRID_AUTHTOKEN" \
-  --set "gateway.service.port=8080");
+  --set "gateway.rpc.useSSL=$TYK_HYBRID_USESSL" \
+  --set "gateway.service.port=8081");
 
 tykReleaseName="tyk-hybrid-tyk-hybrid";
 checkTykRelease;

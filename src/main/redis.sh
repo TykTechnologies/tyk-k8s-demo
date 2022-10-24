@@ -3,27 +3,21 @@ redisReleaseName="tyk-redis";
 checkHelmReleaseExists $redisReleaseName;
 
 if [[ $REDISCLUSTER == $redis ]]; then
-  tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName-redis-cluster.$namespace.svc.cluster.local:6379" \
+  tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName-redis-cluster.$namespace.svc:6379" \
     --set "redis.pass=$PASSWORD" \
     --set "redis.enableCluster=true");
-
-  addService "$redisReleaseName-redis-cluster";
 elif [[ $REDISSENTINEL == $redis ]]; then
-  tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName.$namespace.svc.cluster.local:6379" \
+  tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName.$namespace.svc:6379" \
     --set "redis.pass=$PASSWORD");
-
-  addService "$redisReleaseName";
 else
-  tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName-master.$namespace.svc.cluster.local:6379" \
+  tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName-master.$namespace.svc:6379" \
     --set "redis.pass=$PASSWORD");
-
-  addService "$redisReleaseName-master";
 fi
 
 if $releaseExists; then
   logger $INFO "$redisReleaseName release already exists in $namespace namespace...skipping Redis install";
 else
-  logger $INFO "installing $redisReleaseName in $namespace";
+  logger $INFO "installing $redisReleaseName in namespace $namespace";
   if [[ $REDISCLUSTER == $redis ]]; then
     setVerbose;
     helm install $redisReleaseName bitnami/redis-cluster --version 7.6.4 \
@@ -33,7 +27,6 @@ else
       --atomic \
       --wait > /dev/null;
     unsetVerbose;
-    logger $INFO "installed $redisReleaseName in $namespace";
   elif [[ $REDISSENTINEL == $redis ]]; then
     setVerbose;
     helm install $redisReleaseName bitnami/redis --version 17.3.2 \
@@ -44,7 +37,6 @@ else
       --atomic \
       --wait > /dev/null;
     unsetVerbose;
-    logger $INFO "installed $redisReleaseName in $namespace";
   else
     setVerbose;
     helm install $redisReleaseName bitnami/redis --version 17.3.2 \
@@ -54,6 +46,6 @@ else
       --atomic \
       --wait > /dev/null;
     unsetVerbose;
-    logger $INFO "installed $redisReleaseName in $namespace";
   fi
+  logger $INFO "installed $redisReleaseName in namespace $namespace";
 fi

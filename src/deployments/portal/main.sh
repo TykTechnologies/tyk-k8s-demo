@@ -29,7 +29,7 @@ else
 
   portalArgs=(--set "enterprisePortal.license=$PORTAL_LICENSE" \
     --set "enterprisePortal.enabled=true" \
-    --set "enterprisePortal.storage.database.connectionString=host\=tyk-$portalDBName-postgres-postgresql.$namespace.svc.cluster.local port\=$portalDBPort user\=postgres password\=$PASSWORD database\=$portalDBName sslmode\=disable" \
+    --set "enterprisePortal.storage.database.connectionString=host\=tyk-$portalDBName-postgres-postgresql.$namespace.svc port\=$portalDBPort user\=postgres password\=$PASSWORD database\=$portalDBName sslmode\=disable" \
     "${potalSecurityContextArgs[@]}");
 
   addDeploymentArgs "${portalArgs[@]}";

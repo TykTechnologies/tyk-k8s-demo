@@ -10,6 +10,7 @@ tykArgs=(--set "dash.license=$LICENSE" \
 
 tykReleaseName="tyk-cp-tyk-pro";
 checkTykRelease;
+
 setVerbose;
 helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   -n $namespace \
@@ -22,15 +23,22 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   --wait > /dev/null;
 unsetVerbose;
 
-echo $dryRun
-
 if ! $dryRun; then
   source src/helpers/update-hybrid-org.sh $tykReleaseName;
 fi
 
+addService "dashboard-svc-$tykReleaseName";
+addService "gateway-svc-$tykReleaseName";
+
+serviceType="LoadBalancer";
+if ! $TYK_CP_RUNASLB; then
+  serviceType="NodePort";
+  addService "mdcb-svc-$tykReleaseName";
+fi
+
 mdcbArgs=(--set "mdcb.enabled=true" \
   --set "mdcb.license=$MDCB_LICENSE" \
-  --set "mdcb.service.type=NodePort" \
+  --set "mdcb.service.type=$serviceType" \
   --set "mdcb.image.tag=$TYK_MDCB_VERSION");
 
 setVerbose;
@@ -47,17 +55,23 @@ helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   --wait > /dev/null;
 unsetVerbose;
 
-addService "dashboard-svc-$tykReleaseName";
-addService "gateway-svc-$tykReleaseName";
-addService "mdcb-svc-$tykReleaseName";
+source src/helpers/set-cp-args.sh;
 
 addSummary "\n\
 \tTyk Control Plane deployed\n \
 \tDashboard username: default@example.com\n \
 \tDashboard password: $PASSWORD\n \
-\tMDCB connection string: \n \
-\tOrganisation ID: $orgID \n \
-\n\n You deploy a hybrid gateway and connect it to this Control Plane by running the following command: \n\n \
-\tTYK_HYBRID_CONNECTIONSTRING=$test TYK_HYBRID_ORGID=$test TYK_HYBRID_AUTHTOKEN=$test ./up.sh tyk-hybrid\n";
+\tMDCB connection string: $ip:$port\n \
+\tOrganisation ID: $orgID\n";
+
+if $TYK_CP_RUNASLB; then
+addSummary "\n\
+You deploy a hybrid gateway and connect it to this Control Plane by running the following command: \n\n \
+\tTYK_HYBRID_CONNECTIONSTRING=$ip:$port TYK_HYBRID_ORGID=$orgID TYK_HYBRID_AUTHTOKEN=$authToken ./up.sh tyk-hybrid\n";
+else
+addSummary "\n\
+You deploy a hybrid gateway and connect it to this Control Plane by running the following command: \n\n \
+\tTYK_HYBRID_CONNECTIONSTRING=$ip:$port TYK_HYBRID_ORGID=$orgID TYK_HYBRID_AUTHTOKEN=$authToken TYK_HYBRID_USESSL=false ./up.sh --namespace tyk-hybrid tyk-hybrid\n";
+fi
 
 logger $INFO "installed tyk in namespace $namespace";

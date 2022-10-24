@@ -2,14 +2,12 @@ ERROR="ERROR";
 INFO="INFO";
 DEBUG="DEBUG";
 
+# Default value
+LOGLEVEL=$INFO;
+
 E=0;
 I=1;
 D=2;
-
-isDebug=false;
-if [[ $LOGLEVEL == $DEBUG ]]; then
-  isDebug=true;
-fi
 
 setVerbose() {
   if $isDebug; then
@@ -26,7 +24,7 @@ unsetVerbose() {
 logLevelValue() {
   if [[ $LOGLEVEL == $ERROR ]]; then
     logLevel=$E;
-  elif $isDebug; then
+  elif [[ $LOGLEVEL == $DEBUG ]]; then
     logLevel=$D;
   else
     logLevel=$I;
@@ -48,6 +46,6 @@ logger() {
   setLevelValue $1;
 
   if [[ $levelValue -le logLevel ]]; then
-    echo -e "[$1]\t$(date +"%T") ${@: 1}";
+    echo -e "[$1]\t$(date +"%T") ${@: 2}";
   fi
 }
