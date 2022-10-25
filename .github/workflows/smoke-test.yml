@@ -75,7 +75,7 @@ jobs:
       fail-fast: false
       matrix:
         cluster: [v1.20.2, v1.19.7, v1.18.15, v1.17.17, v1.16.15]
-        mode: [tyk-hybrid]
+        mode: [tyk-worker]
     steps:
       - uses: actions/checkout@v2
 

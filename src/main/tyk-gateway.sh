@@ -7,6 +7,8 @@ tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.service.port=8080");
 
 tykReleaseName="tyk-gateway-tyk-headless";
+addService "gateway-svc-$tykReleaseName";
+addServiceArgs "gateway";
 checkTykRelease;
 
 setVerbose;
@@ -15,11 +17,11 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-headless \
   "${tykArgs[@]}" \
   "${tykRedisArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
+  "${servicesArgs[@]}" \
   --atomic \
   --wait > /dev/null;
 unsetVerbose;
 
-addService "gateway-svc-$tykReleaseName";
 addSummary "\n\
 \tTyk Gateway deployed\n";
 

@@ -8,17 +8,17 @@ source src/helpers/init-vars.sh;
 source src/helpers/init-args.sh;
 source src/helpers/helm-release-exists.sh;
 source src/helpers/check-tyk-release.sh;
-source src/helpers/port-forward.sh;
+source src/helpers/expose-services.sh;
 source src/helpers/summary.sh;
 source src/helpers/deployments-args.sh;
 
 TYKPRO="tyk-pro";
 TYKCP="tyk-cp";
-TYKHYBRID="tyk-hybrid";
+TYKWORKER="tyk-worker";
 TYKGATEWAY="tyk-gateway";
 
 mode=$@
-if [[ $TYKPRO != $mode ]] && [[ $TYKCP != $mode ]] && [[ $TYKHYBRID != $mode ]] && [[ $TYKGATEWAY != $mode ]]; then
+if [[ $TYKPRO != $mode ]] && [[ $TYKCP != $mode ]] && [[ $TYKWORKER != $mode ]] && [[ $TYKGATEWAY != $mode ]]; then
   logger $ERROR "invalid selection";
   usage; exit 1;
 fi
@@ -43,8 +43,8 @@ if ! [[ -z $deployments ]]; then
 fi
 
 if ! $dryRun; then
-  sleep 10;
-  exposePorts;
+  sleep $portsWait;
 fi
+exposePorts;
 
 printSummaries;
