@@ -1,3 +1,5 @@
+envs=$(printenv | xargs);
+
 # Default values
 TYK_DASHBOARD_VERSION="v4.2.2";
 TYK_GATEWAY_VERSION="v4.2.2";
@@ -6,18 +8,8 @@ TYK_PUMP_VERSION="v1.6.0";
 TYK_PORTAL_VERSION="v1.0.0";
 TYK_HELM_CHART_PATH="tyk-helm";
 PASSWORD="topsecretpassword";
-
-if [[ -z $TYK_CP_RUNASLB ]]; then
-  TYK_CP_RUNASLB=false;
-fi
-
-if [[ -z $TYK_HYBRID_USESSL ]]; then
-  TYK_HYBRID_USESSL=true;
-fi
-
-if [[ -z $TYK_HYBRID_USESSL ]]; then
-  TYK_HYBRID_GW_PORT=8081;
-fi
+TYK_HYBRID_USESSL=true;
+TYK_HYBRID_GW_PORT=8081;
 
 # Check for .env file, if found, load variables
 if [[ -f .env ]]; then
@@ -25,3 +17,6 @@ if [[ -f .env ]]; then
 else
   logger $INFO ".env file not found";
 fi
+
+# Remap environment variables in case they were overridden by the defaults
+export $envs;

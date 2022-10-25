@@ -52,7 +52,7 @@ Usage:
 Available Commands:
   tyk-pro
   tyk-cp
-  tyk-hybrid
+  tyk-worker
   tyk-gateway
 
 Flags:

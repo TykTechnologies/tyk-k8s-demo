@@ -9,6 +9,10 @@ tykArgs=(--set "dash.license=$LICENSE" \
   --set "pump.image.tag=$TYK_PUMP_VERSION");
 
 tykReleaseName="tyk-cp-tyk-pro";
+addService "dashboard-svc-$tykReleaseName";
+addService "gateway-svc-$tykReleaseName";
+addServiceArgs "dash";
+addServiceArgs "gateway";
 checkTykRelease;
 
 setVerbose;
@@ -19,6 +23,7 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   "${tykStorageArgs[@]}" \
   "${tykSecurityContextArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
+  "${servicesArgs[@]}" \
   --atomic \
   --wait > /dev/null;
 unsetVerbose;
@@ -27,18 +32,11 @@ if ! $dryRun; then
   source src/helpers/update-hybrid-org.sh $tykReleaseName;
 fi
 
-addService "dashboard-svc-$tykReleaseName";
-addService "gateway-svc-$tykReleaseName";
-
-serviceType="LoadBalancer";
-if ! $TYK_CP_RUNASLB; then
-  serviceType="NodePort";
-  addService "mdcb-svc-$tykReleaseName";
-fi
+addService "mdcb-svc-$tykReleaseName";
+addServiceArgs "mdcb";
 
 mdcbArgs=(--set "mdcb.enabled=true" \
   --set "mdcb.license=$MDCB_LICENSE" \
-  --set "mdcb.service.type=$serviceType" \
   --set "mdcb.image.tag=$TYK_MDCB_VERSION");
 
 setVerbose;
@@ -51,6 +49,7 @@ helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   "${tykSecurityContextArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
   "${mdcbSecurityContextArgs[@]}" \
+  "${servicesArgs[@]}" \
   --atomic \
   --wait > /dev/null;
 unsetVerbose;
@@ -66,14 +65,8 @@ addSummary "\n\
 \tMDCB connection string: $ip:$port\n \
 \tOrganisation ID: $orgID\n";
 
-if $TYK_CP_RUNASLB; then
 addSummary "\n\
-You deploy a hybrid gateway and connect it to this Control Plane by running the following command: \n\n \
-\tTYK_HYBRID_CONNECTIONSTRING=$ip:$port TYK_HYBRID_ORGID=$orgID TYK_HYBRID_AUTHTOKEN=$authToken ./up.sh tyk-hybrid\n";
-else
-addSummary "\n\
-You deploy a hybrid gateway and connect it to this Control Plane by running the following command: \n\n \
-\tTYK_HYBRID_CONNECTIONSTRING=$ip:$port TYK_HYBRID_ORGID=$orgID TYK_HYBRID_AUTHTOKEN=$authToken TYK_HYBRID_USESSL=false ./up.sh --namespace tyk-hybrid tyk-hybrid\n";
-fi
+You deploy a worker gateway and connect it to this Control Plane by running the following command: \n\n \
+\tTYK_HYBRID_CONNECTIONSTRING=$ip:$port TYK_HYBRID_ORGID=$orgID TYK_HYBRID_AUTHTOKEN=$authToken TYK_HYBRID_USESSL=false ./up.sh --namespace tyk-worker tyk-worker\n";
 
 logger $INFO "installed tyk in namespace $namespace";

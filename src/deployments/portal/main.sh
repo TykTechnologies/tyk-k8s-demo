@@ -22,6 +22,7 @@ source src/main/pgsql.sh $portalDBName $portalDBPort;
 source src/helpers/portal-exists.sh;
 
 addService "enterprise-portal-svc-$tykReleaseName";
+addServiceArgs "enterprisePortal";
 
 if $portalExists; then
   logger $INFO "tyk-portal already exists in $namespace namespace...skipping Tyk Enterprise Portal install";
@@ -41,6 +42,7 @@ else
     "${tykStorageArgs[@]}" \
     "${tykSecurityContextArgs[@]}" \
     "${gatewaySecurityContextArgs[@]}" \
+    "${servicesArgs[@]}" \
     "${deploymentsArgs[@]}" \
     --atomic \
     --wait > /dev/null

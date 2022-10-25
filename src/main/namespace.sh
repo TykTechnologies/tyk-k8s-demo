@@ -18,7 +18,8 @@ postalSecurityContextArgs=();
 
 if [[ $OPENSHIFT == $flavor ]]; then
   logger $INFO "generating security context values for the OpenShift environment";
-  sleep 1;
+  sleep 5;
+  portsWait=60;
 
   ID=$(kubectl get ns $namespace -o=jsonpath='{.metadata.annotations.openshift\.io\/sa\.scc\.uid-range}' | rev | cut -c7- | rev);
 
