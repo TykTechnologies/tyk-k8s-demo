@@ -6,11 +6,15 @@ addService() {
 }
 
 addServiceArgs() {
-  if [[ $LOADBALANCER == $expose ]]; then
-    servicesArgs+=(--set "$1.service.type=LoadBalancer");
-  elif [[ $INGRESS == $expose ]]; then
-    servicesArgs+=(--set "$1.ingress.enabled=true");
-    servicesArgs+=(--set "$1.ingress.className=nginx");
+  if [[ "mdcb" == $1 ]] && [[ $LOADBALANCER != $expose ]]; then
+    servicesArgs+=(--set "mdcb.service.type=NodePort");
+  else
+    if [[ $LOADBALANCER == $expose ]]; then
+      servicesArgs+=(--set "$1.service.type=LoadBalancer");
+    elif [[ $INGRESS == $expose ]]; then
+      servicesArgs+=(--set "$1.ingress.enabled=true");
+      servicesArgs+=(--set "$1.ingress.className=nginx");
+    fi
   fi
 }
 
