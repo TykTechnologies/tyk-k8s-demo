@@ -29,6 +29,9 @@ jobs:
         with:
           version: v3.5.3
 
+      - name: Copy .env file
+        run: cp .env.example .env
+
       - name: Deploy basic ${{ matrix.mode }}
         uses: nick-invision/retry@v2
         with:
@@ -90,6 +93,9 @@ jobs:
         with:
           version: v3.5.3
 
+      - name: Copy .env file
+        run: cp .env.example .env
+
       - name: Deploy basic ${{ matrix.mode }}
         uses: nick-invision/retry@v2
         with:
@@ -142,6 +148,9 @@ jobs:
         uses: Azure/setup-helm@v1.1
         with:
           version: v3.5.3
+
+      - name: Copy .env file
+        run: cp .env.example .env
 
       - name: Deploy basic ${{ matrix.mode }}
         uses: nick-invision/retry@v2
