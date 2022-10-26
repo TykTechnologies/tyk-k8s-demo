@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "947506c3-8476-4a1a-b872-972f2e365a66",
+		"name": "tyk-k8s-demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13702323"
+	},
+	"item": [
+		{
+			"name": "Component Health Checks",
+			"item": [
+				{
+					"name": "pro-gateway",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Gateway status is pass\", function () {",
+									"    var health = pm.response.json();",
+									"    pm.expect(health.status).to.eql(\"pass\");",
+									"});",
+									"",
+									"pm.test(\"Dashboard status is pass\", function () {",
+									"    var health = pm.response.json();",
+									"    pm.expect(health.details[\"dashboard\"].status).to.eql(\"pass\");",
+									"});",
+									"",
+									"pm.test(\"Redis status is pass\", function () {",
+									"    var health = pm.response.json();",
+									"    pm.expect(health.details[\"redis\"].status).to.eql(\"pass\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{pro-gateway.port}}/hello",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{pro-gateway.port}}",
+							"path": [
+								"hello"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "worker-gateway",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Gateway status is pass\", function () {",
+									"    var health = pm.response.json();",
+									"    pm.expect(health.status).to.eql(\"pass\");",
+									"});",
+									"",
+									"pm.test(\"RPC status is pass\", function () {",
+									"    var health = pm.response.json();",
+									"    pm.expect(health.details[\"rpc\"].status).to.eql(\"pass\");",
+									"});",
+									"",
+									"pm.test(\"Redis status is pass\", function () {",
+									"    var health = pm.response.json();",
+									"    pm.expect(health.details[\"redis\"].status).to.eql(\"pass\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{worker-gateway.port}}/hello",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{worker-gateway.port}}",
+							"path": [
+								"hello"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gateway",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Gateway status is pass\", function () {",
+									"    var health = pm.response.json();",
+									"    pm.expect(health.status).to.eql(\"pass\");",
+									"});",
+									"",
+									"pm.test(\"Redis status is pass\", function () {",
+									"    var health = pm.response.json();",
+									"    pm.expect(health.details[\"redis\"].status).to.eql(\"pass\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{gateway.port}}/hello",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{gateway.port}}",
+							"path": [
+								"hello"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dashboard",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Gateway status is pass\", function () {",
+									"    var health = pm.response.json();",
+									"    pm.expect(health.status).to.eql(\"ok\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{dashboard.port}}/hello",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{dashboard.port}}",
+							"path": [
+								"hello"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "gateway.port",
+			"value": "8080"
+		},
+		{
+			"key": "worker-gateway.port",
+			"value": "8081"
+		},
+		{
+			"key": "pro-gateway.port",
+			"value": "8080"
+		},
+		{
+			"key": "dashboard.port",
+			"value": "3000"
+		},
+		{
+			"key": "mdcb.health_port",
+			"value": "8181"
+		}
+	]
+}

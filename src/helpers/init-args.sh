@@ -19,7 +19,7 @@ storage=$MONGO;
 isDebug=false;
 dryRun=false;
 expose=$NONE;
-portsWait=5;
+portsWait=15;
 deployments=$();
 
 # Translate long argument flags into short ones.
