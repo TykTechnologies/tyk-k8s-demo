@@ -82,11 +82,11 @@ Flags:
 | TYK_PORTAL_VERSION          | `v1.0.0`            | Portal version |
 | TYK_HELM_CHART_PATH         | `tyk-helm`          | Path to charts, can be a local directory or a helm repo |
 | PASSWORD                    | `topsecretpassword` | Default password for all the services deployed |
-| LICENSE                     | ``                  | Dashboard license |
-| MDCB_LICENSE                | ``                  | MDCB license |
-| PORTAL_LICENSE              | ``                  | Portal license |
-| TYK_WORKER_CONNECTIONSTRING | ``                  | MDCB URL for worker connection |
-| TYK_WORKER_ORGID            | ``                  | Org ID of dashboard user |
-| TYK_WORKER_AUTHTOKEN        | ``                  | Auth token of dashboard user |
+| LICENSE                     |                     | Dashboard license |
+| MDCB_LICENSE                |                     | MDCB license |
+| PORTAL_LICENSE              |                     | Portal license |
+| TYK_WORKER_CONNECTIONSTRING |                     | MDCB URL for worker connection |
+| TYK_WORKER_ORGID            |                     | Org ID of dashboard user |
+| TYK_WORKER_AUTHTOKEN        |                     | Auth token of dashboard user |
 | TYK_WORKER_USESSL           | `true`              | Set to `true` when the MDCB is serving on a TLS connection |
 | TYK_WORKER_GW_PORT          | `8081`              | Set the gateway service port to use |
