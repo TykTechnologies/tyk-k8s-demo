@@ -29,7 +29,7 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
 unsetVerbose;
 
 if ! $dryRun; then
-  source src/helpers/update-hybrid-org.sh $tykReleaseName;
+  source src/helpers/update-org.sh $tykReleaseName;
 fi
 
 addService "mdcb-svc-$tykReleaseName";
@@ -67,6 +67,6 @@ addSummary "\n\
 
 addSummary "\n\
 You deploy a worker gateway and connect it to this Control Plane by running the following command: \n\n \
-\tTYK_HYBRID_CONNECTIONSTRING=$ip:$port TYK_HYBRID_ORGID=$orgID TYK_HYBRID_AUTHTOKEN=$authToken TYK_HYBRID_USESSL=false ./up.sh --namespace tyk-worker tyk-worker\n";
+\tTYK_WORKER_CONNECTIONSTRING=$ip:$port TYK_WORKER_ORGID=$orgID TYK_WORKER_AUTHTOKEN=$authToken TYK_WORKER_USESSL=false ./up.sh --namespace tyk-worker tyk-worker\n";
 
 logger $INFO "installed tyk in namespace $namespace";

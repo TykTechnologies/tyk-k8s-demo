@@ -30,17 +30,17 @@ if [[ $TYKCP == $mode ]]; then
   fi
 fi
 
-if [[ $TYKHYBRID == $mode ]]; then
-  if [[ -z "$TYK_HYBRID_CONNECTIONSTRING" ]]; then
-    logger $ERROR "Please make sure TYK_HYBRID_CONNECTIONSTRING variable is set in your .env file";
+if [[ $TYKWORKER == $mode ]]; then
+  if [[ -z "$TYK_WORKER_CONNECTIONSTRING" ]]; then
+    logger $ERROR "Please make sure TYK_WORKER_CONNECTIONSTRING variable is set in your .env file";
     invalid=true;
   fi
-  if [[ -z "$TYK_HYBRID_ORGID" ]]; then
-    logger $ERROR "Please make sure TYK_HYBRID_ORGID variable is set in your .env file";
+  if [[ -z "$TYK_WORKER_ORGID" ]]; then
+    logger $ERROR "Please make sure TYK_WORKER_ORGID variable is set in your .env file";
     invalid=true;
   fi
-  if [[ -z "$TYK_HYBRID_AUTHTOKEN" ]]; then
-    logger $ERROR "Please make sure TYK_HYBRID_AUTHTOKEN variable is set in your .env file";
+  if [[ -z "$TYK_WORKER_AUTHTOKEN" ]]; then
+    logger $ERROR "Please make sure TYK_WORKER_AUTHTOKEN variable is set in your .env file";
     invalid=true;
   fi
 fi

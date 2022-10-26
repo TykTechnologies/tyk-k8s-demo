@@ -1,7 +1,7 @@
 logger $DEBUG "Installing operator";
 
 if [[ $TYKPRO != $mode ]] && [[ $TYKCP != $mode ]] && [[ $TYKGATEWAY != $mode ]]; then
-  logger $INFO "you need a an operator secret to install the operator with the hybrid gateway";
+  logger $INFO "you need an operator secret to install the operator with a worker gateway";
 fi
 
 operatorReleaseName="tyk-operator";

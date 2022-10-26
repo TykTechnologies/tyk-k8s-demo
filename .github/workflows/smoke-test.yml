@@ -72,7 +72,7 @@ jobs:
       #         --storage postgres \
       #         ${{ matrix.mode }}
 
-  hybrid:
+  worker:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -103,12 +103,12 @@ jobs:
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: kubectl delete ns ${{ matrix.mode }}
           command: |
-            echo "HYBRID_MDCB_HOST: ${{ secrets.HYBRID_MDCB_HOST }}" && \
-            echo "HYBRID_RPC_KEY: ${{ secrets.HYBRID_RPC_KEY }}" && \
-            echo "HYBRID_API_KEY: ${{ secrets.HYBRID_API_KEY }}" && \
-            TYK_HYBRID_CONNECTIONSTRING="${{ secrets.HYBRID_MDCB_HOST }}" \
-            TYK_HYBRID_ORGID="${{ secrets.HYBRID_RPC_KEY }}" \
-            TYK_HYBRID_AUTHTOKEN="${{ secrets.HYBRID_API_KEY }}" \
+            echo "WORKER_MDCB_HOST: ${{ secrets.WORKER_MDCB_HOST }}" && \
+            echo "WORKER_RPC_KEY: ${{ secrets.WORKER_RPC_KEY }}" && \
+            echo "WORKER_API_KEY: ${{ secrets.WORKER_API_KEY }}" && \
+            TYK_WORKER_CONNECTIONSTRING="${{ secrets.WORKER_MDCB_HOST }}" \
+            TYK_WORKER_ORGID="${{ secrets.WORKER_RPC_KEY }}" \
+            TYK_WORKER_AUTHTOKEN="${{ secrets.WORKER_API_KEY }}" \
             ./up.sh \
               --namespace ${{ matrix.mode }} \
               ${{ matrix.mode }}
@@ -120,9 +120,9 @@ jobs:
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: kubectl delete ns ${{ matrix.mode }}-redis-cluster
           command: |
-            TYK_HYBRID_CONNECTIONSTRING="${{ secrets.HYBRID_MDCB_HOST }}" \
-            TYK_HYBRID_ORGID="${{ secrets.HYBRID_RPC_KEY }}" \
-            TYK_HYBRID_AUTHTOKEN="${{ secrets.HYBRID_API_KEY }}" \
+            TYK_WORKER_CONNECTIONSTRING="${{ secrets.WORKER_MDCB_HOST }}" \
+            TYK_WORKER_ORGID="${{ secrets.WORKER_RPC_KEY }}" \
+            TYK_WORKER_AUTHTOKEN="${{ secrets.WORKER_API_KEY }}" \
             ./up.sh \
               --namespace ${{ matrix.mode }}-redis-cluster \
               --redis redis-cluster \
