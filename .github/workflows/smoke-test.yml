@@ -5,7 +5,7 @@ on: [push, pull_request, workflow_dispatch]
 
 env:
   MAX_ATTEMPTS: 5
-  TIMEOUT: 15
+  TIMEOUT: 30
   WORKER_WAIT: 60
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
         cluster: [v1.20.2, v1.19.7, v1.18.15, v1.17.17, v1.16.15]
         mode: [tyk-gateway]
         redis: [redis, redis-cluster, redis-sentinel]
-      max-parallel: 2
+      max-parallel: 1
     steps:
       - uses: actions/checkout@v2
 
@@ -62,9 +62,7 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
-            ./down.sh \
-              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
-              --ports && \
+            ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }} && \
             ./up.sh \
               --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
               --expose port-forward \
@@ -130,9 +128,7 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
-            ./down.sh \
-              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
-              --ports && \
+            ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }} && \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
             ./up.sh \
@@ -204,9 +200,7 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
-            ./down.sh \
-              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
-              --ports && \
+            ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }} && \
             TYK_WORKER_CONNECTIONSTRING="${{ secrets.WORKER_MDCB_HOST }}" \
             TYK_WORKER_ORGID="${{ secrets.WORKER_RPC_KEY }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.WORKER_API_KEY }}" \
