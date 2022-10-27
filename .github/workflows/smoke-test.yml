@@ -200,7 +200,9 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
-            ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }} && \
+            ./down.sh \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
+              --ports && \
             TYK_WORKER_CONNECTIONSTRING="${{ secrets.WORKER_MDCB_HOST }}" \
             TYK_WORKER_ORGID="${{ secrets.WORKER_RPC_KEY }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.WORKER_API_KEY }}" \
