@@ -81,7 +81,7 @@ jobs:
         cluster: [v1.20.2, v1.19.7, v1.18.15, v1.17.17, v1.16.15]
         mode: [tyk-pro,tyk-cp]
         redis: [redis, redis-cluster, redis-sentinel]
-      max-parallel: 2
+      max-parallel: 1
     steps:
       - uses: actions/checkout@v2
 
