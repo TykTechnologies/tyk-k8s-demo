@@ -16,6 +16,8 @@ jobs:
       matrix:
         cluster: [v1.20.2, v1.19.7, v1.18.15, v1.17.17, v1.16.15]
         mode: [tyk-gateway]
+        redis: [redis, redis-cluster, redis-sentinel]
+      max-parallel: 2
     steps:
       - uses: actions/checkout@v2
 
@@ -39,80 +41,49 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy basic ${{ matrix.mode }}
+      - name: Deploy ${{ matrix.mode }} with ${{ matrix.redis }}
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
             ./down.sh \
-              --namespace ${{ matrix.mode }}
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }}
           command: |
             ./up.sh \
-              --namespace ${{ matrix.mode }} \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
               --expose port-forward \
+              --redis ${{ matrix.redis }} \
               ${{ matrix.mode }}
 
-      - name: Run ${{ matrix.mode }} postman tests
+      - name: Run ${{ matrix.mode }} with ${{ matrix.redis }} postman tests
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
             ./down.sh \
-              --namespace ${{ matrix.mode }} \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
               --ports && \
             ./up.sh \
-              --namespace ${{ matrix.mode }} \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
               --expose port-forward \
+              --redis ${{ matrix.redis }} \
               ${{ matrix.mode }}
           command: newman run --folder gateway tyk-k8s-demo.postman_collection.json
 
-      - name: Clean up ${{ matrix.mode }}
-        run: ./down.sh --namespace ${{ matrix.mode }}
-
-      - name: Deploy ${{ matrix.mode }} with a redis cluster
-        uses: nick-invision/retry@v2
-        with:
-          max_attempts: ${{ env.MAX_ATTEMPTS }}
-          timeout_minutes: ${{ env.TIMEOUT }}
-          on_retry_command: |
-            ./down.sh \
-              --namespace ${{ matrix.mode }}-redis-cluster
-          command: |
-            ./up.sh \
-              --namespace ${{ matrix.mode }}-redis-cluster \
-              --redis redis-cluster \
-              --expose port-forward \
-              ${{ matrix.mode }}
-
-      - name: Run ${{ matrix.mode }} postman tests when setup with redis-cluster
-        uses: nick-invision/retry@v2
-        with:
-          max_attempts: ${{ env.MAX_ATTEMPTS }}
-          timeout_minutes: ${{ env.TIMEOUT }}
-          on_retry_command: |
-            ./down.sh \
-              --namespace ${{ matrix.mode }}-redis-cluster \
-              --ports && \
-            ./up.sh \
-              --namespace ${{ matrix.mode }}-redis-cluster \
-              --redis redis-cluster \
-              --expose port-forward \
-              ${{ matrix.mode }}
-          command: newman run --folder gateway tyk-k8s-demo.postman_collection.json
-
-      - name: Clean up ${{ matrix.mode }}-redis-cluster
-        run: ./down.sh --namespace ${{ matrix.mode }}-redis-cluster
+      - name: Clean up ${{ matrix.mode }} with ${{ matrix.redis }}
+        run: ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }}
 
   pro:
     runs-on: ubuntu-latest
-    needs: [oss]
     strategy:
       fail-fast: false
       matrix:
         cluster: [v1.20.2, v1.19.7, v1.18.15, v1.17.17, v1.16.15]
         mode: [tyk-pro,tyk-cp]
+        redis: [redis, redis-cluster, redis-sentinel]
+      max-parallel: 2
     steps:
       - uses: actions/checkout@v2
 
@@ -136,83 +107,45 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy basic ${{ matrix.mode }}
+      - name: Deploy ${{ matrix.mode }} with ${{ matrix.redis }}
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
             ./down.sh \
-              --namespace ${{ matrix.mode }}
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }}
           command: |
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
             ./up.sh \
-              --namespace ${{ matrix.mode }} \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
               --expose port-forward \
+              --redis ${{ matrix.redis }} \
               ${{ matrix.mode }}
 
-      - name: Run ${{ matrix.mode }} postman tests
+      - name: Run ${{ matrix.mode }} with ${{ matrix.redis }} postman tests
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
             ./down.sh \
-              --namespace ${{ matrix.mode }} \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
               --ports && \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
             ./up.sh \
-              --namespace ${{ matrix.mode }} \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
               --expose port-forward \
+              --redis ${{ matrix.redis }} \
               ${{ matrix.mode }}
           command: |
             newman run --folder pro-gateway tyk-k8s-demo.postman_collection.json && \
             newman run --folder dashboard tyk-k8s-demo.postman_collection.json
 
-      - name: Clean up ${{ matrix.mode }}
-        run: ./down.sh --namespace ${{ matrix.mode }}
-
-      - name: Deploy ${{ matrix.mode }} with a redis cluster
-        uses: nick-invision/retry@v2
-        with:
-          max_attempts: ${{ env.MAX_ATTEMPTS }}
-          timeout_minutes: ${{ env.TIMEOUT }}
-          on_retry_command: |
-            ./down.sh \
-              --namespace ${{ matrix.mode }}-redis-cluster
-          command: |
-            LICENSE="${{ secrets.DASH_LICENSE }}" \
-            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
-            ./up.sh \
-              --namespace ${{ matrix.mode }}-redis-cluster \
-              --redis redis-cluster \
-              --expose port-forward \
-              ${{ matrix.mode }}
-
-      - name: Run ${{ matrix.mode }} postman tests when setup with redis-cluster
-        uses: nick-invision/retry@v2
-        with:
-          max_attempts: ${{ env.MAX_ATTEMPTS }}
-          timeout_minutes: ${{ env.TIMEOUT }}
-          on_retry_command: |
-            ./down.sh \
-              --namespace ${{ matrix.mode }}-redis-cluster \
-              --ports && \
-            LICENSE="${{ secrets.DASH_LICENSE }}" \
-            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
-            ./up.sh \
-              --namespace ${{ matrix.mode }}-redis-cluster \
-              --redis redis-cluster \
-              --expose port-forward \
-              ${{ matrix.mode }}
-          command: |
-            newman run --folder pro-gateway tyk-k8s-demo.postman_collection.json && \
-            newman run --folder dashboard tyk-k8s-demo.postman_collection.json
-
-      - name: Clean up ${{ matrix.mode }}-redis-cluster
-        run: ./down.sh --namespace ${{ matrix.mode }}-redis-cluster
+      - name: Clean up ${{ matrix.mode }} with ${{ matrix.redis }}
+        run: ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }}
 
   worker:
     runs-on: ubuntu-latest
@@ -221,7 +154,7 @@ jobs:
       fail-fast: false
       matrix:
         cluster: [v1.20.2, v1.19.7, v1.18.15, v1.17.17, v1.16.15]
-        mode: [tyk-worker]
+        redis: [redis, redis-cluster, redis-sentinel]
       max-parallel: 1
     steps:
       - uses: actions/checkout@v2
@@ -246,84 +179,44 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy basic ${{ matrix.mode }}
+      - name: Deploy ${{ matrix.mode }} with ${{ matrix.redis }}
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
             ./down.sh \
-              --namespace ${{ matrix.mode }}
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }}
           command: |
             TYK_WORKER_CONNECTIONSTRING="${{ secrets.WORKER_MDCB_HOST }}" \
             TYK_WORKER_ORGID="${{ secrets.WORKER_RPC_KEY }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.WORKER_API_KEY }}" \
             ./up.sh \
-              --namespace ${{ matrix.mode }} \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
               --expose port-forward \
+              --redis ${{ matrix.redis }} \
               ${{ matrix.mode }} && \
             sleep ${{ env.WORKER_WAIT }}
 
-      - name: Run ${{ matrix.mode }} postman tests
+      - name: Run ${{ matrix.mode }} with ${{ matrix.redis }} postman tests
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
             ./down.sh \
-              --namespace ${{ matrix.mode }} \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
               --ports && \
             TYK_WORKER_CONNECTIONSTRING="${{ secrets.WORKER_MDCB_HOST }}" \
             TYK_WORKER_ORGID="${{ secrets.WORKER_RPC_KEY }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.WORKER_API_KEY }}" \
             ./up.sh \
-              --namespace ${{ matrix.mode }} \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
               --expose port-forward \
+              --redis ${{ matrix.redis }} \
               ${{ matrix.mode }} && \
             sleep ${{ env.WORKER_WAIT }}
           command: newman run --folder worker-gateway tyk-k8s-demo.postman_collection.json
 
-      - name: Clean up ${{ matrix.mode }}
-        run: ./down.sh --namespace ${{ matrix.mode }}
-
-      - name: Deploy ${{ matrix.mode }} with a redis cluster
-        uses: nick-invision/retry@v2
-        with:
-          max_attempts: ${{ env.MAX_ATTEMPTS }}
-          timeout_minutes: ${{ env.TIMEOUT }}
-          on_retry_command: |
-              ./down.sh \
-              --namespace ${{ matrix.mode }}-redis-cluster
-          command: |
-            TYK_WORKER_CONNECTIONSTRING="${{ secrets.WORKER_MDCB_HOST }}" \
-            TYK_WORKER_ORGID="${{ secrets.WORKER_RPC_KEY }}" \
-            TYK_WORKER_AUTHTOKEN="${{ secrets.WORKER_API_KEY }}" \
-            ./up.sh \
-              --namespace ${{ matrix.mode }}-redis-cluster \
-              --redis redis-cluster \
-              --expose port-forward \
-              ${{ matrix.mode }} && \
-            sleep ${{ env.WORKER_WAIT }}
-
-      - name: Run ${{ matrix.mode }} postman tests when setup with redis-cluster
-        uses: nick-invision/retry@v2
-        with:
-          max_attempts: ${{ env.MAX_ATTEMPTS }}
-          timeout_minutes: ${{ env.TIMEOUT }}
-          on_retry_command: |
-            ./down.sh \
-              --ports \
-              --namespace ${{ matrix.mode }}-redis-cluster && \
-            TYK_WORKER_CONNECTIONSTRING="${{ secrets.WORKER_MDCB_HOST }}" \
-            TYK_WORKER_ORGID="${{ secrets.WORKER_RPC_KEY }}" \
-            TYK_WORKER_AUTHTOKEN="${{ secrets.WORKER_API_KEY }}" \
-            ./up.sh \
-              --namespace ${{ matrix.mode }}-redis-cluster \
-              --redis redis-cluster \
-              --expose port-forward \
-              ${{ matrix.mode }} && \
-            sleep ${{ env.WORKER_WAIT }}
-          command: newman run --folder worker-gateway tyk-k8s-demo.postman_collection.json
-
-      - name: Clean up ${{ matrix.mode }}-redis-cluster
-        run: ./down.sh --namespace ${{ matrix.mode }}-redis-cluster
+      - name: Clean up ${{ matrix.mode }} with ${{ matrix.redis }}
+        run: ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }}
