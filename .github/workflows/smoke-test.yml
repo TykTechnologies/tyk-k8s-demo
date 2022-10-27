@@ -149,7 +149,6 @@ jobs:
 
   worker:
     runs-on: ubuntu-latest
-    needs: [oss,pro]
     strategy:
       fail-fast: false
       matrix:
