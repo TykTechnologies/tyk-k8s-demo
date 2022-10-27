@@ -153,6 +153,7 @@ jobs:
       fail-fast: false
       matrix:
         cluster: [v1.20.2, v1.19.7, v1.18.15, v1.17.17, v1.16.15]
+        mode: [tyk-worker]
         redis: [redis, redis-cluster, redis-sentinel]
       max-parallel: 1
     steps:
