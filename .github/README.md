@@ -5,7 +5,7 @@
 Will allow you to deploy the entire Tyk stack for POC on k8s.
   
 ## Purpose
-Minimize the amount of effort needed to stand up the Tyk infrastructure and show examples of how Tyk can be setup in k8s using different deployment architectures as well as differnt technologies integrations.
+Minimize the amount of effort needed to stand up the Tyk infrastructure and show examples of how Tyk can be setup in k8s using different deployment architectures as well as different technologies integrations.
   
 ## Getting started  
 
