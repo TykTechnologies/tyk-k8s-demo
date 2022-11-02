@@ -7,7 +7,9 @@ tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.rpc.apiKey=$TYK_WORKER_AUTHTOKEN" \
   --set "gateway.rpc.useSSL=$TYK_WORKER_USESSL" \
   --set "gateway.rpc.groupId=$(date | base64)" \
-  --set "gateway.service.port=$TYK_WORKER_GW_PORT");
+  --set "gateway.service.port=$TYK_WORKER_GW_PORT" \
+  --set "gateway.extraEnvs[0].name=TYK_GW_SLAVEOPTIONS_SYNCHRONISERENABLED" \
+  --set "gateway.extraEnvs[0].value=true");
 
 tykReleaseName="tyk-worker-tyk-hybrid";
 addService "gateway-svc-$tykReleaseName";
