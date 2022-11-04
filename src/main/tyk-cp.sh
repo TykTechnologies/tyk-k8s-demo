@@ -43,10 +43,10 @@ addServiceArgs "mdcb";
 
 mdcbArgs=(--set "mdcb.enabled=true" \
   --set "mdcb.license=$MDCB_LICENSE" \
-  --set "mdcb.extraEnvs[0].name=TYK_MDCB_SYNCWORKER_ENABLED" \
-  --set "mdcb.extraEnvs[0].value=true" \
-  --set "mdcb.extraEnvs[1].name=TYK_MDCB_SYNCWORKER_HASHKEYS" \
-  --set "mdcb.extraEnvs[1].value=true" \
+  # --set "mdcb.extraEnvs[0].name=TYK_MDCB_SYNCWORKER_ENABLED" \
+  # --set "mdcb.extraEnvs[0].value=true" \
+  # --set "mdcb.extraEnvs[1].name=TYK_MDCB_SYNCWORKER_HASHKEYS" \
+  # --set "mdcb.extraEnvs[1].value=true" \
   --set "mdcb.image.tag=$TYK_MDCB_VERSION");
 
 setVerbose;
