@@ -1,12 +1,18 @@
 source src/main/namespace.sh;
 source src/main/redis.sh;
 
+cluster=$(kubectl config current-context);
+
+logger $INFO "-----------------------------------------------------------------------"
+logger $INFO "$cluster"
+logger $INFO "-----------------------------------------------------------------------"
+
 tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.rpc.connString=$TYK_WORKER_CONNECTIONSTRING" \
   --set "gateway.rpc.rpcKey=$TYK_WORKER_ORGID" \
   --set "gateway.rpc.apiKey=$TYK_WORKER_AUTHTOKEN" \
   --set "gateway.rpc.useSSL=$TYK_WORKER_USESSL" \
-  --set "gateway.rpc.groupId=$(date | base64)" \
+  --set "gateway.rpc.groupId=$(echo "$cluster/$namespace" | base64)" \
   --set "gateway.service.port=$TYK_WORKER_GW_PORT" \
   --set "gateway.extraEnvs[0].name=TYK_GW_SLAVEOPTIONS_SYNCHRONISERENABLED" \
   --set "gateway.extraEnvs[0].value=true");
