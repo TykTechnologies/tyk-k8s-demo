@@ -14,23 +14,29 @@ addService "gateway-svc-$tykReleaseName";
 addServiceArgs "dash";
 addServiceArgs "gateway";
 checkTykRelease;
+checkMDCBRelease;
 
-setVerbose;
-helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
-  -n $namespace \
-  "${tykArgs[@]}" \
-  "${tykRedisArgs[@]}" \
-  "${tykStorageArgs[@]}" \
-  "${tykSecurityContextArgs[@]}" \
-  "${gatewaySecurityContextArgs[@]}" \
-  "${servicesArgs[@]}" \
-  --atomic \
-  --wait > /dev/null;
-unsetVerbose;
+if ! $mdcbExists; then
+  setVerbose;
+  helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
+    -n $namespace \
+    "${tykArgs[@]}" \
+    "${tykRedisArgs[@]}" \
+    "${tykStorageArgs[@]}" \
+    "${tykSecurityContextArgs[@]}" \
+    "${gatewaySecurityContextArgs[@]}" \
+    "${servicesArgs[@]}" \
+    --atomic \
+    --wait > /dev/null;
+  unsetVerbose;
 
-if ! $dryRun; then
-  source src/helpers/update-org.sh $tykReleaseName;
+  if ! $dryRun; then
+    source src/helpers/update-org.sh $tykReleaseName;
+  fi
+else
+  logger $INFO "MDCB exists skipping $tykReleaseName install..."
 fi
+
 
 addService "mdcb-svc-$tykReleaseName";
 addServiceArgs "mdcb";
