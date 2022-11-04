@@ -3,10 +3,6 @@ source src/main/redis.sh;
 
 cluster=$(kubectl config current-context);
 
-logger $INFO "-----------------------------------------------------------------------"
-logger $INFO "$cluster"
-logger $INFO "-----------------------------------------------------------------------"
-
 tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.rpc.connString=$TYK_WORKER_CONNECTIONSTRING" \
   --set "gateway.rpc.rpcKey=$TYK_WORKER_ORGID" \
