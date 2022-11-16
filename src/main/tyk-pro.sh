@@ -23,6 +23,9 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   "${tykStorageArgs[@]}" \
   "${tykSecurityContextArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
+  "${gatewayExtraEnvs[@]}" \
+  "${dashboardExtraEnvs[@]}" \
+  "${pumpExtraEnvs[@]}" \
   "${servicesArgs[@]}" \
   --atomic \
   --wait > /dev/null;
