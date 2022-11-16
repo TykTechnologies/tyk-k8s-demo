@@ -22,6 +22,18 @@ else
     setVerbose;
     helm install $redisReleaseName bitnami/redis-cluster --version 7.6.4 \
       -n $namespace \
+      --set "image.repository=zalbiraw/redis-cluster" \
+      --set "image.tag=6.2.7-debian-11" \
+      \
+      --set "metrics.image.repository=zalbiraw/redis-exporter" \
+      --set "metrics.image.tag=1.45.0-debian-11" \
+      \
+      --set "volumePermissions.image.repository=zalbiraw/bitnami-shell" \
+      --set "volumePermissions.image.tag=11.0.0-debian-11" \
+      \
+      --set "sysctlImage.repository=zalbiraw/bitnami-shell" \
+      --set "sysctlImage.tag=11.0.0-debian-11" \
+      \
       --set "password=$PASSWORD" \
       "${redisSecurityContextArgs[@]}" \
       --atomic \
@@ -31,6 +43,21 @@ else
     setVerbose;
     helm install $redisReleaseName bitnami/redis --version 17.3.2 \
       -n $namespace \
+      --set "image.repository=zalbiraw/redis" \
+      --set "image.tag=6.2.7-debian-11" \
+      \
+      --set "sentinel.image.repository=zalbiraw/redis-sentinel" \
+      --set "sentinel.image.tag=6.2.7-debian-11" \
+      \
+      --set "metrics.image.repository=zalbiraw/redis-exporter" \
+      --set "metrics.image.tag=1.45.0-debian-11" \
+      \
+      --set "volumePermissions.image.repository=zalbiraw/bitnami-shell" \
+      --set "volumePermissions.image.tag=11.0.0-debian-11" \
+      \
+      --set "sysctl.image.repository=zalbiraw/bitnami-shell" \
+      --set "sysctl.image.tag=11.0.0-debian-11" \
+      \
       --set "auth.password=$PASSWORD" \
       --set "sentinel.enabled=true" \
       "${redisSecurityContextArgs[@]}" \
@@ -41,6 +68,21 @@ else
     setVerbose;
     helm install $redisReleaseName bitnami/redis --version 17.3.2 \
       -n $namespace \
+      --set "image.repository=zalbiraw/redis" \
+      --set "image.tag=6.2.7-debian-11" \
+      \
+      --set "sentinel.image.repository=zalbiraw/redis-sentinel" \
+      --set "sentinel.image.tag=6.2.7-debian-11" \
+      \
+      --set "metrics.image.repository=zalbiraw/redis-exporter" \
+      --set "metrics.image.tag=1.45.0-debian-11" \
+      \
+      --set "volumePermissions.image.repository=zalbiraw/bitnami-shell" \
+      --set "volumePermissions.image.tag=11.0.0-debian-11" \
+      \
+      --set "sysctl.image.repository=zalbiraw/bitnami-shell" \
+      --set "sysctl.image.tag=11.0.0-debian-11" \
+      \
       --set "auth.password=$PASSWORD" \
       "${redisSecurityContextArgs[@]}" \
       --atomic \
