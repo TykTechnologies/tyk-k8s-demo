@@ -9,9 +9,7 @@ tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.rpc.apiKey=$TYK_WORKER_AUTHTOKEN" \
   --set "gateway.rpc.useSSL=$TYK_WORKER_USESSL" \
   --set "gateway.rpc.groupId=$(echo "$cluster/$namespace" | base64)" \
-  --set "gateway.service.port=$TYK_WORKER_GW_PORT" \
-  --set "gateway.extraEnvs[0].name=TYK_GW_SLAVEOPTIONS_SYNCHRONISERENABLED" \
-  --set "gateway.extraEnvs[0].value=true");
+  --set "gateway.service.port=$TYK_WORKER_GW_PORT");
 
 tykReleaseName="tyk-worker-tyk-hybrid";
 addService "gateway-svc-$tykReleaseName";
@@ -24,6 +22,8 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-hybrid \
   "${tykArgs[@]}" \
   "${tykRedisArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
+  "${gatewayExtraEnvs[@]}" \
+  "${pumpExtraEnvs[@]}" \
   "${servicesArgs[@]}" \
   --atomic \
   --wait > /dev/null;

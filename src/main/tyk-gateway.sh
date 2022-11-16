@@ -17,6 +17,8 @@ helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-headless \
   "${tykArgs[@]}" \
   "${tykRedisArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
+  "${gatewayExtraEnvs[@]}" \
+  "${pumpExtraEnvs[@]}" \
   "${servicesArgs[@]}" \
   --atomic \
   --wait > /dev/null;

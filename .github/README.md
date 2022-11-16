@@ -3,11 +3,11 @@
 
 ## About
 Will allow you to deploy the entire Tyk stack for POC on k8s.
-  
+
 ## Purpose
 Minimize the amount of effort needed to stand up the Tyk infrastructure and show examples of how Tyk can be setup in k8s using different deployment architectures as well as different technologies integrations.
-  
-## Getting started  
+
+## Getting started
 
 #### Prerequisites
 - Helm
@@ -73,6 +73,8 @@ Flags:
 ```
 
 ## Variables
+You can add any Tyk environments variables to the `.env` file and they will be mapped to the respective extraEnvs section in the helm charts.
+
 | Variable                    | Default             | Comments |
 | --------------------------- | :-----------------: | --------- |
 | TYK_DASHBOARD_VERSION       | `v4.2.2`            | Dashboard version |

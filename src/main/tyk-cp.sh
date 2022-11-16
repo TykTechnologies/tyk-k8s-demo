@@ -25,6 +25,9 @@ if ! $mdcbExists; then
     "${tykStorageArgs[@]}" \
     "${tykSecurityContextArgs[@]}" \
     "${gatewaySecurityContextArgs[@]}" \
+    "${gatewayExtraEnvs[@]}" \
+    "${dashboardExtraEnvs[@]}" \
+    "${pumpExtraEnvs[@]}" \
     "${servicesArgs[@]}" \
     --atomic \
     --wait > /dev/null;
@@ -43,10 +46,6 @@ addServiceArgs "mdcb";
 
 mdcbArgs=(--set "mdcb.enabled=true" \
   --set "mdcb.license=$MDCB_LICENSE" \
-  # --set "mdcb.extraEnvs[0].name=TYK_MDCB_SYNCWORKER_ENABLED" \
-  # --set "mdcb.extraEnvs[0].value=true" \
-  # --set "mdcb.extraEnvs[1].name=TYK_MDCB_SYNCWORKER_HASHKEYS" \
-  # --set "mdcb.extraEnvs[1].value=true" \
   --set "mdcb.image.tag=$TYK_MDCB_VERSION");
 
 setVerbose;
@@ -59,6 +58,10 @@ helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
   "${tykSecurityContextArgs[@]}" \
   "${gatewaySecurityContextArgs[@]}" \
   "${mdcbSecurityContextArgs[@]}" \
+  "${gatewayExtraEnvs[@]}" \
+  "${dashboardExtraEnvs[@]}" \
+  "${pumpExtraEnvs[@]}" \
+  "${mdcbExtraEnvs[@]}" \
   "${servicesArgs[@]}" \
   --atomic \
   --wait > /dev/null;
