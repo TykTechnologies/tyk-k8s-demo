@@ -9,7 +9,7 @@ else
   helm install $mongoReleaseName bitnami/mongodb --version 11.1.10 \
     -n $namespace \
     --set "image.repository=zalbiraw/mongodb" \
-    --set "image.tag=5.0.13-debian-11" \
+    --set "image.tag=4.4.15-debian-10" \
     \
     --set "volumePermissions.image.repository=zalbiraw/bitnami-shell" \
     --set "volumePermissions.image.tag=11.0.0-debian-11" \
