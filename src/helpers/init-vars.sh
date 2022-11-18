@@ -21,7 +21,6 @@ if [[ -f .env ]]; then
       export "${var[0]}=${var[1]}";
 
       if [[ "${var[0]}" == "$gatewayPrefix"* ]]; then
-        echo "${var[0]}"
         gatewayExtraEnvs+=(--set "gateway.extraEnvs[$gatewayCtr].name=${var[0]}" \
           --set "gateway.extraEnvs[$gatewayCtr].value=${var[1]}");
         gatewayCtr+=1;
