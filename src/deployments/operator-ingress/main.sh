@@ -3,13 +3,8 @@ logger $DEBUG "Creating Tyk Operator as Ingress example...";
 loadBalancerArgs=(--set "gateway.service.type=LoadBalancer");
 addDeploymentArgs "${loadBalancerArgs[@]}";
 
-helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
+helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/$chart \
   -n $namespace \
-  "${tykArgs[@]}" \
-  "${tykRedisArgs[@]}" \
-  "${tykStorageArgs[@]}" \
-  "${tykSecurityContextArgs[@]}" \
-  "${gatewaySecurityContextArgs[@]}" \
   "${deploymentsArgs[@]}" \
   --atomic \
   --wait > /dev/null;

@@ -3,8 +3,10 @@ source src/helpers/check-license-expiry.sh;
 logger $INFO "Checking variables...";
 
 invalid=false;
-if [[ $TYKPRO == $mode ]] || [[ $TYKCP == $mode ]]; then
+chart="tyk-headless";
 
+if [[ $TYKPRO == $mode ]] || [[ $TYKCP == $mode ]]; then
+  chart="tyk-pro";
   if [[ -z "$LICENSE" ]]; then
     logger $ERROR "Please make sure the LICENSE variable is set in your .env file";
     invalid=true;
@@ -31,6 +33,7 @@ if [[ $TYKCP == $mode ]]; then
 fi
 
 if [[ $TYKWORKER == $mode ]]; then
+  chart="tyk-hybrid";
   if [[ -z "$TYK_WORKER_CONNECTIONSTRING" ]]; then
     logger $ERROR "Please make sure TYK_WORKER_CONNECTIONSTRING variable is set in your .env file";
     invalid=true;
