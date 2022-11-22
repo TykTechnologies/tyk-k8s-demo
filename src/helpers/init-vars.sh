@@ -1,7 +1,4 @@
-gatewayExtraEnvs=();
-dashboardExtraEnvs=();
-mdcbExtraEnvs=();
-pumpExtraEnvs=();
+extraEnvs=();
 
 gatewayPrefix="TYK_GW_";
 dashboardPrefix="TYK_DB_";
@@ -21,19 +18,19 @@ if [[ -f .env ]]; then
       export "${var[0]}=${var[1]}";
 
       if [[ "${var[0]}" == "$gatewayPrefix"* ]]; then
-        gatewayExtraEnvs+=(--set "gateway.extraEnvs[$gatewayCtr].name=${var[0]}" \
+        extraEnvs+=(--set "gateway.extraEnvs[$gatewayCtr].name=${var[0]}" \
           --set "gateway.extraEnvs[$gatewayCtr].value=${var[1]}");
         gatewayCtr+=1;
       elif [[ "${var[0]}" == "$dashboardPrefix"* ]]; then
-        dashboardExtraEnvs+=(--set "dash.extraEnvs[$dashboardCtr].name=${var[0]}" \
+        extraEnvs+=(--set "dash.extraEnvs[$dashboardCtr].name=${var[0]}" \
           --set "dash.extraEnvs[$dashboardCtr].value=${var[1]}");
         dashboardCtr+=1;
       elif [[ "${var[0]}" == "$mdcbPrefix"* ]]; then
-        mdcbExtraEnvs+=(--set "mdcb.extraEnvs[$mdcbCtr].name=${var[0]}" \
+        extraEnvs+=(--set "mdcb.extraEnvs[$mdcbCtr].name=${var[0]}" \
           --set "mdcb.extraEnvs[$mdcbCtr].value=${var[1]}");
         mdcbCtr+=1;
       elif [[ "${var[0]}" == "$pumpPrefix"* ]]; then
-        pumpExtraEnvs+=(--set "pump.extraEnvs[$pumpCtr].name=${var[0]}" \
+        extraEnvs+=(--set "pump.extraEnvs[$pumpCtr].name=${var[0]}" \
           --set "pump.extraEnvs[$pumpCtr].value=${var[1]}");
         pumpCtr+=1;
       fi

@@ -3,7 +3,7 @@ source src/main/redis.sh;
 
 cluster=$(kubectl config current-context);
 
-tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
+args=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.rpc.connString=$TYK_WORKER_CONNECTIONSTRING" \
   --set "gateway.rpc.rpcKey=$TYK_WORKER_ORGID" \
   --set "gateway.rpc.apiKey=$TYK_WORKER_AUTHTOKEN" \
@@ -11,20 +11,21 @@ tykArgs=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.rpc.groupId=$(echo "$cluster/$namespace" | base64)" \
   --set "gateway.service.port=$TYK_WORKER_GW_PORT");
 
+addDeploymentArgs "${args[@]}";
+addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
+addDeploymentArgs "${tykSecurityContextArgs[@]}";
+addDeploymentArgs "${servicesArgs[@]}";
+addDeploymentArgs "${extraEnvs[@]}";
+
 tykReleaseName="tyk-worker-tyk-hybrid";
 addService "gateway-svc-$tykReleaseName";
 addServiceArgs "gateway";
 checkTykRelease;
 
 setVerbose;
-helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-hybrid \
+helm $command $tykReleaseName $TYK_HELM_CHART_PATH/$chart \
   -n $namespace \
-  "${tykArgs[@]}" \
-  "${tykRedisArgs[@]}" \
-  "${gatewaySecurityContextArgs[@]}" \
-  "${gatewayExtraEnvs[@]}" \
-  "${pumpExtraEnvs[@]}" \
-  "${servicesArgs[@]}" \
+  "${deploymentsArgs[@]}" \
   --atomic \
   --wait > /dev/null;
 unsetVerbose;

@@ -2,11 +2,17 @@ source src/main/namespace.sh;
 source src/main/redis.sh;
 source src/main/storage.sh;
 
-tykArgs=(--set "dash.license=$LICENSE" \
+args=(--set "dash.license=$LICENSE" \
   --set "dash.adminUser.password=$PASSWORD" \
   --set "dash.image.tag=$TYK_DASHBOARD_VERSION" \
   --set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "pump.image.tag=$TYK_PUMP_VERSION");
+
+addDeploymentArgs "${args[@]}";
+addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
+addDeploymentArgs "${tykSecurityContextArgs[@]}";
+addDeploymentArgs "${servicesArgs[@]}";
+addDeploymentArgs "${extraEnvs[@]}";
 
 tykReleaseName="tyk-pro-tyk-pro";
 addService "dashboard-svc-$tykReleaseName";
@@ -16,17 +22,9 @@ addServiceArgs "gateway";
 checkTykRelease;
 
 setVerbose;
-helm $command $tykReleaseName $TYK_HELM_CHART_PATH/tyk-pro \
+helm $command $tykReleaseName $TYK_HELM_CHART_PATH/$chart \
   -n $namespace \
-  "${tykArgs[@]}" \
-  "${tykRedisArgs[@]}" \
-  "${tykStorageArgs[@]}" \
-  "${tykSecurityContextArgs[@]}" \
-  "${gatewaySecurityContextArgs[@]}" \
-  "${gatewayExtraEnvs[@]}" \
-  "${dashboardExtraEnvs[@]}" \
-  "${pumpExtraEnvs[@]}" \
-  "${servicesArgs[@]}" \
+  "${deploymentsArgs[@]}" \
   --atomic \
   --wait > /dev/null;
 unsetVerbose;

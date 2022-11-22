@@ -3,14 +3,14 @@ redisReleaseName="tyk-redis";
 checkHelmReleaseExists $redisReleaseName;
 
 if [[ $REDISCLUSTER == $redis ]]; then
-  tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName-redis-cluster.$namespace.svc:6379" \
+  args=(--set "redis.addrs[0]=$redisReleaseName-redis-cluster.$namespace.svc:6379" \
     --set "redis.pass=$PASSWORD" \
     --set "redis.enableCluster=true");
 elif [[ $REDISSENTINEL == $redis ]]; then
-  tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName.$namespace.svc:6379" \
+  args=(--set "redis.addrs[0]=$redisReleaseName.$namespace.svc:6379" \
     --set "redis.pass=$PASSWORD");
 else
-  tykRedisArgs=(--set "redis.addrs[0]=$redisReleaseName-master.$namespace.svc:6379" \
+  args=(--set "redis.addrs[0]=$redisReleaseName-master.$namespace.svc:6379" \
     --set "redis.pass=$PASSWORD");
 fi
 
@@ -91,3 +91,5 @@ else
   fi
   logger $INFO "installed $redisReleaseName in namespace $namespace";
 fi
+
+addDeploymentArgs "${args[@]}";
