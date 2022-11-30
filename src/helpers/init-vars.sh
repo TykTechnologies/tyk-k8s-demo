@@ -20,19 +20,19 @@ if [[ -f .env ]]; then
       if [[ "${var[0]}" == "$gatewayPrefix"* ]]; then
         extraEnvs+=(--set "gateway.extraEnvs[$gatewayCtr].name=${var[0]}" \
           --set "gateway.extraEnvs[$gatewayCtr].value=${var[1]}");
-        gatewayCtr+=1;
+        gatewayCtr=$((gatewayCtr + 1));
       elif [[ "${var[0]}" == "$dashboardPrefix"* ]]; then
         extraEnvs+=(--set "dash.extraEnvs[$dashboardCtr].name=${var[0]}" \
           --set "dash.extraEnvs[$dashboardCtr].value=${var[1]}");
-        dashboardCtr+=1;
+        dashboardCtr=$((dashboardCtr + 1));
       elif [[ "${var[0]}" == "$mdcbPrefix"* ]]; then
         extraEnvs+=(--set "mdcb.extraEnvs[$mdcbCtr].name=${var[0]}" \
           --set "mdcb.extraEnvs[$mdcbCtr].value=${var[1]}");
-        mdcbCtr+=1;
+        mdcbCtr=$((mdcbCtr + 1));
       elif [[ "${var[0]}" == "$pumpPrefix"* ]]; then
         extraEnvs+=(--set "pump.extraEnvs[$pumpCtr].name=${var[0]}" \
           --set "pump.extraEnvs[$pumpCtr].value=${var[1]}");
-        pumpCtr+=1;
+        pumpCtr=$((pumpCtr + 1));
       fi
     fi
   done < .env
