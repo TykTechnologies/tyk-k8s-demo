@@ -6,15 +6,15 @@ args=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.kind=Deployment" \
   --set "gateway.service.port=8080");
 
-addDeploymentArgs "${args[@]}";
-addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
-addDeploymentArgs "${servicesArgs[@]}";
-addDeploymentArgs "${extraEnvs[@]}";
-
 tykReleaseName="tyk-gateway-tyk-headless";
 addService "gateway-svc-$tykReleaseName";
 addServiceArgs "gateway";
 checkTykRelease;
+
+addDeploymentArgs "${args[@]}";
+addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
+addDeploymentArgs "${servicesArgs[@]}";
+addDeploymentArgs "${extraEnvs[@]}";
 
 setVerbose;
 helm $command $tykReleaseName $TYK_HELM_CHART_PATH/$chart \

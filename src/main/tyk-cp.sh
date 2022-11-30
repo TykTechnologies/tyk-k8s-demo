@@ -8,12 +8,6 @@ args=(--set "dash.license=$LICENSE" \
   --set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "pump.image.tag=$TYK_PUMP_VERSION");
 
-addDeploymentArgs "${args[@]}";
-addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
-addDeploymentArgs "${tykSecurityContextArgs[@]}";
-addDeploymentArgs "${servicesArgs[@]}";
-addDeploymentArgs "${extraEnvs[@]}";
-
 tykReleaseName="tyk-cp-tyk-pro";
 addService "dashboard-svc-$tykReleaseName";
 addService "gateway-svc-$tykReleaseName";
@@ -21,6 +15,12 @@ addServiceArgs "dash";
 addServiceArgs "gateway";
 checkTykRelease;
 checkMDCBRelease;
+
+addDeploymentArgs "${args[@]}";
+addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
+addDeploymentArgs "${tykSecurityContextArgs[@]}";
+addDeploymentArgs "${servicesArgs[@]}";
+addDeploymentArgs "${extraEnvs[@]}";
 
 if ! $mdcbExists; then
   setVerbose;

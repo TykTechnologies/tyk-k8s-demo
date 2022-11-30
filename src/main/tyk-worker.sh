@@ -11,16 +11,16 @@ args=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.rpc.groupId=$(echo "$cluster/$namespace" | base64)" \
   --set "gateway.service.port=$TYK_WORKER_GW_PORT");
 
+tykReleaseName="tyk-worker-tyk-hybrid";
+addService "gateway-svc-$tykReleaseName";
+addServiceArgs "gateway";
+checkTykRelease;
+
 addDeploymentArgs "${args[@]}";
 addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
 addDeploymentArgs "${tykSecurityContextArgs[@]}";
 addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
-
-tykReleaseName="tyk-worker-tyk-hybrid";
-addService "gateway-svc-$tykReleaseName";
-addServiceArgs "gateway";
-checkTykRelease;
 
 setVerbose;
 helm $command $tykReleaseName $TYK_HELM_CHART_PATH/$chart \
