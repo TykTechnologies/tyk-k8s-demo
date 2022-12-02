@@ -47,6 +47,7 @@ mdcbArgs=(--set "mdcb.enabled=true" \
   --set "mdcb.image.tag=$TYK_MDCB_VERSION");
 
 addDeploymentArgs "${mdcbArgs[@]}";
+addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${mdcbSecurityContextArgs[@]}";
 
 setVerbose;
