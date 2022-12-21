@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifications-subgraph-svc
+  labels:
+    app: notifications-subgraph
+spec:
+  ports:
+    - name: http
+      port: 4204
+      targetPort: 4204
+  selector:
+    app: notifications-subgraph
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-subgraph
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifications-subgraph
+  template:
+    metadata:
+      labels:
+        app: notifications-subgraph
+    spec:
+      containers:
+        - image: zalbiraw/go-api-test-service:v2.0.0
+          imagePullPolicy: IfNotPresent
+          name: notifications-subgraph
+          command:
+            - ./services/graphql-subgraphs/notifications/server
+          ports:
+            - containerPort: 4204
+          env:
+            - name: PORT
+              value: "4204"

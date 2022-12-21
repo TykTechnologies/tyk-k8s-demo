@@ -40,7 +40,7 @@ for arg in "$@"; do
 done
 
 # Parse short options
-OPTIND=1
+OPTIND=1;
 while getopts "hvn:f:e:r:s:d:z" opt
 do
   case "$opt" in
@@ -53,7 +53,7 @@ do
     'z') dryRun=true                   ;;
     's')
         storage=$OPTARG
-        logger $INFO "Warning: MDCB installtion does not currently support postgres database";
+        logger "$INFO" "Warning: MDCB installtion does not currently support postgres database";
         ;;
     'd')
         IFS=',' read -r -a deployments <<< "$OPTARG";
@@ -63,9 +63,9 @@ do
 done
 shift $((OPTIND - 1));
 
-if ([[ $VANILLA     != $flavor  ]] && [[ $OPENSHIFT    != $flavor  ]]) || \
-   ([[ $MONGO       != $storage ]] && [[ $POSTGRES     != $storage ]]) || \
-   ([[ $REDIS       != $redis   ]] && [[ $REDISCLUSTER != $redis   ]]  && [[ $REDISSENTINEL != $redis  ]]) || \
-   ([[ $PORTFORWARD != $expose  ]] && [[ $LOADBALANCER != $expose  ]]  && [[ $INGRESS       != $expose ]]  && [[ $NONE != $expose ]]); then
+if ([[ $VANILLA     != "$flavor"  ]] && [[ $OPENSHIFT    != "$flavor"  ]]) || \
+   ([[ $MONGO       != "$storage" ]] && [[ $POSTGRES     != "$storage" ]]) || \
+   ([[ $REDIS       != "$redis"   ]] && [[ $REDISCLUSTER != "$redis"   ]]  && [[ $REDISSENTINEL != "$redis"  ]]) || \
+   ([[ $PORTFORWARD != "$expose"  ]] && [[ $LOADBALANCER != "$expose"  ]]  && [[ $INGRESS       != "$expose" ]]  && [[ $NONE != "$expose" ]]); then
   usage; exit 1;
 fi

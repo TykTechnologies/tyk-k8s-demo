@@ -23,20 +23,16 @@ addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
 
 setVerbose;
-helm $command $tykReleaseName $TYK_HELM_CHART_PATH/$chart \
-  -n $namespace \
+helm upgarde $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
+  --install \
+  -n "$namespace" \
   "${deploymentsArgs[@]}" \
   --atomic \
   --wait > /dev/null;
 unsetVerbose;
 
-if ! $dryRun; then
-  source src/helpers/set-worker-args.sh;
-fi
-
 addSummary "\n\
 \tTyk Worker Gateway deployed\n
-\tMDCB Connection: $TYK_WORKER_CONNECTIONSTRING
-\tGateway URL: http://$ip:$port\n";
+\tMDCB Connection: $TYK_WORKER_CONNECTIONSTRING\n";
 
-logger $INFO "installed tyk in namespace $namespace";
+logger "$INFO" "installed tyk in namespace $namespace";

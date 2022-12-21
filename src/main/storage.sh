@@ -1,4 +1,4 @@
-if [[ $POSTGRES == $storage ]]; then
+if [[ $POSTGRES == "$storage" ]]; then
   tykDBName="storage";
   tykDBPort=5432;
   source src/main/pgsql.sh $tykDBName $tykDBPort;

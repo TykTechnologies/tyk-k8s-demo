@@ -37,6 +37,6 @@ if [[ -f .env ]]; then
     fi
   done < .env
 else
-  logger $ERROR ".env file not found";
+  logger "$ERROR" ".env file not found";
   exit 1;
 fi

@@ -13,7 +13,7 @@ Minimize the amount of effort needed to stand up the Tyk infrastructure and show
 - Helm
 - jq
 
-#### Intial setup
+#### Initial setup
 Create `.env` file
 
 ```
