@@ -23,7 +23,7 @@ addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
 
 setVerbose;
-helm upgarde $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
+helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
   --install \
   -n "$namespace" \
   "${deploymentsArgs[@]}" \
