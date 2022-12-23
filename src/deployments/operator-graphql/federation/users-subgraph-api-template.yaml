@@ -15,18 +15,27 @@ spec:
 
     directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
 
-    scalar _Any
+    type Address {
+      street: String!
+      suite: String!
+      city: String!
+      zipcode: String!
+      geo: GeoLocation!
+    }
 
-    union _Entity = User
-
-    scalar _FieldSet
-
-    type _Service {
-      sdl: String
+    type Company {
+      name: String!
+      catchPhrase: String!
+      bs: String!
     }
 
     type Entity {
       findUserByID(id: ID!): User!
+    }
+
+    type GeoLocation {
+      lat: String!
+      lng: String!
     }
 
     type Query {
@@ -47,23 +56,14 @@ spec:
       company: Company!
     }
 
-    type Address {
-      street: String!
-      suite: String!
-      city: String!
-      zipcode: String!
-      geo: GeoLocation!
-    }
+    scalar _Any
 
-    type GeoLocation {
-      lat: String!
-      lng: String!
-    }
+    union _Entity = User
 
-    type Company {
-      name: String!
-      catchPhrase: String!
-      bs: String!
+    scalar _FieldSet
+
+    type _Service {
+      sdl: String
     }
   sdl: |
     extend type Query {

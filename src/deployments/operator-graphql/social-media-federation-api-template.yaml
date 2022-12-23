@@ -10,16 +10,39 @@ spec:
     - name: notifications-subgraph
   schema: |-
     type Query {
-      user(id: ID!): User!
-      users: [User!]!
-      post(id: ID!): Post!
-      posts: [Post!]!
       comment(id: ID!): Comment!
       comments: [Comment!]!
+      post(id: ID!): Post!
+      posts: [Post!]!
+      user(id: ID!): User!
+      users: [User!]!
     }
 
     type Subscription {
       getUserNotifications(userId: ID!): User!
+    }
+
+    type Notification {
+      id: ID!
+      userId: ID!
+      title: String!
+      body: String!
+    }
+
+    type Comment {
+      id: ID!
+      postId: ID!
+      name: String!
+      email: String!
+      body: String!
+    }
+
+    type Post {
+      id: ID!
+      userId: ID!
+      title: String!
+      body: String!
+      comments: [Comment!]!
     }
 
     type User {
@@ -31,8 +54,8 @@ spec:
       phone: String!
       website: String!
       company: Company!
-      posts: [Post!]!
       notifications: [Notification!]!
+      posts: [Post!]!
     }
 
     type Address {
@@ -52,29 +75,6 @@ spec:
       name: String!
       catchPhrase: String!
       bs: String!
-    }
-
-    type Post {
-      id: ID!
-      userId: ID!
-      title: String!
-      body: String!
-      comments: [Comment!]!
-    }
-
-    type Comment {
-      id: ID!
-      postId: ID!
-      name: String!
-      email: String!
-      body: String!
-    }
-
-    type Notification {
-      id: ID!
-      userId: ID!
-      title: String!
-      body: String!
     }
 ---
 apiVersion: tyk.tyk.io/v1alpha1

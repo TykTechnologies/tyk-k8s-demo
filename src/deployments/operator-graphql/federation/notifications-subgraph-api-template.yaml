@@ -15,19 +15,16 @@ spec:
 
     directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
 
-    scalar _Any
-
-    union _Entity = User
-
-    scalar _FieldSet
-
-    type _Service {
-      sdl: String
-    }
-
     type Entity {
       findNotificationByID(id: ID!): Notification!
       findUserByID(id: ID!): User!
+    }
+
+    type Notification {
+      id: ID!
+      userId: ID!
+      title: String!
+      body: String!
     }
 
     type Query {
@@ -44,20 +41,18 @@ spec:
       notifications: [Notification!]!
     }
 
-    type Notification {
-      id: ID!
-      userId: ID!
-      title: String!
-      body: String!
+    scalar _Any
+
+    union _Entity = Notification | User
+
+    scalar _FieldSet
+
+    type _Service {
+      sdl: String
     }
   sdl: |
     extend type Subscription {
         getUserNotifications(userId: ID!): User!
-    }
-
-    extend type User @key(fields: "id") {
-        id: ID! @external
-        notifications: [Notification!]!
     }
 
     type Notification @key(fields: "id") {
@@ -65,6 +60,11 @@ spec:
         userId: ID!
         title: String!
         body: String!
+    }
+
+    extend type User @key(fields: "id") {
+        id: ID! @external
+        notifications: [Notification!]!
     }
 ---
 apiVersion: tyk.tyk.io/v1alpha1
