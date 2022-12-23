@@ -60,6 +60,6 @@ sed "s/users-rest/$usersID/g" "$deploymentPath/social-media-udg-rest-stitch-api-
   sed "s/comments-rest/$commentsID/g" | \
   kubectl apply -n "$namespace" -f - > /dev/null;
 
-kubectl apply -n "$namespace" -f "$deploymentPath/social-media-federation-api.yaml" > /dev/null;
+kubectl apply -n "$namespace" -f "$deploymentPath/social-media-federation-api-template.yaml" > /dev/null;
 
 unsetVerbose;

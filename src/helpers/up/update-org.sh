@@ -1,3 +1,14 @@
+terminateDashboardPort() {
+  set +e;
+  pid=$(pgrep -f "svc/dashboard-svc-$tykReleaseName");
+  set -e;
+
+  if [[ -n "$pid" ]]; then
+    logger "$DEBUG" "terminating dashboard port-forwarding ($pid)";
+    kill -9 "$pid" 2>&1;
+  fi
+}
+
 ORG_FILENAME=myorg.json;
 FORWARD_PORT=3001;
 
@@ -11,12 +22,10 @@ logger "$DEBUG" "Organisation ID: $orgID";
 
 tykReleaseName=$1;
 
+terminateDashboardPort;
 kubectl port-forward "svc/dashboard-svc-$tykReleaseName" -n "$namespace" $FORWARD_PORT:$port > /dev/null &
 
-pid=$!;
-
 setVerbose;
-logger "$INFO" "5 seconds sleep to allow for the port-forwarding to be established";
 sleep 5;
 curl -s "localhost:$FORWARD_PORT/admin/organisations/$orgID" -H "Admin-Auth: 12345" > $ORG_FILENAME;
 
@@ -32,6 +41,7 @@ jq '.hybrid_enabled = true | .event_options = {
 
 curl -s -X PUT "localhost:$FORWARD_PORT/admin/organisations/$orgID" -H "Admin-Auth: 12345" -d @$ORG_FILENAME > /dev/null;
 
-trap "kill $pid" EXIT;
 rm $ORG_FILENAME;
 unsetVerbose;
+
+terminateDashboardPort;
