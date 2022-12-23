@@ -100,11 +100,18 @@ You can add any Tyk environments variables to the `.env` file and they will be m
 | TYK_WORKER_GW_PORT          |       `8081`        | Set the gateway service port to use                        |
 
 ## Features compatibility & tests matrix
-| Depoloyment          |               Expose Support               |   Postman Tests    | OpenShift Support  |
+| Depoloyment          |             `--expose` Support             |   Postman Tests    | OpenShift Support  |
 |----------------------|:------------------------------------------:|:------------------:|:------------------:|
-| k6-traffic-generator |                    N/A                     |        N/A         |        :x:         |
-| operator             |                    N/A                     |        N/A         |        :x:         |
-| operator-graphql     |               `port-froward`               | :white_check_mark: |        :x:         |
-| operator-httpbin     |               `port-froward`               |        :x:         |        :x:         |
-| portal               | `port-froward`, `ingress`, `load-balancer` |        N/A         | :white_check_mark: |
-| pump-prometheus      |               `port-froward`               |        N/A         |        :x:         |
+| tyk-gateway          | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
+| tyk-worker           | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
+| tyk-pro              | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
+| tyk-cp               | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
+| k6-traffic-generator |                    N/A                     |        N/A         |   :construction:   |
+| operator             |                    N/A                     |        N/A         |   :construction:   |
+| operator-graphql     |               `port-froward`               | :white_check_mark: |   :construction:   |
+| operator-httpbin     |               `port-froward`               |   :construction:   |   :construction:   |
+| portal               | `port-froward`, `ingress`, `load-balancer` |   :construction:   | :white_check_mark: |
+| pump-prometheus      |               `port-froward`               |   :construction:   |   :construction:   |
+
+:white_check_mark: Built/Compatible
+:construction: Working on it
