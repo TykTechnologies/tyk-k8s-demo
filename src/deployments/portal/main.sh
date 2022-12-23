@@ -23,6 +23,7 @@ source src/main/pgsql.sh $portalDBName $portalDBPort;
 addService "enterprise-portal-svc-$tykReleaseName";
 addServiceArgs "enterprisePortal";
 
+checkPortalExists;
 if $portalExists; then
   logger "$INFO" "tyk-portal already exists in $namespace namespace...";
 else
