@@ -80,7 +80,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cluster: [v1.20.2, v1.19.7, v1.18.15]
+        cluster: [v1.20.2, v1.19.7]
         mode: [tyk-pro,tyk-cp]
         redis: [redis, redis-cluster, redis-sentinel]
       max-parallel: 1
@@ -152,7 +152,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cluster: [v1.20.2, v1.19.7, v1.18.15]
+        cluster: [v1.20.2, v1.19.7]
         mode: [tyk-worker]
         redis: [redis, redis-cluster, redis-sentinel]
       max-parallel: 1
