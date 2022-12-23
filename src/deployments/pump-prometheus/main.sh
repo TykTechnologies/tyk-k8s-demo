@@ -30,11 +30,6 @@ sed "s/release_name/$tykReleaseName/g" src/deployments/pump-prometheus/pump-svc.
   sed "s/prom_pump_port/$PROMETHEUS_PUMP_PORT/g" | \
   kubectl apply -n "$namespace" -f - > /dev/null;
 
-logger "$INFO" "add Prometheus and Grafana helm repos...";
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts > /dev/null;
-helm repo add grafana https://grafana.github.io/helm-charts > /dev/null;
-helm repo update > /dev/null;
-
 prometheusReleaseName="tyk-prometheus";
 addService "$prometheusReleaseName-server";
 

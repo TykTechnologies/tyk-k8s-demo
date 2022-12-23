@@ -23,7 +23,7 @@ logger "$DEBUG" "Organisation ID: $orgID";
 tykReleaseName=$1;
 
 terminateDashboardPort;
-kubectl port-forward "svc/dashboard-svc-$tykReleaseName" -n "$namespace" $FORWARD_PORT:$port > /dev/null &
+(kubectl port-forward "svc/dashboard-svc-$tykReleaseName" -n "$namespace" $FORWARD_PORT:$port > /dev/null &)
 
 setVerbose;
 sleep 5;
@@ -43,5 +43,3 @@ curl -s -X PUT "localhost:$FORWARD_PORT/admin/organisations/$orgID" -H "Admin-Au
 
 rm $ORG_FILENAME;
 unsetVerbose;
-
-terminateDashboardPort;

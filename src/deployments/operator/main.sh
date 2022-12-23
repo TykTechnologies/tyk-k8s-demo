@@ -9,15 +9,19 @@ if ! $operatorSecretExists; then
 fi
 
 operatorReleaseName="tyk-operator";
+certManagerReleaseName="tyk-operator-cert-manager";
 
 setVerbose;
-kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.8.0/cert-manager.yaml > /dev/null;
-kubectl wait -n cert-manager deployment.apps/cert-manager-webhook --for condition=Available=True --timeout=90s > /dev/null;
+helm upgrade "$certManagerReleaseName" jetstack/cert-manager \
+  --install \
+  --version v1.10.1 \
+  --namespace "$namespace" \
+  --wait > /dev/null;
 
 helm upgrade $operatorReleaseName tyk-helm/tyk-operator \
   --install \
-  -n "$namespace" \
-   --wait > /dev/null;
+  --namespace "$namespace" \
+  --wait > /dev/null;
 unsetVerbose;
 
 logger "$INFO" "installed tyk-operator in namespace $namespace";

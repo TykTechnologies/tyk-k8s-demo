@@ -13,6 +13,8 @@ fi
 
 cleanPorts;
 
+source src/helpers/down/crds.sh;
+
 if ! $ports; then
   kubectl delete namespace "$namespace";
 fi
