@@ -15,6 +15,7 @@ setVerbose;
 helm upgrade "$certManagerReleaseName" jetstack/cert-manager \
   --install \
   --version v1.10.1 \
+  --set "installCRDs=true" \
   --namespace "$namespace" \
   --wait --debug;
 
