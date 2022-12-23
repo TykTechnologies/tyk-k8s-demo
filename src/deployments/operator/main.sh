@@ -16,7 +16,7 @@ helm upgrade "$certManagerReleaseName" jetstack/cert-manager \
   --install \
   --version v1.10.1 \
   --namespace "$namespace" \
-  --wait > /dev/null;
+  --wait --debug;
 
 helm upgrade $operatorReleaseName tyk-helm/tyk-operator \
   --install \
