@@ -12,6 +12,7 @@ Minimize the amount of effort needed to stand up the Tyk infrastructure and show
 #### Prerequisites
 - Helm
 - jq
+- git
 
 #### Initial setup
 Create `.env` file
@@ -33,12 +34,17 @@ cp .env.example .env
 - `redis-sentinel`: Bitnami Redis Sentinel deployment
 
 ### Storage Options
-- `mongo`: mongo database as a Tyk backend
-- `postgres`: postgres database as a Tyk backend
+- `mongo`: Bitnami Mongo database deployment as a Tyk backend
+- `postgres`: Bitnami Postgres database deployment as a Tyk backend
 
 ### Deployments
-- `portal`
-- `operator`
+- [k6 Traffic Generator](../src/deployments/k6-traffic-generator)
+- [Operator](../src/deployments/operator)
+	- [HttpBin](../src/deployments/operator-httpbin)
+	- [GraphQL](../src/deployments/operator-graphql)
+- [Portal](../src/deployments/portal)
+- Pumps
+  - [Prometheus](../src/deployments/pump-prometheus)
 
 ## Usage
 ```
@@ -75,20 +81,30 @@ Flags:
 ## Variables
 You can add any Tyk environments variables to the `.env` file and they will be mapped to the respective extraEnvs section in the helm charts.
 
-| Variable                    | Default             | Comments |
-| --------------------------- | :-----------------: | --------- |
-| TYK_DASHBOARD_VERSION       | `v4.2.2`            | Dashboard version |
-| TYK_GATEWAY_VERSION         | `v4.2.2`            | Gateway version |
-| TYK_MDCB_VERSION            | `v2.0.3`            | MDCB version |
-| TYK_PUMP_VERSION            | `v1.6.0`            | Pump version |
-| TYK_PORTAL_VERSION          | `v1.0.0`            | Portal version |
-| TYK_HELM_CHART_PATH         | `tyk-helm`          | Path to charts, can be a local directory or a helm repo |
-| PASSWORD                    | `topsecretpassword` | Default password for all the services deployed |
-| LICENSE                     |                     | Dashboard license |
-| MDCB_LICENSE                |                     | MDCB license |
-| PORTAL_LICENSE              |                     | Portal license |
-| TYK_WORKER_CONNECTIONSTRING |                     | MDCB URL for worker connection |
-| TYK_WORKER_ORGID            |                     | Org ID of dashboard user |
-| TYK_WORKER_AUTHTOKEN        |                     | Auth token of dashboard user |
-| TYK_WORKER_USESSL           | `true`              | Set to `true` when the MDCB is serving on a TLS connection |
-| TYK_WORKER_GW_PORT          | `8081`              | Set the gateway service port to use |
+| Variable                    |       Default       | Comments                                                   |
+|-----------------------------|:-------------------:|------------------------------------------------------------|
+| TYK_DASHBOARD_VERSION       |      `v4.3.1`       | Dashboard version                                          |
+| TYK_GATEWAY_VERSION         |      `v4.3.1`       | Gateway version                                            |
+| TYK_MDCB_VERSION            |      `v2.0.4`       | MDCB version                                               |
+| TYK_PUMP_VERSION            |      `v1.7.0`       | Pump version                                               |
+| TYK_PORTAL_VERSION          |      `v1.0.1`       | Portal version                                             |
+| TYK_HELM_CHART_PATH         |     `tyk-helm`      | Path to charts, can be a local directory or a helm repo    |
+| PASSWORD                    | `topsecretpassword` | Default password for all the services deployed             |
+| LICENSE                     |                     | Dashboard license                                          |
+| MDCB_LICENSE                |                     | MDCB license                                               |
+| PORTAL_LICENSE              |                     | Portal license                                             |
+| TYK_WORKER_CONNECTIONSTRING |                     | MDCB URL for worker connection                             |
+| TYK_WORKER_ORGID            |                     | Org ID of dashboard user                                   |
+| TYK_WORKER_AUTHTOKEN        |                     | Auth token of dashboard user                               |
+| TYK_WORKER_USESSL           |       `true`        | Set to `true` when the MDCB is serving on a TLS connection |
+| TYK_WORKER_GW_PORT          |       `8081`        | Set the gateway service port to use                        |
+
+## Features compatibility & tests matrix
+| Depoloyment          |               Expose Support               |   Postman Tests    | OpenShift Support  |
+|----------------------|:------------------------------------------:|:------------------:|:------------------:|
+| k6-traffic-generator |                    N/A                     |        N/A         |        :x:         |
+| operator             |                    N/A                     |        N/A         |        :x:         |
+| operator-graphql     |               `port-froward`               | :white_check_mark: |        :x:         |
+| operator-httpbin     |               `port-froward`               |        :x:         |        :x:         |
+| portal               | `port-froward`, `ingress`, `load-balancer` |        N/A         | :white_check_mark: |
+| pump-prometheus      |               `port-froward`               |        N/A         |        :x:         |

@@ -16,6 +16,7 @@ kubectl port-forward "svc/dashboard-svc-$tykReleaseName" -n "$namespace" $FORWAR
 pid=$!;
 
 setVerbose;
+logger "$INFO" "5 seconds sleep to allow for the port-forwarding to be established";
 sleep 5;
 curl -s "localhost:$FORWARD_PORT/admin/organisations/$orgID" -H "Admin-Auth: 12345" > $ORG_FILENAME;
 

@@ -8,3 +8,4 @@ checkCommand() {
 
 checkCommand jq;
 checkCommand helm;
+checkCommand git;
