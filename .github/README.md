@@ -1,5 +1,5 @@
 # tyk-k8s-demo
-[![Smoke Tests](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/smoke-test.yml)
+[![Tests](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tests.yml/badge.svg)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tests.yml)
 
 ## About
 Will allow you to deploy the entire Tyk stack for POC on k8s.
