@@ -1,0 +1,15 @@
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: users-rest
+spec:
+  name: users-rest
+  protocol: http
+  active: true
+  internal: true
+  use_keyless: true
+  proxy:
+    target_url: http://service_url/
+    listen_path: /users-rest
+    strip_listen_path: true

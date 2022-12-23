@@ -1,18 +1,29 @@
-logger $DEBUG "Installing operator";
+source src/deployments/operator/helpers.sh;
 
-if [[ $TYKPRO != $mode ]] && [[ $TYKCP != $mode ]] && [[ $TYKGATEWAY != $mode ]]; then
-  logger $INFO "you need an operator secret to install the operator with a worker gateway";
+logger "$INFO" "installing tyk-operator...";
+
+checkOperatorSecretExists;
+if ! $operatorSecretExists; then
+  logger "$INFO" "you need an operator secret to install the operator with a worker gateway";
+  exit 1;
 fi
 
 operatorReleaseName="tyk-operator";
-checkHelmReleaseExists $operatorReleaseName;
+certManagerReleaseName="tyk-operator-cert-manager";
 
-if $releaseExists; then
-  logger $INFO "$operatorReleaseName release already exists in $namespace namespace...skipping $operatorReleaseName install";
-else
-  setVerbose;
-  kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.0/cert-manager.yaml;
-  sleep 1;
-  helm install $operatorReleaseName tyk-helm/tyk-operator -n $namespace;
-  unsetVerbose;
-fi
+setVerbose;
+helm upgrade "$certManagerReleaseName" jetstack/cert-manager \
+  --install \
+  --version v1.10.1 \
+  --set "installCRDs=true" \
+  --set "prometheus.enabled=false" \
+  --namespace "$namespace" \
+  --wait > /dev/null;
+
+helm upgrade $operatorReleaseName tyk-helm/tyk-operator \
+  --install \
+  --namespace "$namespace" \
+  --wait > /dev/null;
+unsetVerbose;
+
+logger "$INFO" "installed tyk-operator in namespace $namespace";

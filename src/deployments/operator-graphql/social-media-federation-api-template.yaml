@@ -1,0 +1,100 @@
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SuperGraph
+metadata:
+  name: social-media-app-supergraph
+spec:
+  subgraph_refs:
+    - name: users-subgraph
+    - name: posts-subgraph
+    - name: comments-subgraph
+    - name: notifications-subgraph
+  schema: |-
+    type Query {
+      comment(id: ID!): Comment!
+      comments: [Comment!]!
+      post(id: ID!): Post!
+      posts: [Post!]!
+      user(id: ID!): User!
+      users: [User!]!
+    }
+
+    type Subscription {
+      getUserNotifications(userId: ID!): User!
+    }
+
+    type Notification {
+      id: ID!
+      userId: ID!
+      title: String!
+      body: String!
+    }
+
+    type Comment {
+      id: ID!
+      postId: ID!
+      name: String!
+      email: String!
+      body: String!
+    }
+
+    type Post {
+      id: ID!
+      userId: ID!
+      title: String!
+      body: String!
+      comments: [Comment!]!
+    }
+
+    type User {
+      id: ID!
+      name: String!
+      username: String!
+      email: String!
+      address: Address!
+      phone: String!
+      website: String!
+      company: Company!
+      notifications: [Notification!]!
+      posts: [Post!]!
+    }
+
+    type Address {
+      street: String!
+      suite: String!
+      city: String!
+      zipcode: String!
+      geo: GeoLocation!
+    }
+
+    type GeoLocation {
+      lat: String!
+      lng: String!
+    }
+
+    type Company {
+      name: String!
+      catchPhrase: String!
+      bs: String!
+    }
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: federation-supergraph
+spec:
+  name: Social Media App - Federated
+  protocol: http
+  use_keyless: true
+  active: true
+  graphql:
+    enabled: true
+    execution_mode: supergraph
+    graph_ref: social-media-app-supergraph
+    version: "2"
+    playground:
+      enabled: true
+      path: /playground
+  proxy:
+    target_url: ""
+    strip_listen_path: true
+    listen_path: /social-media-app-federated/

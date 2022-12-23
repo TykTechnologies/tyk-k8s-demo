@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "947506c3-8476-4a1a-b872-972f2e365a66",
+		"_postman_id": "a9a67026-8423-497e-9649-3549329ea741",
 		"name": "tyk-k8s-demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13702323"
@@ -181,6 +181,154 @@
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deployments",
+			"item": [
+				{
+					"name": "operator-graphql",
+					"item": [
+						{
+							"name": "trevorblades",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Looking up Canada!\", function () {",
+											"    var res = pm.response.json();",
+											"    pm.expect(res.data.country.code).to.eql(\"CA\");",
+											"    pm.expect(res.data.country.name).to.eql(\"Canada\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query {\n  country(code:\"CA\") {\n    code\n    name\n  }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{pro-gateway.port}}/trevorblades",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{pro-gateway.port}}",
+									"path": [
+										"trevorblades"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Social Media App - Stitch",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Testing stitching...\", function () {",
+											"    var res = pm.response.json();",
+											"    pm.expect(res.data.user.name).to.eql(\"Leanne Graham\");",
+											"    pm.expect(res.data.user.posts[0].title).to.eql(\"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\");",
+											"    pm.expect(res.data.user.posts[0].comments[0].email).to.eql(\"Eliseo@gardner.biz\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query {\n  user(id:1) {\n  \tname\n  \tposts {\n      title\n      comments {\n        email\n      }\n    }\n  }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{pro-gateway.port}}/udg",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{pro-gateway.port}}",
+									"path": [
+										"udg"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Social Media App - Federated",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Testing federation...\", function () {",
+											"    var res = pm.response.json();",
+											"    pm.expect(res.data.user.name).to.eql(\"Leanne Graham\");",
+											"    pm.expect(res.data.user.posts[0].title).to.eql(\"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\");",
+											"    pm.expect(res.data.user.posts[0].comments[0].email).to.eql(\"Eliseo@gardner.biz\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query {\n  user(id:1) {\n  \tname\n  \tposts {\n      title\n      comments {\n        email\n      }\n    }\n  }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{pro-gateway.port}}/social-media-app-federated/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{pro-gateway.port}}",
+									"path": [
+										"social-media-app-federated",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}

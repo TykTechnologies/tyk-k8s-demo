@@ -1,7 +1,7 @@
 kubectl() {
-  echo "kubectl $@";
+  true
 }
 
 helm() {
-  echo "helm $@";
+  true
 }

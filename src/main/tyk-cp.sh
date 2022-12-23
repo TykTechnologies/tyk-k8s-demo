@@ -24,20 +24,20 @@ addDeploymentArgs "${extraEnvs[@]}";
 
 if ! $mdcbExists; then
   setVerbose;
-  helm $command $tykReleaseName $TYK_HELM_CHART_PATH/$chart \
-    -n $namespace \
+  helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
+    --install \
+    -n "$namespace" \
     "${deploymentsArgs[@]}" \
     --atomic \
     --wait > /dev/null;
   unsetVerbose;
 
   if ! $dryRun; then
-    source src/helpers/update-org.sh $tykReleaseName;
+    source src/helpers/up/update-org.sh $tykReleaseName;
   fi
 else
-  logger $INFO "MDCB exists skipping $tykReleaseName install..."
+  logger "$INFO" "MDCB exists skipping $tykReleaseName install..."
 fi
-
 
 addService "mdcb-svc-$tykReleaseName";
 addServiceArgs "mdcb";
@@ -51,15 +51,15 @@ addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${mdcbSecurityContextArgs[@]}";
 
 setVerbose;
-helm upgrade $tykReleaseName $TYK_HELM_CHART_PATH/$chart \
-  -n $namespace \
+helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
+  -n "$namespace" \
   "${deploymentsArgs[@]}" \
   --atomic \
   --wait > /dev/null;
 unsetVerbose;
 
 if ! $dryRun; then
-  source src/helpers/set-cp-args.sh;
+  source src/helpers/up/set-cp-args.sh;
 fi
 
 exposeWorker="";
@@ -78,4 +78,4 @@ addSummary "\n\
 You deploy a worker gateway and connect it to this Control Plane by running the following command: \n\n \
 \tTYK_WORKER_CONNECTIONSTRING=$ip:$port TYK_WORKER_ORGID=$orgID TYK_WORKER_AUTHTOKEN=$authToken TYK_WORKER_USESSL=false ./up.sh --namespace tyk-worker$exposeWorker tyk-worker\n";
 
-logger $INFO "installed tyk in namespace $namespace";
+logger "$INFO" "installed tyk in namespace $namespace";

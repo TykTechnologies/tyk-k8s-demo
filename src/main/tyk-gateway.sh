@@ -17,8 +17,9 @@ addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
 
 setVerbose;
-helm $command $tykReleaseName $TYK_HELM_CHART_PATH/$chart \
-  -n $namespace \
+helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
+  --install \
+  -n "$namespace" \
   "${deploymentsArgs[@]}" \
   --atomic \
   --wait > /dev/null;
@@ -27,4 +28,4 @@ unsetVerbose;
 addSummary "\n\
 \tTyk Gateway deployed\n";
 
-logger $INFO "installed tyk in namespace $namespace";
+logger "$INFO" "installed tyk in namespace $namespace";

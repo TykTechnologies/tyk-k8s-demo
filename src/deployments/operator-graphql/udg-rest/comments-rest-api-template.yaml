@@ -1,0 +1,15 @@
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: comments-rest
+spec:
+  name: comments-rest
+  protocol: http
+  active: true
+  internal: true
+  use_keyless: true
+  proxy:
+    target_url: http://service_url/
+    listen_path: /comments-rest
+    strip_listen_path: true
