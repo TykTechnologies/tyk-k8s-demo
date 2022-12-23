@@ -223,75 +223,75 @@ jobs:
       - name: Clean up ${{ matrix.mode }} with ${{ matrix.redis }}
         run: ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }}
 
-#  deployments:
-#    runs-on: ubuntu-latest
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        cluster: [v1.20.2, v1.19.7, v1.18.15]
-#        mode: [tyk-pro]
-#        redis: [redis-cluster]
-#      max-parallel: 1
-#    steps:
-#      - uses: actions/checkout@v2
-#
-#      - name: Create Kind Cluster
-#        uses: engineerd/setup-kind@v0.5.0
-#        with:
-#          version: "v0.11.1"
-#          config: .github/kind-cluster-${{ matrix.cluster }}.yml
-#
-#      - name: Install helm
-#        uses: Azure/setup-helm@v1.1
-#        with:
-#          version: v3.5.3
-#
-#      - name: Install newman
-#        run: |
-#          sudo apt update && \
-#          sudo apt install nodejs npm -y && \
-#          npm install -g newman
-#
-#      - name: Copy .env file
-#        run: cp .env.example .env
-#
-#      - name: Deploy ${{ matrix.mode }} with ${{ matrix.redis }}
-#        uses: nick-invision/retry@v2
-#        with:
-#          max_attempts: ${{ env.MAX_ATTEMPTS }}
-#          timeout_minutes: ${{ env.TIMEOUT }}
-#          on_retry_command: |
-#            ./down.sh \
-#              --namespace ${{ matrix.mode }}-${{ matrix.redis }}
-#          command: |
-#            LICENSE="${{ secrets.DASH_LICENSE }}" \
-#            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
-#            ./up.sh \
-#              -v \
-#              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
-#              --expose port-forward \
-#              --redis ${{ matrix.redis }} \
-#              --deployments operator,operator-graphql,operator-httpbin,portal,pump-prometheus \
-#              ${{ matrix.mode }}
-#
-#      - name: Run ${{ matrix.mode }} with ${{ matrix.redis }} postman tests
-#        uses: nick-invision/retry@v2
-#        with:
-#          max_attempts: ${{ env.MAX_ATTEMPTS }}
-#          timeout_minutes: ${{ env.TIMEOUT }}
-#          on_retry_command: |
-#            ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }} && \
-#            LICENSE="${{ secrets.DASH_LICENSE }}" \
-#            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
-#            ./up.sh \
-#              -v \
-#              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
-#              --expose port-forward \
-#              --redis ${{ matrix.redis }} \
-#              --deployments operator,operator-graphql,operator-httpbin,portal,pump-prometheus \
-#              ${{ matrix.mode }}
-#          command: |
-#            newman run --folder Deployments tyk-k8s-demo.postman_collection.json
-#
-#      - name: Clean up ${{ matrix.mode }} with ${{ matrix.redis }}
-#        run: ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }}
+  deployments:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cluster: [v1.20.2, v1.19.7, v1.18.15]
+        mode: [tyk-pro]
+        redis: [redis-cluster]
+      max-parallel: 1
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Kind Cluster
+        uses: engineerd/setup-kind@v0.5.0
+        with:
+          version: "v0.11.1"
+          config: .github/kind-cluster-${{ matrix.cluster }}.yml
+
+      - name: Install helm
+        uses: Azure/setup-helm@v1.1
+        with:
+          version: v3.5.3
+
+      - name: Install newman
+        run: |
+          sudo apt update && \
+          sudo apt install nodejs npm -y && \
+          npm install -g newman
+
+      - name: Copy .env file
+        run: cp .env.example .env
+
+      - name: Deploy ${{ matrix.mode }} with ${{ matrix.redis }}
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: |
+            ./down.sh \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }}
+          command: |
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+            ./up.sh \
+              -v \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
+              --expose port-forward \
+              --redis ${{ matrix.redis }} \
+              --deployments operator,operator-graphql,operator-httpbin,portal,pump-prometheus \
+              ${{ matrix.mode }}
+
+      - name: Run ${{ matrix.mode }} with ${{ matrix.redis }} postman tests
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: |
+            ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }} && \
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+            ./up.sh \
+              -v \
+              --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
+              --expose port-forward \
+              --redis ${{ matrix.redis }} \
+              --deployments operator,operator-graphql,operator-httpbin,portal,pump-prometheus \
+              ${{ matrix.mode }}
+          command: |
+            newman run --folder Deployments tyk-k8s-demo.postman_collection.json
+
+      - name: Clean up ${{ matrix.mode }} with ${{ matrix.redis }}
+        run: ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }}
