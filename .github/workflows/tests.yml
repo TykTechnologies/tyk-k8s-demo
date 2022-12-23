@@ -265,7 +265,7 @@ jobs:
               --namespace ${{ matrix.mode }}-${{ matrix.redis }}
           command: |
             LICENSE="${{ secrets.DASH_LICENSE }}" \
-            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_SECRET }}" \
             ./up.sh \
               -v \
               --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
@@ -282,7 +282,7 @@ jobs:
           on_retry_command: |
             ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }} && \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
-            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_SECRET }}" \
             ./up.sh \
               -v \
               --namespace ${{ matrix.mode }}-${{ matrix.redis }} \

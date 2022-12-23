@@ -18,7 +18,7 @@ helm upgrade "$certManagerReleaseName" jetstack/cert-manager \
   --set "installCRDs=true" \
   --set "prometheus.enabled=true" \
   --namespace "$namespace" \
-  --wait --debug;
+  --wait > /dev/null;
 
 helm upgrade $operatorReleaseName tyk-helm/tyk-operator \
   --install \
