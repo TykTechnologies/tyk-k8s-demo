@@ -21,6 +21,36 @@ Create `.env` file
 cp .env.example .env
 ```
 
+Run the following command to install Tyk into a fresh k8s cluster:
+```bash
+$ ./up.sh --redis redis-cluster --storage postgres --deployments operator,operator-httpbin,pump-prometheus,k6-traffic-generator --expose port-forward tyk-pro
+```
+
+This will run:
+- Tyk Stack (Dashboard + Gateways)
+- Tyk Operator - to manage your API definitions via k8s native CRDs
+- Tyk Pump w/ Grafana + Prometheus - Analytics will flow into these sinks in addition to Tyk Dashboard
+- K6 Traffic Generator - To simulate user API traffic
+
+Once the script is finished, you'll see an output with the exposed services that you can access from your localhost via Port-Forwarding.   We can log into the Dashboard to see analytics as well as send an API request to the Gateway for testing:
+
+```
+$ curl http://localhost:8080/httpbin-keyless/get
+
+{
+  "args": {},
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip",
+    "Host": "httpbin-svc.tyk.svc:8000",
+    "User-Agent": "curl/7.79.1"
+  },
+  "origin": "127.0.0.1",
+  "url": "http://httpbin-svc.tyk.svc:8000/get"
+}
+```
+
+
 ## Possible deployments
 - `tyk-pro`: Tyk pro self-managed single region
 - `tyk-cp`: Tyk pro self-managed multi region control plane
