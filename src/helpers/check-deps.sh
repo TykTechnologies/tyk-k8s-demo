@@ -9,3 +9,5 @@ checkCommand() {
 checkCommand jq;
 checkCommand helm;
 checkCommand git;
+checkCommand terraform;
+checkCommand kubectl;

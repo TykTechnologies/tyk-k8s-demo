@@ -5,7 +5,7 @@ source src/helpers/logger.sh;
 source src/helpers/helm-release-exists.sh;
 source src/helpers/check-deps.sh;
 source src/helpers/up/usage.sh;
-source src/helpers/up/init-vars.sh;
+source src/helpers/init-vars.sh;
 source src/helpers/up/init-args.sh;
 source src/helpers/up/check-tyk-release.sh;
 source src/helpers/deployments-args.sh;
@@ -25,6 +25,11 @@ fi
 
 if $dryRun; then
   source src/helpers/dry-run.sh;
+fi
+
+if [ "$AWS" == "$cloud" ] || [ "$GCP" == "$cloud" ]  || [ "$AZURE" == "$cloud" ]; then
+  logger "$INFO" "standing up $cloud k8s cluster. This may take up 10-30 minutes depending on the cloud provider...";
+  source src/helpers/up/tf-apply.sh;
 fi
 
 logger "$INFO" "installing $mode in $flavor k8s environment";
