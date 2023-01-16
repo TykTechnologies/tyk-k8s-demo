@@ -55,9 +55,11 @@ exposeServices() {
   fi
   ## TODO add LOADBALANCER and INGRESS support.
 
-  addSummary "\n\
-  \tExposed Services
-  $servicesSummary";
+  if [[ $NONE != "$expose" ]]; then
+    addSummary "\n\
+    \tExposed Services
+    $servicesSummary";
+  fi
 }
 
 cleanPorts() {
