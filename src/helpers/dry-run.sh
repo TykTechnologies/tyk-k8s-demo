@@ -5,3 +5,7 @@ kubectl() {
 helm() {
   true
 }
+
+terraform() {
+  true
+}

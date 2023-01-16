@@ -10,6 +10,9 @@ INGRESS="ingress";
 LOADBALANCER="load-balancer";
 NONE="none";
 DEFAULTNAMESPACE="tyk";
+AWS="aws";
+GCP="gcp";
+AZURE="azure";
 
 # Default values
 namespace=$DEFAULTNAMESPACE;
@@ -19,6 +22,7 @@ storage=$MONGO;
 isDebug=false;
 dryRun=false;
 expose=$NONE;
+cloud=$NONE;
 portsWait=15;
 deployments=$();
 
@@ -35,13 +39,14 @@ for arg in "$@"; do
     '--storage')     set -- "$@" '-s'   ;;
     '--deployments') set -- "$@" '-d'   ;;
     '--dry-run')     set -- "$@" '-z'   ;;
+    '--cloud')       set -- "$@" '-c'   ;;
     *)               set -- "$@" "$arg" ;;
   esac
 done
 
 # Parse short options
 OPTIND=1;
-while getopts "hvn:f:e:r:s:d:z" opt
+while getopts "hvn:f:e:r:s:d:zc:" opt
 do
   case "$opt" in
     'h') usage; exit 0                 ;;
@@ -51,6 +56,7 @@ do
     'e') expose=$OPTARG                ;;
     'r') redis=$OPTARG                 ;;
     'z') dryRun=true                   ;;
+    'c') cloud=$OPTARG                 ;;
     's')
         storage=$OPTARG
         logger "$INFO" "Warning: MDCB installtion does not currently support postgres database";
@@ -66,6 +72,7 @@ shift $((OPTIND - 1));
 if ([[ $VANILLA     != "$flavor"  ]] && [[ $OPENSHIFT    != "$flavor"  ]]) || \
    ([[ $MONGO       != "$storage" ]] && [[ $POSTGRES     != "$storage" ]]) || \
    ([[ $REDIS       != "$redis"   ]] && [[ $REDISCLUSTER != "$redis"   ]]  && [[ $REDISSENTINEL != "$redis"  ]]) || \
-   ([[ $PORTFORWARD != "$expose"  ]] && [[ $LOADBALANCER != "$expose"  ]]  && [[ $INGRESS       != "$expose" ]]  && [[ $NONE != "$expose" ]]); then
+   ([[ $PORTFORWARD != "$expose"  ]] && [[ $LOADBALANCER != "$expose"  ]]  && [[ $INGRESS       != "$expose" ]]  && [[ $NONE != "$expose" ]]) || \
+   ([[ $AWS         != "$cloud"   ]] && [[ $GCP          != "$cloud"   ]]  && [[ $AZURE         != "$cloud"  ]]  && [[ $NONE != "$cloud" ]]) ; then
   usage; exit 1;
 fi
