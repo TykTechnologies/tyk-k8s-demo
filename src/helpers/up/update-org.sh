@@ -10,7 +10,7 @@ terminateDashboardPort() {
 }
 
 ORG_FILENAME=myorg.json;
-FORWARD_PORT=3001;
+FORWARD_PORT=3999;
 
 dashURL=$(kubectl get secrets tyk-operator-conf -n "$namespace" -o=jsonpath='{.data.TYK_URL}' | base64 -d | cut -d '/' -f3);
 orgID=$(kubectl get secrets tyk-operator-conf -n "$namespace" -o=jsonpath='{.data.TYK_ORG}' | base64 -d);
