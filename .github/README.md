@@ -25,6 +25,12 @@ cp .env.example .env
 ## Quick Start
 
 ```
+./up.sh -e port-forward -d portal,operator tyk-pro
+```
+This quick start command will stand up the entire Tyk stack along with the Tyk Enterprise Portal and the Tyk Operator.
+
+
+```
 ./up.sh -e port-forward -d portal,operator,operator-httpbin,pump-prometheus,k6-traffic-generator tyk-pro
 ```
 
