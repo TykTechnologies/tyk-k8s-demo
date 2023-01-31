@@ -70,7 +70,7 @@ fi
 
 addSummary "\n\
 \tTyk Control Plane deployed\n \
-\tDashboard username: default@example.com\n \
+\tDashboard username: $USERNAME\n \
 \tDashboard password: $PASSWORD\n \
 \tMDCB connection string: $ip:$port\n \
 \tOrganisation ID: $orgID\n";

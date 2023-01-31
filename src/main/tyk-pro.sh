@@ -33,7 +33,7 @@ unsetVerbose;
 
 addSummary "\n\
 \tTyk Pro deployed\n \
-\tDashboard username: default@example.com\n \
+\tDashboard username: $USERNAME\n \
 \tDashboard password: $PASSWORD\n";
 
 logger "$INFO" "installed tyk in namespace $namespace";
