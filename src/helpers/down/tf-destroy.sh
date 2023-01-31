@@ -1,3 +1,5 @@
+checkCommand terraform;
+
 dir=$(pwd);
 
 cd "src/clouds/$cloud";
