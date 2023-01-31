@@ -3,6 +3,7 @@ source src/main/redis.sh;
 source src/main/storage.sh;
 
 args=(--set "dash.license=$LICENSE" \
+  --set "dash.adminUser.email=$USERNAME" \
   --set "dash.adminUser.password=$PASSWORD" \
   --set "dash.image.tag=$TYK_DASHBOARD_VERSION" \
   --set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
