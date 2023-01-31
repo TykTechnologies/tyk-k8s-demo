@@ -22,6 +22,14 @@ Create `.env` file
 cp .env.example .env
 ```
 
+## Quick Start
+
+```
+./up.sh -e port-forward -d portal,operator,operator-httpbin,pump-prometheus,k6-traffic-generator tyk-pro
+```
+
+This quick start command will stand up the entire Tyk stack a long with example APIs, Prometheus and Grafana and a traffic generating job to generate analytics. 
+
 ## Possible deployments
 - `tyk-pro`: Tyk pro self-managed single region
 - `tyk-cp`: Tyk pro self-managed multi region control plane
