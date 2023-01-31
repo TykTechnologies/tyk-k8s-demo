@@ -28,7 +28,7 @@ cp .env.example .env
 ./up.sh -e port-forward -d portal,operator,operator-httpbin,pump-prometheus,k6-traffic-generator tyk-pro
 ```
 
-This quick start command will stand up the entire Tyk stack along with example APIs, Prometheus and Grafana and a k6 traffic generating job to generate analytics. 
+This quick start command will stand up the entire Tyk stack along with example APIs, Prometheus and Grafana and a k6 traffic generating job to generate analytics.
 
 ## Possible deployments
 - `tyk-pro`: Tyk pro self-managed single region
@@ -104,27 +104,28 @@ Flags:
 ## Variables
 You can add any Tyk environments variables to the `.env` file and they will be mapped to the respective extraEnvs section in the helm charts.
 
-| Variable                    |       Default       | Comments                                                                 |
-|-----------------------------|:-------------------:|--------------------------------------------------------------------------|
-| TYK_DASHBOARD_VERSION       |      `v4.3.1`       | Dashboard version                                                        |
-| TYK_GATEWAY_VERSION         |      `v4.3.1`       | Gateway version                                                          |
-| TYK_MDCB_VERSION            |      `v2.0.4`       | MDCB version                                                             |
-| TYK_PUMP_VERSION            |      `v1.7.0`       | Pump version                                                             |
-| TYK_PORTAL_VERSION          |      `v1.0.1`       | Portal version                                                           |
-| TYK_HELM_CHART_PATH         |     `tyk-helm`      | Path to charts, can be a local directory or a helm repo                  |
-| PASSWORD                    | `topsecretpassword` | Default password for all the services deployed                           |
-| LICENSE                     |                     | Dashboard license                                                        |
-| MDCB_LICENSE                |                     | MDCB license                                                             |
-| PORTAL_LICENSE              |                     | Portal license                                                           |
-| TYK_WORKER_CONNECTIONSTRING |                     | MDCB URL for worker connection                                           |
-| TYK_WORKER_ORGID            |                     | Org ID of dashboard user                                                 |
-| TYK_WORKER_AUTHTOKEN        |                     | Auth token of dashboard user                                             |
-| TYK_WORKER_USESSL           |       `true`        | Set to `true` when the MDCB is serving on a TLS connection               |
-| TYK_WORKER_GW_PORT          |       `8081`        | Set the gateway service port to use                                      |
-| GCP_PROJECT                 |                     | The GCP project for terraform authentication on GCP                      |
-| CLUSTER_LOCATION            |                     | Cluster location that will be created on AKS, EKS, or GKE                |
-| CLUSTER_MACHINE_TYPE        |                     | Machine type for the cluster that will be created on AKS, EKS, or GKE    |
-| CLUSTER_NODE_COUNT          |                     | Number of nodes for the cluster that will be created on AKS, EKS, or GKE |
+| Variable                    |        Default        | Comments                                                                 |
+|-----------------------------|:---------------------:|--------------------------------------------------------------------------|
+| TYK_DASHBOARD_VERSION       |       `v4.3.1`        | Dashboard version                                                        |
+| TYK_GATEWAY_VERSION         |       `v4.3.1`        | Gateway version                                                          |
+| TYK_MDCB_VERSION            |       `v2.0.4`        | MDCB version                                                             |
+| TYK_PUMP_VERSION            |       `v1.7.0`        | Pump version                                                             |
+| TYK_PORTAL_VERSION          |       `v1.0.1`        | Portal version                                                           |
+| TYK_HELM_CHART_PATH         |      `tyk-helm`       | Path to charts, can be a local directory or a helm repo                  |
+| USERNAME                    | `default@example.com` | Default password for all the services deployed                           |
+| PASSWORD                    |  `topsecretpassword`  | Default password for all the services deployed                           |
+| LICENSE                     |                       | Dashboard license                                                        |
+| MDCB_LICENSE                |                       | MDCB license                                                             |
+| PORTAL_LICENSE              |                       | Portal license                                                           |
+| TYK_WORKER_CONNECTIONSTRING |                       | MDCB URL for worker connection                                           |
+| TYK_WORKER_ORGID            |                       | Org ID of dashboard user                                                 |
+| TYK_WORKER_AUTHTOKEN        |                       | Auth token of dashboard user                                             |
+| TYK_WORKER_USESSL           |        `true`         | Set to `true` when the MDCB is serving on a TLS connection               |
+| TYK_WORKER_GW_PORT          |        `8081`         | Set the gateway service port to use                                      |
+| GCP_PROJECT                 |                       | The GCP project for terraform authentication on GCP                      |
+| CLUSTER_LOCATION            |                       | Cluster location that will be created on AKS, EKS, or GKE                |
+| CLUSTER_MACHINE_TYPE        |                       | Machine type for the cluster that will be created on AKS, EKS, or GKE    |
+| CLUSTER_NODE_COUNT          |                       | Number of nodes for the cluster that will be created on AKS, EKS, or GKE |
 
 ## Features compatibility & tests matrix
 | Depoloyment          |             `--expose` Support             |   Postman Tests    | OpenShift Support  |
