@@ -1,0 +1,118 @@
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: httpbin-protected
+spec:
+  name: httpbin-protected
+  protocol: http
+  active: true
+  proxy:
+    target_url: http://service_url
+    listen_path: /httpbin-protected
+    strip_listen_path: true
+  use_standard_auth: true
+  auth_configs:
+    authToken:
+      auth_header_name: Authorization
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: httpbin-protected-product-1
+spec:
+  name: httpbin-protected-product-1
+  state: active
+  active: true
+  partitions:
+    quota: true
+    rate_limit: true
+  access_rights_array:
+    - name: httpbin-protected
+      namespace: api_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: httpbin-protected-product-2
+spec:
+  name: httpbin-protected-product-2
+  state: active
+  active: true
+  partitions:
+    quota: true
+    rate_limit: true
+  access_rights_array:
+    - name: httpbin-protected
+      namespace: api_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: httpbin-protected-product-3
+spec:
+  name: httpbin-protected-product-3
+  state: active
+  active: true
+  partitions:
+    quota: true
+    rate_limit: true
+  access_rights_array:
+    - name: httpbin-protected
+      namespace: api_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: httpbin-protected-plan-gold
+spec:
+  name: httpbin-protected-plan-gold
+  state: active
+  active: true
+  partitions:
+    acl: true
+  rate: 10000
+  access_rights_array:
+    - name: httpbin-protected
+      namespace: api_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: httpbin-protected-plan-silver
+spec:
+  name: httpbin-protected-plan-silver
+  state: active
+  active: true
+  rate: 1000
+  partitions:
+    acl: true
+  access_rights_array:
+    - name: httpbin-protected
+      namespace: api_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: httpbin-protected-plan-bronze
+spec:
+  name: httpbin-protected-plan-bronze
+  state: active
+  active: true
+  rate: 60
+  partitions:
+    acl: true
+  access_rights_array:
+    - name: httpbin-protected
+      namespace: api_namespace
+      versions:
+        - Default

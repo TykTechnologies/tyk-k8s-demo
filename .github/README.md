@@ -116,7 +116,7 @@ You can add any Tyk environments variables to the `.env` file and they will be m
 | TYK_GATEWAY_VERSION         |       `v4.3.1`        | Gateway version                                                          |
 | TYK_MDCB_VERSION            |       `v2.0.4`        | MDCB version                                                             |
 | TYK_PUMP_VERSION            |       `v1.7.0`        | Pump version                                                             |
-| TYK_PORTAL_VERSION          |       `v1.0.1`        | Portal version                                                           |
+| TYK_PORTAL_VERSION          |       `v1.1.0`        | Portal version                                                           |
 | TYK_HELM_CHART_PATH         |      `tyk-helm`       | Path to charts, can be a local directory or a helm repo                  |
 | USERNAME                    | `default@example.com` | Default password for all the services deployed                           |
 | PASSWORD                    |  `topsecretpassword`  | Default password for all the services deployed                           |
