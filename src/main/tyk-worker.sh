@@ -9,6 +9,8 @@ args=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "gateway.rpc.apiKey=$TYK_WORKER_AUTHTOKEN" \
   --set "gateway.rpc.useSSL=$TYK_WORKER_USESSL" \
   --set "gateway.rpc.groupId=$(echo "$cluster/$namespace" | base64)" \
+  --set "gateway.sharding.enabled=$TYK_WORKER_SHARDING_ENABLED" \
+  --set "gateway.sharding.tags=$TYK_WORKER_SHARDING_TAGS" \
   --set "gateway.service.port=$TYK_WORKER_GW_PORT");
 
 tykReleaseName="tyk-worker-tyk-hybrid";
