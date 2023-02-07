@@ -127,6 +127,8 @@ You can add any Tyk environments variables to the `.env` file and they will be m
 | TYK_WORKER_ORGID            |                       | Org ID of dashboard user                                                 |
 | TYK_WORKER_AUTHTOKEN        |                       | Auth token of dashboard user                                             |
 | TYK_WORKER_USESSL           |        `true`         | Set to `true` when the MDCB is serving on a TLS connection               |
+| TYK_WORKER_SHARDING_ENABLED |        `false`        | Set to `true` to enable API Sharding               			 |
+| TYK_WORKER_SHARDING_TAGS    |                       | API Gateway segmentation tags 					         |
 | TYK_WORKER_GW_PORT          |        `8081`         | Set the gateway service port to use                                      |
 | GCP_PROJECT                 |                       | The GCP project for terraform authentication on GCP                      |
 | CLUSTER_LOCATION            |                       | Cluster location that will be created on AKS, EKS, or GKE                |
