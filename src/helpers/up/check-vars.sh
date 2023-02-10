@@ -46,6 +46,10 @@ if [[ $TYKWORKER == "$mode" ]]; then
     logger "$ERROR" "please make sure TYK_WORKER_AUTHTOKEN variable is set in your .env file";
     invalid=true;
   fi
+  if [[ -z "$TYK_WORKER_SHARDING_ENABLED" ]]; then
+    logger "$ERROR" "please make sure TYK_WORKER_SHARDING_ENABLED variable is set in your .env file";
+    invalid=true;
+  fi
 fi
 
 if $invalid; then
