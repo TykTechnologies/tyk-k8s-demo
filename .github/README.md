@@ -22,6 +22,8 @@ Create `.env` file
 cp .env.example .env
 ```
 
+Depending on the deployments you would like install  set values of the `LICENSE`, `MDCB_LICENSE` and `PORTAL_LICENSE` inside the `.env` file.
+
 ## Quick Start
 
 ```
