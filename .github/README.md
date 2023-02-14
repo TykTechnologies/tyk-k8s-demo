@@ -22,6 +22,8 @@ Create `.env` file
 cp .env.example .env
 ```
 
+In the `.env` file, set `LICENSE` with the value of your Dashboard license. Adding license keys for `MDCB_LICENSE` and `PORTAL_LICENSE` is optional unless you wish to bootstrap those services.
+
 ## Quick Start
 
 ```
