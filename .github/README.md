@@ -27,13 +27,13 @@ Depending on the deployments you would like install  set values of the `LICENSE`
 ## Quick Start
 
 ```
-./up.sh -e port-forward -d portal,operator tyk-pro
+./up.sh --expose port-forward --deployments portal,operator tyk-pro
 ```
 This quick start command will stand up the entire Tyk stack along with the Tyk Enterprise Portal and the Tyk Operator.
 
 
 ```
-./up.sh -e port-forward -d portal,operator,operator-httpbin,pump-prometheus,k6-traffic-generator tyk-pro
+./up.sh --expose port-forward --deployments portal,operator,operator-httpbin,pump-prometheus,k6-traffic-generator tyk-pro
 ```
 
 This quick start command will stand up the entire Tyk stack along with example APIs, Prometheus and Grafana and a k6 traffic generating job to generate analytics.
