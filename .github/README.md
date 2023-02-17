@@ -13,7 +13,7 @@ Minimize the amount of effort needed to stand up the Tyk infrastructure and show
 - Helm
 - jq
 - git
-- Terraform
+- Terraform (only when using `--cloud` flag)
 
 #### Initial setup
 Create `.env` file
@@ -107,6 +107,7 @@ Flags:
   -v, --verbose   	bool   	 set log level to debug
   -n, --namespace 	string 	 namespace the tyk stack will be installed in, defaults to 'tyk'
   -p, --ports     	bool   	 disconnect port connections only
+  -c, --cloud     	enum     tear down k8s cluster stood up
 ```
 
 ## Variables
