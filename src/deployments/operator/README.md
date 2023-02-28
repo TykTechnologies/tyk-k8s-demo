@@ -7,5 +7,4 @@ To run on `minikube` you must enable ingress addons
 ```
 minikube start
 minikube addons enable ingress
-minikube start
 ```
