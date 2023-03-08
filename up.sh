@@ -28,7 +28,7 @@ if $dryRun; then
 fi
 
 if [ "$AWS" == "$cloud" ] || [ "$GCP" == "$cloud" ]  || [ "$AZURE" == "$cloud" ]; then
-  logger "$INFO" "standing up $cloud k8s cluster. This may take up 10-30 minutes depending on the cloud provider...";
+  logger "$INFO" "standing up $cloud k8s cluster. This may take 10-30 minutes depending on the cloud provider...";
   source src/helpers/up/tf-apply.sh;
 fi
 

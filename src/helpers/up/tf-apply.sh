@@ -45,4 +45,3 @@ fi
 unsetVerbose;
 
 cd "$dir";
-
