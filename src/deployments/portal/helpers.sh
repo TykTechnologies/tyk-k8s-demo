@@ -1,6 +1,6 @@
 checkPortalExists() {
   set +e;
-  search=$(kubectl get pods -n "$namespace" | awk '{print $1}' | grep -e "^enterprise-portal-");
+  search=$(kubectl get pods --namespace "$namespace" | awk '{print $1}' | grep -e "^enterprise-portal-");
   logger "$DEBUG" "portal-exists: search result: $search";
   set -e;
 

@@ -34,7 +34,7 @@ addDeploymentArgs "${extraEnvs[@]}";
 setVerbose;
 helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
   --install \
-  -n "$namespace" \
+  --namespace "$namespace" \
   "${deploymentsArgs[@]}" \
   --atomic \
   --wait > /dev/null;

@@ -59,20 +59,20 @@ This quick start command will stand up the entire Tyk stack along with the Tyk E
 - `postgres`: Bitnami Postgres database deployment as a Tyk backend
 
 ### Supplementary Deployments
-- [k6 Traffic Generator](../src/deployments/k6-traffic-generator): generates a load of traffic to seed analytical data.
+- [k6 Traffic Generator](../src/deployments/k6-traffic-sim): generates a load of traffic to seed analytical data.
 - [Operator](../src/deployments/operator): this deployment option will install the [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency [cert-manager](https://github.com/jetstack/cert-manager).
 	- [HttpBin](../src/deployments/operator-httpbin): creates API examples using the tyk-operator.
 	- [GraphQL](../src/deployments/operator-graphql): creates a set of graphql API examples using the tyk-operator. Federation v1 and stitching examples.
 - [Portal](../src/deployments/portal): this deployment will install the [Tyk Enterprise Developer Portal](https://tyk.io/docs/tyk-developer-portal/tyk-enterprise-developer-portal/) as well as its dependency PostgreSQL.
 - Pumps
-  - [Prometheus](../src/deployments/pump-prometheus): this deployment will stand up a Tyk Prometheus pump with custom analytics that is fed into Grafana for visualization.
+  - [Prometheus](../src/deployments/prometheus): this deployment will stand up a Tyk Prometheus pump with custom analytics that is fed into Grafana for visualization.
 
 ### Example
 ```
 ./up.sh \
   --redis redis-cluster \
   --storage postgres \
-  --deployments operator,operator-httpbin,pump-prometheus,k6-traffic-generator \
+  --deployments operator-httpbin,prometheus,k6-traffic-sim \
   --expose port-forward \
   tyk-pro
 ```
@@ -100,7 +100,7 @@ Flags:
   -n, --namespace   	string 	 namespace the tyk stack will be installed in, defaults to 'tyk'
   -f, --flavor      	enum   	 k8s environment flavor. This option can be set 'openshift' and defaults to 'vanilla'
   -e, --expose      	enum   	 set this option to 'port-forward' to expose the services as port-forwards or to 'load-balancer' to expose the services as load balancers or 'ingress' which exposes services as a k8s ingress object
-  -r, --redis       	enum   	 the redis mode that tyk stack will use. This option can be set 'redis-cluster', 'redis-sentinel' and defaults to 'redis'
+  -r, --redis       	enum   	 the redis mode that tyk stack will use. This option can be set 'redis', 'redis-sentinel' and defaults to 'redis-cluster'
   -s, --storage     	enum   	 database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'
   -d, --deployments 	string 	 comma separated list of deployments to launch
   -c, --cloud       	enum   	 stand up k8s infrastructure in 'aws', 'gcp' or 'azure'. This will require Terraform and the CLIs associate with the cloud of choice
@@ -182,18 +182,18 @@ You can add any Tyk environments variables to the `.env` file and they will be m
 | CLUSTER_NODE_COUNT          |                       | Number of nodes for the cluster that will be created on AKS, EKS, or GKE |
 
 ## Features compatibility & tests matrix
-| Depoloyment          |             `--expose` Support             |   Postman Tests    | OpenShift Support  |
-|----------------------|:------------------------------------------:|:------------------:|:------------------:|
-| tyk-gateway          | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
-| tyk-worker           | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
-| tyk-pro              | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
-| tyk-cp               | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
-| k6-traffic-generator |                    N/A                     |        N/A         |   :construction:   |
-| operator             |                    N/A                     |        N/A         |   :construction:   |
-| operator-graphql     |               `port-froward`               | :white_check_mark: |   :construction:   |
-| operator-httpbin     |               `port-froward`               |   :construction:   |   :construction:   |
-| portal               | `port-froward`, `ingress`, `load-balancer` |   :construction:   | :white_check_mark: |
-| pump-prometheus      |               `port-froward`               |   :construction:   |   :construction:   |
+| Deployment       |             `--expose` Support             |   Postman Tests    | OpenShift Support  |
+|------------------|:------------------------------------------:|:------------------:|:------------------:|
+| tyk-gateway      | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
+| tyk-worker       | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
+| tyk-pro          | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
+| tyk-cp           | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
+| k6-traffic-sim   |                    N/A                     |        N/A         |   :construction:   |
+| operator         |                    N/A                     |        N/A         |   :construction:   |
+| operator-graphql |               `port-froward`               | :white_check_mark: |   :construction:   |
+| operator-httpbin |               `port-froward`               |   :construction:   |   :construction:   |
+| portal           | `port-froward`, `ingress`, `load-balancer` |   :construction:   | :white_check_mark: |
+| prometheus  |               `port-froward`               |   :construction:   |   :construction:   |
 
 :white_check_mark: Built/Compatible
 :construction: Working on it

@@ -52,7 +52,7 @@ data:
     };
 
     function sendStatus(status) {
-      http.get('http://gateway_url/listen_path/status/' + status);
+      http.get('http://replace_gateway_url/replace_listen_path/status/' + status);
     }
 
     export function success() {
@@ -93,15 +93,15 @@ data:
     export function differentPath() {
       switch (randomIntBetween(1, 5)) {
         case 1:
-          http.get('http://gateway_url/listen_path/cache'); break;
+          http.get('http://replace_gateway_url/replace_listen_path/cache'); break;
         case 2:
-          http.get('http://gateway_url/listen_path/ip'); break;
+          http.get('http://replace_gateway_url/replace_listen_path/ip'); break;
         case 3:
-          http.get('http://gateway_url/listen_path/headers'); break;
+          http.get('http://replace_gateway_url/replace_listen_path/headers'); break;
         case 4:
-          http.get('http://gateway_url/listen_path/user-agent'); break;
+          http.get('http://replace_gateway_url/replace_listen_path/user-agent'); break;
         default:
-          http.get('http://gateway_url/listen_path/image'); break;
+          http.get('http://replace_gateway_url/replace_listen_path/image'); break;
       }
 
       if (randomIntBetween(1, 7) === 1) {
@@ -126,19 +126,19 @@ data:
 
       switch (randomIntBetween(1, 5)) {
         case 1:
-          http.post("http://gateway_url/listen_path/post", payload, params);
+          http.post("http://replace_gateway_url/replace_listen_path/post", payload, params);
           break;
         case 2:
-          http.patch("http://gateway_url/listen_path/patch", payload, params);
+          http.patch("http://replace_gateway_url/replace_listen_path/patch", payload, params);
           break;
         case 3:
-          http.del("http://gateway_url/listen_path/delete", payload, params);
+          http.del("http://replace_gateway_url/replace_listen_path/delete", payload, params);
           break;
         case 4:
-          http.put("http://gateway_url/listen_path/put", payload, params);
+          http.put("http://replace_gateway_url/replace_listen_path/put", payload, params);
           break;
         case 5:
-          http.post("http://gateway_url/listen_path/response-headers", payload, params);
+          http.post("http://replace_gateway_url/replace_listen_path/response-headers", payload, params);
           break;
       }
     }

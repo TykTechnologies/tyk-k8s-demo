@@ -10,7 +10,7 @@ fi
 setVerbose;
 helm upgrade $mongoReleaseName bitnami/mongodb --version 13.6.1 \
   --install \
-  -n "$namespace" \
+  --namespace "$namespace" \
   --set "image.repository=zalbiraw/mongodb" \
   --set "image.tag=4.4.15-debian-10" \
   \

@@ -10,7 +10,7 @@ fi
 setVerbose;
 helm upgrade "$postgresReleaseName" bitnami/postgresql --version 11.9.7 \
   --install \
-  -n "$namespace" \
+  --namespace "$namespace" \
   --set "image.repository=zalbiraw/postgresql" \
   --set "image.tag=12.12.0-debian-11" \
   \

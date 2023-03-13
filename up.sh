@@ -39,8 +39,12 @@ source "src/main/$mode.sh";
 
 if ! [[ -z $deployments ]]; then
   for deployment in "${deployments[@]}"; do
-    if [[ -f "src/deployments/$deployment/main.sh" ]]; then
-      source "src/deployments/$deployment/main.sh";
+    if [[ -f "src/deployments/$deployment/main.safe.sh" ]]; then
+      parent="${deployment%%-*}"
+      if [[ -f "src/deployments/$parent/main.safe.sh" ]]; then
+        source "src/deployments/$parent/main.safe.sh";
+      fi
+      source "src/deployments/$deployment/main.safe.sh";
     else
       logger "$INFO" "deployment $deployment not found...skipping";
     fi

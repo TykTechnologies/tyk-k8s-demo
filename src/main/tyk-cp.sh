@@ -27,7 +27,7 @@ if ! $mdcbExists; then
   setVerbose;
   helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
     --install \
-    -n "$namespace" \
+    --namespace "$namespace" \
     "${deploymentsArgs[@]}" \
     --atomic \
     --wait > /dev/null;
@@ -53,7 +53,7 @@ addDeploymentArgs "${mdcbSecurityContextArgs[@]}";
 
 setVerbose;
 helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
-  -n "$namespace" \
+  --namespace "$namespace" \
   "${deploymentsArgs[@]}" \
   --atomic \
   --wait > /dev/null;

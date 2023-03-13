@@ -11,19 +11,6 @@ checkK6OperatorExists() {
   fi
 }
 
-checkHttpBinCRDExists() {
-  set +e;
-  search=$(kubectl get -n "$namespace" tykapis httpbin-keyless);
-  logger "$DEBUG" "httpbin-crd-exists: search result: $search";
-  set -e;
-
-  if [[ -z $search ]]; then
-    httpBinCRDExists=false;
-  else
-    httpBinCRDExists=true;
-  fi
-}
-
 waitForK6Jobs() {
   logger "$INFO" "waiting for jobs to start...";
 
@@ -31,7 +18,7 @@ waitForK6Jobs() {
     sleep 1;
 
     set +e;
-    search=$(kubectl get -n "$namespace" jobs "$load_test_name-1" 2> /dev/null | grep "$load_test_name-1");
+    search=$(kubectl get --namespace "$namespace" jobs "$load_test_name-1" 2> /dev/null | grep "$load_test_name-1");
     logger "$DEBUG" "job $load_test_name-1 not found";
     set -e;
 

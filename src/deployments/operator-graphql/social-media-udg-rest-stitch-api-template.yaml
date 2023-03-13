@@ -73,7 +73,7 @@ spec:
               fields:
                 - user
           config:
-            url: tyk://users-rest/users/{{.arguments.id}}
+            url: tyk://replace_users_url/users/{{.arguments.id}}
             method: GET
             body: ""
             headers: {}
@@ -85,7 +85,7 @@ spec:
               fields:
                 - posts
           config:
-            url: tyk://posts-rest/users/{{.object.id}}/posts
+            url: tyk://replace_posts_url/users/{{.object.id}}/posts
             method: GET
             body: ""
             headers: {}
@@ -97,7 +97,7 @@ spec:
               fields:
                 - comments
           config:
-            url: tyk://comments-rest/posts/{{.object.id}}/comments
+            url: tyk://replace_comments_url/posts/{{.object.id}}/comments
             method: GET
             body: ""
             headers: {}

@@ -12,8 +12,8 @@ terminateDashboardPort() {
 ORG_FILENAME=myorg.json;
 FORWARD_PORT=3999;
 
-dashURL=$(kubectl get secrets tyk-operator-conf -n "$namespace" -o=jsonpath='{.data.TYK_URL}' | base64 -d | cut -d '/' -f3);
-orgID=$(kubectl get secrets tyk-operator-conf -n "$namespace" -o=jsonpath='{.data.TYK_ORG}' | base64 -d);
+dashURL=$(kubectl get secrets tyk-operator-conf --namespace "$namespace" -o=jsonpath='{.data.TYK_URL}' | base64 -d | cut -d '/' -f3);
+orgID=$(kubectl get secrets tyk-operator-conf --namespace "$namespace" -o=jsonpath='{.data.TYK_ORG}' | base64 -d);
 domain=$(echo "$dashURL" | cut -d ':' -f1);
 port=$(echo "$dashURL" | cut -d ':' -f2);
 
@@ -23,7 +23,7 @@ logger "$DEBUG" "Organisation ID: $orgID";
 tykReleaseName=$1;
 
 terminateDashboardPort;
-(kubectl port-forward "svc/dashboard-svc-$tykReleaseName" -n "$namespace" $FORWARD_PORT:$port > /dev/null &)
+(kubectl port-forward "svc/dashboard-svc-$tykReleaseName" --namespace "$namespace" $FORWARD_PORT:$port > /dev/null &)
 
 setVerbose;
 sleep 5;

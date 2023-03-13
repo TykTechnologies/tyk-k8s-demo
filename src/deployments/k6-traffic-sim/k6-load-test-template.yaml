@@ -1,7 +1,7 @@
 apiVersion: k6.io/v1alpha1
 kind: K6
 metadata:
-  name: load_test_name
+  name: replace_test_name
 spec:
   parallelism: 4
   separate: false

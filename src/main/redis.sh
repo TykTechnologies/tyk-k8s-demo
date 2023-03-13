@@ -26,7 +26,7 @@ if [[ $REDISCLUSTER == "$redis" ]]; then
   setVerbose;
   helm upgrade $redisReleaseName bitnami/redis-cluster --version 7.6.4 \
     --install \
-    -n "$namespace" \
+    --namespace "$namespace" \
     --set "image.repository=zalbiraw/redis-cluster" \
     --set "image.tag=6.2.7-debian-11" \
     \
@@ -48,7 +48,7 @@ elif [[ $REDISSENTINEL == "$redis" ]]; then
   setVerbose;
   helm upgrade $redisReleaseName bitnami/redis --version 17.3.2 \
     --install \
-    -n "$namespace" \
+    --namespace "$namespace" \
     --set "image.repository=zalbiraw/redis" \
     --set "image.tag=6.2.7-debian-11" \
     \
@@ -74,7 +74,7 @@ else
   setVerbose;
   helm upgrade $redisReleaseName bitnami/redis --version 17.3.2 \
     --install \
-    -n "$namespace" \
+    --namespace "$namespace" \
     --set "image.repository=zalbiraw/redis" \
     --set "image.tag=6.2.7-debian-11" \
     \

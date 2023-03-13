@@ -1,6 +1,6 @@
 checkOperatorSecretExists() {
   set +e;
-  search=$(kubectl get secrets -n "$namespace" | grep "tyk-operator-conf");
+  search=$(kubectl get secrets --namespace "$namespace" | grep "tyk-operator-conf");
   logger "$DEBUG" "checkOperatorSecretExists: search result $search";
   set -e;
 

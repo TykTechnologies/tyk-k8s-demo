@@ -15,23 +15,19 @@ args=(--set "pump.extraEnvs[$pumpCtr].name=TYK_PMP_PUMPS_PROMETHEUS_TYPE" \
   --set "pump.extraEnvs[$(($pumpCtr + 3))].value=$customMetrics");
 pumpCtr=$((pumpCtr + 4));
 
-addService "pump-svc-$tykReleaseName";
 addDeploymentArgs "${args[@]}";
 
 setVerbose;
 helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
-  -n "$namespace" \
+  --namespace "$namespace" \
   "${deploymentsArgs[@]}" \
   --atomic \
   --wait > /dev/null
 unsetVerbose;
 
-sed "s/release_name/$tykReleaseName/g" src/deployments/pump-prometheus/pump-svc.yaml | \
-  sed "s/prom_pump_port/$PROMETHEUS_PUMP_PORT/g" | \
-  kubectl apply -n "$namespace" -f - > /dev/null;
-
-prometheusReleaseName="tyk-prometheus";
-addService "$prometheusReleaseName-server";
+sed "s/replace_release_name/$tykReleaseName/g" src/deployments/prometheus/pump-svc.yaml | \
+  sed "s/replace_pump_port/$PROMETHEUS_PUMP_PORT/g" | \
+  kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 setVerbose;
 helm upgrade $prometheusReleaseName prometheus-community/prometheus \
@@ -54,14 +50,11 @@ helm upgrade $prometheusReleaseName prometheus-community/prometheus \
   --set "serverFiles.prometheus\.yml.scrape_configs[0].job_name=tyk" \
   --set "serverFiles.prometheus\.yml.scrape_configs[0].metrics_path=$PROMETHEUS_PUMP_PATH" \
   --set "serverFiles.prometheus\.yml.scrape_configs[0].static_configs[0].targets={pump-svc-$tykReleaseName.$namespace.svc:$PROMETHEUS_PUMP_PORT}" \
-  -n "$namespace" > /dev/null;
+  --namespace "$namespace" > /dev/null;
 unsetVerbose;
 
-grafanaReleaseName="tyk-grafana";
-addService "$grafanaReleaseName";
-
 setVerbose;
-kubectl apply -f src/deployments/pump-prometheus/grafana-dashboards-configmap.yaml -n "$namespace" > /dev/null;
+kubectl apply -f src/deployments/prometheus/grafana-dashboards-configmap.yaml --namespace "$namespace" > /dev/null;
 helm upgrade $grafanaReleaseName grafana/grafana \
   --install \
   --set "adminPassword=$PASSWORD" \
@@ -85,7 +78,7 @@ helm upgrade $grafanaReleaseName grafana/grafana \
   --set "extraConfigmapMounts[0].subPath=dashboards.json" \
   --set "extraConfigmapMounts[0].configMap=grafana-dashboards-configmap" \
   --set "extraConfigmapMounts[0].readOnly=true" \
-  -n "$namespace" > /dev/null;
+  --namespace "$namespace" > /dev/null;
 unsetVerbose;
 
 addSummary "\n\

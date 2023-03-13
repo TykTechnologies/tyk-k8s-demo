@@ -17,7 +17,7 @@ AZURE="azure";
 # Default values
 namespace=$DEFAULTNAMESPACE;
 flavor=$VANILLA;
-redis=$REDIS;
+redis=$REDISCLUSTER;
 storage=$MONGO;
 isDebug=false;
 dryRun=false;
@@ -35,7 +35,7 @@ for arg in "$@"; do
     '--namespace')   set -- "$@" '-n'   ;;
     '--flavor')      set -- "$@" '-f'   ;;
     '--expose')      set -- "$@" '-e'   ;;
-    '--redis')       set -- "$@" '-r'   ;;
+    '----namespace "$namespace"')       set -- "$@" '-r'   ;;
     '--storage')     set -- "$@" '-s'   ;;
     '--deployments') set -- "$@" '-d'   ;;
     '--dry-run')     set -- "$@" '-z'   ;;
