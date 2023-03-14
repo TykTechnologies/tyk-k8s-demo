@@ -1,11 +1,9 @@
-prometheusReleaseName="tyk-prometheus";
-grafanaReleaseName="tyk-grafana";
+PROMETHEUS_PUMP_PORT=9091;
+PROMETHEUS_SERVICE_PORT=9080;
+PROMETHEUS_PUMP_PATH="/metrics";
+prometheusReleaseName="prometheus";
 
-if ! $prometheusRegistered; then
+if [ -z "$prometheusRegistered" ]; then
   prometheusRegistered=true;
   source "src/deployments/prometheus/main.sh";
 fi
-
-addService "pump-svc-$tykReleaseName";
-addService "$prometheusReleaseName-server";
-addService "$grafanaReleaseName";

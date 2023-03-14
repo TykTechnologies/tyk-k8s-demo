@@ -20,6 +20,9 @@ portalDBName=portal;
 portalDBPort=54321;
 source src/main/pgsql.sh $portalDBName $portalDBPort;
 
+addService "enterprise-portal-svc-$tykReleaseName";
+addServiceArgs "enterprisePortal";
+
 checkPortalExists;
 if $portalExists; then
   logger "$INFO" "tyk-portal already exists in $namespace namespace...";
@@ -33,9 +36,3 @@ args=(--set "enterprisePortal.license=$PORTAL_LICENSE" \
   "${potalSecurityContextArgs[@]}");
 
 addDeploymentArgs "${args[@]}";
-
-helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
-  --namespace "$namespace" \
-  "${deploymentsArgs[@]}" \
-  --atomic \
-  --wait > /dev/null

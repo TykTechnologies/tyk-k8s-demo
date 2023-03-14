@@ -1,8 +1,5 @@
-deploymentPath="src/deployments/operator-httpbin";
-
-if ! $operatorHTTPBinRegistered; then
+if [ -z "$operatorHTTPBinRegistered" ]; then
   operatorHTTPBinRegistered=true;
-  source "$deploymentPath/main.sh";
+  source "src/deployments/operator/main.safe.sh";
+  source "src/deployments/operator-httpbin/main.sh";
 fi
-
-addService "httpbin-svc";

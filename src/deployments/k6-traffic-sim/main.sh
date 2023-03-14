@@ -1,6 +1,7 @@
+deploymentsPath="src/deployments";
+deploymentPath="src/deployments/k6-traffic-sim";
+
 source "$deploymentPath/helpers.sh";
-source "$deploymentsPath/operator/main.safe.sh";
-source "$deploymentsPath/operator-httpbin/main.safe.sh";
 
 checkK6OperatorExists;
 if ! $k6OperatorExists; then

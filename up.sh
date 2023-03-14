@@ -40,15 +40,20 @@ source "src/main/$mode.sh";
 if ! [[ -z $deployments ]]; then
   for deployment in "${deployments[@]}"; do
     if [[ -f "src/deployments/$deployment/main.safe.sh" ]]; then
-      parent="${deployment%%-*}"
-      if [[ -f "src/deployments/$parent/main.safe.sh" ]]; then
-        source "src/deployments/$parent/main.safe.sh";
-      fi
       source "src/deployments/$deployment/main.safe.sh";
     else
       logger "$INFO" "deployment $deployment not found...skipping";
     fi
   done
+
+  # Update tyk installation after some configuration might have been changed.
+  setVerbose;
+  helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
+    --namespace "$namespace" \
+    "${deploymentsArgs[@]}" \
+    --atomic \
+    --wait > /dev/null
+  unsetVerbose;
 fi
 
 if ! $dryRun; then

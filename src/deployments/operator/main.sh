@@ -8,9 +8,6 @@ if ! $operatorSecretExists; then
   exit 1;
 fi
 
-operatorReleaseName="tyk-operator";
-certManagerReleaseName="tyk-operator-cert-manager";
-
 setVerbose;
 helm upgrade "$certManagerReleaseName" jetstack/cert-manager \
   --install \

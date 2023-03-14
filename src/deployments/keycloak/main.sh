@@ -1,5 +1,10 @@
+keycloak_url=https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/21.0.1/kubernetes;
+deploymentPath="src/deployments/keycloak";
+
 logger "$INFO" "installing keycloak...";
 
+keycloakDBName=keycloak;
+keycloakDBPort=54322;
 source src/main/pgsql.sh $keycloakDBName $keycloakDBPort;
 
 logger "$INFO" "installing keycloak operator...";
@@ -25,6 +30,8 @@ kubectl create secret tls keycloak-tls-secret \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 logger "$INFO" "installing keycloak...";
+
+addService "https-$keycloakName-service";
 sed "s/replace_name/$keycloakName/g" "$deploymentPath/keycloak-template.yaml" | \
 sed "s/replace_host/tyk-$keycloakDBName-postgres-postgresql.$namespace.svc/g" | \
 sed "s/replace_port/$keycloakDBPort/g" | \

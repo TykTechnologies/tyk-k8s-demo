@@ -1,6 +1,9 @@
+deploymentPath="src/deployments/operator-httpbin";
+
 logger "$INFO" "creating Tyk Operator httpbin example...";
 
 setVerbose;
+addService "httpbin-svc";
 kubectl apply -f "$deploymentPath/httpbin-svc.yaml" --namespace "$namespace" > /dev/null;
 kubectl wait pods --namespace "$namespace" -l app=httpbin --for condition=Ready --timeout=60s  > /dev/null;
 
@@ -22,4 +25,3 @@ sed "s/replace_service_url/httpbin-svc.$namespace.svc:8000/g" "$deploymentPath/h
 # TODO
 
 unsetVerbose;
-
