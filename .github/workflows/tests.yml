@@ -261,7 +261,8 @@ jobs:
             ./up.sh \
               -v \
               --namespace ${{ matrix.deployment }} \
-              ${{ matrix.mode }}
+              --deployments ${{ matrix.deployment }} \
+              tyk-pro
 
       - name: Clean up ${{ matrix.deployment }} deployment
         run: ./down.sh --namespace ${{ matrix.deployment }}
