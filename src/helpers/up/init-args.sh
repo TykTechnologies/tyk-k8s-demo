@@ -35,7 +35,7 @@ for arg in "$@"; do
     '--namespace')   set -- "$@" '-n'   ;;
     '--flavor')      set -- "$@" '-f'   ;;
     '--expose')      set -- "$@" '-e'   ;;
-    '----namespace "$namespace"')       set -- "$@" '-r'   ;;
+    '--redis')       set -- "$@" '-r'   ;;
     '--storage')     set -- "$@" '-s'   ;;
     '--deployments') set -- "$@" '-d'   ;;
     '--dry-run')     set -- "$@" '-z'   ;;
