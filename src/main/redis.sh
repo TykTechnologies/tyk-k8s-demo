@@ -1,6 +1,5 @@
 tykRedisArgs=();
 redisReleaseName="tyk-redis";
-checkHelmReleaseExists $redisReleaseName;
 
 if [[ $REDISCLUSTER == "$redis" ]]; then
   args=(--set "redis.addrs[0]=$redisReleaseName-redis-cluster.$namespace.svc:6379" \
@@ -16,11 +15,7 @@ fi
 
 addDeploymentArgs "${args[@]}";
 
-if $releaseExists; then
-  logger "$INFO" "$redisReleaseName release already exists in $namespace namespace...";
-else
-  logger "$INFO" "installing $redisReleaseName in namespace $namespace";
-fi
+logger "$INFO" "installing $redisReleaseName in namespace $namespace";
 
 if [[ $REDISCLUSTER == "$redis" ]]; then
   setVerbose;

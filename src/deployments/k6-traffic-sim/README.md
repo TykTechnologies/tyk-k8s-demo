@@ -10,8 +10,8 @@ This deployment will install the `tyk-operator` and the `httpbin` API as require
 The generator jobs are run using the [k6-operator](https://github.com/grafana/k6-operator) which does not terminate jobs once they are finished. There is a hack in the code to overcome this but if that fails you can run the following to delete those jobs when completed.
 
 ```
-load_test_name=k6-load-test-1671763896
+test_name=k6-load-test-1671763896
 namespace=tyk
-sed "s/load_test_name/$load_test_name/g" src/deployments/k6-traffic-sim/k6-load-test-template.yaml | \
+sed "s/replace_test_name/$test_name/g" src/deployments/k6-traffic-sim/k6-load-test-template.yaml | \
 	kubectl delete --namespace "$namespace" -f -
 ```

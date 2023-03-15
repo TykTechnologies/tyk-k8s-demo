@@ -1,11 +1,6 @@
 postgresReleaseName="tyk-$1-postgres";
-checkHelmReleaseExists "$postgresReleaseName";
 
-if $releaseExists; then
-  logger "$INFO" "$postgresReleaseName release already exists in $namespace namespace...";
-else
-  logger "$INFO" "installing $postgresReleaseName in namespace $namespace";
-fi
+logger "$INFO" "installing $postgresReleaseName in namespace $namespace";
 
 setVerbose;
 helm upgrade "$postgresReleaseName" bitnami/postgresql --version 11.9.7 \

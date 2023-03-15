@@ -1,11 +1,6 @@
 mongoReleaseName="tyk-mongo";
-checkHelmReleaseExists $mongoReleaseName;
 
-if $releaseExists; then
-  logger "$INFO" "$mongoReleaseName release already exists in $namespace namespace...";
-else
-  logger "$INFO" "installing $mongoReleaseName in namespace $namespace";
-fi
+logger "$INFO" "installing $mongoReleaseName in namespace $namespace";
 
 setVerbose;
 helm upgrade $mongoReleaseName bitnami/mongodb --version 13.6.1 \

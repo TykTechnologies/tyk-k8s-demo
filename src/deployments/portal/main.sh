@@ -1,4 +1,4 @@
-source src/deployments/portal/helpers.sh;
+logger "$INFO" "installing portal in $namespace namespace...";
 
 if [[ $TYKPRO != "$mode" ]] && [[ $TYKCP != "$mode" ]]; then
   logger "$ERROR" "can only install the enterprise portal with a tyk-pro or a tyk-cp installation";
@@ -22,13 +22,6 @@ source src/main/pgsql.sh $portalDBName $portalDBPort;
 
 addService "enterprise-portal-svc-$tykReleaseName";
 addServiceArgs "enterprisePortal";
-
-checkPortalExists;
-if $portalExists; then
-  logger "$INFO" "tyk-portal already exists in $namespace namespace...";
-else
-  logger "$INFO" "installing enterprise portal in $namespace namespace...";
-fi
 
 args=(--set "enterprisePortal.license=$PORTAL_LICENSE" \
   --set "enterprisePortal.enabled=true" \

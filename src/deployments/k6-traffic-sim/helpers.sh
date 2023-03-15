@@ -18,8 +18,8 @@ waitForK6Jobs() {
     sleep 1;
 
     set +e;
-    search=$(kubectl get --namespace "$namespace" jobs "$load_test_name-1" 2> /dev/null | grep "$load_test_name-1");
-    logger "$DEBUG" "job $load_test_name-1 not found";
+    search=$(kubectl get --namespace "$namespace" jobs "$test_name-1" 2> /dev/null | grep "$test_name-1");
+    logger "$DEBUG" "job $test_name-1 not found";
     set -e;
 
     if ! [[ -z $search ]]; then
