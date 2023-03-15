@@ -252,9 +252,6 @@ jobs:
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
-          on_retry_command: |
-            ./down.sh \
-              --namespace ${{ matrix.deployment }}
           command: |
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.PORTAL_SECRET }}" \
