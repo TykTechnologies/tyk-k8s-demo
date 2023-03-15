@@ -229,7 +229,7 @@ jobs:
       fail-fast: false
       matrix:
 #        elasticsearch,elasticsearch-kibana,
-        deployment: [keycloak,keycloak-dcr,operator,operator-httpbin,operator-graphql,operator-udg,operator-federation,portal,prometheus,prometheus-grafana]
+        deployment: [keycloak-dcr,operator-httpbin,operator-graphql,operator-udg,operator-federation,portal,prometheus-grafana]
       max-parallel: 1
     steps:
       - uses: actions/checkout@v2
@@ -261,6 +261,3 @@ jobs:
               --namespace ${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
               tyk-pro
-
-      - name: Clean up ${{ matrix.deployment }} deployment
-        run: ./down.sh --namespace ${{ matrix.deployment }}
