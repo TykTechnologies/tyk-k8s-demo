@@ -222,3 +222,46 @@ jobs:
 
       - name: Clean up ${{ matrix.mode }} with ${{ matrix.redis }}
         run: ./down.sh --namespace ${{ matrix.mode }}-${{ matrix.redis }}
+
+  deployments:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        deployment: [elasticsearch,elasticsearch-kibana,keycloak,keycloak-dcr,operator,operator-httpbin,operator-graphql,operator-udg,operator-federation,portal,prometheus,prometheus-grafana]
+      max-parallel: 1
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Kind Cluster
+        uses: engineerd/setup-kind@v0.5.0
+        with:
+          version: "v0.11.1"
+          config: .github/kind-cluster-v1.22.15.yml
+
+      - name: Install helm
+        uses: Azure/setup-helm@v1.1
+        with:
+          version: v3.5.3
+
+      - name: Copy .env file
+        run: cp .env.example .env
+
+      - name: Testing ${{ matrix.deployment }} deployment
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: |
+            ./down.sh \
+              --namespace ${{ matrix.deployment }}
+          command: |
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_SECRET }}" \
+            ./up.sh \
+              -v \
+              --namespace ${{ matrix.deployment }} \
+              ${{ matrix.mode }}
+
+      - name: Clean up ${{ matrix.deployment }} deployment
+        run: ./down.sh --namespace ${{ matrix.deployment }}
