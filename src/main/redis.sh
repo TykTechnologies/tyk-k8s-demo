@@ -1,22 +1,45 @@
-tykRedisArgs=();
 redisReleaseName="tyk-redis";
 
+logger "$INFO" "installing $redisReleaseName in namespace $namespace";
+
+tykRedisArgs=();
 if [[ $REDISCLUSTER == "$redis" ]]; then
+  logger "$DEBUG" "redis.sh: setting tyk related redis cluster configuration";
   args=(--set "redis.addrs[0]=$redisReleaseName-redis-cluster.$namespace.svc:6379" \
     --set "redis.pass=$PASSWORD" \
     --set "redis.enableCluster=true");
 elif [[ $REDISSENTINEL == "$redis" ]]; then
+  logger "$DEBUG" "redis.sh: setting tyk related redis sentinel configuration";
   args=(--set "redis.addrs[0]=$redisReleaseName.$namespace.svc:6379" \
     --set "redis.pass=$PASSWORD");
 else
+  logger "$DEBUG" "redis.sh: setting tyk related redis configuration";
   args=(--set "redis.addrs[0]=$redisReleaseName-master.$namespace.svc:6379" \
     --set "redis.pass=$PASSWORD");
 fi
 
+securityContextArgs=();
+if [[ $OPENSHIFT == "$flavor" ]]; then
+  if [[ $REDISCLUSTER == "$redis" ]]; then
+    logger "$DEBUG" "redis.sh: setting openshift related redis cluster configuration";
+    securityContextArgs=(--set "podSecurityContext.runAsUser=$OS_UID_RANGE" \
+      --set "podSecurityContext.fsGroup=$OS_UID_RANGE" \
+      --set "containerSecurityContext.runAsUser=$OS_UID_RANGE");
+  elif [[ $REDISSENTINEL == "$redis" ]]; then
+    logger "$DEBUG" "redis.sh: setting openshift related redis sentinel configuration";
+    securityContextArgs=(--set "replica.podSecurityContext.fsGroup=$OS_UID_RANGE" \
+      --set "replica.containerSecurityContext.runAsUser=$OS_UID_RANGE" \
+      --set "sentinel.containerSecurityContext.runAsUser=$OS_UID_RANGE");
+  else
+    logger "$DEBUG" "redis.sh: setting openshift related redis configuration";
+    securityContextArgs=(--set "master.podSecurityContext.fsGroup=$OS_UID_RANGE" \
+      --set "master.containerSecurityContext.runAsUser=$OS_UID_RANGE" \
+      --set "replica.podSecurityContext.fsGroup=$OS_UID_RANGE" \
+      --set "replica.containerSecurityContext.runAsUser=$OS_UID_RANGE");
+  fi
+fi
+
 addDeploymentArgs "${args[@]}";
-
-logger "$INFO" "installing $redisReleaseName in namespace $namespace";
-
 if [[ $REDISCLUSTER == "$redis" ]]; then
   setVerbose;
   helm upgrade $redisReleaseName bitnami/redis-cluster --version 7.6.4 \
@@ -35,7 +58,7 @@ if [[ $REDISCLUSTER == "$redis" ]]; then
     --set "sysctlImage.tag=11.0.0-debian-11" \
     \
     --set "password=$PASSWORD" \
-    "${redisSecurityContextArgs[@]}" \
+    "${securityContextArgs[@]}" \
     --atomic \
     --wait > /dev/null;
   unsetVerbose;
@@ -61,7 +84,7 @@ elif [[ $REDISSENTINEL == "$redis" ]]; then
     \
     --set "auth.password=$PASSWORD" \
     --set "sentinel.enabled=true" \
-    "${redisSecurityContextArgs[@]}" \
+    "${securityContextArgs[@]}" \
     --atomic \
     --wait > /dev/null;
   unsetVerbose;
@@ -86,7 +109,7 @@ else
     --set "sysctl.image.tag=11.0.0-debian-11" \
     \
     --set "auth.password=$PASSWORD" \
-    "${redisSecurityContextArgs[@]}" \
+    "${securityContextArgs[@]}" \
     --atomic \
     --wait > /dev/null;
   unsetVerbose;

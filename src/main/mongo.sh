@@ -2,6 +2,13 @@ mongoReleaseName="tyk-mongo";
 
 logger "$INFO" "installing $mongoReleaseName in namespace $namespace";
 
+securityContextArgs=();
+if [[ $OPENSHIFT == "$flavor" ]]; then
+  logger "$DEBUG" "mongo.sh: setting openshift related mongo configuration";
+  securityContextArgs=(--set "podSecurityContext.fsGroup=$OS_UID_RANGE" \
+    --set "containerSecurityContext.runAsUser=$OS_UID_RANGE");
+fi
+
 setVerbose;
 helm upgrade $mongoReleaseName bitnami/mongodb --version 13.6.1 \
   --install \
@@ -23,8 +30,7 @@ helm upgrade $mongoReleaseName bitnami/mongodb --version 13.6.1 \
   \
   --set "auth.rootPassword=$PASSWORD" \
   --set "replicaSet.enabled=true" \
-  "${mongoSecurityContextArgs[@]}" \
+  "${securityContextArgs[@]}" \
   --atomic \
   --wait > /dev/null;
 unsetVerbose;
-

@@ -3,9 +3,9 @@ usage() {
   echo "Usage:";
   echo "  ./up.sh [flags] [command]";
   echo -e "\nAvailable Commands:";
-  echo "  tyk-pro";
+  echo "  tyk-stack";
   echo "  tyk-cp";
-  echo "  tyk-worker";
+  echo "  tyk-dp";
   echo "  tyk-gateway";
   echo -e "\nFlags:";
   echo -e "  -v, --verbose     \tbool   \t set log level to debug";

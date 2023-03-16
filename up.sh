@@ -12,13 +12,13 @@ source src/helpers/deployments-args.sh;
 source src/helpers/expose-services.sh;
 source src/helpers/summary.sh;
 
-TYKPRO="tyk-pro";
+TYKSTACK="tyk-stack";
 TYKCP="tyk-cp";
-TYKWORKER="tyk-worker";
+TYKWORKER="tyk-dp";
 TYKGATEWAY="tyk-gateway";
 
 mode=$@
-if [[ $TYKPRO != "$mode" ]] && [[ $TYKCP != "$mode" ]] && [[ $TYKWORKER != "$mode" ]] && [[ $TYKGATEWAY != "$mode" ]]; then
+if [[ $TYKSTACK != "$mode" ]] && [[ $TYKCP != "$mode" ]] && [[ $TYKWORKER != "$mode" ]] && [[ $TYKGATEWAY != "$mode" ]]; then
   logger "$ERROR" "invalid selection";
   usage; exit 1;
 fi

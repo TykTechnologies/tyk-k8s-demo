@@ -8,60 +8,27 @@ else
   logger "$INFO" "namespace $namespace created";
 fi
 
-redisSecurityContextArgs=();
-mongoSecurityContextArgs=();
-postgresSecurityContextArgs=();
 tykSecurityContextArgs=();
 gatewaySecurityContextArgs=();
 mdcbSecurityContextArgs=();
-postalSecurityContextArgs=();
-
 if [[ $OPENSHIFT == "$flavor" ]]; then
   logger "$INFO" "generating security context values for the OpenShift environment";
   sleep 5;
   portsWait=60;
 
-  ID=$(kubectl get ns "$namespace" -o=jsonpath='{.metadata.annotations.openshift\.io\/sa\.scc\.uid-range}' | rev | cut -c7- | rev);
+  OS_UID_RANGE=$(kubectl get ns "$namespace" -o=jsonpath='{.metadata.annotations.openshift\.io\/sa\.scc\.uid-range}' | rev | cut -c7- | rev);
 
-  logger "$INFO" "using $ID for OpenShift security context values";
-  # Set Redis args
-  if [[ $REDISCLUSTER == "$redis" ]]; then
-    redisSecurityContextArgs=(--set "podSecurityContext.runAsUser=$ID" \
-      --set "podSecurityContext.fsGroup=$ID" \
-      --set "containerSecurityContext.runAsUser=$ID");
-  elif [[ $REDISSENTINEL == "$redis" ]]; then
-    redisSecurityContextArgs=(--set "replica.podSecurityContext.fsGroup=$ID" \
-      --set "replica.containerSecurityContext.runAsUser=$ID" \
-      --set "sentinel.containerSecurityContext.runAsUser=$ID");
-  else
-    redisSecurityContextArgs=(--set "master.podSecurityContext.fsGroup=$ID" \
-      --set "master.containerSecurityContext.runAsUser=$ID" \
-      --set "replica.podSecurityContext.fsGroup=$ID" \
-      --set "replica.containerSecurityContext.runAsUser=$ID");
-  fi
-
-  # Set Mongo args
-  mongoSecurityContextArgs=(--set "podSecurityContext.fsGroup=$ID" \
-    --set "containerSecurityContext.runAsUser=$ID");
-
-  # Set Postgres args
-  postgresSecurityContextArgs=(--set "primary.podSecurityContext.fsGroup=$ID" \
-    --set "primary.containerSecurityContext.runAsUser=$ID");
-
+  logger "$INFO" "using $OS_UID_RANGE for OpenShift security context values";
   # Set Tyk args
-  tykSecurityContextArgs=(--set "dash.securityContext.fsGroup=$ID" \
-    --set "dash.securityContext.runAsUser=$ID" \
-    --set "pump.securityContext.fsGroup=$ID" \
-    --set "pump.securityContext.runAsUser=$ID");
+  tykSecurityContextArgs=(--set "dash.securityContext.fsGroup=$OS_UID_RANGE" \
+    --set "dash.securityContext.runAsUser=$OS_UID_RANGE" \
+    --set "pump.securityContext.fsGroup=$OS_UID_RANGE" \
+    --set "pump.securityContext.runAsUser=$OS_UID_RANGE");
 
-  gatewaySecurityContextArgs=(--set "gateway.securityContext.fsGroup=$ID" \
-    --set "gateway.securityContext.runAsUser=$ID");
+  gatewaySecurityContextArgs=(--set "gateway.securityContext.fsGroup=$OS_UID_RANGE" \
+    --set "gateway.securityContext.runAsUser=$OS_UID_RANGE");
 
   # Set MDCB args
-  mdcbSecurityContextArgs=(--set "mdcb.securityContext.fsGroup=$ID" \
-    --set "mdcb.securityContext.runAsUser=$ID");
-
-  # Set Portal args
-  potalSecurityContextArgs=(--set "enterprisePortal.securityContext.fsGroup=$ID" \
-    --set "enterprisePortal.securityContext.runAsUser=$ID");
+  mdcbSecurityContextArgs=(--set "mdcb.securityContext.fsGroup=$OS_UID_RANGE" \
+    --set "mdcb.securityContext.runAsUser=$OS_UID_RANGE");
 fi

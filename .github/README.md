@@ -38,14 +38,14 @@ minikube addons enable ingress
 ## Quick Start
 
 ```
-./up.sh --expose port-forward --deployments portal,operator tyk-pro
+./up.sh --expose port-forward --deployments portal,operator tyk-stack
 ```
 This quick start command will stand up the entire Tyk stack along with the Tyk Enterprise Portal and the Tyk Operator.
 
 ## Possible deployments
-- `tyk-pro`: Tyk pro self-managed single region
+- `tyk-stack`: Tyk pro self-managed single region
 - `tyk-cp`: Tyk pro self-managed multi region control plane
-- `tyk-worker`: Tyk worker gateway, this can connect to Tyk Cloud or a Tyk Control Plane
+- `tyk-dp`: Tyk worker gateway, this can connect to Tyk Cloud or a Tyk Control Plane
 - `tyk-gateway`: Tyk oss self-managed single region
 
 ## Dependencies Options
@@ -74,7 +74,7 @@ This quick start command will stand up the entire Tyk stack along with the Tyk E
   --storage postgres \
   --deployments operator-httpbin,prometheus,k6-traffic-sim \
   --expose port-forward \
-  tyk-pro
+  tyk-stack
 ```
 
 The deployment will take 10 minutes as the installation is sequential and the dependencies require a bit of time before
@@ -89,9 +89,9 @@ Usage:
   ./up.sh [flags] [command]
 
 Available Commands:
-  tyk-pro
+  tyk-stack
   tyk-cp
-  tyk-worker
+  tyk-dp
   tyk-gateway
 
 Flags:
@@ -185,8 +185,8 @@ You can add any Tyk environments variables to the `.env` file and they will be m
 | Deployment       |             `--expose` Support             |   Postman Tests    | OpenShift Support  |
 |------------------|:------------------------------------------:|:------------------:|:------------------:|
 | tyk-gateway      | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
-| tyk-worker       | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
-| tyk-pro          | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
+| tyk-dp       | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
+| tyk-stack          | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
 | tyk-cp           | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
 | k6-traffic-sim   |                    N/A                     |        N/A         |   :construction:   |
 | operator         |                    N/A                     |        N/A         |   :construction:   |

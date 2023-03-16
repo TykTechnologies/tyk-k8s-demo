@@ -1,7 +1,9 @@
+source src/deployments/portal/openshift.sh;
+
 logger "$INFO" "installing portal in $namespace namespace...";
 
-if [[ $TYKPRO != "$mode" ]] && [[ $TYKCP != "$mode" ]]; then
-  logger "$ERROR" "can only install the enterprise portal with a tyk-pro or a tyk-cp installation";
+if [[ $TYKSTACK != "$mode" ]] && [[ $TYKCP != "$mode" ]]; then
+  logger "$ERROR" "can only install the enterprise portal with a tyk-stack or a tyk-cp installation";
   exit 1;
 fi
 

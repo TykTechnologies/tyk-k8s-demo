@@ -5,8 +5,8 @@ logger "$INFO" "checking variables...";
 invalid=false;
 chart="tyk-headless";
 
-if [[ $TYKPRO == "$mode" ]] || [[ $TYKCP == "$mode" ]]; then
-  chart="tyk-pro";
+if [[ $TYKSTACK == "$mode" ]] || [[ $TYKCP == "$mode" ]]; then
+  chart="tyk-stack";
   if [[ -z "$LICENSE" ]]; then
     logger "$ERROR" "please make sure the LICENSE variable is set in your .env file";
     invalid=true;

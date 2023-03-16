@@ -15,9 +15,9 @@ args=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
 
 if [ -z "$TYK_WORKER_SHARDING_TAGS" ]
 then
-      tykReleaseName="tyk-worker-tyk-hybrid";
+      tykReleaseName="tyk-dp-tyk-hybrid";
 else
-      tykReleaseName="tyk-worker-tyk-hybrid-$TYK_WORKER_SHARDING_TAGS";
+      tykReleaseName="tyk-dp-tyk-hybrid-$TYK_WORKER_SHARDING_TAGS";
 fi
 logger "$DEBUG" "tykReleaseName=$tykReleaseName";
 
