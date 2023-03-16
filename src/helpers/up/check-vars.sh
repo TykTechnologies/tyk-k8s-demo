@@ -6,7 +6,7 @@ invalid=false;
 chart="tyk-headless";
 
 if [[ $TYKSTACK == "$mode" ]] || [[ $TYKCP == "$mode" ]]; then
-  chart="tyk-stack";
+  chart="tyk-pro";
   if [[ -z "$LICENSE" ]]; then
     logger "$ERROR" "please make sure the LICENSE variable is set in your .env file";
     invalid=true;
