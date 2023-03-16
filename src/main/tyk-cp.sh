@@ -9,7 +9,7 @@ args=(--set "dash.license=$LICENSE" \
   --set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
   --set "pump.image.tag=$TYK_PUMP_VERSION");
 
-tykReleaseName="tyk-cp-tyk-stack";
+tykReleaseName="tyk-cp";
 addService "dashboard-svc-$tykReleaseName";
 addService "gateway-svc-$tykReleaseName";
 addServiceArgs "dash";
