@@ -1,12 +1,4 @@
-source src/deployments/operator/helpers.sh;
-
 logger "$INFO" "installing tyk-operator...";
-
-checkOperatorSecretExists;
-if ! $operatorSecretExists; then
-  logger "$INFO" "you need an operator secret to install the operator with a worker gateway";
-  exit 1;
-fi
 
 setVerbose;
 helm upgrade "$certManagerReleaseName" jetstack/cert-manager \
@@ -14,11 +6,13 @@ helm upgrade "$certManagerReleaseName" jetstack/cert-manager \
   --version v1.10.1 \
   --set "installCRDs=true" \
   --set "prometheus.enabled=false" \
+  "${certManagerSecurityContextArgs[@]}" \
   --namespace "$namespace" \
   --wait > /dev/null;
 
-helm upgrade $operatorReleaseName tyk-helm/tyk-operator \
+helm upgrade "$operatorReleaseName" tyk-helm/tyk-operator \
   --install \
+  "${tykOperatorSecurityContextArgs[@]}" \
   --namespace "$namespace" \
   --wait > /dev/null;
 unsetVerbose;

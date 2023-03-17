@@ -38,3 +38,7 @@ spec:
           env:
             - name: PORT
               value: "4202"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: replace_runAsUser
+            runAsGroup: replace_runAsGroup

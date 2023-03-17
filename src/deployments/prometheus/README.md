@@ -3,7 +3,6 @@ This deployment do the following:
 - Create a Prometheus with Tyk Pump with custom metrics
 - Create a Tyk Pump service
 - Deploy a Prometheus instance with custom rules and jobs
-- Deploy a Grafana instance with a Tyk dashboard
 
 #### Prometheus Pump Custom Metrics
 ```json

@@ -3,5 +3,6 @@ keycloakName="keycloak";
 
 if [ -z "$keycloakRegistered" ]; then
   keycloakRegistered=true;
+  source "src/deployments/keycloak/helpers.sh";
   source "src/deployments/keycloak/main.sh";
 fi

@@ -9,3 +9,9 @@ checkOperatorSecretExists() {
     operatorSecretExists=false;
   fi
 }
+
+checkOperatorSecretExists;
+if ! $operatorSecretExists; then
+  logger "$INFO" "you need an operator secret to install the operator with a worker gateway";
+  exit 1;
+fi

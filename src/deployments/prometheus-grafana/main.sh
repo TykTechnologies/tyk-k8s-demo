@@ -4,7 +4,7 @@ addService "$grafanaReleaseName";
 
 setVerbose;
 kubectl apply -f src/deployments/prometheus-grafana/grafana-dashboards-configmap.yaml --namespace "$namespace" > /dev/null;
-helm upgrade $grafanaReleaseName grafana/grafana \
+helm upgrade "$grafanaReleaseName" grafana/grafana \
   --install \
   --set "adminPassword=$PASSWORD" \
   --set "service.port=$GRAFANA_SERVICE_PORT" \
@@ -27,6 +27,7 @@ helm upgrade $grafanaReleaseName grafana/grafana \
   --set "extraConfigmapMounts[0].subPath=dashboards.json" \
   --set "extraConfigmapMounts[0].configMap=grafana-dashboards-configmap" \
   --set "extraConfigmapMounts[0].readOnly=true" \
+  "${prometheusGrafanaSecurityContextArgs[@]}" \
   --namespace "$namespace" > /dev/null;
 unsetVerbose;
 

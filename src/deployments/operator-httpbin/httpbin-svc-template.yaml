@@ -35,3 +35,7 @@ spec:
           name: httpbin
           ports:
             - containerPort: 80
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: replace_runAsUser
+            runAsGroup: replace_runAsGroup

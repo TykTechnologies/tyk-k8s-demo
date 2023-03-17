@@ -32,7 +32,7 @@ if [[ $TYKCP == "$mode" ]]; then
   fi
 fi
 
-if [[ $TYKWORKER == "$mode" ]]; then
+if [[ $TYKDP == "$mode" ]]; then
   chart="tyk-hybrid";
   if [[ -z "$TYK_WORKER_CONNECTIONSTRING" ]]; then
     logger "$ERROR" "please make sure TYK_WORKER_CONNECTIONSTRING variable is set in your .env file";

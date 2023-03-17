@@ -1,7 +1,7 @@
 logger "$INFO" "installing keycloak DCR realm...";
 
 setVerbose;
-sed "s/replace_keycloak/$keycloakName/g" src/deployments/keycloak-dcr/realm.yaml | \
+sed "s/replace_keycloak/$keycloakName/g" src/deployments/keycloak-dcr/realm-template.yaml | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 unsetVerbose;
 
