@@ -4,7 +4,7 @@ portalDBName=portal;
 portalDBPort=54321;
 source src/main/pgsql.sh $portalDBName $portalDBPort;
 
-addService "enterprise-portal-svc-$tykReleaseName";
+addService "enterprise-portal-svc-$tykReleaseName-$chart";
 addServiceArgs "enterprisePortal";
 
 args=(--set "enterprisePortal.license=$PORTAL_LICENSE" \

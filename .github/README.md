@@ -59,7 +59,7 @@ This quick start command will stand up the entire Tyk stack along with the Tyk E
 - `postgres`: Bitnami Postgres database deployment as a Tyk backend
 
 ### Supplementary Deployments
-- [k6 Traffic Generator](../src/deployments/k6-traffic-sim): generates a load of traffic to seed analytical data.
+- [k6 Traffic Generator](../src/deployments/k6-slo-traffic): generates a load of traffic to seed analytical data.
 - [Operator](../src/deployments/operator): this deployment option will install the [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency [cert-manager](https://github.com/jetstack/cert-manager).
 	- [HttpBin](../src/deployments/operator-httpbin): creates API examples using the tyk-operator.
 	- [GraphQL](../src/deployments/operator-graphql): creates a set of graphql API examples using the tyk-operator. Federation v1 and stitching examples.
@@ -72,7 +72,7 @@ This quick start command will stand up the entire Tyk stack along with the Tyk E
 ./up.sh \
   --redis redis-cluster \
   --storage postgres \
-  --deployments operator-httpbin,prometheus,k6-traffic-sim \
+  --deployments operator-httpbin,prometheus,k6-slo-traffic \
   --expose port-forward \
   tyk-stack
 ```
@@ -188,7 +188,7 @@ You can add any Tyk environments variables to the `.env` file and they will be m
 | tyk-dp       | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
 | tyk-stack          | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
 | tyk-cp           | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
-| k6-traffic-sim   |                    N/A                     |        N/A         |   :construction:   |
+| k6-slo-traffic   |                    N/A                     |        N/A         |   :construction:   |
 | operator         |                    N/A                     |        N/A         |   :construction:   |
 | operator-graphql |               `port-froward`               | :white_check_mark: |   :construction:   |
 | operator-httpbin |               `port-froward`               |   :construction:   |   :construction:   |

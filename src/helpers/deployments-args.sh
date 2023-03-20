@@ -5,6 +5,5 @@ else
 fi
 
 addDeploymentArgs() {
-  logger "$DEBUG" "addDeploymentArgs: passed args ${@}";
   deploymentsArgs+=("$@");
 }

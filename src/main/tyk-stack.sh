@@ -10,8 +10,8 @@ args=(--set "dash.license=$LICENSE" \
   --set "pump.image.tag=$TYK_PUMP_VERSION");
 
 tykReleaseName="tyk-stack";
-addService "dashboard-svc-$tykReleaseName";
-addService "gateway-svc-$tykReleaseName";
+addService "dashboard-svc-$tykReleaseName-$chart";
+addService "gateway-svc-$tykReleaseName-$chart";
 addServiceArgs "dash";
 addServiceArgs "gateway";
 checkTykRelease;
@@ -35,5 +35,3 @@ addSummary "\n\
 \tTyk Pro deployed\n \
 \tDashboard username: $USERNAME\n \
 \tDashboard password: $PASSWORD\n";
-
-logger "$INFO" "installed tyk in namespace $namespace";

@@ -37,5 +37,5 @@ spec:
             - containerPort: 80
           securityContext:
             runAsNonRoot: true
-            runAsUser: replace_runAsUser
-            runAsGroup: replace_runAsGroup
+            runAsUser: replace_run_as_user
+            runAsGroup: replace_run_as_group

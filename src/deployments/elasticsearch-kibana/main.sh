@@ -1,4 +1,4 @@
-logger "$INFO" "installing tyk-elasticsearch-kibana...";
+logger "$INFO" "installing tyk-elasticsearch-kibana in $namespace namespace...";
 
 addService "$elasticsearchKibanaReleaseName";
 
@@ -11,5 +11,3 @@ helm upgrade "$elasticsearchKibanaReleaseName" bitnami/kibana \
   --namespace "$namespace" \
   --wait > /dev/null;
 unsetVerbose;
-
-logger "$INFO" "installed tyk-elasticsearch-kibana in namespace $namespace";

@@ -46,6 +46,10 @@ logger() {
   setLevelValue $1;
 
   if [[ $levelValue -le logLevel ]]; then
-    echo -e "[$1]\t$(date +"%T") ${@: 2}";
+    if [[ $INFO == "$LOGLEVEL" ]]; then
+      echo -e "$(date +"%T") ${@: 2}";
+    else
+      echo -e "[$1]\t$(date +"%T") ${@: 2}";
+    fi
   fi
 }

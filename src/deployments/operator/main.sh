@@ -1,4 +1,4 @@
-logger "$INFO" "installing tyk-operator...";
+logger "$INFO" "installing tyk-operator in $namespace namespace...";
 
 setVerbose;
 helm upgrade "$certManagerReleaseName" jetstack/cert-manager \
@@ -16,5 +16,3 @@ helm upgrade "$operatorReleaseName" tyk-helm/tyk-operator \
   --namespace "$namespace" \
   --wait > /dev/null;
 unsetVerbose;
-
-logger "$INFO" "installed tyk-operator in namespace $namespace";

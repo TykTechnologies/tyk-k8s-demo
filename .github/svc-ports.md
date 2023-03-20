@@ -15,4 +15,4 @@
 | prometheus pump        | `9091` |
 | prometheus             | `9080` |
 | grafana                | `9081` |
-| keycloak               | `7000` |
+| keycloak               | `7001` |

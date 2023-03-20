@@ -4,10 +4,10 @@ logger "$INFO" "creating Tyk Operator httpbin example...";
 
 setVerbose;
 addService "httpbin-svc";
-sed "s/replace_runAsUser/$applicationSecurityContextUID/g" "$deploymentPath/httpbin-svc-template.yaml" | \
-  sed "s/replace_runAsGroup/$applicationSecurityContextUID/g" | \
+sed "s/replace_run_as_user/$applicationSecurityContextUID/g" "$deploymentPath/httpbin-svc-template.yaml" | \
+  sed "s/replace_run_as_group/$applicationSecurityContextUID/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
-kubectl wait pods --namespace "$namespace" -l app=httpbin --for condition=Ready --timeout=60s  > /dev/null;
+kubectl wait pods --namespace "$namespace" -l app=httpbin --for=condition=Ready --timeout=60s  > /dev/null;
 
 # httpbin-keyless
 sed "s/replace_service_url/httpbin-svc.$namespace.svc:8000/g" "$deploymentPath/httpbin-keyless-api-template.yaml" | \

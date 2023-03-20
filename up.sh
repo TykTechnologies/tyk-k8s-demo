@@ -11,20 +11,21 @@ source src/helpers/up/check-tyk-release.sh;
 source src/helpers/deployments-args.sh;
 source src/helpers/expose-services.sh;
 source src/helpers/summary.sh;
+source src/helpers/helpers.sh;
 
 if $dryRun; then
   source src/helpers/dry-run.sh;
 fi
 
-source src/helpers/up/check-vars.sh;
-source src/helpers/up/update-helm.sh;
-
+mode=$@
 TYKSTACK="tyk-stack";
 TYKCP="tyk-cp";
 TYKDP="tyk-dp";
 TYKGATEWAY="tyk-gateway";
 
-mode=$@
+source src/helpers/up/check-vars.sh;
+source src/helpers/up/update-helm.sh;
+
 if [[ $TYKSTACK != "$mode" ]] && [[ $TYKCP != "$mode" ]] && [[ $TYKDP != "$mode" ]] && [[ $TYKGATEWAY != "$mode" ]]; then
   logger "$ERROR" "invalid selection";
   usage; exit 1;
@@ -55,6 +56,10 @@ if ! [[ -z $deployments ]]; then
     --atomic \
     --wait > /dev/null
   unsetVerbose;
+
+  if [ -n "$patchRequired" ]; then
+    source src/helpers/patch.sh;
+  fi
 fi
 
 if ! $dryRun; then

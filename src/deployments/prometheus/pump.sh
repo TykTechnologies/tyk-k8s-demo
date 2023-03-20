@@ -10,7 +10,7 @@ args=(--set "pump.extraEnvs[$pumpCtr].name=TYK_PMP_PUMPS_PROMETHEUS_TYPE" \
   --set "pump.extraEnvs[$(($pumpCtr + 3))].value=$customMetrics");
 pumpCtr=$((pumpCtr + 4));
 
-addService "pump-svc-$tykReleaseName";
+addService "pump-svc-$tykReleaseName-$chart";
 addDeploymentArgs "${args[@]}";
 
 sed "s/replace_release_name/$tykReleaseName/g" src/deployments/prometheus/pump-svc.yaml | \

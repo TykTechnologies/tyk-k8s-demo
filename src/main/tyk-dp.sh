@@ -43,5 +43,3 @@ unsetVerbose;
 addSummary "\n\
 \tTyk Worker Gateway deployed\n
 \tMDCB Connection: $TYK_WORKER_CONNECTIONSTRING\n";
-
-logger "$INFO" "installed tyk in namespace $namespace";

@@ -1,6 +1,6 @@
 redisReleaseName="tyk-redis";
 
-logger "$INFO" "installing $redisReleaseName in namespace $namespace";
+logger "$INFO" "installing $redisReleaseName in $namespace namespace";
 
 tykRedisArgs=();
 if [[ $REDISCLUSTER == "$redis" ]]; then

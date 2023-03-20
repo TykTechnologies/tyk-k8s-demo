@@ -1,8 +1,16 @@
-logger "$INFO" "installing keycloak DCR realm...";
+crName="tyk-dcr";
 
-setVerbose;
-sed "s/replace_keycloak/$keycloakName/g" src/deployments/keycloak-dcr/realm-template.yaml | \
+logger "$INFO" "installing keycloak DCR realm in $namespace namespace...";
+
+sed "s/replace_cr_name/$crName/g" src/deployments/keycloak-dcr/realm-template.yaml | \
+sed "s/replace_keycloak/$keycloakName/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
-unsetVerbose;
 
-logger "$INFO" "installed keycloak DCR realm...";
+if [ "$(kubectl get pods -l "job-name=$crName" --namespace "$namespace" -o json | jq '.status.phase')" != "Succeeded" ]; then
+  logger "$DEBUG" "keycloak-dcr: waiting for $crName to be created";
+  waitForPods "job-name=$crName" "$crName";
+  kubectl wait --namespace "$namespace" jobs "$crName" --for=condition=complete --timeout=120s > /dev/null;
+
+  logger "$INFO" "waiting for keycloak to be ready...";
+  kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-name=$keycloakName-0" --for=condition=Ready --timeout=180s > /dev/null;
+fi

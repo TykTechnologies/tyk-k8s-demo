@@ -6,3 +6,4 @@
 **/.terraform.*
 **/terraform.tfstate
 **/terraform.tfstate.backup
+**/*[.crt,.csr,.key]
