@@ -1,0 +1,618 @@
+{
+  "data_view": {
+    "id": "926a0d62-5522-4e0b-89a2-65cb989ab07d",
+    "version": "WzcyLDFd",
+    "title": "tyk_analytics*",
+    "timeFieldName": "@timestamp",
+    "sourceFilters": [],
+    "fields": {
+      "@timestamp": {
+        "count": 0,
+        "name": "@timestamp",
+        "type": "date",
+        "esTypes": [
+          "date"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "date"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "_id": {
+        "count": 0,
+        "name": "_id",
+        "type": "string",
+        "esTypes": [
+          "_id"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "_index": {
+        "count": 0,
+        "name": "_index",
+        "type": "string",
+        "esTypes": [
+          "_index"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "_score": {
+        "count": 0,
+        "name": "_score",
+        "type": "number",
+        "scripted": false,
+        "searchable": false,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "_source": {
+        "count": 0,
+        "name": "_source",
+        "type": "_source",
+        "esTypes": [
+          "_source"
+        ],
+        "scripted": false,
+        "searchable": false,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "_source"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "alias": {
+        "count": 0,
+        "name": "alias",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "alias.keyword": {
+        "count": 0,
+        "name": "alias.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "alias"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "api_id": {
+        "count": 0,
+        "name": "api_id",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "api_id.keyword": {
+        "count": 0,
+        "name": "api_id.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "api_id"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "api_key": {
+        "count": 0,
+        "name": "api_key",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "api_key.keyword": {
+        "count": 0,
+        "name": "api_key.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "api_key"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "api_name": {
+        "count": 0,
+        "name": "api_name",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "api_name.keyword": {
+        "count": 0,
+        "name": "api_name.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "api_name"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "api_version": {
+        "count": 0,
+        "name": "api_version",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "api_version.keyword": {
+        "count": 0,
+        "name": "api_version.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "api_version"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "content_length": {
+        "count": 0,
+        "name": "content_length",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "http_method": {
+        "count": 0,
+        "name": "http_method",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "http_method.keyword": {
+        "count": 0,
+        "name": "http_method.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "http_method"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "ip_address": {
+        "count": 0,
+        "name": "ip_address",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "ip_address.keyword": {
+        "count": 0,
+        "name": "ip_address.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "ip_address"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "oauth_id": {
+        "count": 0,
+        "name": "oauth_id",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "oauth_id.keyword": {
+        "count": 0,
+        "name": "oauth_id.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "oauth_id"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "org_id": {
+        "count": 0,
+        "name": "org_id",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "org_id.keyword": {
+        "count": 0,
+        "name": "org_id.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "org_id"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "request_time_ms": {
+        "count": 0,
+        "name": "request_time_ms",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "request_uri": {
+        "count": 0,
+        "name": "request_uri",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "request_uri.keyword": {
+        "count": 0,
+        "name": "request_uri.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "request_uri"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "request_uri_full": {
+        "count": 0,
+        "name": "request_uri_full",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "request_uri_full.keyword": {
+        "count": 0,
+        "name": "request_uri_full.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "request_uri_full"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "response_code": {
+        "count": 0,
+        "name": "response_code",
+        "type": "number",
+        "esTypes": [
+          "long"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "format": {
+          "id": "number"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "tags": {
+        "count": 0,
+        "name": "tags",
+        "type": "string",
+        "esTypes": [
+          "text"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": false,
+        "readFromDocValues": false,
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      },
+      "tags.keyword": {
+        "count": 0,
+        "name": "tags.keyword",
+        "type": "string",
+        "esTypes": [
+          "keyword"
+        ],
+        "scripted": false,
+        "searchable": true,
+        "aggregatable": true,
+        "readFromDocValues": true,
+        "subType": {
+          "multi": {
+            "parent": "tags"
+          }
+        },
+        "format": {
+          "id": "string"
+        },
+        "shortDotsEnable": false,
+        "isMapped": true
+      }
+    },
+    "typeMeta": {},
+    "fieldFormats": {},
+    "runtimeFieldMap": {},
+    "fieldAttrs": {},
+    "allowNoIndex": false,
+    "name": "Tyk"
+  }
+}

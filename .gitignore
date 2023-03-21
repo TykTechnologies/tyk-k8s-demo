@@ -6,4 +6,6 @@
 **/.terraform.*
 **/terraform.tfstate
 **/terraform.tfstate.backup
-**/*[.crt,.csr,.key]
+
+src/deployments/self-signed-certs/certs/*[.crt,.csr,.key,.pem,.slr]
+src/deployments/k6/k6-operator

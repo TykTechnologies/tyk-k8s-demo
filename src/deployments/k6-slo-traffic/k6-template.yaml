@@ -1,0 +1,12 @@
+apiVersion: k6.io/v1alpha1
+kind: K6
+metadata:
+  name: replace_test_name
+spec:
+  parallelism: 4
+  separate: false
+  quiet: "false"
+  script:
+    configMap:
+      name: slo-traffic
+      file: load.js
