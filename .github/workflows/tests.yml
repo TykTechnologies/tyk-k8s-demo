@@ -229,7 +229,7 @@ jobs:
       fail-fast: false
       matrix:
 #        elasticsearch,elasticsearch-kibana,
-        deployment: [keycloak-dcr,operator-httpbin,operator-graphql,operator-udg,operator-federation,portal,prometheus-grafana]
+        deployment: [k6-slo-traffic,keycloak-sso,keycloak-dcr,operator-httpbin,operator-graphql,operator-udg,operator-federation,portal,prometheus-grafana]
       max-parallel: 1
     steps:
       - uses: actions/checkout@v2

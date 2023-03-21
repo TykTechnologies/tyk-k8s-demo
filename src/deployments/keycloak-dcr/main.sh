@@ -12,5 +12,7 @@ if [ "$(kubectl get pods -l "job-name=$crName" --namespace "$namespace" -o json 
   kubectl wait --namespace "$namespace" jobs "$crName" --for=condition=complete --timeout=120s > /dev/null;
 
   logger "$INFO" "waiting for keycloak to be ready...";
+  kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-name=$keycloakName-0" --for=delete --timeout=10s > /dev/null;
+  waitForPods "statefulset.kubernetes.io/pod-name=$keycloakName-0" "$keycloakName-0";
   kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-name=$keycloakName-0" --for=condition=Ready --timeout=180s > /dev/null;
 fi

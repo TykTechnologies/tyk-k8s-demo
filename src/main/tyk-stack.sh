@@ -32,6 +32,6 @@ helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
 unsetVerbose;
 
 addSummary "\n\
-\tTyk Pro deployed\n \
+\tTyk Stack deployed\n \
 \tDashboard username: $USERNAME\n \
 \tDashboard password: $PASSWORD\n";
