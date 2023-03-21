@@ -5,6 +5,8 @@ logger "$INFO" "installing keycloak SSO realm in $namespace namespace...";
 
 sed "s/replace_cr_name/$crName/g" "$deploymentPath/realm-template.yaml" | \
 sed "s/replace_keycloak/$keycloakName/g" | \
+sed "s/replace_username/$USERNAME/g" | \
+sed "s/replace_password/$PASSWORD/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 if [ "$(kubectl get pods -l "job-name=$crName" --namespace "$namespace" -o json | jq '.status.phase')" != "Succeeded" ]; then
@@ -17,3 +19,9 @@ if [ "$(kubectl get pods -l "job-name=$crName" --namespace "$namespace" -o json 
 
   source "$deploymentPath/create-sso-profile.sh";
 fi
+
+addSummary "\n\
+\tDashboard Keycloak SSO Credentials:\n \
+\tLogin URL: http://localhost:3000/auth/keycloak/openid-connect\n \
+\tUsername: $USERNAME\n \
+\tPassword: $PASSWORD\n";
