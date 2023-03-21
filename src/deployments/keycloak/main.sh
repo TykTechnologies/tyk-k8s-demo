@@ -2,7 +2,7 @@ deploymentPath="src/deployments/keycloak";
 
 source src/deployments/keycloak/operator.sh;
 
-logger "$INFO" "installing keycloak in $namespace namespace...";
+logger "$INFO" "installing $keycloakName in $namespace namespace...";
 source src/deployments/keycloak/storage.sh;
 
 logger "$DEBUG" "keycloak: creating keycloak initial credentials...";
@@ -27,7 +27,7 @@ sed "s/replace_database/$keycloakDBName/g" | \
 sed "s/replace_service_port/$KEYCLOAK_SERVICE_PORT/g" | \
 	kubectl apply --namespace "$namespace" -f - > /dev/null;
 
-logger "$INFO" "waiting for keycloak pods to come up...";
+logger "$INFO" "waiting for $keycloakName pods to come up...";
 waitForPods "statefulset.kubernetes.io/pod-name=$keycloakName-0" "$keycloakName-0";
 kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-name=$keycloakName-0" --for=condition=Ready --timeout=180s > /dev/null;
 

@@ -1,4 +1,6 @@
-logger "$INFO" "installing elasticsearch in $namespace namespace...";
+logger "$INFO" "installing $elasticsearchReleaseName in $namespace namespace...";
+
+source src/deployments/elasticsearch/pump.sh;
 
 addService "$elasticsearchReleaseName";
 

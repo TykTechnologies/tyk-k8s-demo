@@ -30,7 +30,7 @@ terminatePorts() {
     getPort "$service";
 
     set +e;
-    pid=$(pgrep -f "$service");
+    pid=$(pgrep -f "$service --namespace");
     set -e;
 
     if [[ -n "$pid" ]]; then

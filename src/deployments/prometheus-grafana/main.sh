@@ -1,4 +1,4 @@
-logger "$INFO" "installing grafana in $namespace namespace...";
+logger "$INFO" "installing $grafanaReleaseName in $namespace namespace...";
 
 addService "$grafanaReleaseName";
 

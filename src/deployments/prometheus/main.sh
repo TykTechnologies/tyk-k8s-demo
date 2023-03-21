@@ -1,4 +1,4 @@
-logger "$INFO" "installing prometheus in $namespace namespace...";
+logger "$INFO" "installing $prometheusReleaseName in $namespace namespace...";
 
 source src/deployments/prometheus/pump.sh;
 
