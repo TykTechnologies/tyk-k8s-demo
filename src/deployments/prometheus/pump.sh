@@ -16,3 +16,11 @@ addDeploymentArgs "${args[@]}";
 sed "s/replace_release_name/$tykReleaseName/g" src/deployments/prometheus/pump-svc.yaml | \
   sed "s/replace_pump_port/$PROMETHEUS_PUMP_PORT/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
+
+setVerbose;
+helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
+  --namespace "$namespace" \
+  "${deploymentsArgs[@]}" \
+  --atomic \
+  --wait > /dev/null
+unsetVerbose;

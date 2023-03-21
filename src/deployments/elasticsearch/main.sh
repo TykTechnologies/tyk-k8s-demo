@@ -1,7 +1,5 @@
 logger "$INFO" "installing $elasticsearchReleaseName in $namespace namespace...";
 
-source src/deployments/elasticsearch/pump.sh;
-
 addService "$elasticsearchReleaseName";
 
 setVerbose;
@@ -11,3 +9,5 @@ helm upgrade "$elasticsearchReleaseName" bitnami/elasticsearch \
   --namespace "$namespace" \
   --wait > /dev/null;
 unsetVerbose;
+
+source src/deployments/elasticsearch/pump.sh;

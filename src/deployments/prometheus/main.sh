@@ -1,7 +1,5 @@
 logger "$INFO" "installing $prometheusReleaseName in $namespace namespace...";
 
-source src/deployments/prometheus/pump.sh;
-
 addService "$prometheusReleaseName-server";
 
 setVerbose;
@@ -28,3 +26,5 @@ helm upgrade "$prometheusReleaseName" prometheus-community/prometheus \
   "${prometheusSecurityContextArgs[@]}" \
   --namespace "$namespace" > /dev/null;
 unsetVerbose;
+
+source src/deployments/prometheus/pump.sh;

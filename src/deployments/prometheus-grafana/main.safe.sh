@@ -5,5 +5,6 @@ if [ -z "$prometheusGrafanaRegistered" ]; then
   prometheusGrafanaRegistered=true;
   source "src/deployments/prometheus/main.safe.sh";
   source "src/deployments/prometheus-grafana/openshift.sh";
+  source "src/deployments/k6-slo-traffic/main.safe.sh";
   source "src/deployments/prometheus-grafana/main.sh";
 fi
