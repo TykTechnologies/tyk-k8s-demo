@@ -5,6 +5,7 @@ addService "$prometheusReleaseName-server";
 setVerbose;
 helm upgrade "$prometheusReleaseName" prometheus-community/prometheus \
   --install \
+  --version 20.0.1 \
   --set "server.service.servicePort=$PROMETHEUS_SERVICE_PORT" \
   --set "server.global.scrape_interval=15s" \
   --set "server.global.evaluation_interval=15s" \
