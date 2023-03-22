@@ -228,8 +228,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-#        elasticsearch,elasticsearch-kibana,
-        deployment: [k6-slo-traffic,keycloak-sso,keycloak-dcr,operator-httpbin,operator-graphql,operator-udg,operator-federation,portal,prometheus-grafana]
+        deployment:
+          - elasticsearch
+          - elasticsearch-kibana
+          - k6
+          - k6-slo-traffic
+          - keycloak
+          - keycloak-sso
+          - keycloak-dcr
+          - operator
+          - operator-httpbin
+          - operator-graphql
+          - operator-udg
+          - operator-federation
+          - portal
+          - prometheus
+          - prometheus-grafana
       max-parallel: 1
     steps:
       - uses: actions/checkout@v2

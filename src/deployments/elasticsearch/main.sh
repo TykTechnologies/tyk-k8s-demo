@@ -6,6 +6,7 @@ setVerbose;
 helm upgrade "$elasticsearchReleaseName" bitnami/elasticsearch \
   --install \
   --set "global.elasticsearch.service.ports.restAPI=$ELASTICSEARCH_SERVICE_PORT" \
+  --set "sysctlImage.enabled=false" \
   "${elasticsearchSecurityContextArgs[@]}" \
   --namespace "$namespace" \
   --wait > /dev/null;

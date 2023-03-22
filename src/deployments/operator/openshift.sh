@@ -11,5 +11,7 @@ if [[ $OPENSHIFT == "$flavor" ]]; then
     --set "startupapicheck.securityContext.runAsGroup=$OS_UID_RANGE");
 
   tykOperatorSecurityContextArgs=(--set "securityContext.runAsUser=$OS_UID_RANGE" \
-    --set "securityContext.runAsGroup=$OS_UID_RANGE");
+    --set "securityContext.runAsGroup=$OS_UID_RANGE" \
+    --set "rbac.securityContext.runAsUser=$OS_UID_RANGE" \
+    --set "rbac.securityContext.runAsGroup=$OS_UID_RANGE");
 fi

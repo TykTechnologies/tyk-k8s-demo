@@ -30,7 +30,7 @@ spec:
         version: v1
     spec:
       containers:
-        - image: docker.io/kennethreitz/httpbin
+        - image: kong/httpbin
           imagePullPolicy: IfNotPresent
           name: httpbin
           ports:
