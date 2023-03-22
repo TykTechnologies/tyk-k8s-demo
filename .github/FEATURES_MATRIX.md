@@ -22,7 +22,7 @@
 
 ### OpenShift Support
 | Deployment           | OpenShift Support  |
-|----------------------|:-------------------|
+|----------------------|:------------------:|
 | tyk-gateway          | :white_check_mark: |
 | tyk-dp               | :white_check_mark: |
 | tyk-stack            | :white_check_mark: |
