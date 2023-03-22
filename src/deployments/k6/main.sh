@@ -13,4 +13,5 @@ if [[ -z $search ]]; then
   cd "$deploymentPath/k6-operator";
   make deploy > /dev/null;
   cd "$dir";
+  rm -rf "$deploymentPath/k6-operator";
 fi
