@@ -8,6 +8,8 @@ sed "s/replace_gateway_url/gateway-svc-$tykReleaseName-$chart.$namespace.svc:$po
 
 test_name="k6-load-test-$(date +%s)";
 sed "s/replace_test_name/$test_name/g" "$deploymentPath/k6-template.yaml" | \
+sed "s/replace_run_as_user/$run_as_user/g" | \
+sed "s/replace_fs_group/$fs_group/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 logger "$INFO" "tests will continue to run in the background...";

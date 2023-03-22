@@ -22,3 +22,21 @@ spec:
     strict: false
   ingress:
     enabled: false
+  unsupported:
+    podTemplate:
+      spec:
+        securityContext:
+          runAsUser: replace_run_as_user
+          fsGroup: replace_fs_group
+        ephemeralContainers:
+          - securityContext:
+              runAsUser: replace_run_as_user
+              fsGroup: replace_fs_group
+        containers:
+          - securityContext:
+              runAsUser: replace_run_as_user
+              fsGroup: replace_fs_group
+        initContainers:
+          - securityContext:
+              runAsUser: replace_run_as_user
+              fsGroup: replace_fs_group

@@ -10,3 +10,11 @@ spec:
     configMap:
       name: slo-traffic
       file: load.js
+  starter:
+    securityContext:
+      runAsUser: replace_run_as_user
+      fsGroup: replace_fs_group
+  runner:
+    securityContext:
+      runAsUser: replace_run_as_user
+      fsGroup: replace_fs_group
