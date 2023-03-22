@@ -5,7 +5,7 @@
 Will allow you to deploy the entire Tyk stack for POC on k8s.
 
 ## Purpose
-Minimize the amount of effort needed to stand up the Tyk infrastructure and show examples of how Tyk can be setup in k8s using different deployment architectures as well as different technologies integrations.
+Minimize the amount of effort needed to stand up the Tyk infrastructure and show examples of how Tyk can be setup in k8s using different deployment architectures as well as different integrations.
 
 ## Getting started
 
@@ -39,7 +39,7 @@ minikube addons enable ingress
 ```
 ./up.sh --deployments portal,operator-httpbin tyk-stack
 ```
-This quick start command will stand up the entire Tyk stack along with the Tyk Enterprise Portal and the Tyk Operator.
+This quick start command will stand up the entire Tyk stack along with the Tyk Enterprise Portal and the Tyk Operator and httpbin CRD example.
 
 ## Possible deployments
 - `tyk-stack`: Tyk single region self-managed deployment

@@ -25,8 +25,6 @@ sed "s/replace_host/tyk-$keycloakDBName-postgres-postgresql.$namespace.svc/g" | 
 sed "s/replace_port/$keycloakDBPort/g" | \
 sed "s/replace_database/$keycloakDBName/g" | \
 sed "s/replace_service_port/$KEYCLOAK_SERVICE_PORT/g" | \
-sed "s/replace_run_as_user/$run_as_user/g" | \
-sed "s/replace_fs_group/$fs_group/g" | \
 	kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 logger "$INFO" "waiting for $keycloakName pods to come up...";

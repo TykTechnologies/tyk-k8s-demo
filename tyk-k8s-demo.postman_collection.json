@@ -187,54 +187,59 @@
 		{
 			"name": "Deployments",
 			"item": [
-				{
-					"name": "operator-graphql",
-					"item": [
-						{
-							"name": "trevorblades",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Looking up Canada!\", function () {",
-											"    var res = pm.response.json();",
-											"    pm.expect(res.data.country.code).to.eql(\"CA\");",
-											"    pm.expect(res.data.country.name).to.eql(\"Canada\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "query {\n  country(code:\"CA\") {\n    code\n    name\n  }\n}",
-										"variables": ""
-									}
-								},
-								"url": {
-									"raw": "http://localhost:{{pro-gateway.port}}/trevorblades",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "{{pro-gateway.port}}",
-									"path": [
-										"trevorblades"
-									]
-								}
-							},
-							"response": []
-						},
+        {
+          "name": "operator-graphql",
+          "item": [
+            {
+              "name": "trevorblades",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Looking up Canada!\", function () {",
+                      "    var res = pm.response.json();",
+                      "    pm.expect(res.data.country.code).to.eql(\"CA\");",
+                      "    pm.expect(res.data.country.name).to.eql(\"Canada\");",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "graphql",
+                  "graphql": {
+                    "query": "query {\n  country(code:\"CA\") {\n    code\n    name\n  }\n}",
+                    "variables": ""
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:{{pro-gateway.port}}/trevorblades",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "{{pro-gateway.port}}",
+                  "path": [
+                    "trevorblades"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "operator-udg",
+          "item": [
 						{
 							"name": "Social Media App - Stitch",
 							"event": [
@@ -280,7 +285,12 @@
 								}
 							},
 							"response": []
-						},
+						}
+          ]
+        },
+        {
+          "name": "operator-federation",
+          "item": [
 						{
 							"name": "Social Media App - Federated",
 							"event": [
