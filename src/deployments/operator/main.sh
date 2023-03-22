@@ -8,11 +8,11 @@ helm upgrade "$certManagerReleaseName" jetstack/cert-manager \
   --set "prometheus.enabled=false" \
   "${certManagerSecurityContextArgs[@]}" \
   --namespace "$namespace" \
-  --wait > /dev/null;
+  --wait --atomic > /dev/null;
 
 helm upgrade "$operatorReleaseName" tyk-helm/tyk-operator \
   --install \
   "${tykOperatorSecurityContextArgs[@]}" \
   --namespace "$namespace" \
-  --wait > /dev/null;
+  --wait --atomic > /dev/null;
 unsetVerbose;

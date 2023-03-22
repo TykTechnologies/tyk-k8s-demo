@@ -10,7 +10,7 @@ helm upgrade "$elasticsearchKibanaReleaseName" bitnami/kibana \
   --set "service.ports.http=$KIBANA_SERVICE_PORT" \
   "${elasticsearchKibanaSecurityContextArgs[@]}" \
   --namespace "$namespace" \
-  --wait > /dev/null;
+  --wait --atomic > /dev/null;
 unsetVerbose;
 
 logger "$DEBUG" "elasticsearch-kibana: adding tyk-analytics data view to kibana...";

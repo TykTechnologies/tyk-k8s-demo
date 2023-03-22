@@ -31,6 +31,5 @@ helm upgrade $mongoReleaseName bitnami/mongodb --version 13.6.1 \
   --set "auth.rootPassword=$PASSWORD" \
   --set "replicaSet.enabled=true" \
   "${securityContextArgs[@]}" \
-  --atomic \
-  --wait > /dev/null;
+  --wait --atomic > /dev/null;
 unsetVerbose;
