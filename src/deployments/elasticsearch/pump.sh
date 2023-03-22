@@ -14,3 +14,4 @@ helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
   "${deploymentsArgs[@]}" \
   --wait --atomic > /dev/null
 unsetVerbose;
+kubectl wait pods --namespace "$namespace" -l "app=pump-$tykReleaseName-$chart" --for=condition=Ready --timeout=30s > /dev/null;

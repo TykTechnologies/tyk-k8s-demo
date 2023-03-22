@@ -13,7 +13,7 @@ pumpCtr=$((pumpCtr + 4));
 addService "pump-svc-$tykReleaseName-$chart";
 addDeploymentArgs "${args[@]}";
 
-sed "s/replace_release_name/$tykReleaseName/g" src/deployments/prometheus/pump-svc.yaml | \
+sed "s/replace_release_name/$tykReleaseName-$chart/g" src/deployments/prometheus/pump-svc.yaml | \
   sed "s/replace_pump_port/$PROMETHEUS_PUMP_PORT/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
@@ -23,3 +23,4 @@ helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
   "${deploymentsArgs[@]}" \
   --wait --atomic > /dev/null
 unsetVerbose;
+kubectl wait pods --namespace "$namespace" -l "app=pump-$tykReleaseName-$chart" --for=condition=Ready --timeout=30s > /dev/null;
