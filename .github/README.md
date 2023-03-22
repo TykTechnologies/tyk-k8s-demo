@@ -10,6 +10,7 @@ Minimize the amount of effort needed to stand up the Tyk infrastructure and show
 ## Getting started
 
 #### Requirements
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Helm](https://helm.sh/docs/intro/install/)
 - [jq](https://stedolan.github.io/jq/download/)
 - [git](https://git-scm.com/downloads)
@@ -26,8 +27,6 @@ cd tyk-k8s-demo
 cp .env.example .env
 ```
 
-Depending on the deployments you would like install  set values of the `LICENSE`, `MDCB_LICENSE` and `PORTAL_LICENSE` inside the `.env` file.
-
 ### Minikube
 If you are deploying this on Minikube you will need to enable the ingress addon. You do so by running the following:
 ```
@@ -38,14 +37,14 @@ minikube addons enable ingress
 ## Quick Start
 
 ```
-./up.sh --expose port-forward --deployments portal,operator tyk-stack
+./up.sh --deployments portal,operator-httpbin tyk-stack
 ```
 This quick start command will stand up the entire Tyk stack along with the Tyk Enterprise Portal and the Tyk Operator.
 
 ## Possible deployments
-- `tyk-stack`: Tyk pro self-managed single region
-- `tyk-cp`: Tyk pro self-managed multi region control plane
-- `tyk-dp`: Tyk worker gateway, this can connect to Tyk Cloud or a Tyk Control Plane
+- `tyk-stack`: Tyk single region self-managed deployment
+- `tyk-cp`: Tyk self-managed multi region control plane
+- `tyk-dp`: Tyk self-managed data plane, this can connect to Tyk Cloud or a Tyk Control Plane
 - `tyk-gateway`: Tyk oss self-managed single region
 
 ## Dependencies Options
@@ -59,21 +58,27 @@ This quick start command will stand up the entire Tyk stack along with the Tyk E
 - `postgres`: Bitnami Postgres database deployment as a Tyk backend
 
 ### Supplementary Deployments
-- [k6 Traffic Generator](../src/deployments/k6-slo-traffic): generates a load of traffic to seed analytical data.
+- [Elasticsearch](../src/deployments/elasticsearch): connects tyk deployments analytics to elasticsearch.
+  - [Kibana](../src/deployments/elasticsearch-kibana): connects a Kibana installment to the elasticsearch deployment.
+- [k6](../src/deployments/k6): generates a load of traffic to seed analytical data.
+  - [SLO Traffic](../src/deployments/k6-slo-traffic): generates a load of traffic to seed analytical data.
+- [Keycloak](../src/deployments/keycloak): stands up a keycloak deployment.
+  - [DCR](../src/deployments/keycloak-dcr): stands up a keycloak Dynamic Client Registration example.
+  - [SSO](../src/deployments/keycloak-sso): stands up a keycloak SSO example with Tyk dashboard.
 - [Operator](../src/deployments/operator): this deployment option will install the [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency [cert-manager](https://github.com/jetstack/cert-manager).
 	- [HttpBin](../src/deployments/operator-httpbin): creates API examples using the tyk-operator.
-	- [GraphQL](../src/deployments/operator-graphql): creates a set of graphql API examples using the tyk-operator. Federation v1 and stitching examples.
+	- [GraphQL](../src/deployments/operator-graphql): creates GraphQL API examples using the tyk-operator.
+	- [Universal Data Graph](../src/deployments/operator-udg): creates Universal Data Graph API examples using the tyk-operator.
+	- [Federation v1](../src/deployments/operator-federation): creates Federation v1 API examples using the tyk-operator.
 - [Portal](../src/deployments/portal): this deployment will install the [Tyk Enterprise Developer Portal](https://tyk.io/docs/tyk-developer-portal/tyk-enterprise-developer-portal/) as well as its dependency PostgreSQL.
-- Pumps
-  - [Prometheus](../src/deployments/prometheus): this deployment will stand up a Tyk Prometheus pump with custom analytics that is fed into Grafana for visualization.
+- [Prometheus](../src/deployments/prometheus): this deployment will stand up a Tyk Prometheus pump with custom analytics.
+  - [Grafana](../src/deployments/prometheus-grafana): connects a Grafana installment to the Prometheus deployment.
 
 ### Example
 ```
 ./up.sh \
-  --redis redis-cluster \
   --storage postgres \
-  --deployments operator-httpbin,prometheus,k6-slo-traffic \
-  --expose port-forward \
+  --deployments prometheus-grafana \
   tyk-stack
 ```
 
@@ -99,9 +104,9 @@ Flags:
       --dry-run     	bool   	 set the execution mode to dry run. This will dump the kubectl and helm commands rather than execute them
   -n, --namespace   	string 	 namespace the tyk stack will be installed in, defaults to 'tyk'
   -f, --flavor      	enum   	 k8s environment flavor. This option can be set 'openshift' and defaults to 'vanilla'
-  -e, --expose      	enum   	 set this option to 'port-forward' to expose the services as port-forwards or to 'load-balancer' to expose the services as load balancers or 'ingress' which exposes services as a k8s ingress object
+  -e, --expose      	enum   	 set this option to 'port-forward' to expose the services as port-forwards or to 'load-balancer' to expose the services as load balancers or 'ingress' which exposes services as a k8s ingress object. Defaults to 'port-forward'
   -r, --redis       	enum   	 the redis mode that tyk stack will use. This option can be set 'redis', 'redis-sentinel' and defaults to 'redis-cluster'
-  -s, --storage     	enum   	 database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'
+  -s, --storage     	enum   	 database the tyk stack will use. This option can be set 'mongo' and defaults to 'postgres'
   -d, --deployments 	string 	 comma separated list of deployments to launch
   -c, --cloud       	enum   	 stand up k8s infrastructure in 'aws', 'gcp' or 'azure'. This will require Terraform and the CLIs associate with the cloud of choice
 ```
@@ -181,19 +186,4 @@ You can add any Tyk environments variables to the `.env` file and they will be m
 | CLUSTER_MACHINE_TYPE        |                       | Machine type for the cluster that will be created on AKS, EKS, or GKE    |
 | CLUSTER_NODE_COUNT          |                       | Number of nodes for the cluster that will be created on AKS, EKS, or GKE |
 
-## Features compatibility & tests matrix
-| Deployment       |             `--expose` Support             |   Postman Tests    | OpenShift Support  |
-|------------------|:------------------------------------------:|:------------------:|:------------------:|
-| tyk-gateway      | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
-| tyk-dp       | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
-| tyk-stack          | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
-| tyk-cp           | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: |
-| k6-slo-traffic   |                    N/A                     |        N/A         |   :construction:   |
-| operator         |                    N/A                     |        N/A         |   :construction:   |
-| operator-graphql |               `port-froward`               | :white_check_mark: |   :construction:   |
-| operator-httpbin |               `port-froward`               |   :construction:   |   :construction:   |
-| portal           | `port-froward`, `ingress`, `load-balancer` |   :construction:   | :white_check_mark: |
-| prometheus  |               `port-froward`               |   :construction:   |   :construction:   |
-
-:white_check_mark: Built/Compatible
-:construction: Working on it
+For more information please see the feature & tests matrices [page](./FEATURES_MATRIX.md)
