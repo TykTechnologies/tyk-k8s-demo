@@ -22,7 +22,7 @@ helm upgrade "$prometheusReleaseName" prometheus-community/prometheus \
   --set "serverFiles.recording_rules\.yml.groups[1].rules[1].expr=(1 - job:slo_errors_per_request:ratio_rate10m) * 100" \
   --set "serverFiles.prometheus\.yml.scrape_configs[0].job_name=tyk" \
   --set "serverFiles.prometheus\.yml.scrape_configs[0].metrics_path=$PROMETHEUS_PUMP_PATH" \
-  --set "serverFiles.prometheus\.yml.scrape_configs[0].static_configs[0].targets={pump-svc-$tykReleaseName.$namespace.svc:$PROMETHEUS_PUMP_PORT}" \
+  --set "serverFiles.prometheus\.yml.scrape_configs[0].static_configs[0].targets={pump-svc-$tykReleaseName-$chart.$namespace.svc:$PROMETHEUS_PUMP_PORT}" \
   "${prometheusSecurityContextArgs[@]}" \
   --namespace "$namespace" > /dev/null;
 unsetVerbose;
