@@ -9,6 +9,7 @@ helm upgrade "$elasticsearchReleaseName" bitnami/elasticsearch \
   --set "sysctlImage.enabled=false" \
   "${elasticsearchSecurityContextArgs[@]}" \
   --namespace "$namespace" \
+  --timeout 10m \
   --wait > /dev/null;
 unsetVerbose;
 
