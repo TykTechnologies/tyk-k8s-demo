@@ -1,2 +1,2 @@
 ## Keycloak
-Keycloak installation
+Deploys a Keycloak instance using the Keycloak operator.

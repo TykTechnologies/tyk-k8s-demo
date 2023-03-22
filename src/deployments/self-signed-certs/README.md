@@ -1,4 +1,5 @@
-## Generate Self Signed Cert for Deployments to use
+## Self Singed Certs
+This deployment will generate self-signed certs for apps to use and adds them to trusted stores.
 
 You can trust the CA on macOS using the following command:
 ```

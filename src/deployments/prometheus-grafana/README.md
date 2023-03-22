@@ -1,3 +1,2 @@
 ## Grafana-Prometheus Pump Deployment
-This deployment do the following:
-- Deploy a Grafana instance with a Tyk SLOs dashboard
+Will deploy Grafana and Prometheus stack with a connection to Tyk Pump and a k6 job to generate traffic.

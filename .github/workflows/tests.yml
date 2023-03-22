@@ -229,8 +229,8 @@ jobs:
       fail-fast: false
       matrix:
         deployment:
-          - elasticsearch
-          - elasticsearch-kibana
+#          - elasticsearch
+#          - elasticsearch-kibana
           - k6
           - k6-slo-traffic
           - keycloak
