@@ -13,6 +13,7 @@ DEFAULTNAMESPACE="tyk";
 AWS="aws";
 GCP="gcp";
 AZURE="azure";
+CLOUD="cloud";
 
 # Default values
 namespace=$DEFAULTNAMESPACE;
@@ -76,9 +77,9 @@ done
 shift $((OPTIND - 1));
 
 if ([[ $VANILLA     != "$flavor"  ]] && [[ $OPENSHIFT    != "$flavor"  ]]) || \
-   ([[ $MONGO       != "$storage" ]] && [[ $POSTGRES     != "$storage" ]]) || \
-   ([[ $REDIS       != "$redis"   ]] && [[ $REDISCLUSTER != "$redis"   ]]  && [[ $REDISSENTINEL != "$redis"  ]]) || \
-   ([[ $PORTFORWARD != "$expose"  ]] && [[ $LOADBALANCER != "$expose"  ]]  && [[ $INGRESS       != "$expose" ]]  && [[ $NONE != "$expose" ]]) || \
-   ([[ $AWS         != "$cloud"   ]] && [[ $GCP          != "$cloud"   ]]  && [[ $AZURE         != "$cloud"  ]]  && [[ $NONE != "$cloud" ]]) ; then
+   ([[ $MONGO       != "$storage" ]] && [[ $POSTGRES     != "$storage" ]] && [[ $CLOUD         != "$storage" ]]) || \
+   ([[ $REDIS       != "$redis"   ]] && [[ $REDISCLUSTER != "$redis"   ]] && [[ $REDISSENTINEL != "$redis"   ]]  && [[ $CLOUD != "$redis"  ]]) || \
+   ([[ $PORTFORWARD != "$expose"  ]] && [[ $LOADBALANCER != "$expose"  ]] && [[ $INGRESS       != "$expose"  ]]  && [[ $NONE != "$expose" ]]) || \
+   ([[ $AWS         != "$cloud"   ]] && [[ $GCP          != "$cloud"   ]] && [[ $AZURE         != "$cloud"   ]]  && [[ $NONE != "$cloud" ]]) ; then
   usage; exit 1;
 fi

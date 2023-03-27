@@ -4,6 +4,15 @@ dir=$(pwd);
 
 cd "src/clouds/$cloud";
 
+enable_cloud_redis=false;
+enable_cloud_storage=false;
+if [ "$redis" == "$CLOUD" ]; then
+    enable_cloud_redis=true;
+fi
+if [ "$storage" == "$CLOUD" ]; then
+    enable_cloud_storage=true;
+fi
+
 setVerbose;
 if [ "$AWS" == "$cloud" ]; then
   terraform init > /dev/null
@@ -12,6 +21,8 @@ if [ "$AWS" == "$cloud" ]; then
     -var "cluster_location=$CLUSTER_LOCATION" \
     -var "cluster_machine_type=$CLUSTER_MACHINE_TYPE" \
     -var "cluster_node_count=$CLUSTER_NODE_COUNT" \
+    -var "enable_cloud_redis=$enable_cloud_redis" \
+    -var "enable_cloud_storage=$enable_cloud_storage" \
     -auto-approve > /dev/null
 
   aws eks update-kubeconfig \
@@ -25,6 +36,8 @@ elif [ "$GCP" == "$cloud" ]; then
     -var "cluster_location=$CLUSTER_LOCATION" \
     -var "cluster_machine_type=$CLUSTER_MACHINE_TYPE" \
     -var "cluster_node_count=$CLUSTER_NODE_COUNT" \
+    -var "enable_cloud_redis=$enable_cloud_redis" \
+    -var "enable_cloud_storage=$enable_cloud_storage" \
     -auto-approve > /dev/null
 
   gcloud container clusters get-credentials "tyk-demo-$CLUSTER_LOCATION" \
@@ -36,6 +49,8 @@ elif [ "$AZURE" == "$cloud" ]; then
     -var "cluster_location=$CLUSTER_LOCATION" \
     -var "cluster_machine_type=$CLUSTER_MACHINE_TYPE" \
     -var "cluster_node_count=$CLUSTER_NODE_COUNT" \
+    -var "enable_cloud_redis=$enable_cloud_redis" \
+    -var "enable_cloud_storage=$enable_cloud_storage" \
     -auto-approve > /dev/null
 
   az aks get-credentials \
