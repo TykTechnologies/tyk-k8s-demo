@@ -5,9 +5,9 @@ source src/main/storage.sh;
 args=(--set "dash.license=$LICENSE" \
   --set "dash.adminUser.email=$USERNAME" \
   --set "dash.adminUser.password=$PASSWORD" \
-  --set "dash.image.tag=$TYK_DASHBOARD_VERSION" \
-  --set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
-  --set "pump.image.tag=$TYK_PUMP_VERSION");
+  --set "dash.image.tag=$DASHBOARD_VERSION" \
+  --set "gateway.image.tag=$GATEWAY_VERSION" \
+  --set "pump.image.tag=$PUMP_VERSION");
 
 tykReleaseName="tyk-cp";
 addService "dashboard-svc-$tykReleaseName-$chart";
@@ -44,7 +44,7 @@ addServiceArgs "mdcb";
 
 mdcbArgs=(--set "mdcb.enabled=true" \
   --set "mdcb.license=$MDCB_LICENSE" \
-  --set "mdcb.image.tag=$TYK_MDCB_VERSION");
+  --set "mdcb.image.tag=$MDCB_VERSION");
 
 addDeploymentArgs "${mdcbArgs[@]}";
 addDeploymentArgs "${servicesArgs[@]}";

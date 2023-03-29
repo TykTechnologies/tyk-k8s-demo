@@ -55,10 +55,6 @@ if ! [[ -z $deployments ]]; then
     "${deploymentsArgs[@]}" \
     --wait --atomic > /dev/null
   unsetVerbose;
-
-  if [ -n "$patchRequired" ]; then
-    source src/helpers/patch.sh;
-  fi
 fi
 
 if ! $dryRun; then

@@ -163,11 +163,11 @@ You can add any Tyk environments variables to the `.env` file and they will be m
 
 | Variable                    |        Default        | Comments                                                                 |
 |-----------------------------|:---------------------:|--------------------------------------------------------------------------|
-| TYK_DASHBOARD_VERSION       |       `v4.3.3`        | Dashboard version                                                        |
-| TYK_GATEWAY_VERSION         |       `v4.3.3`        | Gateway version                                                          |
-| TYK_MDCB_VERSION            |       `v2.1.0`        | MDCB version                                                             |
-| TYK_PUMP_VERSION            |       `v1.7.0`        | Pump version                                                             |
-| TYK_PORTAL_VERSION          |       `v1.1.0`        | Portal version                                                           |
+| DASHBOARD_VERSION       |       `v4.3.3`        | Dashboard version                                                        |
+| GATEWAY_VERSION         |       `v4.3.3`        | Gateway version                                                          |
+| MDCB_VERSION            |       `v2.1.0`        | MDCB version                                                             |
+| PUMP_VERSION            |       `v1.7.0`        | Pump version                                                             |
+| PORTAL_VERSION          |       `v1.1.0`        | Portal version                                                           |
 | TYK_HELM_CHART_PATH         |      `tyk-helm`       | Path to charts, can be a local directory or a helm repo                  |
 | USERNAME                    | `default@example.com` | Default password for all the services deployed                           |
 | PASSWORD                    |  `topsecretpassword`  | Default password for all the services deployed                           |
