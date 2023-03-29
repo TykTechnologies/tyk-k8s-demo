@@ -20,7 +20,6 @@ waitForPods "statefulset.kubernetes.io/pod-name=$keycloakName-0" "$keycloakName-
 kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-name=$keycloakName-0" --for=condition=Ready --timeout=180s > /dev/null;
 
 source "$deploymentPath/create-sso-profile.sh";
-clear
 
 addSummary "\n\
 \tDashboard Keycloak SSO Credentials:\n \
