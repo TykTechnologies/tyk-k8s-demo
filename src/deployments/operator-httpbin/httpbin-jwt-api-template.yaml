@@ -38,7 +38,7 @@ spec:
   protocol: http
   active: true
   proxy:
-    target_url: http://replace_service_url
+    target_url: http://httpbin.org
     listen_path: /httpbin-jwt
     strip_listen_path: true
   enable_jwt: true
