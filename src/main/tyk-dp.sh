@@ -3,7 +3,7 @@ source src/main/redis.sh;
 
 cluster=$(kubectl config current-context);
 
-args=(--set "gateway.image.tag=$TYK_GATEWAY_VERSION" \
+args=(--set "gateway.image.tag=$GATEWAY_VERSION" \
   --set "gateway.rpc.connString=$TYK_WORKER_CONNECTIONSTRING" \
   --set "gateway.rpc.rpcKey=$TYK_WORKER_ORGID" \
   --set "gateway.rpc.apiKey=$TYK_WORKER_AUTHTOKEN" \

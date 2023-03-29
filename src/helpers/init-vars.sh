@@ -5,10 +5,18 @@ dashboardPrefix="TYK_DB_";
 mdcbPrefix="TYK_MDCB_";
 pumpPrefix="TYK_PMP_";
 
-gatewayCtr=0;
-dashboardCtr=0;
-mdcbCtr=0;
-pumpCtr=0;
+gatewayExtraEnvsCtr=0;
+dashExtraEnvsCtr=0;
+mdcbExtraEnvsCtr=0;
+pumpExtraEnvsCtr=0;
+gatewayExtraVolumesCtr=0;
+dashExtraVolumesCtr=0;
+mdcbExtraVolumesCtr=0;
+pumpExtraVolumesCtr=0;
+gatewayExtraVolumeMountsCtr=0;
+dashExtraVolumeMountsCtr=0;
+mdcbExtraVolumeMountsCtr=0;
+pumpExtraVolumeMountsCtr=0;
 
 # Check for .env file, if found, load variables
 if [[ -f .env ]]; then
@@ -18,21 +26,21 @@ if [[ -f .env ]]; then
       export "${var[0]}=${var[1]}";
 
       if [[ "${var[0]}" == "$gatewayPrefix"* ]]; then
-        extraEnvs+=(--set "gateway.extraEnvs[$gatewayCtr].name=${var[0]}" \
-          --set "gateway.extraEnvs[$gatewayCtr].value=${var[1]}");
-        gatewayCtr=$((gatewayCtr + 1));
+        extraEnvs+=(--set-string "gateway.extraEnvs[$gatewayExtraEnvsCtr].name=${var[0]}" \
+          --set-string "gateway.extraEnvs[$gatewayExtraEnvsCtr].value=${var[1]}");
+        gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 1));
       elif [[ "${var[0]}" == "$dashboardPrefix"* ]]; then
-        extraEnvs+=(--set "dash.extraEnvs[$dashboardCtr].name=${var[0]}" \
-          --set "dash.extraEnvs[$dashboardCtr].value=${var[1]}");
-        dashboardCtr=$((dashboardCtr + 1));
+        extraEnvs+=(--set-string "dash.extraEnvs[$dashExtraEnvsCtr].name=${var[0]}" \
+          --set-string "dash.extraEnvs[$dashExtraEnvsCtr].value=${var[1]}");
+        dashExtraEnvsCtr=$((dashExtraEnvsCtr + 1));
       elif [[ "${var[0]}" == "$mdcbPrefix"* ]]; then
-        extraEnvs+=(--set "mdcb.extraEnvs[$mdcbCtr].name=${var[0]}" \
-          --set "mdcb.extraEnvs[$mdcbCtr].value=${var[1]}");
-        mdcbCtr=$((mdcbCtr + 1));
+        extraEnvs+=(--set-string "mdcb.extraEnvs[$mdcbExtraEnvsCtr].name=${var[0]}" \
+          --set-string "mdcb.extraEnvs[$mdcbExtraEnvsCtr].value=${var[1]}");
+        mdcbExtraEnvsCtr=$((mdcbExtraEnvsCtr + 1));
       elif [[ "${var[0]}" == "$pumpPrefix"* ]]; then
-        extraEnvs+=(--set "pump.extraEnvs[$pumpCtr].name=${var[0]}" \
-          --set "pump.extraEnvs[$pumpCtr].value=${var[1]}");
-        pumpCtr=$((pumpCtr + 1));
+        extraEnvs+=(--set-string "pump.extraEnvs[$pumpExtraEnvsCtr].name=${var[0]}" \
+          --set-string "pump.extraEnvs[$pumpExtraEnvsCtr].value=${var[1]}");
+        pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 1));
       fi
     fi
   done < .env

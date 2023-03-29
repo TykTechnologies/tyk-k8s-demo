@@ -57,10 +57,7 @@ do
     'r') redis=$OPTARG                 ;;
     'z') dryRun=true                   ;;
     'c') cloud=$OPTARG                 ;;
-    's')
-        storage=$OPTARG
-        logger "$INFO" "Warning: MDCB installtion does not currently support postgres database";
-        ;;
+    's') storage=$OPTARG               ;;
     'd')
         IFS=',' read -r -a deployments <<< "$OPTARG";
         ;;
