@@ -6,6 +6,7 @@
 | tyk-dp               | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | tyk-stack            | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | tyk-cp               | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| datadog              |               `port-froward`               | :white_check_mark: | :white_check_mark: |        :x:         |        :x:         |
 | elasticsearch        |               `port-froward`               | :white_check_mark: | :white_check_mark: |        :x:         |        :x:         |
 | elasticsearch-kibana |               `port-froward`               | :white_check_mark: | :white_check_mark: |        :x:         |        :x:         |
 | k6                   |                    N/A                     |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |

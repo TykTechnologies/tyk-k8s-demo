@@ -6,16 +6,18 @@ helm upgrade "$datadogReleaseName" datadog/datadog \
   --set "datadog.apiKey=$DATADOG_APIKEY" \
   --set "datadog.site=$DATADOG_SITE" \
   --set "datadog.logLevel=debug" \
-  --set "datadog.acExclude=redis" \
+  --set "datadog.logs.enabled=true" \
+  --set "datadog.logs.containerCollectAll=true" \
+  --set "datadog.containerIncludeLogs=image:docker.tyk.io/.* image:tykio/.*" \
+  --set "datadog.containerExcludeLogs=image:.*" \
+  --set "datadog.dogstatsd.port=$DATADOG_SERVICE_PORT" \
+  --set "datadog.dogstatsd.tags=env:$namespace" \
   --set "datadog.dogstatsd.originDetection=true" \
-  --set "datadog.processAgent.enabled=true" \
-  --set "datadog.processAgent.processCollection=true" \
-  --set "dogstatsd.port=$DATADOG_SERVICE_PORT" \
-  --set "dogstatsd.tags=env:$namespace" \
-  --set "logs.enabled=true" \
+  --set "datadog.dogstatsd.nonLocalTraffic=true" \
   "${datadogSecurityContextArgs[@]}" \
   --namespace "$namespace" \
   --wait --atomic > /dev/null;
 unsetVerbose;
 
-source src/deployments/datadog/pump.sh;
+source "$datadogDeploymentPath/pump.sh";
+source "$datadogDeploymentPath/dashboard.sh";
