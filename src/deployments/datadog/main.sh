@@ -5,6 +5,7 @@ helm upgrade "$datadogReleaseName" datadog/datadog \
   --install \
   --set "datadog.apiKey=$DATADOG_APIKEY" \
   --set "datadog.site=$DATADOG_SITE" \
+  --set "datadog.kubelet.tlsVerify=false" \
   --set "datadog.logLevel=debug" \
   --set "datadog.logs.enabled=true" \
   --set "datadog.logs.containerCollectAll=true" \
