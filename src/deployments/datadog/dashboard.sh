@@ -1,6 +1,6 @@
 logger "$INFO" "creating datadog dashboard...";
 
-dashboards=$(curl -s -X GET "https://api.datadoghq.com/api/v1/dashboard" \
+dashboards=$(curl -s -X GET "https://api.$DATADOG_SITE/api/v1/dashboard" \
 -H "Accept: application/json" \
 -H "DD-API-KEY: $DATADOG_APIKEY" \
 -H "DD-APPLICATION-KEY: $DATADOG_APPKEY");
@@ -24,7 +24,3 @@ else
   logger "$DEBUG" "datadog/dashboard.sh: dashboard already exists...skipping";
   dashboard="$(echo "$dashboards" | jq '.dashboards | .[] | select(.title="Tyk Dashboard")')";
 fi
-
-addSummary "\n\
-\tDatadog Agent deployed\n \
-\tTyk Dashboard: https://app.$DATADOG_SITE$(echo "$dashboard" | jq -r '.url')\n";

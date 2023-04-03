@@ -32,5 +32,4 @@ kubectl create secret generic tyk-operator-conf \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 unsetVerbose;
 
-addSummary "\n\
-\tTyk Gateway deployed\n";
+addSummary "\tTyk Gateway deployed";

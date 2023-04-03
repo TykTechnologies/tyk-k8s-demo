@@ -22,3 +22,8 @@ unsetVerbose;
 
 source "$datadogDeploymentPath/pump.sh";
 source "$datadogDeploymentPath/dashboard.sh";
+source "$datadogDeploymentPath/pipeline.sh";
+
+addSummary "\tDatadog Agent deployed\n \
+\tTyk Dashboard: https://app.$DATADOG_SITE$(echo "$dashboard" | jq -r '.url')\n \
+\tDatadog Logs: https://app.$DATADOG_SITE/logs";

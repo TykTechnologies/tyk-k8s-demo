@@ -21,8 +21,7 @@ kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-nam
 
 source "$deploymentPath/create-sso-profile.sh";
 
-addSummary "\n\
-\tDashboard Keycloak SSO Credentials:\n \
+addSummary "\tDashboard Keycloak SSO Credentials:\n \
 \tLogin URL: http://localhost:3000/auth/keycloak/openid-connect\n \
 \tUsername: $USERNAME\n \
-\tPassword: $PASSWORD\n";
+\tPassword: $PASSWORD";

@@ -31,7 +31,6 @@ logger "$INFO" "waiting for $keycloakName pods to come up...";
 waitForPods "statefulset.kubernetes.io/pod-name=$keycloakName-0" "$keycloakName-0";
 kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-name=$keycloakName-0" --for=condition=Ready --timeout=180s > /dev/null;
 
-addSummary "\n\
-\tKeycloak deployed\n \
+addSummary "\tKeycloak deployed\n \
 \tUsername: $(kubectl get secret "$keycloakName-initial-admin" -o jsonpath='{.data.username}' --namespace "$namespace" | base64 --decode)\n \
-\tPassword: $(kubectl get secret "$keycloakName-initial-admin" -o jsonpath='{.data.password}' --namespace "$namespace" | base64 --decode)\n";
+\tPassword: $(kubectl get secret "$keycloakName-initial-admin" -o jsonpath='{.data.password}' --namespace "$namespace" | base64 --decode)";

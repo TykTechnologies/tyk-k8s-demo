@@ -1,0 +1,31 @@
+{
+  "name": "Tyk",
+  "is_enabled": true,
+  "filter": {
+    "query": "service:tyk-*"
+  },
+  "processors": [
+    {
+      "name": "Grok Parser",
+      "is_enabled": true,
+      "source": "message",
+      "samples": [
+        "time=\"Mar 31 17:21:51\" level=info msg=\"Purged 5000 records...\" prefix=stdout-pump",
+        "time=\"Mar 31 17:04:49\" level=error msg=\"http: proxy error: context canceled\" api_id=dHlrL2h0dHBiaW4ta2V5bGVzcw api_name=httpbin-keyless mw=ReverseProxy org_id=6426fc46d956f600016bfa0a prefix=proxy server_name=httpbin.org user_id=-- user_ip=10.120.0.48 user_name="
+      ],
+      "grok": {
+        "support_rules": "",
+        "match_rules": "autoFilledRule1 %{data::keyvalue(\"=\",\" \\\":*\\\\[\\\\]\")}\n\nautoFilledRule2 %{data::keyvalue(\"=\",\" \\\":=\")}\n\nautoFilledRule3 Updating\\s+linked\\s+api\\s+definitions"
+      },
+      "type": "grok-parser"
+    },
+    {
+      "name": "Status Remapper",
+      "is_enabled": true,
+      "sources": [
+        "level"
+      ],
+      "type": "status-remapper"
+    }
+  ]
+}

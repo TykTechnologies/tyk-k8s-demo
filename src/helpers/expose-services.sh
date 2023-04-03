@@ -56,7 +56,7 @@ exposeServices() {
       kubectl port-forward "svc/$service" --namespace "$namespace" $port > /dev/null &
 
       logger "$DEBUG" "forwarding to $proto://localhost:$port \tfrom\t svc/$service:$port";
-      servicesSummary="$servicesSummary\t$(printf "%-50s" "$service") $proto://localhost:$port\n";
+      servicesSummary="$servicesSummary\n\t$(printf "%-50s" "$service") $proto://localhost:$port";
     done
   else
     logger "$DEBUG" "expose not set to port-forward";
@@ -64,9 +64,7 @@ exposeServices() {
   ## TODO add LOADBALANCER and INGRESS support.
 
   if [[ $NONE != "$expose" ]]; then
-    addSummary "\n\
-    \tExposed Services
-    $servicesSummary";
+    addSummary "\tExposed Services$servicesSummary";
   fi
 }
 

@@ -39,6 +39,5 @@ helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
   --wait --atomic > /dev/null;
 unsetVerbose;
 
-addSummary "\n\
-\tTyk Worker Gateway deployed\n
-\tMDCB Connection: $TYK_WORKER_CONNECTIONSTRING\n";
+addSummary "\tTyk Worker Gateway deployed\n
+\tMDCB Connection: $TYK_WORKER_CONNECTIONSTRING";

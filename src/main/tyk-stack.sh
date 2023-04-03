@@ -30,7 +30,6 @@ helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
   --wait --atomic > /dev/null;
 unsetVerbose;
 
-addSummary "\n\
-\tTyk Stack deployed\n \
+addSummary "\tTyk Stack deployed\n \
 \tDashboard username: $USERNAME\n \
-\tDashboard password: $PASSWORD\n";
+\tDashboard password: $PASSWORD";

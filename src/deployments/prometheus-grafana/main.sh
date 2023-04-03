@@ -31,7 +31,6 @@ helm upgrade "$grafanaReleaseName" grafana/grafana \
   --namespace "$namespace" > /dev/null;
 unsetVerbose;
 
-addSummary "\n\
-\tGrafana deployed\n \
+addSummary "\tGrafana deployed\n \
 \tUsername: admin\n \
-\tPassword: $(kubectl get secret --namespace "$namespace" "$grafanaReleaseName" -o jsonpath="{.data.admin-password}" | base64 --decode)\n";
+\tPassword: $(kubectl get secret --namespace "$namespace" "$grafanaReleaseName" -o jsonpath="{.data.admin-password}" | base64 --decode)";
