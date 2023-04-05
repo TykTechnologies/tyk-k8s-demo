@@ -41,8 +41,7 @@ jobs:
         run: |
           LICENSE="${{ secrets.DASH_LICENSE }}" \
           MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
-          ./up.sh \
-            -v \
+          ./up.sh -v \
             --namespace tyk-cp-${{ matrix.redis }} \
             --redis ${{ matrix.redis }} \
             tyk-cp

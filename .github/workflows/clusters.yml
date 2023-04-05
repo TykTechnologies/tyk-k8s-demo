@@ -41,9 +41,7 @@ jobs:
         run: |
           LICENSE="${{ secrets.DASH_LICENSE }}" \
           MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
-          ./up.sh -v \
-            --namespace tyk-cp-${{ matrix.cluster }} \
-            tyk-cp
+          ./up.sh -v tyk-cp
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=multi-region" tyk-k8s-demo.postman_collection.json
