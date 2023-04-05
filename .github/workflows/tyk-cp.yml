@@ -9,8 +9,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mode:
-          - tyk-cp
         deployment:
           #          - datadog
           #          - elasticsearch
@@ -58,7 +56,7 @@ jobs:
           MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
           ./up.sh -v \
             --namespace tyk-cp-${{ matrix.deployment }} \
-            --deployment ${{ matrix.deployment }}
+            --deployment ${{ matrix.deployment }} \
             tyk-cp
 
       - name: Test Tyk deployment

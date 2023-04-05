@@ -50,7 +50,7 @@ jobs:
         run: |
           ./up.sh -v \
             --namespace tyk-gateway-${{ matrix.deployment }} \
-            --deployment ${{ matrix.deployment }}
+            --deployment ${{ matrix.deployment }} \
             tyk-gateway
 
       - name: Test Tyk deployment

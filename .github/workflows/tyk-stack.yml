@@ -55,7 +55,7 @@ jobs:
           LICENSE="${{ secrets.DASH_LICENSE }}" \
           ./up.sh -v \
             --namespace tyk-stack-${{ matrix.deployment }} \
-            --deployment ${{ matrix.deployment }}
+            --deployment ${{ matrix.deployment }} \
             tyk-stack
 
       - name: Test Tyk deployment

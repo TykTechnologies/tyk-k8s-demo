@@ -53,7 +53,7 @@ jobs:
           TYK_WORKER_AUTHTOKEN="${{ secrets.WORKER_API_KEY }}" \
           ./up.sh -v \
             --namespace tyk-dp-${{ matrix.deployment }} \
-            --deployment ${{ matrix.deployment }}
+            --deployment ${{ matrix.deployment }} \
             tyk-dp
 
       - name: Test Tyk deployment
