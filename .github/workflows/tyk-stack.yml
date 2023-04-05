@@ -53,6 +53,7 @@ jobs:
       - name: Deploy tyk-stack-${{ matrix.deployment }}
         run: |
           LICENSE="${{ secrets.DASH_LICENSE }}" \
+          PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
           ./up.sh -v \
             --namespace tyk-stack-${{ matrix.deployment }} \
             --deployments ${{ matrix.deployment }} \

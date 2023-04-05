@@ -56,6 +56,9 @@ jobs:
             --deployments ${{ matrix.deployment }} \
             tyk-dp
 
+      - name: Sleep 3 minutes
+        run: sleep 180
+
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
 

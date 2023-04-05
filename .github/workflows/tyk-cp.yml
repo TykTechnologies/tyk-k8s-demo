@@ -54,6 +54,7 @@ jobs:
         run: |
           LICENSE="${{ secrets.DASH_LICENSE }}" \
           MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+          PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
           ./up.sh -v \
             --namespace tyk-cp-${{ matrix.deployment }} \
             --deployments ${{ matrix.deployment }} \
