@@ -4,9 +4,9 @@ and requires the respective cloud CLI to be installed and authorized on your sys
 `CLUSTER_LOCATION`, `CLUSTER_MACHINE_TYPE`, `CLUSTER_NODE_COUNT` and `GCP_PROJECT` (for GCP only) parameters in the .env file.
 
 You can find examples of .env files under each of the `src/clouds` folders:
-- [AWS](src/clouds/aws/.env.example)
-- [GCP](src/clouds/gcp/.env.example)
-- [Azure](src/clouds/azure/.env.example)
+- [AWS](../src/clouds/aws/.env.example)
+- [GCP](../src/clouds/gcp/.env.example)
+- [Azure](../src/clouds/azure/.env.example)
 
 For more information about cloud CLIs:
 - AWS:
