@@ -75,8 +75,8 @@ jobs:
               --redis ${{ matrix.redis }} \
               tyk-dp
 
-      - name: Sleep 1 minute
-        run: sleep 60
+      - name: Sleep 3 minute
+        run: sleep 180
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
