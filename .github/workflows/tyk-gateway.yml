@@ -68,4 +68,4 @@ jobs:
         run: newman run --folder gateway tyk-k8s-demo.postman_collection.json
 
       - name: Test ${{ matrix.deployment }}
-        run: newman run --folder --insecure ${{ matrix.deployment }} tyk-k8s-demo.postman_collection.json
+        run: newman run --folder ${{ matrix.deployment }} --insecure tyk-k8s-demo.postman_collection.json

@@ -32,11 +32,22 @@ addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
 
 setVerbose;
-helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
+helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
   --install \
   --namespace "$namespace" \
   "${deploymentsArgs[@]}" \
   --wait --atomic > /dev/null;
+
+  if [[ -n "$TYK_WORKER_OPERATOR_CONNECTIONSTRING" ]]; then
+    logger "$DEBUG" "creating tyk-operator secret...";
+    kubectl create secret generic tyk-operator-conf \
+      --from-literal="TYK_MODE=pro" \
+      --from-literal="$TYK_WORKER_OPERATOR_CONNECTIONSTRING" \
+      --from-literal="TYK_AUTH=$TYK_WORKER_AUTHTOKEN" \
+      --from-literal="TYK_ORG=$TYK_WORKER_ORGID" \
+      --dry-run=client -o=yaml | \
+      kubectl apply --namespace "$namespace" -f - > /dev/null;
+  fi
 unsetVerbose;
 
 addSummary "\tTyk Worker Gateway deployed\n

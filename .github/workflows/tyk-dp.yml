@@ -56,9 +56,10 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           command: |
-            TYK_WORKER_CONNECTIONSTRING="${{ secrets.WORKER_MDCB_HOST }}" \
-            TYK_WORKER_ORGID="${{ secrets.WORKER_RPC_KEY }}" \
-            TYK_WORKER_AUTHTOKEN="${{ secrets.WORKER_API_KEY }}" \
+            TYK_WORKER_CONNECTIONSTRING="${{ secrets.TYK_WORKER_CONNECTIONSTRING }}" \
+            TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
+            TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
+            TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
             ./up.sh -v \
               --namespace tyk-dp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
