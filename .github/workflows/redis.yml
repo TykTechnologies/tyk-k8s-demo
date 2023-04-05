@@ -1,33 +1,20 @@
-name: Tyk Control Plane Tests
+name: Tyk Redis Tests
 
 # Controls when the workflow will run
 on: [pull_request, workflow_dispatch]
 
 jobs:
-  tyk-cp:
+  tyk-redis:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         mode:
           - tyk-cp
-        deployment:
-          #          - datadog
-          #          - elasticsearch
-          #          - elasticsearch-kibana
-          - k6
-          - k6-slo-traffic
-          - keycloak
-          - keycloak-sso
-          - keycloak-dcr
-          - operator
-          - operator-httpbin
-          - operator-graphql
-          - operator-udg
-          - operator-federation
-          - portal
-          - prometheus
-          - prometheus-grafana
+        redis:
+          - redis
+          - redis-cluster
+          - redis-sentinel
       max-parallel: 3
     steps:
       - uses: actions/checkout@v2
@@ -52,17 +39,15 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy ${{ matrix.mode }}-${{ matrix.deployment }}
+      - name: Deploy ${{ matrix.mode }} with ${{ matrix.redis }}
         run: |
           LICENSE="${{ secrets.DASH_LICENSE }}" \
           MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
-          ./up.sh -v \
-            --namespace ${{ matrix.mode }}-${{ matrix.deployment }} \
-            --deployment ${{ matrix.deployment }}
+          ./up.sh \
+            -v \
+            --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
+            --redis ${{ matrix.redis }} \
             ${{ matrix.mode }}
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=multi-region" tyk-k8s-demo.postman_collection.json
-
-      - name: Test ${{ matrix.deployment }}
-        run: newman run --folder ${{ matrix.deployment }} tyk-k8s-demo.postman_collection.json

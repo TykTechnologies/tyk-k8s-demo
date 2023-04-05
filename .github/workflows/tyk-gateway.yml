@@ -9,16 +9,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cluster:
-          - v1.21.14
-          - v1.22.15
-          - v1.23.13
         mode:
           - tyk-gateway
-        redis:
-          - redis
-          - redis-cluster
-          - redis-sentinel
         deployment:
           #          - datadog
           #          - elasticsearch
@@ -40,7 +32,7 @@ jobs:
         uses: engineerd/setup-kind@v0.5.0
         with:
           version: "v0.11.1"
-          config: .github/kind-cluster-${{ matrix.cluster }}.yml
+          config: .github/kind-cluster-v1.23.13.yml
 
       - name: Install helm
         uses: Azure/setup-helm@v1.1
@@ -56,14 +48,15 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy ${{ matrix.mode }}-${{ matrix.deployment }} with ${{ matrix.redis }} on ${{ matrix.cluster }}
+      - name: Deploy ${{ matrix.mode }}-${{ matrix.deployment }}
         run: |
-          ./up.sh \
-            -v \
-            --namespace ${{ matrix.mode }}-${{ matrix.deployment }}-${{ matrix.redis }}-${{ matrix.cluster }} \
-            --redis ${{ matrix.redis }} \
+          ./up.sh -v \
+            --namespace ${{ matrix.mode }}-${{ matrix.deployment }} \
             --deployment ${{ matrix.deployment }}
             ${{ matrix.mode }}
 
       - name: Test Tyk deployment
         run: newman run --folder gateway tyk-k8s-demo.postman_collection.json
+
+      - name: Test ${{ matrix.deployment }}
+        run: newman run --folder ${{ matrix.deployment }} tyk-k8s-demo.postman_collection.json
