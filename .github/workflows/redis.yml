@@ -69,6 +69,7 @@ jobs:
             TYK_WORKER_CONNECTIONSTRING="mdcb-svc-tyk-cp-tyk-pro.tyk-${{ matrix.redis }}.svc:9090" \
             TYK_WORKER_ORGID="$(kubectl get secret --namespace tyk-${{ matrix.redis }} tyk-operator-conf -o=jsonpath='{.data.TYK_ORG}' | base64 -d)" \
             TYK_WORKER_AUTHTOKEN="$(kubectl get secret --namespace tyk-${{ matrix.redis }} tyk-operator-conf -o=jsonpath='{.data.TYK_AUTH}' | base64 -d)" \
+            TYK_WORKER_USESSL=false \
             ./up.sh -v \
               --namespace tyk-${{ matrix.redis }} \
               --redis ${{ matrix.redis }} \
