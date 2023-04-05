@@ -4,7 +4,8 @@ source src/main/redis.sh;
 args=(--set "gateway.image.tag=$GATEWAY_VERSION" \
   --set "gateway.image.repository=tykio/tyk-gateway" \
   --set "gateway.kind=Deployment" \
-  --set "gateway.service.port=8080");
+  --set "gateway.service.port=8080" \
+  --set "pump.enabled=true");
 
 tykReleaseName="tyk-gateway";
 addService "gateway-svc-$tykReleaseName-$chart";
