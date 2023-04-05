@@ -5,27 +5,21 @@ deploymentPath="src/deployments/operator-udg";
 setVerbose;
 # UDG DataSource - Users REST
 addService "users-rest-svc";
-sed "s/replace_run_as_user/$applicationSecurityContextUID/g" "$deploymentPath/users-rest-app-template.yaml" | \
-  sed "s/replace_run_as_group/$applicationSecurityContextUID/g" | \
-  kubectl apply --namespace "$namespace" -f - > /dev/null;
+kubectl apply --namespace "$namespace" -f "$deploymentPath/users-rest-app.yaml" > /dev/null;
 kubectl wait pods --namespace "$namespace" -l app=users-rest --for=condition=Ready --timeout=60s  > /dev/null;
 sed "s/replace_service_url/users-rest-svc.$namespace.svc:3101/g" "$deploymentPath/users-rest-api-template.yaml" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 # UDG DataSource - Posts REST
 addService "posts-rest-svc";
-sed "s/replace_run_as_user/$applicationSecurityContextUID/g" "$deploymentPath/posts-rest-app-template.yaml" | \
-  sed "s/replace_run_as_group/$applicationSecurityContextUID/g" | \
-  kubectl apply --namespace "$namespace" -f - > /dev/null;
+kubectl apply --namespace "$namespace" -f "$deploymentPath/posts-rest-app.yaml" > /dev/null;
 kubectl wait pods --namespace "$namespace" -l app=posts-rest --for=condition=Ready --timeout=60s  > /dev/null;
 sed "s/replace_service_url/posts-rest-svc.$namespace.svc:3102/g" "$deploymentPath/posts-rest-api-template.yaml" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 # UDG DataSource - Comments REST
 addService "comments-rest-svc";
-sed "s/replace_run_as_user/$applicationSecurityContextUID/g" "$deploymentPath/comments-rest-app-template.yaml" | \
-  sed "s/replace_run_as_group/$applicationSecurityContextUID/g" | \
-  kubectl apply --namespace "$namespace" -f - > /dev/null;
+kubectl apply --namespace "$namespace" -f "$deploymentPath/comments-rest-app.yaml" > /dev/null;
 kubectl wait pods --namespace "$namespace" -l app=comments-rest --for=condition=Ready --timeout=60s  > /dev/null;
 sed "s/replace_service_url/comments-rest-svc.$namespace.svc:3103/g" "$deploymentPath/comments-rest-api-template.yaml" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;

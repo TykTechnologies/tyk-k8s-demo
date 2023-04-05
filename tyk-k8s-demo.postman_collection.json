@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a9a67026-8423-497e-9649-3549329ea741",
+		"_postman_id": "0dc202b5-9124-41fc-96db-6fafbdbf98a1",
 		"name": "tyk-k8s-demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13702323"
@@ -10,106 +10,14 @@
 			"name": "Component Health Checks",
 			"item": [
 				{
-					"name": "pro-gateway",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Gateway status is pass\", function () {",
-									"    var health = pm.response.json();",
-									"    pm.expect(health.status).to.eql(\"pass\");",
-									"});",
-									"",
-									"pm.test(\"Dashboard status is pass\", function () {",
-									"    var health = pm.response.json();",
-									"    pm.expect(health.details[\"dashboard\"].status).to.eql(\"pass\");",
-									"});",
-									"",
-									"pm.test(\"Redis status is pass\", function () {",
-									"    var health = pm.response.json();",
-									"    pm.expect(health.details[\"redis\"].status).to.eql(\"pass\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{pro-gateway.port}}/hello",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{pro-gateway.port}}",
-							"path": [
-								"hello"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "worker-gateway",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Gateway status is pass\", function () {",
-									"    var health = pm.response.json();",
-									"    pm.expect(health.status).to.eql(\"pass\");",
-									"});",
-									"",
-									"pm.test(\"RPC status is pass\", function () {",
-									"    var health = pm.response.json();",
-									"    pm.expect(health.details[\"rpc\"].status).to.eql(\"pass\");",
-									"});",
-									"",
-									"pm.test(\"Redis status is pass\", function () {",
-									"    var health = pm.response.json();",
-									"    pm.expect(health.details[\"redis\"].status).to.eql(\"pass\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{worker-gateway.port}}/hello",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{worker-gateway.port}}",
-							"path": [
-								"hello"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "gateway",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
+									"deployment = pm.variables.get(\"deployment\");",
+									"",
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
@@ -122,7 +30,19 @@
 									"pm.test(\"Redis status is pass\", function () {",
 									"    var health = pm.response.json();",
 									"    pm.expect(health.details[\"redis\"].status).to.eql(\"pass\");",
-									"});"
+									"});",
+									"",
+									"if (\"single-region\" == deployment) {",
+									"    pm.test(\"Dashboard status is pass\", function () {",
+									"        var health = pm.response.json();",
+									"        pm.expect(health.details[\"dashboard\"].status).to.eql(\"pass\");",
+									"    });",
+									"} else if (\"multi-region\" == deployment) {",
+									"    pm.test(\"RPC status is pass\", function () {",
+									"        var health = pm.response.json();",
+									"        pm.expect(health.details[\"rpc\"].status).to.eql(\"pass\");",
+									"    });",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -144,102 +64,215 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "dashboard",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Gateway status is pass\", function () {",
-									"    var health = pm.response.json();",
-									"    pm.expect(health.status).to.eql(\"ok\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{dashboard.port}}/hello",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{dashboard.port}}",
-							"path": [
-								"hello"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
 		{
 			"name": "Deployments",
 			"item": [
-        {
-          "name": "operator-graphql",
-          "item": [
-            {
-              "name": "trevorblades",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
-                      "    pm.response.to.have.status(200);",
-                      "});",
-                      "",
-                      "pm.test(\"Looking up Canada!\", function () {",
-                      "    var res = pm.response.json();",
-                      "    pm.expect(res.data.country.code).to.eql(\"CA\");",
-                      "    pm.expect(res.data.country.name).to.eql(\"Canada\");",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "graphql",
-                  "graphql": {
-                    "query": "query {\n  country(code:\"CA\") {\n    code\n    name\n  }\n}",
-                    "variables": ""
-                  }
-                },
-                "url": {
-                  "raw": "http://localhost:{{pro-gateway.port}}/trevorblades",
-                  "protocol": "http",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "{{pro-gateway.port}}",
-                  "path": [
-                    "trevorblades"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ]
-        },
-        {
-          "name": "operator-udg",
-          "item": [
+				{
+					"name": "datadog",
+					"item": [
+						{
+							"name": "healthz",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Datadog status is health\", function () {",
+											"    var health = pm.response.json();",
+											"    pm.expect(health.Unhealthy).to.eql(null);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{datadog.port}}/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{datadog.port}}",
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "elasticsearch",
+					"item": [
+						{
+							"name": "health",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Elasticsearch status is green\", function () {",
+											"    var health = pm.response.json();",
+											"    pm.expect(health.status).to.eql(\"green\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{elasticsearch.port}}/_cluster/health",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{elasticsearch.port}}",
+									"path": [
+										"_cluster",
+										"health"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "elasticsearch-kibana",
+					"item": [
+						{
+							"name": "status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Kibana status is available\", function () {",
+											"    var resp = pm.response.json();",
+											"    pm.expect(resp.status.overall.level).to.eql(\"available\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{kibana.port}}/api/status",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{kibana.port}}",
+									"path": [
+										"api",
+										"status"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "keycloak",
+					"item": [
+						{
+							"name": "health",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Elasticsearch status is green\", function () {",
+											"    var health = pm.response.json();",
+											"    pm.expect(health.status).to.eql(\"UP\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{keycloak.port}}/health",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{keycloak.port}}",
+									"path": [
+										"health"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "operator-graphql",
+					"item": [
+						{
+							"name": "trevorblades",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Looking up Canada!\", function () {",
+											"    var res = pm.response.json();",
+											"    pm.expect(res.data.country.code).to.eql(\"CA\");",
+											"    pm.expect(res.data.country.name).to.eql(\"Canada\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query {\n  country(code:\"CA\") {\n    code\n    name\n  }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{gateway.port}}/trevorblades",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{gateway.port}}",
+									"path": [
+										"trevorblades"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "operator-udg",
+					"item": [
 						{
 							"name": "Social Media App - Stitch",
 							"event": [
@@ -247,10 +280,6 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
 											"pm.test(\"Testing stitching...\", function () {",
 											"    var res = pm.response.json();",
 											"    pm.expect(res.data.user.name).to.eql(\"Leanne Graham\");",
@@ -273,12 +302,12 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:{{pro-gateway.port}}/udg",
+									"raw": "http://localhost:{{gateway.port}}/udg",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "{{pro-gateway.port}}",
+									"port": "{{gateway.port}}",
 									"path": [
 										"udg"
 									]
@@ -286,11 +315,11 @@
 							},
 							"response": []
 						}
-          ]
-        },
-        {
-          "name": "operator-federation",
-          "item": [
+					]
+				},
+				{
+					"name": "operator-federation",
+					"item": [
 						{
 							"name": "Social Media App - Federated",
 							"event": [
@@ -298,10 +327,6 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
 											"pm.test(\"Testing federation...\", function () {",
 											"    var res = pm.response.json();",
 											"    pm.expect(res.data.user.name).to.eql(\"Leanne Graham\");",
@@ -324,12 +349,12 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:{{pro-gateway.port}}/social-media-app-federated/",
+									"raw": "http://localhost:{{gateway.port}}/social-media-app-federated/",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "{{pro-gateway.port}}",
+									"port": "{{gateway.port}}",
 									"path": [
 										"social-media-app-federated",
 										""
@@ -339,8 +364,201 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "operator-httpbin",
+					"item": [
+						{
+							"name": "httpbin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"HttpBin status is green\", function () {",
+											"    var health = pm.response.json();",
+											"    pm.expect(health.data).to.eql(\"HelloWorld\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "HelloWorld",
+									"options": {
+										"raw": {
+											"language": "text"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{gateway.port}}/httpbin-keyless/anything",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{gateway.port}}",
+									"path": [
+										"httpbin-keyless",
+										"anything"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "portal",
+					"item": [
+						{
+							"name": "get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{portal.port}}/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portal.port}}",
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "prometheus",
+					"item": [
+						{
+							"name": "targets",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Prometheus Tyk target health status up\", function () {",
+											"    var result = pm.response.json();",
+											"    pm.expect(result.data.activeTargets[0].labels.job).to.eql(\"tyk\");",
+											"    pm.expect(result.data.activeTargets[0].health).to.eql(\"up\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{prometheus.port}}/api/v1/targets",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{prometheus.port}}",
+									"path": [
+										"api",
+										"v1",
+										"targets"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "prometheus-grafana",
+					"item": [
+						{
+							"name": "healthz",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Elasticsearch status is green\", function () {",
+											"    var health = pm.response.text();",
+											"    pm.expect(health).to.eql(\"Ok\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{grafana.port}}/healthz",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{grafana.port}}",
+									"path": [
+										"healthz"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
@@ -349,20 +567,42 @@
 			"value": "8080"
 		},
 		{
-			"key": "worker-gateway.port",
-			"value": "8081"
-		},
-		{
-			"key": "pro-gateway.port",
-			"value": "8080"
-		},
-		{
 			"key": "dashboard.port",
 			"value": "3000"
 		},
 		{
-			"key": "mdcb.health_port",
-			"value": "8181"
+			"key": "deployment",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "elasticsearch.port",
+			"value": "9200",
+			"type": "string"
+		},
+		{
+			"key": "datadog.port",
+			"value": "5555"
+		},
+		{
+			"key": "keycloak.port",
+			"value": "7001"
+		},
+		{
+			"key": "portal.port",
+			"value": "3000"
+		},
+		{
+			"key": "kibana.port",
+			"value": "5601"
+		},
+		{
+			"key": "prometheus.port",
+			"value": "9080"
+		},
+		{
+			"key": "grafana.port",
+			"value": "9081"
 		}
 	]
 }

@@ -5,6 +5,6 @@ prometheusReleaseName="prometheus";
 
 if [ -z "$prometheusRegistered" ]; then
   prometheusRegistered=true;
-  source "src/deployments/portal/openshift.sh";
+  source "src/deployments/prometheus/openshift.sh";
   source "src/deployments/prometheus/main.sh";
 fi

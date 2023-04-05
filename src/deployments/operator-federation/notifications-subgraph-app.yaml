@@ -28,7 +28,7 @@ spec:
         app: notifications-subgraph
     spec:
       containers:
-        - image: zalbiraw/go-api-test-service:v2.0.0
+        - image: zalbiraw/go-api-test-service:v2.0
           imagePullPolicy: IfNotPresent
           name: notifications-subgraph
           command:
@@ -38,7 +38,3 @@ spec:
           env:
             - name: PORT
               value: "4204"
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: replace_run_as_user
-            runAsGroup: replace_run_as_group

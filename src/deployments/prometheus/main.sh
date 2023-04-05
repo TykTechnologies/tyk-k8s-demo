@@ -3,12 +3,13 @@ logger "$INFO" "installing $prometheusReleaseName in $namespace namespace...";
 addService "$prometheusReleaseName-server";
 
 setVerbose;
-helm upgrade "$prometheusReleaseName" prometheus-community/prometheus \
+helm upgrade "$prometheusReleaseName" prometheus-community/prometheus --version 20.1.0 \
   --install \
   --set "prometheus-pushgateway.enabled=false" \
   --set "server.service.servicePort=$PROMETHEUS_SERVICE_PORT" \
   --set "server.global.scrape_interval=15s" \
   --set "server.global.evaluation_interval=15s" \
+  --set "server.extraFlags={web.enable-lifecycle,web.enable-admin-api}" \
   --set "serverFiles.recording_rules\.yml.groups[0].name=tyk" \
   --set "serverFiles.recording_rules\.yml.groups[0].rules[0].record=task:http_response_error_count" \
   --set "serverFiles.recording_rules\.yml.groups[0].rules[0].expr=tyk_http_requests_total{response_code=~\"5\[0-9]{2}\"}" \

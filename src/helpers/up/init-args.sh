@@ -16,7 +16,6 @@ AZURE="azure";
 
 # Default values
 namespace=$DEFAULTNAMESPACE;
-flavor=$VANILLA;
 redis=$REDISCLUSTER;
 storage=$POSTGRES;
 isDebug=false;
@@ -25,6 +24,16 @@ expose=$PORTFORWARD;
 cloud=$NONE;
 portsWait=15;
 deployments=$();
+
+flavor=$VANILLA;
+set +e;
+search=$(kubectl get service --all-namespaces | grep -e "openshift");
+set -e;
+
+if [[ -n $search ]]; then
+  logger "$DEBUG" "init-args.sh: openshift detected";
+  flavor=$OPENSHIFT;
+fi
 
 # Translate long argument flags into short ones.
 for arg in "$@"; do

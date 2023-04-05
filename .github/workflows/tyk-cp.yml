@@ -1,0 +1,75 @@
+name: Tyk Control Plane Tests
+
+# Controls when the workflow will run
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  tyk-cp:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cluster:
+          - v1.21.14
+          - v1.22.15
+          - v1.23.13
+        mode:
+          - tyk-cp
+        redis:
+          - redis
+          - redis-cluster
+          - redis-sentinel
+        deployment:
+          #          - datadog
+          #          - elasticsearch
+          #          - elasticsearch-kibana
+          - k6
+          - k6-slo-traffic
+          - keycloak
+          - keycloak-sso
+          - keycloak-dcr
+          - operator
+          - operator-httpbin
+          - operator-graphql
+          - operator-udg
+          - operator-federation
+          - portal
+          - prometheus
+          - prometheus-grafana
+      max-parallel: 3
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Kind Cluster
+        uses: engineerd/setup-kind@v0.5.0
+        with:
+          version: "v0.11.1"
+          config: .github/kind-cluster-${{ matrix.cluster }}.yml
+
+      - name: Install helm
+        uses: Azure/setup-helm@v1.1
+        with:
+          version: v3.5.3
+
+      - name: Install newman
+        run: |
+          sudo apt update && \
+          sudo apt install nodejs npm -y && \
+          npm install -g newman
+
+      - name: Copy .env file
+        run: cp .env.example .env
+
+      - name: Deploy ${{ matrix.mode }}-${{ matrix.deployment }} with ${{ matrix.redis }} on ${{ matrix.cluster }}
+        run: |
+          LICENSE="${{ secrets.DASH_LICENSE }}" \
+          MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+          ./up.sh \
+            -v \
+            --namespace ${{ matrix.mode }}-${{ matrix.deployment }}-${{ matrix.redis }}-${{ matrix.cluster }} \
+            --redis ${{ matrix.redis }} \
+            --deployment ${{ matrix.deployment }}
+            ${{ matrix.mode }}
+
+      - name: Test Tyk deployment
+        run: newman run --folder gateway tyk-k8s-demo.postman_collection.json
