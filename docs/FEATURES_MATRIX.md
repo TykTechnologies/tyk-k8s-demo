@@ -22,3 +22,24 @@
 | portal               | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus           |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus-grafana   |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+
+
+## Integrations compatible with Tyk deployments
+| Integration          |    tyk-gateway     |     tyk-stack      |       tyk-cp       |       tyk-dp       |
+|----------------------|:------------------:|:------------------:|:------------------:|:------------------:|
+| datadog              | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| elasticsearch        | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| elasticsearch-kibana | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| k6                   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| k6-slo-traffic       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| keycloak             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| keycloak-dcr         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
+| keycloak-sso         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
+| operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| portal               |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
