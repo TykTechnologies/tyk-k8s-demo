@@ -44,4 +44,4 @@ jobs:
           ./up.sh -v tyk-cp
 
       - name: Test Tyk deployment
-        run: newman run --folder gateway --env-var "deployment=multi-region" tyk-k8s-demo.postman_collection.json
+        run: newman run --folder gateway --env-var "deployment=control-plane" tyk-k8s-demo.postman_collection.json

@@ -57,7 +57,7 @@ jobs:
             tyk-dp
 
       - name: Test Tyk deployment
-        run: newman run --folder gateway --env-var "deployment=multi-region" tyk-k8s-demo.postman_collection.json
+        run: newman run --folder gateway --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
 
       - name: Test ${{ matrix.deployment }}
         run: newman run --folder ${{ matrix.deployment }} tyk-k8s-demo.postman_collection.json
