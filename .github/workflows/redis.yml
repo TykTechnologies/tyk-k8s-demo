@@ -50,7 +50,7 @@ jobs:
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
             ./up.sh -v \
-              --namespace tyk-cp-${{ matrix.redis }} \
+              --namespace tyk-${{ matrix.redis }} \
               --redis ${{ matrix.redis }} \
               tyk-cp
 
@@ -59,3 +59,23 @@ jobs:
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=control-plane" tyk-k8s-demo.postman_collection.json
+
+      - name: Deploy tyk-dp with ${{ matrix.redis }}
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          command: |
+            TYK_WORKER_CONNECTIONSTRING="mdcb-svc-tyk-cp-tyk-pro.tyk-${{ matrix.redis }}.svc:9090" \
+            TYK_WORKER_ORGID="$(kubectl get secret --namespace tyk-${{ matrix.redis }} tyk-operator-conf -o=jsonpath='{.data.TYK_ORG}' | base64 -d)" \
+            TYK_WORKER_AUTHTOKEN="$(kubectl get secret --namespace tyk-${{ matrix.redis }} tyk-operator-conf -o=jsonpath='{.data.TYK_AUTH}' | base64 -d)" \
+            ./up.sh -v \
+              --namespace tyk-${{ matrix.redis }} \
+              --redis ${{ matrix.redis }} \
+              tyk-dp
+
+      - name: Sleep 1 minute
+        run: sleep 60
+
+      - name: Test Tyk deployment
+        run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json

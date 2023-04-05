@@ -42,7 +42,7 @@ helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
     logger "$DEBUG" "creating tyk-operator secret...";
     kubectl create secret generic tyk-operator-conf \
       --from-literal="TYK_MODE=pro" \
-      --from-literal="$TYK_WORKER_OPERATOR_CONNECTIONSTRING" \
+      --from-literal="TYK_URL=$TYK_WORKER_OPERATOR_CONNECTIONSTRING" \
       --from-literal="TYK_AUTH=$TYK_WORKER_AUTHTOKEN" \
       --from-literal="TYK_ORG=$TYK_WORKER_ORGID" \
       --dry-run=client -o=yaml | \
