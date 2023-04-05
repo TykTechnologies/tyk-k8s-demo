@@ -14,9 +14,9 @@ jobs:
       fail-fast: false
       matrix:
         deployment:
-          #          - datadog
-          #          - elasticsearch
-          #          - elasticsearch-kibana
+#          - datadog
+#          - elasticsearch
+#          - elasticsearch-kibana
           - k6
           - k6-slo-traffic
           - operator
@@ -24,8 +24,8 @@ jobs:
           - operator-graphql
           - operator-udg
           - operator-federation
-          - prometheus
-          - prometheus-grafana
+#          - prometheus
+#          - prometheus-grafana
       max-parallel: 3
     steps:
       - uses: actions/checkout@v2
