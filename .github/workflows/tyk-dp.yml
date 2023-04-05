@@ -9,8 +9,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mode:
-          - tyk-dp
         deployment:
           #          - datadog
           #          - elasticsearch
@@ -48,15 +46,15 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy ${{ matrix.mode }}-${{ matrix.deployment }}
+      - name: Deploy tyk-dp-${{ matrix.deployment }}
         run: |
           TYK_WORKER_CONNECTIONSTRING="${{ secrets.WORKER_MDCB_HOST }}" \
           TYK_WORKER_ORGID="${{ secrets.WORKER_RPC_KEY }}" \
           TYK_WORKER_AUTHTOKEN="${{ secrets.WORKER_API_KEY }}" \
           ./up.sh -v \
-            --namespace ${{ matrix.mode }}-${{ matrix.deployment }} \
+            --namespace tyk-dp-${{ matrix.deployment }} \
             --deployment ${{ matrix.deployment }}
-            ${{ matrix.mode }}
+            tyk-dp
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=multi-region" tyk-k8s-demo.postman_collection.json

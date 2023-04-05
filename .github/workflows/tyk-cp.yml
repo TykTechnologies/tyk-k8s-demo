@@ -52,14 +52,14 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy ${{ matrix.mode }}-${{ matrix.deployment }}
+      - name: Deploy tyk-cp-${{ matrix.deployment }}
         run: |
           LICENSE="${{ secrets.DASH_LICENSE }}" \
           MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
           ./up.sh -v \
-            --namespace ${{ matrix.mode }}-${{ matrix.deployment }} \
+            --namespace tyk-cp-${{ matrix.deployment }} \
             --deployment ${{ matrix.deployment }}
-            ${{ matrix.mode }}
+            tyk-cp
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=multi-region" tyk-k8s-demo.postman_collection.json

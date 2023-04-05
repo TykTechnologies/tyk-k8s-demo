@@ -4,7 +4,7 @@ name: Tyk Clusters Tests
 on: [pull_request, workflow_dispatch]
 
 jobs:
-  tyk-cp:
+  tyk-clusters:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -13,8 +13,6 @@ jobs:
           - v1.21.14
           - v1.22.15
           - v1.23.13
-        mode:
-          - tyk-cp
       max-parallel: 3
     steps:
       - uses: actions/checkout@v2
@@ -39,13 +37,13 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy ${{ matrix.mode }} on ${{ matrix.cluster }}
+      - name: Deploy tyk-cp on ${{ matrix.cluster }}
         run: |
           LICENSE="${{ secrets.DASH_LICENSE }}" \
           MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
           ./up.sh -v \
-            --namespace ${{ matrix.mode }}-${{ matrix.cluster }} \
-            ${{ matrix.mode }}
+            --namespace tyk-cp-${{ matrix.cluster }} \
+            tyk-cp
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=multi-region" tyk-k8s-demo.postman_collection.json

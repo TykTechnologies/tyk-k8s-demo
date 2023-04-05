@@ -9,8 +9,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mode:
-          - tyk-cp
         redis:
           - redis
           - redis-cluster
@@ -39,15 +37,15 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy ${{ matrix.mode }} with ${{ matrix.redis }}
+      - name: Deploy tyk-cp with ${{ matrix.redis }}
         run: |
           LICENSE="${{ secrets.DASH_LICENSE }}" \
           MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
           ./up.sh \
             -v \
-            --namespace ${{ matrix.mode }}-${{ matrix.redis }} \
+            --namespace tyk-cp-${{ matrix.redis }} \
             --redis ${{ matrix.redis }} \
-            ${{ matrix.mode }}
+            tyk-cp
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=multi-region" tyk-k8s-demo.postman_collection.json

@@ -9,8 +9,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mode:
-          - tyk-stack
         deployment:
           #          - datadog
           #          - elasticsearch
@@ -52,13 +50,13 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy ${{ matrix.mode }}-${{ matrix.deployment }}
+      - name: Deploy tyk-stack-${{ matrix.deployment }}
         run: |
           LICENSE="${{ secrets.DASH_LICENSE }}" \
           ./up.sh -v \
-            --namespace ${{ matrix.mode }}-${{ matrix.deployment }} \
+            --namespace tyk-stack-${{ matrix.deployment }} \
             --deployment ${{ matrix.deployment }}
-            ${{ matrix.mode }}
+            tyk-stack
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=single-region" tyk-k8s-demo.postman_collection.json
