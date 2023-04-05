@@ -20,7 +20,6 @@ jobs:
           - k6
           - k6-slo-traffic
           - operator
-          - operator-httpbin
           - operator-graphql
           - operator-udg
           - operator-federation
