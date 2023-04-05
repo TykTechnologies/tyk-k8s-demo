@@ -3,6 +3,10 @@ name: Tyk Control Plane Tests
 # Controls when the workflow will run
 on: [pull_request, workflow_dispatch]
 
+env:
+  MAX_ATTEMPTS: 3
+  TIMEOUT: 30
+
 jobs:
   tyk-cp:
     runs-on: ubuntu-latest
@@ -51,14 +55,21 @@ jobs:
         run: cp .env.example .env
 
       - name: Deploy tyk-cp-${{ matrix.deployment }}
-        run: |
-          LICENSE="${{ secrets.DASH_LICENSE }}" \
-          MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
-          PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
-          ./up.sh -v \
-            --namespace tyk-cp-${{ matrix.deployment }} \
-            --deployments ${{ matrix.deployment }} \
-            tyk-cp
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          command: |
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
+            ./up.sh -v \
+              --namespace tyk-cp-${{ matrix.deployment }} \
+              --deployments ${{ matrix.deployment }} \
+              tyk-cp
+
+      - name: Sleep 1 minute
+        run: sleep 60
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=control-plane" tyk-k8s-demo.postman_collection.json

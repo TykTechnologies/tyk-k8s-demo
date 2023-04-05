@@ -3,6 +3,10 @@ name: Tyk Stack Tests
 # Controls when the workflow will run
 on: [pull_request, workflow_dispatch]
 
+env:
+  MAX_ATTEMPTS: 3
+  TIMEOUT: 30
+
 jobs:
   tyk-stack:
     runs-on: ubuntu-latest
@@ -51,13 +55,20 @@ jobs:
         run: cp .env.example .env
 
       - name: Deploy tyk-stack-${{ matrix.deployment }}
-        run: |
-          LICENSE="${{ secrets.DASH_LICENSE }}" \
-          PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
-          ./up.sh -v \
-            --namespace tyk-stack-${{ matrix.deployment }} \
-            --deployments ${{ matrix.deployment }} \
-            tyk-stack
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          command: |
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
+            ./up.sh -v \
+              --namespace tyk-stack-${{ matrix.deployment }} \
+              --deployments ${{ matrix.deployment }} \
+              tyk-stack
+
+      - name: Sleep 1 minute
+        run: sleep 60
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=tyk-stack" tyk-k8s-demo.postman_collection.json

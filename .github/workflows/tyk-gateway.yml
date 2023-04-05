@@ -3,6 +3,10 @@ name: Tyk OSS Tests
 # Controls when the workflow will run
 on: [pull_request, workflow_dispatch]
 
+env:
+  MAX_ATTEMPTS: 3
+  TIMEOUT: 30
+
 jobs:
   tyk-oss:
     runs-on: ubuntu-latest
@@ -47,11 +51,18 @@ jobs:
         run: cp .env.example .env
 
       - name: Deploy tyk-gateway-${{ matrix.deployment }}
-        run: |
-          ./up.sh -v \
-            --namespace tyk-gateway-${{ matrix.deployment }} \
-            --deployments ${{ matrix.deployment }} \
-            tyk-gateway
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          command: |
+            ./up.sh -v \
+              --namespace tyk-gateway-${{ matrix.deployment }} \
+              --deployments ${{ matrix.deployment }} \
+              tyk-gateway
+
+      - name: Sleep 1 minute
+        run: sleep 60
 
       - name: Test Tyk deployment
         run: newman run --folder gateway tyk-k8s-demo.postman_collection.json
