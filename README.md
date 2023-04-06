@@ -63,6 +63,7 @@ This quick start command will stand up the entire Tyk stack along with the Tyk E
 - `postgres`: Bitnami Postgres database deployment as a Tyk backend
 
 ### Supplementary Deployments
+Please see this [page](docs/FEATURES_MATRIX.md) for Tyk deployments compatibility charts. 
 - [Datadog](src/deployments/datadog): connects tyk deployments analytics and logs to datadog.
 - [Elasticsearch](src/deployments/elasticsearch): connects tyk deployments analytics to elasticsearch.
   - [Kibana](src/deployments/elasticsearch-kibana): connects a Kibana installment to the elasticsearch deployment.
