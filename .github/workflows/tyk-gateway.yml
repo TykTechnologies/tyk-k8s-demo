@@ -24,8 +24,8 @@ jobs:
           - operator-graphql
           - operator-udg
           - operator-federation
-          - prometheus
-          - prometheus-grafana
+#          - prometheus
+#          - prometheus-grafana
       max-parallel: 3
     steps:
       - uses: actions/checkout@v2
