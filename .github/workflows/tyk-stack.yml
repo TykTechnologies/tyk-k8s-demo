@@ -1,0 +1,77 @@
+name: Tyk Stack Tests
+
+# Controls when the workflow will run
+on: [pull_request, workflow_dispatch]
+
+env:
+  MAX_ATTEMPTS: 3
+  TIMEOUT: 30
+
+jobs:
+  tyk-stack:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        deployment:
+#          - datadog
+#          - elasticsearch
+#          - elasticsearch-kibana
+          - k6
+          - k6-slo-traffic
+          - keycloak
+          - keycloak-sso
+          - keycloak-dcr
+          - operator
+          - operator-httpbin
+          - operator-graphql
+          - operator-udg
+          - operator-federation
+          - portal
+          - prometheus
+          - prometheus-grafana
+      max-parallel: 3
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Kind Cluster
+        uses: engineerd/setup-kind@v0.5.0
+        with:
+          version: "v0.11.1"
+          config: .github/kind-cluster-v1.23.13.yml
+
+      - name: Install helm
+        uses: Azure/setup-helm@v1.1
+        with:
+          version: v3.5.3
+
+      - name: Install newman
+        run: |
+          sudo apt update && \
+          sudo apt install nodejs npm -y && \
+          npm install -g newman
+
+      - name: Copy .env file
+        run: cp .env.example .env
+
+      - name: Deploy tyk-stack-${{ matrix.deployment }}
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          command: |
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
+            ./up.sh -v \
+              --namespace tyk-stack-${{ matrix.deployment }} \
+              --deployments ${{ matrix.deployment }} \
+              tyk-stack
+
+      - name: Sleep 1 minute
+        run: sleep 60
+
+      - name: Test Tyk deployment
+        run: newman run --folder gateway --env-var "deployment=tyk-stack" tyk-k8s-demo.postman_collection.json
+
+      - name: Test ${{ matrix.deployment }}
+        run: newman run --folder ${{ matrix.deployment }} --insecure tyk-k8s-demo.postman_collection.json

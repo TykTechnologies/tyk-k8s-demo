@@ -1,0 +1,92 @@
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SubGraph
+metadata:
+  name: notifications-subgraph
+spec:
+  schema: |
+    directive @extends on OBJECT | INTERFACE
+
+    directive @external on FIELD_DEFINITION
+
+    directive @key(fields: _FieldSet!) on OBJECT | INTERFACE
+
+    directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+
+    directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+
+    type Entity {
+      findNotificationByID(id: ID!): Notification!
+      findUserByID(id: ID!): User!
+    }
+
+    type Notification {
+      id: ID!
+      userId: ID!
+      title: String!
+      body: String!
+    }
+
+    type Query {
+      _entities(representations: [_Any!]!): [_Entity]!
+      _service: _Service!
+    }
+
+    type Subscription {
+      getUserNotifications(userId: ID!): User!
+    }
+
+    type User {
+      id: ID!
+      notifications: [Notification!]!
+    }
+
+    scalar _Any
+
+    union _Entity = Notification | User
+
+    scalar _FieldSet
+
+    type _Service {
+      sdl: String
+    }
+  sdl: |
+    extend type Subscription {
+        getUserNotifications(userId: ID!): User!
+    }
+
+    type Notification @key(fields: "id") {
+        id: ID!
+        userId: ID!
+        title: String!
+        body: String!
+    }
+
+    extend type User @key(fields: "id") {
+        id: ID! @external
+        notifications: [Notification!]!
+    }
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: notifications-subgraph
+spec:
+  name: notifications-subgraph
+  protocol: http
+  active: true
+  internal: true
+  use_keyless: true
+  graphql:
+    enabled: true
+    execution_mode: subgraph
+    graph_ref: notifications-subgraph
+    version: "2"
+    playground:
+      enabled: false
+      path: ""
+  proxy:
+    target_url: http://replace_service_url/query
+    listen_path: /notifications-subgraph/
+    disable_strip_slash: true
+    strip_listen_path: true

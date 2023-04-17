@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: comments-rest-svc
+  labels:
+    app: comments-rest
+spec:
+  ports:
+    - name: http
+      port: 3103
+      targetPort: 3103
+  selector:
+    app: comments-rest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comments-rest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comments-rest
+  template:
+    metadata:
+      labels:
+        app: comments-rest
+    spec:
+      containers:
+        - image: zalbiraw/go-api-test-service:v2.0
+          imagePullPolicy: IfNotPresent
+          name: comments-rest
+          command:
+            - ./services/rest/comments/server
+          ports:
+            - containerPort: 3103
+          env:
+            - name: PORT
+              value: "3103"

@@ -20,16 +20,17 @@ addServiceArgs() {
 
 getPort() {
   set +e;
-  port=$(kubectl get svc -n "$namespace" "$1" -o jsonpath="{.spec.ports[0].port}");
+  port=$(kubectl get svc --namespace "$namespace" "$1" -o jsonpath="{.spec.ports[0].port}");
   set -e;
 }
 
 terminatePorts() {
   for service in "${services[@]}"; do
+    service=${service#"https-"};
     getPort "$service";
 
     set +e;
-    pid=$(pgrep -f "$service");
+    pid=$(pgrep -f "$service --namespace");
     set -e;
 
     if [[ -n "$pid" ]]; then
@@ -44,11 +45,18 @@ exposeServices() {
   if [[ $PORTFORWARD == "$expose" ]]; then
     terminatePorts;
     for service in "${services[@]}"; do
-      getPort "$service";
-      kubectl port-forward "svc/$service" -n "$namespace" $port > /dev/null &
+      if [[ $service == https-* ]]; then
+        proto="https";
+      else
+        proto="http";
+      fi
 
-      logger "$DEBUG" "forwarding to http://localhost:$port \tfrom\t svc/$service:$port";
-      servicesSummary="$servicesSummary\t$(printf "%-50s" "$service") http://localhost:$port\n";
+      service=${service#"https-"}
+      getPort "$service";
+      kubectl port-forward "svc/$service" --namespace "$namespace" $port > /dev/null &
+
+      logger "$DEBUG" "forwarding to $proto://localhost:$port \tfrom\t svc/$service:$port";
+      servicesSummary="$servicesSummary\n\t$(printf "%-50s" "$service") $proto://localhost:$port";
     done
   else
     logger "$DEBUG" "expose not set to port-forward";
@@ -56,13 +64,11 @@ exposeServices() {
   ## TODO add LOADBALANCER and INGRESS support.
 
   if [[ $NONE != "$expose" ]]; then
-    addSummary "\n\
-    \tExposed Services
-    $servicesSummary";
+    addSummary "\tExposed Services$servicesSummary";
   fi
 }
 
 cleanPorts() {
-  services=($(kubectl get svc -n "$namespace" | awk 'NR > 1 {print $1}'));
+  services=($(kubectl get svc --namespace "$namespace" | awk 'NR > 1 {print $1}'));
   terminatePorts;
 }

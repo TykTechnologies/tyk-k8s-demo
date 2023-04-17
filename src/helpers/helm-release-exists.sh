@@ -1,6 +1,6 @@
 checkHelmReleaseExists() {
   set +e;
-  search=$(helm ls -n "$namespace" | awk '{print $1}' | grep -e "^$1$");
+  search=$(helm ls --namespace "$namespace" | awk '{print $1}' | grep -e "^$1$");
   logger "$DEBUG" "checkHelmReleaseExists: search result $search";
   set -e;
 

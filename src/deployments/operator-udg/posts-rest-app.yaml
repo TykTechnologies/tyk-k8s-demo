@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-rest-svc
+  labels:
+    app: posts-rest
+spec:
+  ports:
+    - name: http
+      port: 3102
+      targetPort: 3102
+  selector:
+    app: posts-rest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-rest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts-rest
+  template:
+    metadata:
+      labels:
+        app: posts-rest
+    spec:
+      containers:
+        - image: zalbiraw/go-api-test-service:v2.0
+          imagePullPolicy: IfNotPresent
+          name: posts-rest
+          command:
+            - ./services/rest/posts/server
+          ports:
+            - containerPort: 3102
+          env:
+            - name: PORT
+              value: "3102"

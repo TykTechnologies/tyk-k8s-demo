@@ -5,7 +5,7 @@ logger "$INFO" "checking variables...";
 invalid=false;
 chart="tyk-headless";
 
-if [[ $TYKPRO == "$mode" ]] || [[ $TYKCP == "$mode" ]]; then
+if [[ $TYKSTACK == "$mode" ]] || [[ $TYKCP == "$mode" ]]; then
   chart="tyk-pro";
   if [[ -z "$LICENSE" ]]; then
     logger "$ERROR" "please make sure the LICENSE variable is set in your .env file";
@@ -32,7 +32,7 @@ if [[ $TYKCP == "$mode" ]]; then
   fi
 fi
 
-if [[ $TYKWORKER == "$mode" ]]; then
+if [[ $TYKDP == "$mode" ]]; then
   chart="tyk-hybrid";
   if [[ -z "$TYK_WORKER_CONNECTIONSTRING" ]]; then
     logger "$ERROR" "please make sure TYK_WORKER_CONNECTIONSTRING variable is set in your .env file";

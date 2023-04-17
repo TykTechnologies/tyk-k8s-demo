@@ -1,0 +1,142 @@
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: httpbin-no-op
+spec:
+  name: httpbin-no-op
+  protocol: http
+  active: true
+  proxy:
+    target_url: http://service_url
+    listen_path: /httpbin-no-op
+    strip_listen_path: true
+  use_standard_auth: true
+  auth_configs:
+    authToken:
+      auth_header_name: Authorization
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: httpbin-no-op
+spec:
+  name: httpbin-no-op
+  state: active
+  active: true
+  access_rights_array:
+    - name: httpbin-no-op
+      namespace: replace_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: httpbin-jwt
+spec:
+  name: httpbin-jwt
+  protocol: http
+  active: true
+  proxy:
+    target_url: http://service_url
+    listen_path: /httpbin-jwt
+    strip_listen_path: true
+  enable_jwt: true
+  jwt_signing_method: rsa
+  jwt_source: test
+  jwt_identity_base_field: sub
+  jwt_policy_field_name: pol
+  jwt_default_policies:
+    - replace_namespace/httpbin-no-op
+  jwt_scope_claim_name: scope
+  jwt_scope_to_policy_mapping:
+    product-httpbin: replace_namespace/product-httpbin
+    plan-free: replace_namespace/plan-free
+    plan-bronze: replace_namespace/plan-bronze
+    plan-silver: replace_namespace/plan-silver
+    plan-gold: replace_namespace/plan-gold
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: product-httpbin
+spec:
+  name: product-httpbin
+  state: active
+  active: true
+  partitions:
+    quota: true
+    rate_limit: true
+  access_rights_array:
+    - name: httpbin-jwt
+      namespace: replace_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: plan-free
+spec:
+  name: plan-free
+  state: active
+  active: true
+  partitions:
+    acl: true
+  rate: 10
+  access_rights_array:
+    - name: httpbin-jwt
+      namespace: replace_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: plan-bronze
+spec:
+  name: plan-bronze
+  state: active
+  active: true
+  partitions:
+    acl: true
+  rate: 50
+  access_rights_array:
+    - name: httpbin-jwt
+      namespace: replace_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: plan-silver
+spec:
+  name: plan-silver
+  state: active
+  active: true
+  partitions:
+    acl: true
+  rate: 500
+  access_rights_array:
+    - name: httpbin-jwt
+      namespace: replace_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: plan-gold
+spec:
+  name: plan-gold
+  state: active
+  active: true
+  partitions:
+    acl: true
+  rate: 10000
+  access_rights_array:
+    - name: httpbin-jwt
+      namespace: replace_namespace
+      versions:
+        - Default

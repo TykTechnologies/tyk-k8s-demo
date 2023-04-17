@@ -1,0 +1,332 @@
+{
+  "title": "Tyk Dashboard",
+  "author_handle": "zaid@tyk.io",
+  "author_name": "Zaid Albirawi",
+  "layout_type": "ordered",
+  "template_variables": [
+    {
+      "name": "environment",
+      "prefix": "env",
+      "available_values": ["replace_namespace"],
+      "defaults": ["replace_namespace"]
+    }
+  ],
+  "widgets": [
+    {
+      "id": 5282745477169644,
+      "definition": {
+        "title": "replace_namespace.request_time.count ",
+        "title_size": "16",
+        "title_align": "left",
+        "show_legend": true,
+        "legend_layout": "auto",
+        "legend_columns": [
+          "avg",
+          "min",
+          "max",
+          "value",
+          "sum"
+        ],
+        "type": "timeseries",
+        "requests": [
+          {
+            "formulas": [
+              {
+                "formula": "query1"
+              },
+              {
+                "formula": "query2"
+              }
+            ],
+            "response_format": "timeseries",
+            "on_right_yaxis": false,
+            "queries": [
+              {
+                "query": "sum:replace_namespace.request_time.count{env:replace_namespace} by {path,api_name}.as_count()",
+                "data_source": "metrics",
+                "name": "query1"
+              },
+              {
+                "query": "sum:replace_namespace.request_time.count{env:replace_namespace} by {path,api_name}.as_count()",
+                "data_source": "metrics",
+                "name": "query2"
+              }
+            ],
+            "style": {
+              "palette": "warm",
+              "line_type": "solid",
+              "line_width": "normal"
+            },
+            "display_type": "bars"
+          },
+          {
+            "formulas": [
+              {
+                "formula": "query0"
+              }
+            ],
+            "response_format": "timeseries",
+            "queries": [
+              {
+                "search": {
+                  "query": ""
+                },
+                "data_source": "logs",
+                "compute": {
+                  "aggregation": "count"
+                },
+                "name": "query0",
+                "indexes": [
+                  "*"
+                ],
+                "group_by": [
+                  {
+                    "facet": "@http.url_details.path",
+                    "sort": {
+                      "aggregation": "count",
+                      "order": "desc"
+                    },
+                    "limit": 10
+                  }
+                ]
+              }
+            ],
+            "style": {
+              "palette": "dog_classic",
+              "line_type": "solid",
+              "line_width": "normal"
+            },
+            "display_type": "line"
+          }
+        ],
+        "yaxis": {
+          "include_zero": true,
+          "scale": "linear",
+          "label": "",
+          "min": "auto",
+          "max": "auto"
+        },
+        "markers": []
+      },
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 4,
+        "height": 2,
+        "is_column_break": true
+      }
+    },
+    {
+      "id": 5614477115072584,
+      "definition": {
+        "type": "image",
+        "url": "https://tyk.io/wp-content/uploads/2021/07/tyk_logo_no_bg.png",
+        "sizing": "contain",
+        "margin": "lg",
+        "has_background": false,
+        "has_border": true
+      },
+      "layout": {
+        "x": 4,
+        "y": 0,
+        "width": 4,
+        "height": 2
+      }
+    },
+    {
+      "id": 5825948152918371,
+      "definition": {
+        "title": "",
+        "title_size": "16",
+        "title_align": "left",
+        "show_legend": true,
+        "time": {
+          "live_span": "1d"
+        },
+        "type": "distribution",
+        "xaxis": {
+          "max": "auto",
+          "include_zero": true,
+          "scale": "linear",
+          "min": "auto"
+        },
+        "yaxis": {
+          "max": "auto",
+          "include_zero": true,
+          "scale": "linear",
+          "min": "auto"
+        },
+        "markers": [],
+        "requests": [
+          {
+            "style": {
+              "palette": "orange"
+            },
+            "response_format": "scalar",
+            "queries": [
+              {
+                "data_source": "metrics",
+                "name": "query1",
+                "query": "avg:replace_namespace.request_time.95percentile{env:replace_namespace} by {api_name,path}",
+                "aggregator": "avg"
+              }
+            ],
+            "formulas": [
+              {
+                "formula": "query1"
+              }
+            ]
+          }
+        ]
+      },
+      "layout": {
+        "x": 8,
+        "y": 0,
+        "width": 4,
+        "height": 2
+      }
+    },
+    {
+      "id": 4716317563966102,
+      "definition": {
+        "title": "",
+        "title_size": "16",
+        "title_align": "left",
+        "type": "toplist",
+        "requests": [
+          {
+            "formulas": [
+              {
+                "formula": "query1",
+                "limit": {
+                  "count": 10,
+                  "order": "desc"
+                }
+              }
+            ],
+            "response_format": "scalar",
+            "queries": [
+              {
+                "query": "sum:replace_namespace.request_time.count{*} by {response_code,api_name}.as_count()",
+                "data_source": "metrics",
+                "name": "query1",
+                "aggregator": "sum"
+              }
+            ]
+          }
+        ]
+      },
+      "layout": {
+        "x": 0,
+        "y": 2,
+        "width": 4,
+        "height": 2
+      }
+    },
+    {
+      "id": 8852649577787866,
+      "definition": {
+        "title": "Average request time",
+        "title_size": "16",
+        "title_align": "left",
+        "time": {},
+        "type": "query_value",
+        "requests": [
+          {
+            "formulas": [
+              {
+                "formula": "query1"
+              }
+            ],
+            "response_format": "scalar",
+            "queries": [
+              {
+                "query": "avg:replace_namespace.request_time.avg{env:replace_namespace}",
+                "data_source": "metrics",
+                "name": "query1",
+                "aggregator": "avg"
+              },
+              {
+                "query": "avg:replace_namespace.request_time.avg{env:replace_namespace}",
+                "data_source": "metrics",
+                "name": "query2",
+                "aggregator": "last"
+              },
+              {
+                "query": "avg:replace_namespace.request_time.avg{env:replace_namespace}",
+                "data_source": "metrics",
+                "name": "query3",
+                "aggregator": "max"
+              }
+            ]
+          }
+        ],
+        "autoscale": true,
+        "precision": 2
+      },
+      "layout": {
+        "x": 4,
+        "y": 2,
+        "width": 4,
+        "height": 2
+      }
+    },
+    {
+      "id": 895823668737851,
+      "definition": {
+        "title": "",
+        "title_size": "16",
+        "title_align": "left",
+        "show_legend": true,
+        "legend_layout": "vertical",
+        "legend_columns": [
+          "avg",
+          "min",
+          "max",
+          "value",
+          "sum"
+        ],
+        "time": {},
+        "type": "timeseries",
+        "requests": [
+          {
+            "formulas": [
+              {
+                "formula": "query1"
+              }
+            ],
+            "queries": [
+              {
+                "query": "avg:replace_namespace.request_time.median{env:replace_namespace} by {response_code}",
+                "data_source": "metrics",
+                "name": "query1"
+              }
+            ],
+            "response_format": "timeseries",
+            "style": {
+              "palette": "dog_classic",
+              "line_type": "solid",
+              "line_width": "normal"
+            },
+            "display_type": "line"
+          }
+        ],
+        "yaxis": {
+          "include_zero": true,
+          "scale": "linear",
+          "label": "",
+          "min": "auto",
+          "max": "auto"
+        },
+        "markers": []
+      },
+      "layout": {
+        "x": 8,
+        "y": 2,
+        "width": 4,
+        "height": 2
+      }
+    }
+  ],
+  "reflow_type": "fixed"
+}

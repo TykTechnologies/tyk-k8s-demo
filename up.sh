@@ -11,20 +11,24 @@ source src/helpers/up/check-tyk-release.sh;
 source src/helpers/deployments-args.sh;
 source src/helpers/expose-services.sh;
 source src/helpers/summary.sh;
-
-TYKPRO="tyk-pro";
-TYKCP="tyk-cp";
-TYKWORKER="tyk-worker";
-TYKGATEWAY="tyk-gateway";
-
-mode=$@
-if [[ $TYKPRO != "$mode" ]] && [[ $TYKCP != "$mode" ]] && [[ $TYKWORKER != "$mode" ]] && [[ $TYKGATEWAY != "$mode" ]]; then
-  logger "$ERROR" "invalid selection";
-  usage; exit 1;
-fi
+source src/helpers/helpers.sh;
 
 if $dryRun; then
   source src/helpers/dry-run.sh;
+fi
+
+mode=$@
+TYKSTACK="tyk-stack";
+TYKCP="tyk-cp";
+TYKDP="tyk-dp";
+TYKGATEWAY="tyk-gateway";
+
+source src/helpers/up/check-vars.sh;
+source src/helpers/up/update-helm.sh;
+
+if [[ $TYKSTACK != "$mode" ]] && [[ $TYKCP != "$mode" ]] && [[ $TYKDP != "$mode" ]] && [[ $TYKGATEWAY != "$mode" ]]; then
+  logger "$ERROR" "invalid selection";
+  usage; exit 1;
 fi
 
 if [ "$AWS" == "$cloud" ] || [ "$GCP" == "$cloud" ]  || [ "$AZURE" == "$cloud" ]; then
@@ -33,18 +37,24 @@ if [ "$AWS" == "$cloud" ] || [ "$GCP" == "$cloud" ]  || [ "$AZURE" == "$cloud" ]
 fi
 
 logger "$INFO" "installing $mode in $flavor k8s environment";
-source src/helpers/up/update-helm.sh;
-source src/helpers/up/check-vars.sh;
 source "src/main/$mode.sh";
 
 if ! [[ -z $deployments ]]; then
   for deployment in "${deployments[@]}"; do
-    if [[ -f "src/deployments/$deployment/main.sh" ]]; then
-      source "src/deployments/$deployment/main.sh";
+    if [[ -f "src/deployments/$deployment/main.safe.sh" ]]; then
+      source "src/deployments/$deployment/main.safe.sh";
     else
       logger "$INFO" "deployment $deployment not found...skipping";
     fi
   done
+
+  # Update tyk installation after some configuration might have been changed.
+  setVerbose;
+  helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
+    --namespace "$namespace" \
+    "${deploymentsArgs[@]}" \
+    --wait --atomic > /dev/null
+  unsetVerbose;
 fi
 
 if ! $dryRun; then

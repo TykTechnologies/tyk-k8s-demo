@@ -2,15 +2,15 @@ checkTykRelease() {
   checkHelmReleaseExists "$tykReleaseName";
 
   if $releaseExists; then
-    logger "$INFO" "$tykReleaseName release already exists in $namespace namespace...attempting to upgrade";
+    logger "$INFO" "$tykReleaseName release already exists in $namespace namespace...";
   else
-    logger "$INFO" "installing tyk in namespace $namespace";
+    logger "$INFO" "installing tyk in $namespace namespace";
   fi
 }
 
 checkMDCBRelease() {
   set +e;
-  search=$(kubectl get svc -n "$namespace" | awk '{print $1}' | grep -e "^mdcb-");
+  search=$(kubectl get svc --namespace "$namespace" | awk '{print $1}' | grep -e "^mdcb-");
   logger "$DEBUG" "mdcb-exists: search result: $search";
   set -e;
 

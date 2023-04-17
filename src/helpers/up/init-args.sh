@@ -16,15 +16,24 @@ AZURE="azure";
 
 # Default values
 namespace=$DEFAULTNAMESPACE;
-flavor=$VANILLA;
-redis=$REDIS;
-storage=$MONGO;
+redis=$REDISCLUSTER;
+storage=$POSTGRES;
 isDebug=false;
 dryRun=false;
-expose=$NONE;
+expose=$PORTFORWARD;
 cloud=$NONE;
 portsWait=15;
 deployments=$();
+
+flavor=$VANILLA;
+set +e;
+search=$(kubectl get service --all-namespaces | grep -e "openshift");
+set -e;
+
+if [[ -n $search ]]; then
+  logger "$DEBUG" "init-args.sh: openshift detected";
+  flavor=$OPENSHIFT;
+fi
 
 # Translate long argument flags into short ones.
 for arg in "$@"; do
@@ -57,10 +66,7 @@ do
     'r') redis=$OPTARG                 ;;
     'z') dryRun=true                   ;;
     'c') cloud=$OPTARG                 ;;
-    's')
-        storage=$OPTARG
-        logger "$INFO" "Warning: MDCB installtion does not currently support postgres database";
-        ;;
+    's') storage=$OPTARG               ;;
     'd')
         IFS=',' read -r -a deployments <<< "$OPTARG";
         ;;

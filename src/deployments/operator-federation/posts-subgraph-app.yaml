@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-subgraph-svc
+  labels:
+    app: posts-subgraph
+spec:
+  ports:
+    - name: http
+      port: 4202
+      targetPort: 4202
+  selector:
+    app: posts-subgraph
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-subgraph
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts-subgraph
+  template:
+    metadata:
+      labels:
+        app: posts-subgraph
+    spec:
+      containers:
+        - image: zalbiraw/go-api-test-service:v2.0
+          imagePullPolicy: IfNotPresent
+          name: posts-subgraph
+          command:
+            - ./services/graphql-subgraphs/posts/server
+          ports:
+            - containerPort: 4202
+          env:
+            - name: PORT
+              value: "4202"

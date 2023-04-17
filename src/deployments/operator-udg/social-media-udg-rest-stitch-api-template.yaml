@@ -1,0 +1,103 @@
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: udg
+spec:
+  name: Social Media App - Stitch
+  use_keyless: true
+  protocol: http
+  active: true
+  proxy:
+    target_url: ""
+    listen_path: /udg
+    strip_listen_path: true
+  version_data:
+    default_version: Default
+    not_versioned: true
+    versions:
+      Default:
+        name: Default
+  graphql:
+    enabled: true
+    execution_mode: executionEngine
+    schema: |
+      type Query {
+        user(id: Int!): User
+      }
+
+      type User {
+        id: Int
+        name: String
+        email: String
+        posts: [Post]
+      }
+
+      type Post {
+        id: Int
+        title: String
+        body: String
+        comments: [Comment]
+      }
+
+      type Comment {
+        id: Int
+        name: String
+        email: String
+        body: String
+      }
+
+    version: "2"
+    playground:
+      enabled: true
+      path: /playground
+    engine:
+      field_configs:
+        - type_name: Query
+          field_name: user
+          disable_default_mapping: true
+          path: []
+        - type_name: User
+          field_name: posts
+          disable_default_mapping: true
+          path: []
+        - type_name: Post
+          field_name: comments
+          disable_default_mapping: true
+          path: []
+      data_sources:
+        - kind: REST
+          name: User
+          internal: true
+          root_fields:
+            - type: Query
+              fields:
+                - user
+          config:
+            url: tyk://replace_users_url/users/{{.arguments.id}}
+            method: GET
+            body: ""
+            headers: {}
+        - kind: REST
+          name: Posts
+          internal: true
+          root_fields:
+            - type: User
+              fields:
+                - posts
+          config:
+            url: tyk://replace_posts_url/users/{{.object.id}}/posts
+            method: GET
+            body: ""
+            headers: {}
+        - kind: REST
+          name: Comments
+          internal: true
+          root_fields:
+            - type: Post
+              fields:
+                - comments
+          config:
+            url: tyk://replace_comments_url/posts/{{.object.id}}/comments
+            method: GET
+            body: ""
+            headers: {}

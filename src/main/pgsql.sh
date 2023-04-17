@@ -1,16 +1,18 @@
 postgresReleaseName="tyk-$1-postgres";
-checkHelmReleaseExists "$postgresReleaseName";
 
-if $releaseExists; then
-  logger "$INFO" "$postgresReleaseName release already exists in $namespace namespace...";
-else
-  logger "$INFO" "installing $postgresReleaseName in namespace $namespace";
+logger "$INFO" "installing $postgresReleaseName in namespace $namespace";
+
+securityContextArgs=();
+if [[ $OPENSHIFT == "$flavor" ]]; then
+  logger "$DEBUG" "pgsql.sh: setting openshift related postgres configuration";
+  securityContextArgs=(--set "primary.podSecurityContext.fsGroup=$OS_UID_RANGE" \
+    --set "primary.containerSecurityContext.runAsUser=$OS_UID_RANGE");
 fi
 
 setVerbose;
 helm upgrade "$postgresReleaseName" bitnami/postgresql --version 11.9.7 \
   --install \
-  -n "$namespace" \
+  --namespace "$namespace" \
   --set "image.repository=zalbiraw/postgresql" \
   --set "image.tag=12.12.0-debian-11" \
   \
@@ -24,7 +26,6 @@ helm upgrade "$postgresReleaseName" bitnami/postgresql --version 11.9.7 \
   --set "auth.postgresPassword=$PASSWORD" \
   --set "containerPorts.postgresql=$2" \
   --set "primary.service.ports.postgresql=$2" \
-  "${postgresSecurityContextArgs[@]}" \
-  --atomic \
-  --wait > /dev/null;
+  "${securityContextArgs[@]}" \
+  --wait --atomic > /dev/null;
 unsetVerbose;

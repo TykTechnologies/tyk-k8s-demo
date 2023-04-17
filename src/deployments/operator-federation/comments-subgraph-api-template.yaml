@@ -1,0 +1,94 @@
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SubGraph
+metadata:
+  name: comments-subgraph
+spec:
+  schema: |
+    directive @extends on OBJECT | INTERFACE
+
+    directive @external on FIELD_DEFINITION
+
+    directive @key(fields: _FieldSet!) on OBJECT | INTERFACE
+
+    directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+
+    directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+
+    type Comment {
+      id: ID!
+      postId: ID!
+      name: String!
+      email: String!
+      body: String!
+    }
+
+    type Entity {
+      findCommentByID(id: ID!): Comment!
+      findPostByID(id: ID!): Post!
+    }
+
+    type Post {
+      id: ID!
+      comments: [Comment!]!
+    }
+
+    type Query {
+      comment(id: ID!): Comment!
+      comments: [Comment!]!
+      _entities(representations: [_Any!]!): [_Entity]!
+      _service: _Service!
+    }
+
+    scalar _Any
+
+    union _Entity = Comment | Post
+
+    scalar _FieldSet
+
+    type _Service {
+      sdl: String
+    }
+  sdl: |
+    extend type Query {
+        comment(id: ID!): Comment!
+        comments: [Comment!]!
+    }
+
+    type Comment @key(fields: "id") {
+        id: ID!
+        postId: ID!
+        name: String!
+        email: String!
+        body: String!
+    }
+
+    extend type Post @key(fields: "id") {
+        id: ID! @external
+        comments: [Comment!]!
+    }
+
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: comments-subgraph
+spec:
+  name: comments-subgraph
+  protocol: http
+  active: true
+  internal: true
+  use_keyless: true
+  graphql:
+    enabled: true
+    execution_mode: subgraph
+    graph_ref: comments-subgraph
+    version: "2"
+    playground:
+      enabled: false
+      path: ""
+  proxy:
+    target_url: http://replace_service_url/query
+    listen_path: /comments-subgraph/
+    disable_strip_slash: true
+    strip_listen_path: true
