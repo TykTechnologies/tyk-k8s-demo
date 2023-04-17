@@ -21,13 +21,13 @@ jobs:
           - k6-slo-traffic
           - keycloak
           - keycloak-sso
-#          - keycloak-dcr
+          - keycloak-dcr
           - operator
           - operator-httpbin
           - operator-graphql
           - operator-udg
           - operator-federation
-#          - portal
+          - portal
           - prometheus
           - prometheus-grafana
       max-parallel: 3
