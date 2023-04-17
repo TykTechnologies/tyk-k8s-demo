@@ -7,7 +7,9 @@
 [![Redis](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/redis.yml/badge.svg)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/redis.yml)
 
 ## About
-Will allow you to deploy the entire Tyk stack for POC on k8s.
+The [tyk-k8s-demo](https://github.com/TykTechnologies/tyk-k8s-demo) library allows you
+to stand up an entire Tyk Stack with all its dependencies as well as other tools that can integrate with Tyk.
+The library will spin up everything in Kubernetes using `helm` and bash magic to get you started.
 
 ## Purpose
 Minimize the amount of effort needed to stand up the Tyk infrastructure and show examples of how Tyk can be setup in k8s using different deployment architectures as well as different integrations.
@@ -15,11 +17,14 @@ Minimize the amount of effort needed to stand up the Tyk infrastructure and show
 ## Getting started
 
 #### Requirements
+You will need the following tools to be able to run this library.
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Helm](https://helm.sh/docs/intro/install/)
 - [jq](https://stedolan.github.io/jq/download/)
 - [git](https://git-scm.com/downloads)
 - [Terraform](https://www.terraform.io/) (only when using `--cloud` flag)
+
+Tested on Linux/Unix based systems on AMD64 and ARM architectures
 
 #### Initial setup
 Create `.env` file and update the appropriate fields with your licenses. If you require a trial license you can obtain one
@@ -32,8 +37,11 @@ cd tyk-k8s-demo
 cp .env.example .env
 ```
 
+Depending on the deployments you would like install set values of the `LICENSE`,
+`MDCB_LICENSE` and `PORTAL_LICENSE` inside the `.env` file.
+
 ### Minikube
-If you are deploying this on Minikube you will need to enable the ingress addon. You do so by running the following:
+If you are deploying this on Minikube, you will need to enable the ingress addon. You do so by running the following:
 ```
 minikube start
 minikube addons enable ingress
@@ -63,15 +71,15 @@ This quick start command will stand up the entire Tyk stack along with the Tyk E
 - `postgres`: Bitnami Postgres database deployment as a Tyk backend
 
 ### Supplementary Deployments
-Please see this [page](docs/FEATURES_MATRIX.md) for Tyk deployments compatibility charts. 
+Please see this [page](docs/FEATURES_MATRIX.md) for Tyk deployments compatibility charts.
 - [Datadog](src/deployments/datadog): connects tyk deployments analytics and logs to datadog.
 - [Elasticsearch](src/deployments/elasticsearch): connects tyk deployments analytics to elasticsearch.
-  - [Kibana](src/deployments/elasticsearch-kibana): connects a Kibana installment to the elasticsearch deployment.
+	- [Kibana](src/deployments/elasticsearch-kibana): connects a Kibana installment to the elasticsearch deployment.
 - [k6](src/deployments/k6): generates a load of traffic to seed analytical data.
-  - [SLO Traffic](src/deployments/k6-slo-traffic): generates a load of traffic to seed analytical data.
+	- [SLO Traffic](src/deployments/k6-slo-traffic): generates a load of traffic to seed analytical data.
 - [Keycloak](src/deployments/keycloak): stands up a keycloak deployment.
-  - [DCR](src/deployments/keycloak-dcr): stands up a keycloak Dynamic Client Registration example.
-  - [SSO](src/deployments/keycloak-sso): stands up a keycloak SSO example with Tyk dashboard.
+	- [DCR](src/deployments/keycloak-dcr): stands up a keycloak Dynamic Client Registration example.
+	- [SSO](src/deployments/keycloak-sso): stands up a keycloak SSO example with Tyk dashboard.
 - [Operator](src/deployments/operator): this deployment option will install the [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency [cert-manager](https://github.com/jetstack/cert-manager).
 	- [HttpBin](src/deployments/operator-httpbin): creates API examples using the tyk-operator.
 	- [GraphQL](src/deployments/operator-graphql): creates GraphQL API examples using the tyk-operator.
@@ -79,7 +87,10 @@ Please see this [page](docs/FEATURES_MATRIX.md) for Tyk deployments compatibilit
 	- [Federation v1](src/deployments/operator-federation): creates Federation v1 API examples using the tyk-operator.
 - [Portal](src/deployments/portal): this deployment will install the [Tyk Enterprise Developer Portal](https://tyk.io/docs/tyk-developer-portal/tyk-enterprise-developer-portal/) as well as its dependency PostgreSQL.
 - [Prometheus](src/deployments/prometheus): this deployment will stand up a Tyk Prometheus pump with custom analytics.
-  - [Grafana](src/deployments/prometheus-grafana): connects a Grafana installment to the Prometheus deployment.
+	- [Grafana](src/deployments/prometheus-grafana): connects a Grafana installment to the Prometheus deployment.
+
+If you are running a POC and would like an example of how to integrate a specific tool.
+Please submit a request through the repository [here](https://github.com/TykTechnologies/tyk-k8s-demo/issues).
 
 ### Example
 ```
@@ -90,12 +101,16 @@ Please see this [page](docs/FEATURES_MATRIX.md) for Tyk deployments compatibilit
 ```
 
 The deployment will take 10 minutes as the installation is sequential and the dependencies require a bit of time before
-they are stood up. Once the installation is complete the script will print out a list of all the services that were
+they are stood up. Once the installation is complete, the script will print out a list of all the services that were
 stood up and how those can be accessed. The k6s job will start running after the script is finished and will run in the
-background for 15 minutes to generate traffic over that period of time. To visualize the live traffic you can use the
+background for 15 minutes to generate traffic over that period of time. To visualize the live traffic, you can use the
 credentials provided by the script to access Grafana or the Tyk Dashboard.
 
 ## Usage
+
+### Start Tyk deployment
+Create and start up the deployments
+
 ```
 Usage:
   ./up.sh [flags] [command]
@@ -118,6 +133,9 @@ Flags:
   -c, --cloud       	enum   	 stand up k8s infrastructure in 'aws', 'gcp' or 'azure'. This will require Terraform and the CLIs associate with the cloud of choice
 ```
 
+### Stop Tyk deployment
+Shutdown deployment
+
 ```
 Usage:
   ./down.sh [flags]
@@ -129,4 +147,4 @@ Flags:
   -c, --cloud     	enum     tear down k8s cluster stood up
 ```
 
-For more information please see the [docs folder](docs).
+For more information, please see the [docs' folder](docs).

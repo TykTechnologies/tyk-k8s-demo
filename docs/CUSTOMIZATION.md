@@ -1,6 +1,6 @@
 # Customization
 This library can also act as a guide to help you get set up with Tyk. If you just want to know how to set up a specific
-tool with Tyk you can run the library with the `--dry-run` and `--verbose` flags. This will output all the commands that
+tool with Tyk, you can run the library with the `--dry-run` and `--verbose` flags. This will output all the commands that
 the library will run to stand up any installation. This can be helpful for debugging as well as figuring out what
 configuration options are required to set these tools up.
 
@@ -16,7 +16,10 @@ TYK_GW_SLAVEOPTIONS_SYNCHRONISERENABLED=true
 ```
 
 ## Variables
-You can add any Tyk environments variables to the `.env` file and they will be mapped to the respective extraEnvs section in the helm charts.
+The script has defaults for minimal settings in [this env file](https://github.com/TykTechnologies/tyk-k8s-demo/blob/v2/.env.example),
+and it will give errors if something is missing.
+You can also add or change any Tyk environments variables in the `.env` file,
+and they will be mapped to the respective `extraEnvs` section in the helm charts.
 
 | Variable                    |        Default        | Comments                                                                                           |
 |-----------------------------|:---------------------:|----------------------------------------------------------------------------------------------------|
