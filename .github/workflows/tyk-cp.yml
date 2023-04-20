@@ -27,6 +27,7 @@ jobs:
           - keycloak
           - keycloak-sso
           - keycloak-dcr
+          - keycloak-jwt
           - operator
           - operator-httpbin
           - operator-graphql

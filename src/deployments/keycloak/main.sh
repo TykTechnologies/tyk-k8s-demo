@@ -21,10 +21,10 @@ kubectl create secret tls keycloak-tls-secret \
 
 addService "https-$keycloakName-service";
 sed "s/replace_name/$keycloakName/g" "$deploymentPath/keycloak-template.yaml" | \
-sed "s/replace_host/tyk-$keycloakDBName-postgres-postgresql.$namespace.svc/g" | \
-sed "s/replace_port/$keycloakDBPort/g" | \
-sed "s/replace_database/$keycloakDBName/g" | \
-sed "s/replace_service_port/$KEYCLOAK_SERVICE_PORT/g" | \
+  sed "s/replace_host/tyk-$keycloakDBName-postgres-postgresql.$namespace.svc/g" | \
+  sed "s/replace_port/$keycloakDBPort/g" | \
+  sed "s/replace_database/$keycloakDBName/g" | \
+  sed "s/replace_service_port/$KEYCLOAK_SERVICE_PORT/g" | \
 	kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 logger "$INFO" "waiting for $keycloakName pods to come up...";

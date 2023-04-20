@@ -637,7 +637,7 @@ spec:
         enabled: true
         alwaysDisplayInConsole: false
         clientAuthenticatorType: client-secret
-        secret: 'SLYnJetvXaGWkWlw4JwLboL6MGyUYB3A'
+        secret: 'replace_secret'
         redirectUris:
           - "http://localhost:3000/auth/keycloak/openid-connect/callback"
         webOrigins:

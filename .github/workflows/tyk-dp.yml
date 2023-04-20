@@ -23,6 +23,8 @@ jobs:
 #          - elasticsearch
 #          - elasticsearch-kibana
           - k6
+          - keycloak
+          - keycloak-jwt
           - k6-slo-traffic
           - operator
           - operator-graphql

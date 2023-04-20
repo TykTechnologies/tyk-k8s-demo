@@ -1,12 +1,12 @@
 deploymentPath="src/deployments/keycloak-sso";
-crName="tyk-sso";
 
 logger "$INFO" "installing keycloak SSO realm in $namespace namespace...";
 
 sed "s/replace_cr_name/$crName/g" "$deploymentPath/realm-template.yaml" | \
-sed "s/replace_keycloak/$keycloakName/g" | \
-sed "s/replace_username/$USERNAME/g" | \
-sed "s/replace_password/$PASSWORD/g" | \
+  sed "s/replace_keycloak/$keycloakName/g" | \
+  sed "s/replace_username/$USERNAME/g" | \
+  sed "s/replace_password/$PASSWORD/g" | \
+  sed "s/replace_secret/$secret/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 logger "$DEBUG" "keycloak-sso: waiting for $crName to be created";

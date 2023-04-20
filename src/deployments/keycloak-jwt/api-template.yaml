@@ -1,14 +1,14 @@
 apiVersion: tyk.tyk.io/v1alpha1
 kind: ApiDefinition
 metadata:
-  name: jwt-pass-grant
+  name: keycloak-jwt
 spec:
-  name: jwt-pass-grant
+  name: keycloak-jwt
   protocol: http
   active: true
   proxy:
     target_url: http://replace_service_url
-    listen_path: /jwt-pass-grant
+    listen_path: /keycloak-jwt
     strip_listen_path: true
   enable_jwt: true
   jwt_signing_method: rsa
@@ -16,21 +16,21 @@ spec:
   jwt_identity_base_field: sub
   jwt_policy_field_name: pol
   jwt_default_policies:
-    - replace_namespace/jwt-pass-grant
+    - replace_namespace/keycloak-jwt
 ---
 apiVersion: tyk.tyk.io/v1alpha1
 kind: SecurityPolicy
 metadata:
-  name: jwt-pass-grant
+  name: keycloak-jwt
 spec:
-  name: jwt-pass-grant
+  name: keycloak-jwt
   state: active
   active: true
   partitions:
     quota: true
     rate_limit: true
   access_rights_array:
-    - name: jwt-pass-grant
+    - name: keycloak-jwt
       namespace: replace_namespace
       versions:
         - Default

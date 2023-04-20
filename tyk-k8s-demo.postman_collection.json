@@ -196,7 +196,7 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Elasticsearch status is green\", function () {",
+											"pm.test(\"Keycloak status is UP\", function () {",
 											"    var health = pm.response.json();",
 											"    pm.expect(health.status).to.eql(\"UP\");",
 											"});"
@@ -217,6 +217,316 @@
 									"port": "{{keycloak.port}}",
 									"path": [
 										"health"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "keycloak-jwt",
+					"item": [
+						{
+							"name": "pass-grant-token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Fetching auth token using pass grant flow\", function () {",
+											"    var resp = pm.response.json();",
+											"    var valid = true;",
+											"    const access_token = resp.access_token;",
+											"    const parts = access_token.split('.');",
+											"",
+											"    if (parts.length !== 3) {",
+											"        valid = false;",
+											"    } else {",
+											"        try {",
+											"            // Decode the payload to check its contents",
+											"            const payload = JSON.parse(atob(parts[1]));",
+											"        ",
+											"            // Check that the payload has the expected fields",
+											"            if (!payload.sub || !payload.iat || !payload.exp) {",
+											"                valid = false;",
+											"            }",
+											"        } catch (e) {",
+											"            valid = false;",
+											"        }",
+											"    }",
+											"",
+											"    pm.expect(valid).to.eql(true)",
+											"    pm.globals.set(\"pass-grant-token\", access_token);",
+											"});",
+											"\t"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "client_id",
+											"value": "keycloak-jwt",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "wcl7lBoslXBMAHKinMwa1bbEuBQSCUtI",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "openid",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "default@example.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "topsecretpassword",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://localhost:{{keycloak.port}}/realms/jwt/protocol/openid-connect/token",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{keycloak.port}}",
+									"path": [
+										"realms",
+										"jwt",
+										"protocol",
+										"openid-connect",
+										"token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "client-creds-token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Fetching auth token using client creds flow\", function () {",
+											"    var resp = pm.response.json();",
+											"    var valid = true;",
+											"    const access_token = resp.access_token;",
+											"    const parts = access_token.split('.');",
+											"",
+											"    if (parts.length !== 3) {",
+											"        valid = false;",
+											"    } else {",
+											"        try {",
+											"            // Decode the payload to check its contents",
+											"            const payload = JSON.parse(atob(parts[1]));",
+											"        ",
+											"            // Check that the payload has the expected fields",
+											"            if (!payload.sub || !payload.iat || !payload.exp) {",
+											"                valid = false;",
+											"            }",
+											"        } catch (e) {",
+											"            valid = false;",
+											"        }",
+											"    }",
+											"",
+											"    pm.expect(valid).to.eql(true)",
+											"    pm.globals.set(\"client-creds-token\", access_token);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "client_id",
+											"value": "keycloak-jwt",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "client_credentials",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "wcl7lBoslXBMAHKinMwa1bbEuBQSCUtI",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://localhost:{{keycloak.port}}/realms/jwt/protocol/openid-connect/token",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{keycloak.port}}",
+									"path": [
+										"realms",
+										"jwt",
+										"protocol",
+										"openid-connect",
+										"token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "client-creds-jwt",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Test client creds JWT auth\", function () {",
+											"    var resp = pm.response.json();",
+											"    pm.expect(resp.headers.Authorization[0]).to.eql(pm.globals.get(\"client-creds-token\"))",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const token = pm.globals.get(\"client-creds-token\")",
+											"",
+											"pm.request.headers.add({",
+											"    key: \"Authorization\",",
+											"    value: \"Bearer \" + token",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{client-creds-token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{gateway.port}}/keycloak-jwt/get",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{gateway.port}}",
+									"path": [
+										"keycloak-jwt",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "pass-grant-jwt",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Test client creds JWT auth\", function () {",
+											"    // var resp = pm.response.json();",
+											"    // pm.expect(valid).to.eql(true)",
+											"    // postman.setEnvironmentVariable(\"client-creds-token\", access_token);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const token = pm.globals.get(\"pass-grant-token\")",
+											"",
+											"pm.request.headers.add({",
+											"    key: \"Authorization\",",
+											"    value: \"Bearer \" + token",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{client-creds-token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:{{gateway.port}}/keycloak-jwt/get",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{gateway.port}}",
+									"path": [
+										"keycloak-jwt",
+										"get"
 									]
 								}
 							},
