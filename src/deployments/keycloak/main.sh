@@ -18,7 +18,11 @@ kubectl create secret tls keycloak-tls-secret \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 addService "https-$keycloakName-service";
+<<<<<<< HEAD
 sed "s/replace_name/$keycloakName/g" "$keycloakDeploymentPath/keycloak-template.yaml" | \
+=======
+sed "s/replace_name/$keycloakName/g" "$deploymentPath/keycloak-template.yaml" | \
+>>>>>>> 3c10783 (Finish JWT keycloak auth)
   sed "s/replace_host/tyk-$keycloakDBName-postgres-postgresql.$namespace.svc/g" | \
   sed "s/replace_port/$keycloakDBPort/g" | \
   sed "s/replace_database/$keycloakDBName/g" | \
