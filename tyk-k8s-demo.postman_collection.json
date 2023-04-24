@@ -484,9 +484,8 @@
 									"script": {
 										"exec": [
 											"pm.test(\"Test client creds JWT auth\", function () {",
-											"    // var resp = pm.response.json();",
-											"    // pm.expect(valid).to.eql(true)",
-											"    // postman.setEnvironmentVariable(\"client-creds-token\", access_token);",
+											"    var resp = pm.response.json();",
+											"    pm.expect(resp.headers.Authorization[0]).to.eql(pm.globals.get(\"pass-grant-token\"))",
 											"});",
 											""
 										],
@@ -513,7 +512,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "{{client-creds-token}}",
+										"value": "{{pass-grant-token}}",
 										"type": "text"
 									}
 								],
