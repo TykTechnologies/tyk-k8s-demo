@@ -7,6 +7,7 @@ spec:
   use_keyless: true
   protocol: http
   active: true
+  enable_detailed_recording: true
   proxy:
     target_url: https://countries.trevorblades.com
     listen_path: /trevorblades

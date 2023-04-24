@@ -11,3 +11,4 @@ spec:
     target_url: http://replace_service_url
     listen_path: /httpbin-keyless
     strip_listen_path: true
+  enable_detailed_recording: true
