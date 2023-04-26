@@ -12,5 +12,5 @@ setVerbose;
 helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
   --namespace "$namespace" \
   "${deploymentsArgs[@]}" \
-  --wait --atomic > /dev/null
+  "$helmFlags" > /dev/null;
 unsetVerbose;

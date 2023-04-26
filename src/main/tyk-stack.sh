@@ -28,7 +28,7 @@ helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
   --install \
   --namespace "$namespace" \
   "${deploymentsArgs[@]}" \
-  --wait --atomic > /dev/null;
+  "$helmFlags" > /dev/null;
 unsetVerbose;
 
 addSummary "\tTyk Stack deployed\n \

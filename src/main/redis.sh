@@ -59,7 +59,7 @@ if [[ $REDISCLUSTER == "$redis" ]]; then
     \
     --set "password=$PASSWORD" \
     "${securityContextArgs[@]}" \
-    --wait --atomic > /dev/null;
+    "$helmFlags" > /dev/null;
   unsetVerbose;
 elif [[ $REDISSENTINEL == "$redis" ]]; then
   setVerbose;
@@ -84,7 +84,7 @@ elif [[ $REDISSENTINEL == "$redis" ]]; then
     --set "auth.password=$PASSWORD" \
     --set "sentinel.enabled=true" \
     "${securityContextArgs[@]}" \
-    --wait --atomic > /dev/null;
+    "$helmFlags" > /dev/null;
   unsetVerbose;
 else
   setVerbose;
@@ -108,6 +108,6 @@ else
     \
     --set "auth.password=$PASSWORD" \
     "${securityContextArgs[@]}" \
-    --wait --atomic > /dev/null;
+    "$helmFlags" > /dev/null;
   unsetVerbose;
 fi

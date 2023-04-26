@@ -18,7 +18,7 @@ helm upgrade "$datadogReleaseName" datadog/datadog --version 3.25.1 \
   --set "agents.containers.agent.healthPort=$DATADOG_AGENT_HEALTH_SERVICE_PORT" \
   "${datadogSecurityContextArgs[@]}" \
   --namespace "$namespace" \
-  --wait --atomic > /dev/null;
+  "$helmFlags" > /dev/null;
 unsetVerbose;
 
 source "$datadogDeploymentPath/health.sh";

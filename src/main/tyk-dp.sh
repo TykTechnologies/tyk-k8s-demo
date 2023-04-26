@@ -36,7 +36,7 @@ helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
   --install \
   --namespace "$namespace" \
   "${deploymentsArgs[@]}" \
-  --wait --atomic > /dev/null;
+  "$helmFlags" > /dev/null;
 
   if [[ -n "$TYK_WORKER_OPERATOR_CONNECTIONSTRING" ]]; then
     logger "$DEBUG" "creating tyk-operator secret...";
