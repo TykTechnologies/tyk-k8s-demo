@@ -23,7 +23,7 @@ helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
   --install \
   --namespace "$namespace" \
   "${deploymentsArgs[@]}" \
-  "$helmFlags" > /dev/null;
+  "${helmFlags[@]}" > /dev/null;
 
 kubectl create secret generic tyk-operator-conf \
   --from-literal="TYK_MODE=ce" \

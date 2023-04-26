@@ -52,7 +52,7 @@ if ! [[ -z $deployments ]]; then
   helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
     --namespace "$namespace" \
     "${deploymentsArgs[@]}" \
-    "$helmFlags" > /dev/null;
+    "${helmFlags[@]}" > /dev/null;
   unsetVerbose;
 fi
 

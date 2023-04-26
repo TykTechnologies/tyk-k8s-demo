@@ -27,7 +27,7 @@ helm upgrade "$prometheusReleaseName" prometheus-community/prometheus --version 
   --set "serverFiles.prometheus\.yml.scrape_configs[0].static_configs[0].targets={pump-svc-$tykReleaseName-$chart.$namespace.svc:$PROMETHEUS_PUMP_PORT}" \
   "${prometheusSecurityContextArgs[@]}" \
   --namespace "$namespace" \
-  "$helmFlags" > /dev/null;
+  "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
 
 source src/deployments/prometheus/pump.sh;

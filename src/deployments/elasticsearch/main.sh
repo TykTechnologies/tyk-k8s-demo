@@ -9,7 +9,7 @@ helm upgrade "$elasticsearchReleaseName" bitnami/elasticsearch --version 19.6.0 
   --set "sysctlImage.enabled=false" \
   "${elasticsearchSecurityContextArgs[@]}" \
   --namespace "$namespace" \
-  "$helmFlags" > /dev/null;
+  "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
 
 source src/deployments/elasticsearch/pump.sh;
