@@ -1,2 +1,2 @@
-## DataDog
-Deploys DataDog along with a Tyk Pump to consume API analytics.
+## Resurface
+Deploys Resurface along with a Tyk Pump to consume API analytics.
