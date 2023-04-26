@@ -6,10 +6,10 @@ helm upgrade "$certManagerReleaseName" jetstack/cert-manager --version v1.10.1 \
   --set "installCRDs=true" \
   --set "prometheus.enabled=false" \
   --namespace "$namespace" \
-  --wait --atomic > /dev/null;
+  "${helmFlags[@]}" > /dev/null;
 
 helm upgrade "$operatorReleaseName" tyk-helm/tyk-operator \
   --install \
   --namespace "$namespace" \
-  --wait --atomic > /dev/null;
+  "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

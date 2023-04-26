@@ -27,5 +27,5 @@ helm upgrade "$postgresReleaseName" bitnami/postgresql --version 11.9.7 \
   --set "containerPorts.postgresql=$2" \
   --set "primary.service.ports.postgresql=$2" \
   "${securityContextArgs[@]}" \
-  --wait --atomic > /dev/null;
+  "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

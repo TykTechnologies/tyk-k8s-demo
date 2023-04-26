@@ -29,7 +29,7 @@ if ! $mdcbExists; then
     --install \
     --namespace "$namespace" \
     "${deploymentsArgs[@]}" \
-    --wait --atomic > /dev/null;
+    "${helmFlags[@]}" > /dev/null;
   unsetVerbose;
 
   if ! $dryRun; then
@@ -54,7 +54,7 @@ setVerbose;
 helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
   --namespace "$namespace" \
   "${deploymentsArgs[@]}" \
-  --wait --atomic > /dev/null;
+  "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
 
 if ! $dryRun; then

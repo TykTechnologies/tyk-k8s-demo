@@ -5,10 +5,9 @@ source src/helpers/logger.sh;
 source src/helpers/helm-release-exists.sh;
 source src/helpers/check-deps.sh;
 source src/helpers/up/usage.sh;
-source src/helpers/init-vars.sh;
 source src/helpers/up/init-args.sh;
+source src/helpers/init-vars.sh;
 source src/helpers/up/check-tyk-release.sh;
-source src/helpers/deployments-args.sh;
 source src/helpers/expose-services.sh;
 source src/helpers/summary.sh;
 source src/helpers/helpers.sh;
@@ -53,7 +52,7 @@ if ! [[ -z $deployments ]]; then
   helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
     --namespace "$namespace" \
     "${deploymentsArgs[@]}" \
-    --wait --atomic > /dev/null
+    "${helmFlags[@]}" > /dev/null;
   unsetVerbose;
 fi
 

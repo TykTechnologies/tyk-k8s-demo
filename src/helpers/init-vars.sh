@@ -1,4 +1,9 @@
 extraEnvs=();
+deploymentsArgs=();
+
+addDeploymentArgs() {
+  deploymentsArgs+=("$@");
+}
 
 gatewayPrefix="TYK_GW_";
 dashboardPrefix="TYK_DB_";
@@ -47,4 +52,23 @@ if [[ -f .env ]]; then
 else
   logger "$ERROR" ".env file not found";
   exit 1;
+fi
+
+helmFlags=(--wait --atomic);
+if $isDebug; then
+  helmFlags+=(--debug);
+
+  extraEnvs+=(--set "gateway.extraEnvs[0].name=TYK_LOGLEVEL" \
+    --set "gateway.extraEnvs[0].value=DEBUG" \
+    --set "dash.extraEnvs[0].name=TYK_LOGLEVEL" \
+    --set "dash.extraEnvs[0].value=DEBUG" \
+    --set "mdcb.extraEnvs[0].name=TYK_LOGLEVEL" \
+    --set "mdcb.extraEnvs[0].value=DEBUG" \
+    --set "pump.extraEnvs[0].name=TYK_LOGLEVEL" \
+    --set "pump.extraEnvs[0].value=DEBUG");
+
+  gatewayExtraEnvsCtr=1;
+  dashExtraEnvsCtr=1;
+  mdcbExtraEnvsCtr=1;
+  pumpExtraEnvsCtr=1;
 fi

@@ -16,7 +16,7 @@ setVerbose;
 helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
   --namespace "$namespace" \
   "${deploymentsArgs[@]}" \
-  --wait --atomic > /dev/null
+  "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
 
 sed "s/replace_release_name/$tykReleaseName-$chart/g" src/deployments/prometheus/pump-svc.yaml | \

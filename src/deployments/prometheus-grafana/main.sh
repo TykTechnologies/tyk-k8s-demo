@@ -29,7 +29,7 @@ helm upgrade "$grafanaReleaseName" grafana/grafana --version 6.52.7 \
   --set "extraConfigmapMounts[0].readOnly=true" \
   "${prometheusGrafanaSecurityContextArgs[@]}" \
   --namespace "$namespace" \
-  --wait --atomic > /dev/null;
+  "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
 
 addSummary "\tGrafana deployed\n \
