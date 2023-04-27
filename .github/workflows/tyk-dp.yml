@@ -27,6 +27,7 @@ jobs:
           - keycloak-jwt
           - k6-slo-traffic
           - operator
+          - operator-httpbin
           - operator-graphql
           - operator-udg
           - operator-federation
