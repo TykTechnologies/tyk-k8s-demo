@@ -1,5 +1,5 @@
 source src/main/namespace.sh;
-source src/main/redis.sh;
+source src/main/redis/main.sh;
 
 cluster=$(kubectl config current-context);
 

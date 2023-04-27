@@ -4,9 +4,13 @@ logger "$INFO" "installing $postgresReleaseName in namespace $namespace";
 
 securityContextArgs=();
 if [[ $OPENSHIFT == "$flavor" ]]; then
-  logger "$DEBUG" "pgsql.sh: setting openshift related postgres configuration";
+  logger "$DEBUG" "storage/pgsql.sh: setting openshift related postgres configuration";
   securityContextArgs=(--set "primary.podSecurityContext.fsGroup=$OS_UID_RANGE" \
-    --set "primary.containerSecurityContext.runAsUser=$OS_UID_RANGE");
+    --set "primary.containerSecurityContext.runAsUser=$OS_UID_RANGE" \
+    --set "primary.containerSecurityContext.runAsNonRoot=true" \
+    --set "primary.containerSecurityContext.allowPrivilegeEscalation=false" \
+    --set "primary.containerSecurityContext.capabilities.drop[0]=ALL" \
+    --set "primary.containerSecurityContext.seccompProfile.type=RuntimeDefault");
 fi
 
 setVerbose;

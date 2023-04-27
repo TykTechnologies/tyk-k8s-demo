@@ -1,8 +1,8 @@
 if [[ $POSTGRES == "$storage" ]]; then
   tykDBName="storage";
   tykDBPort=5432;
-  source src/main/pgsql.sh $tykDBName $tykDBPort;
-  logger "$DEBUG" "storage.sh: setting tyk related postgres configuration";
+  source src/main/storage/pgsql.sh $tykDBName $tykDBPort;
+  logger "$DEBUG" "storage/main.sh: setting tyk related postgres configuration";
   args=(--set "backend=postgres" \
     --set "postgres.host=tyk-$tykDBName-postgres-postgresql.$namespace.svc" \
     --set "postgres.port=$tykDBPort" \
@@ -10,8 +10,8 @@ if [[ $POSTGRES == "$storage" ]]; then
     --set "postgres.database=$tykDBName" \
     --set "postgres.sslmode=disable");
 else
-  source src/main/mongo.sh;
-  logger "$DEBUG" "storage.sh: setting tyk related mongo configuration";
+  source src/main/storage/mongo.sh;
+  logger "$DEBUG" "storage/main.sh: setting tyk related mongo configuration";
   args=(--set "mongo.mongoURL=mongodb://root:$PASSWORD@tyk-mongo-mongodb.$namespace.svc:27017/tyk_analytics?authSource=admin");
 fi
 

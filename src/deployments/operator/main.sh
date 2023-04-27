@@ -11,5 +11,6 @@ helm upgrade "$certManagerReleaseName" jetstack/cert-manager --version v1.10.1 \
 helm upgrade "$operatorReleaseName" tyk-helm/tyk-operator \
   --install \
   --namespace "$namespace" \
+  "${operatorSecurityContextArgs[@]}" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

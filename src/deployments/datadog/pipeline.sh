@@ -18,7 +18,7 @@ if [[ -z $search ]]; then
     -H "Content-Type: application/json" \
     -H "DD-API-KEY: $DATADOG_APIKEY" \
     -H "DD-APPLICATION-KEY: $DATADOG_APPKEY" \
-    -d @"$datadogDeploymentPath/pipeline.json"
+    -d @"$datadogDeploymentPath/pipeline.json" > /dev/null;
 else
   logger "$DEBUG" "datadog/pipeline.sh: pipeline already exists...skipping";
 fi

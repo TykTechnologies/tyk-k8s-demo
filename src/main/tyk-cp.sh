@@ -1,6 +1,6 @@
 source src/main/namespace.sh;
-source src/main/redis.sh;
-source src/main/storage.sh;
+source src/main/redis/main.sh;
+source src/main/storage/main.sh;
 
 args=(--set "dash.license=$LICENSE" \
   --set "dash.adminUser.email=$USERNAME" \
