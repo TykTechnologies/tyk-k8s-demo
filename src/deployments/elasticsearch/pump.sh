@@ -7,10 +7,4 @@ args=(--set "pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_PMP_PUMPS_ELASTICSEARCH_
 pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 3));
 
 addDeploymentArgs "${args[@]}";
-
-setVerbose;
-helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
-  --namespace "$namespace" \
-  "${deploymentsArgs[@]}" \
-  "${helmFlags[@]}" > /dev/null;
-unsetVerbose;
+upgradeTyk;

@@ -14,3 +14,4 @@ args=(--set "enterprisePortal.license=$PORTAL_LICENSE" \
   "${portalSecurityContextArgs[@]}");
 
 addDeploymentArgs "${args[@]}";
+upgradeTyk;

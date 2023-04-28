@@ -12,12 +12,7 @@ pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 4));
 
 addService "pump-svc-$tykReleaseName-$chart";
 addDeploymentArgs "${args[@]}";
-setVerbose;
-helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
-  --namespace "$namespace" \
-  "${deploymentsArgs[@]}" \
-  "${helmFlags[@]}" > /dev/null;
-unsetVerbose;
+upgradeTyk;
 
 sed "s/replace_release_name/$tykReleaseName-$chart/g" src/deployments/prometheus/pump-svc.yaml | \
   sed "s/replace_pump_port/$PROMETHEUS_PUMP_PORT/g" | \

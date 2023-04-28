@@ -22,14 +22,7 @@ addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
 addDeploymentArgs "${tykSecurityContextArgs[@]}";
 addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
-
-setVerbose;
-helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
-  --install \
-  --namespace "$namespace" \
-  "${deploymentsArgs[@]}" \
-  "${helmFlags[@]}" > /dev/null;
-unsetVerbose;
+upgradeTyk;
 
 addSummary "\tTyk Stack deployed\n \
 \tDashboard username: $USERNAME\n \

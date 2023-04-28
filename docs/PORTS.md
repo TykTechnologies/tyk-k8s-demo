@@ -22,4 +22,4 @@ All the ports that this library uses.
 | prometheus pump        | `9091` |
 | prometheus             | `9080` |
 | grafana                | `9081` |
-
+| resurface-coordinator  | `7700` |

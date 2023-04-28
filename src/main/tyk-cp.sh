@@ -24,13 +24,7 @@ addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
 
 if ! $mdcbExists; then
-  setVerbose;
-  helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
-    --install \
-    --namespace "$namespace" \
-    "${deploymentsArgs[@]}" \
-    "${helmFlags[@]}" > /dev/null;
-  unsetVerbose;
+  upgradeTyk;
 
   if ! $dryRun; then
     source src/helpers/up/update-org.sh $tykReleaseName;
@@ -49,13 +43,7 @@ mdcbArgs=(--set "mdcb.enabled=true" \
 addDeploymentArgs "${mdcbArgs[@]}";
 addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${mdcbSecurityContextArgs[@]}";
-
-setVerbose;
-helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
-  --namespace "$namespace" \
-  "${deploymentsArgs[@]}" \
-  "${helmFlags[@]}" > /dev/null;
-unsetVerbose;
+upgradeTyk;
 
 if ! $dryRun; then
   source src/helpers/up/set-cp-args.sh;

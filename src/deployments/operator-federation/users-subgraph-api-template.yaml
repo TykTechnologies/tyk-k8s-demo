@@ -111,6 +111,7 @@ spec:
   active: true
   internal: true
   use_keyless: true
+  enable_detailed_recording: true
   graphql:
     enabled: true
     execution_mode: subgraph
