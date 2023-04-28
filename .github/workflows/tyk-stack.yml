@@ -45,7 +45,7 @@ jobs:
         with:
           kubernetes-version: v1.23.13
           extra-config: 'kubelet.max-pods=100'
-          addons: 'ingress'
+          addons: 'ingress,storage-provisioner'
           start-args: '--nodes 3 --force'
 
       - name: Install helm
