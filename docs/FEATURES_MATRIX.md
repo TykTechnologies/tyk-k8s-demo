@@ -22,6 +22,7 @@
 | portal               | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus           |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus-grafana   |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| resurface            |               `port-froward`               |        :x:         |        :x:         | :white_check_mark: |        :x:         |
 
 
 ## Integrations compatible with Tyk deployments

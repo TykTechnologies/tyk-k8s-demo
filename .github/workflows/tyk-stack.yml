@@ -35,6 +35,7 @@ jobs:
           - portal
           - prometheus
           - prometheus-grafana
+          - resurface
       max-parallel: 3
     steps:
       - uses: actions/checkout@v2
