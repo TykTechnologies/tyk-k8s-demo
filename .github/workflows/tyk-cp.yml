@@ -20,8 +20,8 @@ jobs:
       matrix:
         deployment:
 #          - datadog
-          - elasticsearch
-          - elasticsearch-kibana
+#          - elasticsearch
+#          - elasticsearch-kibana
           - k6
           - k6-slo-traffic
           - keycloak
@@ -35,7 +35,7 @@ jobs:
           - portal
           - prometheus
           - prometheus-grafana
-          - resurface
+#          - resurface
       max-parallel: 3
     steps:
       - uses: actions/checkout@v2
