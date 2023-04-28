@@ -59,6 +59,7 @@ jobs:
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: ./down.sh
           command: |
             TYK_WORKER_CONNECTIONSTRING="${{ secrets.TYK_WORKER_CONNECTIONSTRING }}" \
             TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \

@@ -64,8 +64,9 @@ jobs:
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: ./down.sh
           command: |
-            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            LICENSE="${{ secrets.LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
             ./up.sh -v \

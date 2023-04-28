@@ -5,9 +5,9 @@ nodes:
   image: "kindest/node:v1.23.13"
   extraPortMappings:
   - containerPort: 31000
-    hostPort: 7000
+    hostPort: 8000
   - containerPort: 31900
-    hostPort: 7200
+    hostPort: 8200
 - role: worker
   image: "kindest/node:v1.23.13"
 - role: worker
