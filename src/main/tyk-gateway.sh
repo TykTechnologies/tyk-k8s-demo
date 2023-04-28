@@ -17,13 +17,7 @@ addDeploymentArgs "${args[@]}";
 addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
 addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
-
-setVerbose;
-helm upgrade $tykReleaseName "$TYK_HELM_CHART_PATH/$chart" \
-  --install \
-  --namespace "$namespace" \
-  "${deploymentsArgs[@]}" \
-  "${helmFlags[@]}" > /dev/null;
+upgradeTyk;
 
 kubectl create secret generic tyk-operator-conf \
   --from-literal="TYK_MODE=ce" \
@@ -32,6 +26,5 @@ kubectl create secret generic tyk-operator-conf \
   --from-literal="TYK_ORG=tyk" \
   --dry-run=client -o=yaml | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
-unsetVerbose;
 
 addSummary "\tTyk Gateway deployed";

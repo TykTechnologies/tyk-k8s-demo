@@ -21,10 +21,4 @@ args=(--set "pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_PMP_PUMPS_DOGSTATSD_TYPE
 pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 9));
 
 addDeploymentArgs "${args[@]}";
-
-setVerbose;
-helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
-  --namespace "$namespace" \
-  "${deploymentsArgs[@]}" \
-  "${helmFlags[@]}" > /dev/null;
-unsetVerbose;
+upgradeTyk;

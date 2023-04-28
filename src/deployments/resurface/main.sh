@@ -11,7 +11,7 @@ helm upgrade "$resurfaceReleaseName" resurfaceio/resurface --version 3.6.0-0.3.0
   --set "custom.service.apiexplorer.port=$RESURFACE_COORDINATOR_SERVICE_PORT" \
   --set "custom.service.flukeserver.port=$RESURFACE_WORKER_SERVICE_PORT" \
   --namespace "$namespace" \
-  --wait --atomic > /dev/null;
+  "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
 
 source "$resurfaceDeploymentPath/pump.sh";

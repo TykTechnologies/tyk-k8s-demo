@@ -48,12 +48,7 @@ if ! [[ -z $deployments ]]; then
   done
 
   # Update tyk installation after some configuration might have been changed.
-  setVerbose;
-  helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
-    --namespace "$namespace" \
-    "${deploymentsArgs[@]}" \
-    "${helmFlags[@]}" > /dev/null;
-  unsetVerbose;
+  upgradeTyk;
 fi
 
 if ! $dryRun; then

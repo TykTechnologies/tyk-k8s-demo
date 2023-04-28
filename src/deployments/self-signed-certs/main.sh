@@ -33,3 +33,4 @@ gatewayExtraVolumesCtr=$((dashExtraVolumesCtr + 1));
 gatewayExtraVolumeMountsCtr=$((dashExtraVolumesCtr + 1));
 
 addDeploymentArgs "${args[@]}";
+upgradeTyk;

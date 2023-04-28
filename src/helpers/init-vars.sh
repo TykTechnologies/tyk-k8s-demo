@@ -5,6 +5,16 @@ addDeploymentArgs() {
   deploymentsArgs+=("$@");
 }
 
+upgradeTyk() {
+  setVerbose;
+  helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
+    --install \
+    --namespace "$namespace" \
+    "${deploymentsArgs[@]}" \
+    "${helmFlags[@]}" > /dev/null;
+  unsetVerbose;
+}
+
 gatewayPrefix="TYK_GW_";
 dashboardPrefix="TYK_DB_";
 mdcbPrefix="TYK_MDCB_";

@@ -72,23 +72,24 @@ This quick start command will stand up the entire Tyk stack along with the Tyk E
 
 ### Supplementary Deployments
 Please see this [page](docs/FEATURES_MATRIX.md) for Tyk deployments compatibility charts.
-- [Datadog](src/deployments/datadog): connects tyk deployments analytics and logs to datadog.
-- [Elasticsearch](src/deployments/elasticsearch): connects tyk deployments analytics to elasticsearch.
-	- [Kibana](src/deployments/elasticsearch-kibana): connects a Kibana installment to the elasticsearch deployment.
+- [datadog](src/deployments/datadog): connects tyk deployments analytics and logs to datadog.
+- [elasticsearch](src/deployments/elasticsearch): connects tyk deployments analytics to elasticsearch.
+	- [elasticsearch-kibana](src/deployments/elasticsearch-kibana): connects a Kibana installment to the elasticsearch deployment.
 - [k6](src/deployments/k6): generates a load of traffic to seed analytical data.
-	- [SLO Traffic](src/deployments/k6-slo-traffic): generates a load of traffic to seed analytical data.
-- [Keycloak](src/deployments/keycloak): stands up a keycloak deployment.
-	- [DCR](src/deployments/keycloak-dcr): stands up a keycloak Dynamic Client Registration example.
-	- [SSO](src/deployments/keycloak-sso): stands up a keycloak SSO example with Tyk dashboard.
-- [Operator](src/deployments/operator): this deployment option will install the [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency [cert-manager](https://github.com/jetstack/cert-manager).
-	- [HttpBin](src/deployments/operator-httpbin): creates API examples using the tyk-operator.
-	- [GraphQL](src/deployments/operator-graphql): creates GraphQL API examples using the tyk-operator.
-	- [Universal Data Graph](src/deployments/operator-udg): creates Universal Data Graph API examples using the tyk-operator.
-	- [Federation v1](src/deployments/operator-federation): creates Federation v1 API examples using the tyk-operator.
-- [Portal](src/deployments/portal): this deployment will install the [Tyk Enterprise Developer Portal](https://tyk.io/docs/tyk-developer-portal/tyk-enterprise-developer-portal/) as well as its dependency PostgreSQL.
-- [Prometheus](src/deployments/prometheus): this deployment will stand up a Tyk Prometheus pump with custom analytics.
-	- [Grafana](src/deployments/prometheus-grafana): connects a Grafana installment to the Prometheus deployment.
-- [Resurface.io](src/deployments/resurface): this deployment will stand up a Tyk Resurface pump with the Resurface.io installment.
+	- [k6-slo-traffic](src/deployments/k6-slo-traffic): generates a load of traffic to seed analytical data.
+- [keycloak](src/deployments/keycloak): stands up a keycloak deployment.
+	- [keycloak-dcr](src/deployments/keycloak-dcr): stands up a keycloak Dynamic Client Registration example.
+	- [keycloak-sso](src/deployments/keycloak-sso): stands up a keycloak SSO example with Tyk dashboard.
+	- [keycloak-jwt](src/deployments/keycloak-jwt): stands up a keycloak JWT Authentication example with Tyk.
+- [operator](src/deployments/operator): this deployment option will install the [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency [cert-manager](https://github.com/jetstack/cert-manager).
+	- [operator-httpbin](src/deployments/operator-httpbin): creates API examples using the tyk-operator.
+	- [operator-graphql](src/deployments/operator-graphql): creates GraphQL API examples using the tyk-operator.
+	- [operator-udg](src/deployments/operator-udg): creates Universal Data Graph API examples using the tyk-operator.
+	- [operator-federation](src/deployments/operator-federation): creates Federation v1 API examples using the tyk-operator.
+- [portal](src/deployments/portal): this deployment will install the [Tyk Enterprise Developer Portal](https://tyk.io/docs/tyk-developer-portal/tyk-enterprise-developer-portal/) as well as its dependency PostgreSQL.
+- [prometheus](src/deployments/prometheus): this deployment will stand up a Tyk Prometheus pump with custom analytics.
+	- [prometheus-grafana](src/deployments/prometheus-grafana): connects a Grafana installment to the Prometheus deployment.
+- [resurface](src/deployments/resurface): this deployment will stand up a Tyk Resurface pump with the Resurface.io installment.
 
 If you are running a POC and would like an example of how to integrate a specific tool.
 Please submit a request through the repository [here](https://github.com/TykTechnologies/tyk-k8s-demo/issues).
