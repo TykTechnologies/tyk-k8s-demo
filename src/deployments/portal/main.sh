@@ -2,7 +2,7 @@ logger "$INFO" "installing portal in $namespace namespace...";
 
 portalDBName=portal;
 portalDBPort=54321;
-source src/main/pgsql.sh $portalDBName $portalDBPort;
+source src/main/storage/pgsql.sh $portalDBName $portalDBPort;
 
 addService "enterprise-portal-svc-$tykReleaseName-$chart";
 addServiceArgs "enterprisePortal";

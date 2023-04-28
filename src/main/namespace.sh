@@ -22,13 +22,17 @@ if [[ $OPENSHIFT == "$flavor" ]]; then
   # Set Tyk args
   tykSecurityContextArgs=(--set "dash.securityContext.fsGroup=$OS_UID_RANGE" \
     --set "dash.securityContext.runAsUser=$OS_UID_RANGE" \
+    --set "dash.securityContext.seccompProfile.type=RuntimeDefault" \
     --set "pump.securityContext.fsGroup=$OS_UID_RANGE" \
-    --set "pump.securityContext.runAsUser=$OS_UID_RANGE");
+    --set "pump.securityContext.runAsUser=$OS_UID_RANGE" \
+    --set "pump.securityContext.seccompProfile.type=RuntimeDefault");
 
   gatewaySecurityContextArgs=(--set "gateway.securityContext.fsGroup=$OS_UID_RANGE" \
-    --set "gateway.securityContext.runAsUser=$OS_UID_RANGE");
+    --set "gateway.securityContext.runAsUser=$OS_UID_RANGE" \
+    --set "gateway.securityContext.seccompProfile.type=RuntimeDefault");
 
   # Set MDCB args
   mdcbSecurityContextArgs=(--set "mdcb.securityContext.fsGroup=$OS_UID_RANGE" \
-    --set "mdcb.securityContext.runAsUser=$OS_UID_RANGE");
+    --set "mdcb.securityContext.runAsUser=$OS_UID_RANGE" \
+    --set "mdcb.securityContext.seccompProfile.type=RuntimeDefault");
 fi

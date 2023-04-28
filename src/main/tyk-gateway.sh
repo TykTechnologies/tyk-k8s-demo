@@ -1,5 +1,5 @@
 source src/main/namespace.sh;
-source src/main/redis.sh;
+source src/main/redis/main.sh;
 
 args=(--set "gateway.image.tag=$GATEWAY_VERSION" \
   --set "gateway.image.repository=tykio/tyk-gateway" \

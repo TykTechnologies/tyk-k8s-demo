@@ -30,8 +30,16 @@ spec:
         version: v1
     spec:
       containers:
-        - image: mccutchen/go-httpbin
+        - image: zalbiraw/go-httpbin:v1.0.1
           imagePullPolicy: IfNotPresent
           name: httpbin
           ports:
             - containerPort: 8080
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault

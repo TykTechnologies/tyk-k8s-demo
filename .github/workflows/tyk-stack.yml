@@ -65,7 +65,7 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           command: |
-            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            LICENSE="${{ secrets.LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
             ./up.sh -v \
               --namespace tyk-stack-${{ matrix.deployment }} \

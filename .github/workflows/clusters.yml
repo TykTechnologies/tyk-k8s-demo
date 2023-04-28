@@ -52,7 +52,7 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           command: |
-            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            LICENSE="${{ secrets.LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
             ./up.sh -v tyk-cp
 

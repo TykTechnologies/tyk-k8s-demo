@@ -4,9 +4,12 @@ logger "$INFO" "installing $mongoReleaseName in namespace $namespace";
 
 securityContextArgs=();
 if [[ $OPENSHIFT == "$flavor" ]]; then
-  logger "$DEBUG" "mongo.sh: setting openshift related mongo configuration";
+  logger "$DEBUG" "storage/mongo.sh: setting openshift related mongo configuration";
   securityContextArgs=(--set "podSecurityContext.fsGroup=$OS_UID_RANGE" \
-    --set "containerSecurityContext.runAsUser=$OS_UID_RANGE");
+    --set "containerSecurityContext.runAsUser=$OS_UID_RANGE" \
+    --set "containerSecurityContext.allowPrivilegeEscalation=false" \
+    --set "containerSecurityContext.capabilities.drop[0]=ALL" \
+    --set "containerSecurityContext.seccompProfile.type=RuntimeDefault");
 fi
 
 setVerbose;
