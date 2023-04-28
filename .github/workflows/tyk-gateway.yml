@@ -60,7 +60,6 @@ jobs:
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
-          on_retry_command: ./down.sh
           command: |
             ./up.sh -v \
               --namespace tyk-gateway-${{ matrix.deployment }} \
