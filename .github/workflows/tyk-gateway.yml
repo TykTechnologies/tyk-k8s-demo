@@ -36,11 +36,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Create Kind Cluster
-        uses: engineerd/setup-kind@v0.5.0
+      - name: start Minikube
+        uses: medyagh/setup-minikube@latest
         with:
-          version: "v0.11.1"
-          config: .github/kind-cluster-v1.23.13.yml
+          kubernetes-version: v1.23.13
+          extra-config: 'kubelet.max-pods=100'
+          addons: 'ingress'
+          start-args: '--force'
 
       - name: Install helm
         uses: Azure/setup-helm@v1.1
