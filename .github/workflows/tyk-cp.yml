@@ -98,8 +98,6 @@ jobs:
           command: newman run --folder gateway --env-var "deployment=control-plane" tyk-k8s-demo.postman_collection.json
 
       - name: Test ${{ matrix.deployment }}
-
-      - name: Deploy tyk-cp-${{ matrix.deployment }}
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
