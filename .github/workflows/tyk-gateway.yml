@@ -83,7 +83,7 @@ jobs:
             ./up.sh -v \
               --namespace tyk-gateway-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
-              tyk-gateway
+              tyk-gateway && sleep 180
           command: newman run --folder gateway tyk-k8s-demo.postman_collection.json
 
       - name: Test ${{ matrix.deployment }}
@@ -95,5 +95,5 @@ jobs:
             ./up.sh -v \
               --namespace tyk-gateway-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
-              tyk-gateway
+              tyk-gateway && sleep 180
           command: newman run --folder ${{ matrix.deployment }} --insecure -n 1 tyk-k8s-demo.postman_collection.json

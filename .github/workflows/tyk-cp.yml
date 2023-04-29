@@ -92,7 +92,7 @@ jobs:
             ./up.sh -v \
               --namespace tyk-cp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
-              tyk-cp
+              tyk-cp && sleep 180
           command: newman run --folder gateway --env-var "deployment=control-plane" tyk-k8s-demo.postman_collection.json
 
       - name: Test ${{ matrix.deployment }}
@@ -107,5 +107,5 @@ jobs:
             ./up.sh -v \
               --namespace tyk-cp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
-              tyk-cp
+              tyk-cp && sleep 180
           command: newman run --folder ${{ matrix.deployment }} --insecure -n 1 tyk-k8s-demo.postman_collection.json
