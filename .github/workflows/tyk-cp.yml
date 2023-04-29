@@ -81,8 +81,6 @@ jobs:
         run: sleep 60
 
       - name: Test Tyk deployment
-
-      - name: Deploy tyk-cp-${{ matrix.deployment }}
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
