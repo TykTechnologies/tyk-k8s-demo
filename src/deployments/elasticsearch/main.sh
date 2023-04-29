@@ -12,4 +12,4 @@ helm upgrade "$elasticsearchReleaseName" bitnami/elasticsearch --version 19.6.0 
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
 
-source src/deployments/elasticsearch/pump.sh;
+source "$elasticsearchDeploymentPath/pump.sh";

@@ -3,7 +3,7 @@ logger "$INFO" "installing $grafanaReleaseName in $namespace namespace...";
 addService "$grafanaReleaseName";
 
 setVerbose;
-kubectl apply -f src/deployments/prometheus-grafana/grafana-dashboards-configmap.yaml --namespace "$namespace" > /dev/null;
+kubectl apply -f "$prometheusGrafanaDeploymentPath/grafana-dashboards-configmap.yaml" --namespace "$namespace" > /dev/null;
 helm upgrade "$grafanaReleaseName" grafana/grafana --version 6.52.7 \
   --install \
   --set "adminPassword=$PASSWORD" \

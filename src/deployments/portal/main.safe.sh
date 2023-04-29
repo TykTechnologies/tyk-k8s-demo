@@ -1,6 +1,8 @@
+portalDeploymentPath="src/deployments/portal";
+
 if [ -z "$portalRegistered" ]; then
   portalRegistered=true;
-  source "src/deployments/portal/checks.sh";
-  source "src/deployments/portal/openshift.sh";
-  source "src/deployments/portal/main.sh";
+  source "$portalDeploymentPath/checks.sh";
+  source "$portalDeploymentPath/openshift.sh";
+  source "$portalDeploymentPath/main.sh";
 fi

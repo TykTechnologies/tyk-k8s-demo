@@ -1,7 +1,5 @@
-deploymentPath="src/deployments/self-signed-certs";
-
-if ! [ -f "$deploymentPath/certs/tykCA.pem" ]; then
-  source "$deploymentPath/generate.sh";
+if ! [ -f "$selfSignedCertsDeploymentPath/certs/tykCA.pem" ]; then
+  source "$selfSignedCertsDeploymentPath/generate.sh";
 fi
 
 logger "$INFO" "creating self-signed certs secret...";
@@ -12,7 +10,7 @@ selfSignedCertsMountPath="/etc/ssl/certs";
 selfSignedCertsFilename="tykCA.pem";
 
 kubectl create secret generic "$selfSignedCertsSecretName" \
-  --from-file="$selfSignedCertsFilename=$deploymentPath/certs/$selfSignedCertsFilename" \
+  --from-file="$selfSignedCertsFilename=$selfSignedCertsDeploymentPath/certs/$selfSignedCertsFilename" \
   --dry-run=client -o=yaml | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 

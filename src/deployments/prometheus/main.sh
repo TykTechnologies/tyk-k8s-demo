@@ -30,4 +30,4 @@ helm upgrade "$prometheusReleaseName" prometheus-community/prometheus --version 
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
 
-source src/deployments/prometheus/pump.sh;
+source "$prometheusDeploymentPath/pump.sh";
