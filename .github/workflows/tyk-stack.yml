@@ -80,7 +80,29 @@ jobs:
         run: sleep 60
 
       - name: Test Tyk deployment
-        run: newman run --folder gateway --env-var "deployment=tyk-stack" tyk-k8s-demo.postman_collection.json
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: |
+            LICENSE="${{ secrets.LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
+            ./up.sh -v \
+              --namespace tyk-stack-${{ matrix.deployment }} \
+              --deployments ${{ matrix.deployment }} \
+              tyk-stack
+          command: newman run --folder gateway --env-var "deployment=tyk-stack" tyk-k8s-demo.postman_collection.json
 
       - name: Test ${{ matrix.deployment }}
-        run: newman run --folder ${{ matrix.deployment }} --insecure -n 1 tyk-k8s-demo.postman_collection.json
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: |
+            LICENSE="${{ secrets.LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
+            ./up.sh -v \
+              --namespace tyk-stack-${{ matrix.deployment }} \
+              --deployments ${{ matrix.deployment }} \
+              tyk-stack
+          command: newman run --folder ${{ matrix.deployment }} --insecure -n 1 tyk-k8s-demo.postman_collection.json
