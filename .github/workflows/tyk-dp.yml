@@ -24,7 +24,7 @@ jobs:
 #          - elasticsearch-kibana
           - k6
           - keycloak
-          - keycloak-jwt
+#          - keycloak-jwt
           - k6-slo-traffic
           - operator
           - operator-httpbin

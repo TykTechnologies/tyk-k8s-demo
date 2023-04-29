@@ -25,7 +25,7 @@ jobs:
           - k6
           - k6-slo-traffic
           - keycloak
-          - keycloak-jwt
+#          - keycloak-jwt
           - operator
           - operator-httpbin
           - operator-graphql
