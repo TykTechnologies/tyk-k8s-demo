@@ -23,8 +23,11 @@ jobs:
 #          - elasticsearch
 #          - elasticsearch-kibana
           - k6
+          - keycloak
+#          - keycloak-jwt
           - k6-slo-traffic
           - operator
+          - operator-httpbin
           - operator-graphql
           - operator-udg
           - operator-federation
@@ -76,7 +79,33 @@ jobs:
         run: sleep 60
 
       - name: Test Tyk deployment
-        run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: |
+            TYK_WORKER_CONNECTIONSTRING="${{ secrets.TYK_WORKER_CONNECTIONSTRING }}" \
+            TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
+            TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
+            TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            ./up.sh -v \
+              --namespace tyk-dp-${{ matrix.deployment }} \
+              --deployments ${{ matrix.deployment }} \
+              tyk-dp && sleep 180
+          command: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
 
       - name: Test ${{ matrix.deployment }}
-        run: newman run --folder ${{ matrix.deployment }} --insecure --env-var "gateway.port=8081" tyk-k8s-demo.postman_collection.json
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: |
+            TYK_WORKER_CONNECTIONSTRING="${{ secrets.TYK_WORKER_CONNECTIONSTRING }}" \
+            TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
+            TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
+            TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            ./up.sh -v \
+              --namespace tyk-dp-${{ matrix.deployment }} \
+              --deployments ${{ matrix.deployment }} \
+              tyk-dp && sleep 180
+          command: newman run --folder ${{ matrix.deployment }} --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json

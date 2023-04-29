@@ -27,6 +27,7 @@ jobs:
           - keycloak
           - keycloak-sso
           - keycloak-dcr
+#          - keycloak-jwt
           - operator
           - operator-httpbin
           - operator-graphql
@@ -80,7 +81,31 @@ jobs:
         run: sleep 60
 
       - name: Test Tyk deployment
-        run: newman run --folder gateway --env-var "deployment=control-plane" tyk-k8s-demo.postman_collection.json
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: |
+            LICENSE="${{ secrets.LICENSE }}" \
+            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
+            ./up.sh -v \
+              --namespace tyk-cp-${{ matrix.deployment }} \
+              --deployments ${{ matrix.deployment }} \
+              tyk-cp && sleep 180
+          command: newman run --folder gateway --env-var "deployment=control-plane" tyk-k8s-demo.postman_collection.json
 
       - name: Test ${{ matrix.deployment }}
-        run: newman run --folder ${{ matrix.deployment }} --insecure tyk-k8s-demo.postman_collection.json
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          on_retry_command: |
+            LICENSE="${{ secrets.LICENSE }}" \
+            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
+            ./up.sh -v \
+              --namespace tyk-cp-${{ matrix.deployment }} \
+              --deployments ${{ matrix.deployment }} \
+              tyk-cp && sleep 180
+          command: newman run --folder ${{ matrix.deployment }} --insecure -n 1 tyk-k8s-demo.postman_collection.json

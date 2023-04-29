@@ -1,8 +1,9 @@
 ELASTICSEARCH_SERVICE_PORT=9200;
 elasticsearchReleaseName="elasticsearch";
+elasticsearchDeploymentPath="src/deployments/elasticsearch";
 
 if [ -z "$elasticsearchRegistered" ]; then
   elasticsearchRegistered=true;
-  source "src/deployments/elasticsearch/openshift.sh";
-  source "src/deployments/elasticsearch/main.sh";
+  source "$elasticsearchDeploymentPath/openshift.sh";
+  source "$elasticsearchDeploymentPath/main.sh";
 fi
