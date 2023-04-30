@@ -14,7 +14,7 @@
 | keycloak             |               `port-froward`               |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |
 | keycloak-dcr         |                    N/A                     |        :x:         |        :x:         | :white_check_mark: |        :x:         |
 | keycloak-sso         |                    N/A                     |        :x:         |        :x:         | :white_check_mark: |        :x:         |
-| keycloak-jwt         |                    N/A                     |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |
+| keycloak-jwt         |                    N/A                     |        :x:         |        :x:         |        :x:         | :white_check_mark: |
 | operator             |                    N/A                     | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | operator-httpbin     |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-graphql     |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
