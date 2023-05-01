@@ -109,3 +109,6 @@ jobs:
               --deployments ${{ matrix.deployment }} \
               tyk-dp && sleep 180
           command: newman run --folder ${{ matrix.deployment }} --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json
+
+      - name: Clean up
+        run: ./down.sh -v --namespace tyk-dp-${{ matrix.deployment }}
