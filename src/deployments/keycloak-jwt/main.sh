@@ -1,5 +1,7 @@
 logger "$INFO" "installing keycloak jwt realm in $namespace namespace...";
 
+crName="tyk-jwt";
+secret="wcl7lBoslXBMAHKinMwa1bbEuBQSCUtI";
 checkKeycloakRealmImportCRExists "$crName";
 if ! $keycloakRealmImportCRExists; then
 sed "s/replace_cr_name/$crName/g" "$keycloakJWTDeploymentPath/realm-template.yaml" | \

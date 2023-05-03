@@ -1,5 +1,8 @@
 logger "$INFO" "installing keycloak oidc realm in $namespace namespace...";
 
+crName="tyk-oidc";
+client_id="oidc-client";
+secret="5yCQ2p8hg7jz4NwHo5QAqP0PqSOgMpKv";
 checkKeycloakRealmImportCRExists "$crName";
 if ! $keycloakRealmImportCRExists; then
   sed "s/replace_cr_name/$crName/g" "$keycloakOIDCDeploymentPath/realm-template.yaml" | \
