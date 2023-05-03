@@ -21,12 +21,13 @@ kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-nam
 sed "s/replace_service_url/httpbin-svc.$namespace.svc:8000/g" "$deploymentPath/api-template.yaml" | \
   sed "s/replace_namespace/$namespace/g" | \
   sed "s/replace_realm_url/https:\/\/$keycloakName-service.$namespace.svc:$KEYCLOAK_SERVICE_PORT\/realms\/oidc/g" | \
+  sed "s/replace_client_id/$(base64 $client_id)/g" | \
   kubectl apply -n "$namespace" -f - > /dev/null;
 
 addSummary "\tJWT Password Grant flow Example deployed. To generate your JWT:\n \
 \ttoken=\$(curl -L --insecure -s -X POST 'https://keycloak-service.tyk.svc:$KEYCLOAK_SERVICE_PORT/realms/oidc/protocol/openid-connect/token' \\\\\n\
 \t\t-H 'Content-Type: application/x-www-form-urlencoded' \\\\\n\
-\t\t--data-urlencode 'client_id=keycloak-oidc' \\\\\n\
+\t\t--data-urlencode 'client_id=$client_id' \\\\\n\
 \t\t--data-urlencode 'grant_type=password' \\\\\n\
 \t\t--data-urlencode 'client_secret=$secret' \\\\\n\
 \t\t--data-urlencode 'scope=openid' \\\\\n\

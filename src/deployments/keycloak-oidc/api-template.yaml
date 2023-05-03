@@ -15,7 +15,7 @@ spec:
     providers:
       - issuer: replace_realm_url
         client_ids:
-          oidc-client: replace_namespace/keycloak-oidc
+          replace_client_id: replace_namespace/keycloak-oidc
 ---
 apiVersion: tyk.tyk.io/v1alpha1
 kind: SecurityPolicy
