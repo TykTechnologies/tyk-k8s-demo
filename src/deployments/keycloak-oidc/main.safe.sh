@@ -1,3 +1,5 @@
+keycloakOIDCDeploymentPath="src/deployments/keycloak-oidc";
+
 if [ -z "$keycloaJOIDCRegistered" ]; then
   crName="tyk-oidc";
   client_id="oidc-client";
@@ -6,5 +8,5 @@ if [ -z "$keycloaJOIDCRegistered" ]; then
   keycloakOIDCRegistered=true;
   source "src/deployments/operator-httpbin/main.safe.sh";
   source "src/deployments/keycloak/main.safe.sh";
-  source "src/deployments/keycloak-oidc/main.sh";
+  source "$keycloakOIDCDeploymentPath/main.sh";
 fi

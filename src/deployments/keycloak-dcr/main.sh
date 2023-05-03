@@ -1,7 +1,5 @@
 logger "$INFO" "installing keycloak DCR realm in $namespace namespace...";
 
-crName="tyk-dcr";
-
 checkKeycloakRealmImportCRExists "$crName";
 if ! $keycloakRealmImportCRExists; then
   sed "s/replace_cr_name/$crName/g" "$keycloakDCRDeploymentPath/realm-template.yaml" | \
