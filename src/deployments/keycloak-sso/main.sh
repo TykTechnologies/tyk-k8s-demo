@@ -1,5 +1,7 @@
 logger "$INFO" "installing keycloak SSO realm in $namespace namespace...";
 
+crName="tyk-sso";
+secret="5yCQ2p8hg7jz4NwHo5QAqP0PqSOgMpKv";
 checkKeycloakRealmImportCRExists "$crName";
 if ! $keycloakRealmImportCRExists; then
   sed "s/replace_cr_name/$crName/g" "$keycloakSSODeploymentPath/realm-template.yaml" | \
