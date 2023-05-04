@@ -30,7 +30,7 @@ spec:
         version: v1
     spec:
       containers:
-        - image: zalbiraw/go-httpbin:v1.0.1
+        - image: zalbiraw/go-httpbin
           imagePullPolicy: IfNotPresent
           name: httpbin
           ports:
