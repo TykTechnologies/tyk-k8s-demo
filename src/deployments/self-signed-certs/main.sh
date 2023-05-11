@@ -26,9 +26,9 @@ args=(--set "dash.extraVolumes[$dashExtraVolumesCtr].name=$selfSignedCertsVolume
   --set "gateway.extraVolumeMounts[$gatewayExtraVolumeMountsCtr].subPath=$selfSignedCertsFilename");
 
 dashExtraVolumesCtr=$((dashExtraVolumesCtr + 1));
-dashExtraVolumeMountsCtr=$((dashExtraVolumesCtr + 1));
-gatewayExtraVolumesCtr=$((dashExtraVolumesCtr + 1));
-gatewayExtraVolumeMountsCtr=$((dashExtraVolumesCtr + 1));
+dashExtraVolumeMountsCtr=$((dashExtraVolumeMountsCtr + 1));
+gatewayExtraVolumesCtr=$((gatewayExtraVolumesCtr + 1));
+gatewayExtraVolumeMountsCtr=$((gatewayExtraVolumeMountsCtr + 1));
 
 addDeploymentArgs "${args[@]}";
 upgradeTyk;
