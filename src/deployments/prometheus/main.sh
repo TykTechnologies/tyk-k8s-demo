@@ -6,6 +6,7 @@ setVerbose;
 helm upgrade "$prometheusReleaseName" prometheus-community/prometheus --version 20.1.0 \
   --install \
   --set "prometheus-pushgateway.enabled=false" \
+  --set "prometheus-node-exporter.hostRootFsMount.enabled=false" \
   --set "server.service.servicePort=$PROMETHEUS_SERVICE_PORT" \
   --set "server.global.scrape_interval=15s" \
   --set "server.global.evaluation_interval=15s" \
