@@ -86,6 +86,7 @@ Please see this [page](docs/FEATURES_MATRIX.md) for Tyk deployments compatibilit
 	- [operator-graphql](src/deployments/operator-graphql): creates GraphQL API examples using the tyk-operator.
 	- [operator-udg](src/deployments/operator-udg): creates Universal Data Graph API examples using the tyk-operator.
 	- [operator-federation](src/deployments/operator-federation): creates Federation v1 API examples using the tyk-operator.
+	- [operator-jwt-hmac](src/deployments/operator-jwt-hmac): creates an API examples using the tyk-operator to demonstrate JWT HMAC auth.
 - [portal](src/deployments/portal): this deployment will install the [Tyk Enterprise Developer Portal](https://tyk.io/docs/tyk-developer-portal/tyk-enterprise-developer-portal/) as well as its dependency PostgreSQL.
 - [prometheus](src/deployments/prometheus): this deployment will stand up a Tyk Prometheus pump with custom analytics.
 	- [prometheus-grafana](src/deployments/prometheus-grafana): connects a Grafana installment to the Prometheus deployment.
