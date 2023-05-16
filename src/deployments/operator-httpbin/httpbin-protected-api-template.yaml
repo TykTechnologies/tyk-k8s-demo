@@ -25,8 +25,7 @@ spec:
   state: active
   active: true
   partitions:
-    quota: true
-    rate_limit: true
+    acl: true
   access_rights_array:
     - name: httpbin-protected
       namespace: api_namespace
@@ -39,44 +38,43 @@ metadata:
   name: httpbin-protected-product-2
 spec:
   name: httpbin-protected-product-2
-  state: active
-  active: true
-  partitions:
-    quota: true
-    rate_limit: true
-  access_rights_array:
-    - name: httpbin-protected
-      namespace: api_namespace
-      versions:
-        - Default
----
-apiVersion: tyk.tyk.io/v1alpha1
-kind: SecurityPolicy
-metadata:
-  name: httpbin-protected-product-3
-spec:
-  name: httpbin-protected-product-3
-  state: active
-  active: true
-  partitions:
-    quota: true
-    rate_limit: true
-  access_rights_array:
-    - name: httpbin-protected
-      namespace: api_namespace
-      versions:
-        - Default
----
-apiVersion: tyk.tyk.io/v1alpha1
-kind: SecurityPolicy
-metadata:
-  name: httpbin-protected-plan-gold
-spec:
-  name: httpbin-protected-plan-gold
   state: active
   active: true
   partitions:
     acl: true
+  access_rights_array:
+    - name: httpbin-protected
+      namespace: api_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: httpbin-protected-product-3
+spec:
+  name: httpbin-protected-product-3
+  state: active
+  active: true
+  partitions:
+    acl: true
+  access_rights_array:
+    - name: httpbin-protected
+      namespace: api_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: httpbin-protected-plan-gold
+spec:
+  name: httpbin-protected-plan-gold
+  state: active
+  active: true
+  partitions:
+    quota: true
+    rate_limit: true
   rate: 10000
   access_rights_array:
     - name: httpbin-protected
@@ -94,7 +92,8 @@ spec:
   active: true
   rate: 1000
   partitions:
-    acl: true
+    quota: true
+    rate_limit: true
   access_rights_array:
     - name: httpbin-protected
       namespace: api_namespace
@@ -111,7 +110,8 @@ spec:
   active: true
   rate: 60
   partitions:
-    acl: true
+    quota: true
+    rate_limit: true
   access_rights_array:
     - name: httpbin-protected
       namespace: api_namespace
