@@ -6,7 +6,11 @@ args=(--set "gateway.image.tag=$GATEWAY_VERSION" \
   --set "gateway.kind=Deployment" \
   --set "gateway.service.port=8080" \
   --set "pump.enabled=true" \
-  --set "pump.image.repository=tykio/tyk-pump-docker-pub");
+  --set "pump.image.repository=tykio/tyk-pump-docker-pub" \
+  --set "gateway.extraEnvs[$gatewayExtraEnvsCtr].name=TYK_GW_POLICIES_POLICYPATH" \
+  --set "gateway.extraEnvs[$gatewayExtraEnvsCtr].value=/mnt/tyk-gateway/policies");
+
+gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 1));
 
 tykReleaseName="tyk-gateway";
 addService "gateway-svc-$tykReleaseName-$chart";

@@ -31,6 +31,7 @@ jobs:
           - operator-graphql
           - operator-udg
           - operator-federation
+          - operator-jwt-hmac
 #          - prometheus
 #          - prometheus-grafana
 #          - resurface

@@ -33,6 +33,7 @@ jobs:
           - operator-graphql
           - operator-udg
           - operator-federation
+          - operator-jwt-hmac
           - portal
           - prometheus
           - prometheus-grafana

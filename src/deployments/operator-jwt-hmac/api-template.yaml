@@ -1,0 +1,36 @@
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: jwt-hmac
+spec:
+  name: jwt-hmac
+  protocol: http
+  active: true
+  proxy:
+    target_url: http://httpbin.org
+    listen_path: /jwt-hmac
+    strip_listen_path: true
+  enable_jwt: true
+  jwt_signing_method: hmac
+  jwt_source: replace_shared_secret
+  jwt_identity_base_field: sub
+  jwt_policy_field_name: pol
+  jwt_default_policies:
+    - replace_namespace/jwt-hmac
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: jwt-hmac
+spec:
+  name: jwt-hmac
+  state: active
+  active: true
+  partitions:
+    quota: true
+    rate_limit: true
+  access_rights_array:
+    - name: jwt-hmac
+      namespace: replace_namespace
+      versions:
+        - Default
