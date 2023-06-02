@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: portal-bootstrap-sa
+  namespace: replace_namespace
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: portal-boostrap-role
+  namespace: replace_namespace
+rules:
+  - apiGroups: [""]
+    resources:
+    - secrets
+    verbs:
+    - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: portal-boostrap-role-binding
+  namespace: replace_namespace
+subjects:
+  - kind: ServiceAccount
+    name: portal-bootstrap-sa
+    namespace: replace_namespace
+roleRef:
+  kind: Role
+  name: portal-boostrap-role
+  apiGroup: ""
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: portal-bootstrap-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: curl
+          image: curlimages/curl:latest
+          command:
+            - '/bin/sh'
+            - '-c'
+            - 'curl -vvv -H Content-Type: application/json replace_portal_url/portal-api/bootstrap -d { "username":"replace_username", "password": "replace_password", "first_name":"replace_first_name", "last_name":"replace_last_name" }'
+      restartPolicy: Never
+      serviceAccountName: portal-bootstrap-sa
+

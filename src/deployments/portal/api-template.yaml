@@ -21,14 +21,14 @@ kind: SecurityPolicy
 metadata:
   name: httpbin-protected-product-1
 spec:
-  name: httpbin-protected-product-1
+  name: Product Red
   state: active
   active: true
   partitions:
     acl: true
   access_rights_array:
     - name: httpbin-protected
-      namespace: api_namespace
+      namespace: replace_namespace
       versions:
         - Default
 ---
@@ -37,14 +37,14 @@ kind: SecurityPolicy
 metadata:
   name: httpbin-protected-product-2
 spec:
-  name: httpbin-protected-product-2
+  name: Product Blue
   state: active
   active: true
   partitions:
     acl: true
   access_rights_array:
     - name: httpbin-protected
-      namespace: api_namespace
+      namespace: replace_namespace
       versions:
         - Default
 ---
@@ -53,14 +53,14 @@ kind: SecurityPolicy
 metadata:
   name: httpbin-protected-product-3
 spec:
-  name: httpbin-protected-product-3
+  name: Product Green
   state: active
   active: true
   partitions:
     acl: true
   access_rights_array:
     - name: httpbin-protected
-      namespace: api_namespace
+      namespace: replace_namespace
       versions:
         - Default
 ---
@@ -69,7 +69,7 @@ kind: SecurityPolicy
 metadata:
   name: httpbin-protected-plan-gold
 spec:
-  name: httpbin-protected-plan-gold
+  name: Gold Plan
   state: active
   active: true
   partitions:
@@ -78,7 +78,7 @@ spec:
   rate: 10000
   access_rights_array:
     - name: httpbin-protected
-      namespace: api_namespace
+      namespace: replace_namespace
       versions:
         - Default
 ---
@@ -87,7 +87,7 @@ kind: SecurityPolicy
 metadata:
   name: httpbin-protected-plan-silver
 spec:
-  name: httpbin-protected-plan-silver
+  name: Silver Plan
   state: active
   active: true
   rate: 1000
@@ -96,7 +96,7 @@ spec:
     rate_limit: true
   access_rights_array:
     - name: httpbin-protected
-      namespace: api_namespace
+      namespace: replace_namespace
       versions:
         - Default
 ---
@@ -105,7 +105,7 @@ kind: SecurityPolicy
 metadata:
   name: httpbin-protected-plan-bronze
 spec:
-  name: httpbin-protected-plan-bronze
+  name: Bronze Plan
   state: active
   active: true
   rate: 60
@@ -114,6 +114,24 @@ spec:
     rate_limit: true
   access_rights_array:
     - name: httpbin-protected
-      namespace: api_namespace
+      namespace: replace_namespace
+      versions:
+        - Default
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: httpbin-protected-plan-basic
+spec:
+  name: Basic Plan
+  state: active
+  active: true
+  rate: 10
+  partitions:
+    quota: true
+    rate_limit: true
+  access_rights_array:
+    - name: httpbin-protected
+      namespace: replace_namespace
       versions:
         - Default
