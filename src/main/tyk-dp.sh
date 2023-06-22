@@ -3,15 +3,15 @@ source src/main/redis/main.sh;
 
 cluster=$(kubectl config current-context);
 
-args=(--set "gateway.image.tag=$GATEWAY_VERSION" \
-  --set "gateway.rpc.connString=$TYK_WORKER_CONNECTIONSTRING" \
-  --set "gateway.rpc.rpcKey=$TYK_WORKER_ORGID" \
-  --set "gateway.rpc.apiKey=$TYK_WORKER_AUTHTOKEN" \
-  --set "gateway.rpc.useSSL=$TYK_WORKER_USESSL" \
-  --set "gateway.rpc.groupId=$(echo "$cluster/$namespace" | base64)" \
-  --set "gateway.sharding.enabled=$TYK_WORKER_SHARDING_ENABLED" \
-  --set "gateway.sharding.tags=$TYK_WORKER_SHARDING_TAGS" \
-  --set "gateway.service.port=$TYK_WORKER_GW_PORT");
+args=(--set "global.remoteControlPlane.connectionString=$TYK_WORKER_CONNECTIONSTRING" \
+  --set "global.remoteControlPlane.orgId=$TYK_WORKER_ORGID" \
+  --set "global.remoteControlPlane.userApiKey=$TYK_WORKER_AUTHTOKEN" \
+  --set "global.remoteControlPlane.useSSL=$TYK_WORKER_USESSL" \
+  --set "global.remoteControlPlane.groupId=$(echo "$cluster/$namespace" | base64)" \
+  --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
+  --set "tyk-gateway.gateway.sharding.enabled=$TYK_WORKER_SHARDING_ENABLED" \
+  --set "tyk-gateway.gateway.sharding.tags=$TYK_WORKER_SHARDING_TAGS" \
+  --set "tyk-gateway.gateway.service.port=$TYK_WORKER_GW_PORT");
 
 if [ -z "$TYK_WORKER_SHARDING_TAGS" ]
 then
