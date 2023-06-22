@@ -11,7 +11,7 @@ logger "$DEBUG" "Organisation ID: $orgID";
 tykReleaseName=$1;
 
 terminateDashboardPort;
-(kubectl port-forward "svc/dashboard-svc-$tykReleaseName-$chart" --namespace "$namespace" $FORWARD_PORT:$port > /dev/null &)
+(kubectl port-forward "svc/dashboard-svc-$tykReleaseName" --namespace "$namespace" $FORWARD_PORT:$port > /dev/null &)
 
 setVerbose;
 sleep 5;

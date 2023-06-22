@@ -30,9 +30,9 @@
 ## Integrations compatible with Tyk deployments
 | Integration          |    tyk-gateway     |     tyk-stack      |       tyk-cp       |       tyk-dp       |
 |----------------------|:------------------:|:------------------:|:------------------:|:------------------:|
-| datadog              |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
-| elasticsearch        |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
-| elasticsearch-kibana |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
+| datadog              | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| elasticsearch        | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| elasticsearch-kibana | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | k6                   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | k6-slo-traffic       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
@@ -46,5 +46,5 @@
 | operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-jwt-hmac    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | portal               |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| prometheus           |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
-| prometheus-grafana   |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
+| prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
