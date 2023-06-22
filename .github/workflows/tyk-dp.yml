@@ -20,8 +20,8 @@ jobs:
       matrix:
         deployment:
 #          - datadog
-#          - elasticsearch
-#          - elasticsearch-kibana
+          - elasticsearch
+          - elasticsearch-kibana
           - k6
           - keycloak
 #          - keycloak-jwt
@@ -32,8 +32,8 @@ jobs:
           - operator-udg
           - operator-federation
           - operator-jwt-hmac
-#          - prometheus
-#          - prometheus-grafana
+          - prometheus
+          - prometheus-grafana
 #          - resurface
       max-parallel: 3
     steps:
