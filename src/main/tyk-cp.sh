@@ -11,8 +11,8 @@ args=(--set "dash.license=$LICENSE" \
   --set "pump.image.repository=tykio/tyk-pump-docker-pub");
 
 tykReleaseName="tyk-cp";
-addService "dashboard-svc-$tykReleaseName-$chart";
-addService "gateway-svc-$tykReleaseName-$chart";
+addService "dashboard-svc-$tykReleaseName";
+addService "gateway-svc-$tykReleaseName";
 addServiceArgs "dash";
 addServiceArgs "gateway";
 checkTykRelease;
@@ -34,7 +34,7 @@ else
   logger "$INFO" "MDCB exists skipping $tykReleaseName install..."
 fi
 
-addService "mdcb-svc-$tykReleaseName-$chart";
+addService "mdcb-svc-$tykReleaseName";
 addServiceArgs "mdcb";
 
 mdcbArgs=(--set "mdcb.enabled=true" \
