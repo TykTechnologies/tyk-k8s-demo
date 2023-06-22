@@ -10,8 +10,8 @@ args=(--set "dash.license=$LICENSE" \
   --set "pump.image.tag=$PUMP_VERSION");
 
 tykReleaseName="tyk-cp";
-addService "dashboard-svc-$tykReleaseName";
-addService "gateway-svc-$tykReleaseName";
+addService "dashboard-svc-$tykReleaseName-tyk-dashboard";
+addService "gateway-svc-$tykReleaseName-tyk-gateway";
 addServiceArgs "dash";
 addServiceArgs "gateway";
 checkTykRelease;
@@ -33,7 +33,7 @@ else
   logger "$INFO" "MDCB exists skipping $tykReleaseName install..."
 fi
 
-addService "mdcb-svc-$tykReleaseName";
+addService "mdcb-svc-$tykReleaseName-tyk-mdcb";
 addServiceArgs "mdcb";
 
 mdcbArgs=(--set "mdcb.enabled=true" \

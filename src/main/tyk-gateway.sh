@@ -7,8 +7,8 @@ args=(--set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway" \
   --set "tyk-pump.pump.backend[0]=" \
   --set "tyk-pump.pump.image.repository=tykio/tyk-pump-docker-pub");
 
-tykReleaseName="tyk-gateway";
-addService "gateway-svc-$tykReleaseName";
+tykReleaseName="tyk-oss";
+addService "gateway-svc-$tykReleaseName-tyk-gateway";
 addServiceArgs "gateway";
 checkTykRelease;
 

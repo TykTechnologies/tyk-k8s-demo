@@ -15,13 +15,13 @@ args=(--set "global.remoteControlPlane.connectionString=$TYK_WORKER_CONNECTIONST
 
 if [ -z "$TYK_WORKER_SHARDING_TAGS" ]
 then
-      tykReleaseName="tyk-dp-tyk-hybrid";
+      tykReleaseName="tyk-dp";
 else
-      tykReleaseName="tyk-dp-tyk-hybrid-$TYK_WORKER_SHARDING_TAGS";
+      tykReleaseName="tyk-dp-$TYK_WORKER_SHARDING_TAGS";
 fi
 logger "$DEBUG" "tykReleaseName=$tykReleaseName";
 
-addService "gateway-svc-$tykReleaseName";
+addService "gateway-svc-$tykReleaseName-tyk-gateway";
 addServiceArgs "gateway";
 checkTykRelease;
 
@@ -31,6 +31,7 @@ addDeploymentArgs "${tykSecurityContextArgs[@]}";
 addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
 upgradeTyk;
+
 if [[ -n "$TYK_WORKER_OPERATOR_CONNECTIONSTRING" ]]; then
   logger "$INFO" "creating tyk-operator secret...";
   kubectl create secret generic tyk-operator-conf \
