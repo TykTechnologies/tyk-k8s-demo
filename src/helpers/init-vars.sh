@@ -7,7 +7,7 @@ addDeploymentArgs() {
 
 upgradeTyk() {
   setVerbose;
-  helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" \
+  helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" --devel \
     --install \
     --namespace "$namespace" \
     "${deploymentsArgs[@]}" \
@@ -20,6 +20,7 @@ dashboardPrefix="TYK_DB_";
 mdcbPrefix="TYK_MDCB_";
 pumpPrefix="TYK_PMP_";
 
+pumpBackendsCtr=0;
 gatewayExtraEnvsCtr=0;
 dashExtraEnvsCtr=0;
 mdcbExtraEnvsCtr=0;

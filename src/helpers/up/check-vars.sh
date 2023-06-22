@@ -3,7 +3,7 @@ source src/helpers/up/check-license-expiry.sh;
 logger "$INFO" "checking variables...";
 
 invalid=false;
-chart="tyk-headless";
+chart="tyk-oss";
 
 if [[ $TYKSTACK == "$mode" ]] || [[ $TYKCP == "$mode" ]]; then
   chart="tyk-pro";
