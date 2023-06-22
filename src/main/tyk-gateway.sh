@@ -1,9 +1,9 @@
 source src/main/namespace.sh;
 source src/main/redis/main.sh;
 
-args=(--set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
+args=(--set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway" \
+  --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.service.port=8080" \
-  --set "global.components.pump=true" \
   --set "tyk-pump.pump.backend[0]=" \
   --set "tyk-pump.pump.image.repository=tykio/tyk-pump-docker-pub");
 

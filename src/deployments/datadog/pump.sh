@@ -1,6 +1,7 @@
 tags="method\,response_code\,api_version\,api_name\,api_id\,org_id\,tracked\,path\,oauth_id";
 
-args=(--set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_PMP_PUMPS_DOGSTATSD_TYPE" \
+args=(--set "global.components.pump=true" \
+  --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_PMP_PUMPS_DOGSTATSD_TYPE" \
   --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].value=dogstatsd" \
   --set "tyk-pump.pump.extraEnvs[$(($pumpExtraEnvsCtr + 1))].name=TYK_PMP_PUMPS_DOGSTATSD_META_NAMESPACE" \
   --set "tyk-pump.pump.extraEnvs[$(($pumpExtraEnvsCtr + 1))].value=$namespace" \

@@ -1,4 +1,5 @@
-args=(--set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_PMP_PUMPS_RESURFACEIO_TYPE" \
+args=(--set "global.components.pump=true" \
+  --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_PMP_PUMPS_RESURFACEIO_TYPE" \
   --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].value=resurfaceio" \
   --set "tyk-pump.pump.extraEnvs[$(($pumpExtraEnvsCtr + 1))].name=TYK_PMP_PUMPS_RESURFACEIO_META_URL" \
   --set "tyk-pump.pump.extraEnvs[$(($pumpExtraEnvsCtr + 1))].value=http://worker.$namespace.svc:$RESURFACE_WORKER_SERVICE_PORT/message" \
