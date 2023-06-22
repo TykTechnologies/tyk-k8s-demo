@@ -11,8 +11,8 @@ args=(--set "dash.license=$LICENSE" \
   --set "pump.image.repository=tykio/tyk-pump-docker-pub");
 
 tykReleaseName="tyk-stack";
-addService "dashboard-svc-$tykReleaseName";
-addService "gateway-svc-$tykReleaseName";
+addService "dashboard-svc-$tykReleaseName-tyk-dashboard";
+addService "gateway-svc-$tykReleaseName-tyk-gateway";
 addServiceArgs "dash";
 addServiceArgs "gateway";
 checkTykRelease;
