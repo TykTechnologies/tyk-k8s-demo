@@ -1,6 +1,6 @@
 logger "$DEBUG" "redis.sh: setting tyk related redis sentinel configuration";
-args=(--set "redis.addrs[0]=$redisReleaseName.$namespace.svc:6379" \
-  --set "redis.pass=$PASSWORD");
+args=(--set "global.redis.addrs[0]=$redisReleaseName.$namespace.svc:6379" \
+  --set "global.redis.pass=$PASSWORD");
 
 securityContextArgs=();
 if [[ $OPENSHIFT == "$flavor" ]]; then

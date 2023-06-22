@@ -1,7 +1,7 @@
 logger "$DEBUG" "redis-cluster.sh: setting tyk related redis cluster configuration";
-args=(--set "redis.addrs[0]=$redisReleaseName-redis-cluster.$namespace.svc:6379" \
-  --set "redis.pass=$PASSWORD" \
-  --set "redis.enableCluster=true");
+args=(--set "global.redis.addrs[0]=$redisReleaseName-redis-cluster.$namespace.svc:6379" \
+  --set "global.redis.pass=$PASSWORD" \
+  --set "global.redis.enableCluster=true");
 
 if [[ $OPENSHIFT == "$flavor" ]]; then
   logger "$DEBUG" "redis-cluster.sh: setting openshift related redis cluster configuration";

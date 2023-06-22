@@ -1,6 +1,6 @@
 logger "$DEBUG" "redis.sh: setting tyk related redis configuration";
-args=(--set "redis.addrs[0]=$redisReleaseName-master.$namespace.svc:6379" \
-  --set "redis.pass=$PASSWORD");
+args=(--set "global.redis.addrs[0]=$redisReleaseName-master.$namespace.svc:6379" \
+  --set "global.redis.pass=$PASSWORD");
 
 if [[ $OPENSHIFT == "$flavor" ]]; then
   logger "$DEBUG" "redis.sh: setting openshift related redis configuration";
