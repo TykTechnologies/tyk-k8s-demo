@@ -72,8 +72,8 @@ jobs:
               --deployments ${{ matrix.deployment }} \
               tyk-gateway
 
-      - name: Sleep 2 minute
-        run: sleep 120
+      - name: Sleep 5 minute
+        run: sleep 300
 
       - name: Test Tyk deployment
         uses: nick-invision/retry@v2
