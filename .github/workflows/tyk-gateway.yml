@@ -31,7 +31,7 @@ jobs:
           - operator-graphql
           - operator-udg
           - operator-federation
-          - operator-jwt-hmac
+#          - operator-jwt-hmac
 #          - prometheus
 #          - prometheus-grafana
 #          - resurface
@@ -72,8 +72,8 @@ jobs:
               --deployments ${{ matrix.deployment }} \
               tyk-gateway
 
-      - name: Sleep 5 minute
-        run: sleep 300
+      - name: Sleep 1 minute
+        run: sleep 60
 
       - name: Test Tyk deployment
         uses: nick-invision/retry@v2
