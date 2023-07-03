@@ -20,6 +20,7 @@
 | operator-graphql     |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-udg         |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-federation  |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-jwt-hmac    |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | portal               | `port-froward`, `ingress`, `load-balancer` | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus           |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus-grafana   |               `port-froward`               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
@@ -43,6 +44,7 @@
 | operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-jwt-hmac    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | portal               |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus           |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
 | prometheus-grafana   |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
