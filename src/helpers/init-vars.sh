@@ -68,17 +68,17 @@ helmFlags=(--wait --atomic);
 if $isDebug; then
   helmFlags+=(--debug);
 
-  extraEnvs+=(--set "gateway.extraEnvs[0].name=TYK_LOGLEVEL" \
-    --set "gateway.extraEnvs[0].value=DEBUG" \
-    --set "dash.extraEnvs[0].name=TYK_LOGLEVEL" \
-    --set "dash.extraEnvs[0].value=DEBUG" \
-    --set "mdcb.extraEnvs[0].name=TYK_LOGLEVEL" \
-    --set "mdcb.extraEnvs[0].value=DEBUG" \
-    --set "pump.extraEnvs[0].name=TYK_LOGLEVEL" \
-    --set "pump.extraEnvs[0].value=DEBUG");
+  extraEnvs+=(--set "gateway.extraEnvs[$gatewayExtraEnvsCtr].name=TYK_LOGLEVEL" \
+    --set "gateway.extraEnvs[$gatewayExtraEnvsCtr].value=DEBUG" \
+    --set "dash.extraEnvs[$dashExtraEnvsCtr].name=TYK_LOGLEVEL" \
+    --set "dash.extraEnvs[$dashExtraEnvsCtr].value=DEBUG" \
+    --set "mdcb.extraEnvs[$mdcbExtraEnvsCtr].name=TYK_LOGLEVEL" \
+    --set "mdcb.extraEnvs[$mdcbExtraEnvsCtr].value=DEBUG" \
+    --set "pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_LOGLEVEL" \
+    --set "pump.extraEnvs[$pumpExtraEnvsCtr].value=DEBUG");
 
-  gatewayExtraEnvsCtr=1;
-  dashExtraEnvsCtr=1;
-  mdcbExtraEnvsCtr=1;
-  pumpExtraEnvsCtr=1;
+  gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 1));
+  dashExtraEnvsCtr=$((dashExtraEnvsCtr + 1));
+  mdcbExtraEnvsCtr=$((mdcbExtraEnvsCtr + 1));
+  pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 1));
 fi
