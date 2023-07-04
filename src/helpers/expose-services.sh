@@ -13,7 +13,7 @@ addServiceArgs() {
       servicesArgs+=(--set "$1.service.type=LoadBalancer");
     elif [[ $INGRESS == "$expose" ]]; then
       servicesArgs+=(--set "$1.ingress.enabled=true");
-      servicesArgs+=(--set "$1.ingress.className=nginx");
+      servicesArgs+=(--set "$1.ingress.className=$INGRESS_CLASSNAME");
     fi
   fi
 }
