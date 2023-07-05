@@ -1,72 +1,49 @@
 sslPath="src/main/ssl"
 certsPath="$sslPath/certs"
+certsSecretName="ssl-secret";
+CACertsMountPath="/etc/ssl/certs";
+CACertFilename="tykCA.pem";
 
-if ! [ -f "$certsPath/tykCA.pem" ]; then
+if ! [ -f "$certsPath/$CACertFilename" ]; then
   source "$sslPath/generate.sh";
 fi
 
 logger "$INFO" "creating self-signed certs secret...";
 
-certsSecretName="ssl-secret";
-certsVolumeName="ssl-volume";
-certsMountPath="/etc/ssl/certs";
-CACertsMountPath="/etc/ssl/certs";
-CACertFilename="tykCA.pem";
-certFilename="tyk.local.crt";
-keyFilename="tyk.local.key";
-certs="[{\"cert_file\": \"$certsMountPath/tyk\.local\.crt\"\,\"key_file\": \"$certsMountPath/tyk\.local\.key\"}]"
+certs="[{\"cert_file\": \"$certsMountPath/tls\.crt\"\,\"key_file\": \"$certsMountPath/tls\.key\"}]"
 
 kubectl create secret generic "$certsSecretName" \
   --from-file="$CACertFilename=$certsPath/$CACertFilename" \
-  --from-file="$certFilename=$certsPath/$certFilename" \
-  --from-file="$keyFilename=$certsPath/$keyFilename" \
+  --from-file="tls.crt=$certsPath/tyk.local.crt" \
+  --from-file="tls.key=$certsPath/tyk.local.key" \
   --dry-run=client -o=yaml | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
-args=(--set "dash.tls=true" \
-  --set "dash.extraVolumes[$dashExtraVolumesCtr].name=$certsVolumeName" \
-  --set "dash.extraVolumes[$dashExtraVolumesCtr].secret.secretName=$certsSecretName" \
+args=(--set-string "tyk-bootstrap.bootstrap.dashboard.sslInsecureSkipVerify=true" \
 
-  --set "dash.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 0))].name=$certsVolumeName" \
-  --set "dash.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 0))].mountPath=$CACertsMountPath/$CACertFilename" \
-  --set "dash.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 0))].subPath=$CACertFilename" \
-  --set "dash.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 1))].name=$certsVolumeName" \
-  --set "dash.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 1))].mountPath=$certsMountPath/$certFilename" \
-  --set "dash.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 1))].subPath=$certFilename" \
-  --set "dash.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 2))].name=$certsVolumeName" \
-  --set "dash.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 2))].mountPath=$certsMountPath/$keyFilename" \
-  --set "dash.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 2))].subPath=$keyFilename" \
+  --set "global.tls.dashboard=true" \
+  --set-string "tyk-dashboard.dashboard.tls.useDefaultTykCertificate=false" \
+  --set "tyk-dashboard.dashboard.tls.secretName=$certsSecretName" \
+  --set-string "tyk-dashboard.dashboard.tls.insecureSkipVerify=true" \
 
-  --set "dash.extraEnvs[$((dashExtraEnvsCtr + 0))].name=TYK_DB_HTTPSERVEROPTIONS_CERTIFICATES" \
-  --set "dash.extraEnvs[$((dashExtraEnvsCtr + 0))].value=$certs" \
-  --set "dash.extraEnvs[$((dashExtraEnvsCtr + 1))].name=TYK_DB_HTTPSERVEROPTIONS_SSLINSECURESKIPVERIFY" \
-  --set-string "dash.extraEnvs[$((dashExtraEnvsCtr + 1))].value=true" \
+  --set "global.tls.gateway=true" \
+  --set-string "tyk-gateway.gateway.tls.useDefaultTykCertificate=false" \
+  --set "tyk-gateway.gateway.tls.secretName=$certsSecretName" \
+  --set-string "tyk-gateway.gateway.tls.insecureSkipVerify=true" \
 
-  --set "gateway.tls=true" \
-  --set "gateway.extraVolumes[$gatewayExtraVolumesCtr].name=$certsVolumeName" \
-  --set "gateway.extraVolumes[$gatewayExtraVolumesCtr].secret.secretName=$certsSecretName" \
+  --set "tyk-dashboard.dashboard.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 0))].name=$certsSecretName" \
+  --set "tyk-dashboard.dashboard.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 0))].mountPath=$CACertsMountPath/$CACertFilename" \
+  --set "tyk-dashboard.dashboard.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 0))].subPath=$CACertFilename" \
 
-  --set "gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 0))].name=$certsVolumeName" \
-  --set "gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 0))].mountPath=$CACertsMountPath/$CACertFilename" \
-  --set "gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 0))].subPath=$CACertFilename" \
-  --set "gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 1))].name=$certsVolumeName" \
-  --set "gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 1))].mountPath=$certsMountPath/$certFilename" \
-  --set "gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 1))].subPath=$certFilename" \
-  --set "gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 2))].name=$certsVolumeName" \
-  --set "gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 2))].mountPath=$certsMountPath/$keyFilename" \
-  --set "gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 2))].subPath=$keyFilename" \
-
-  --set "gateway.extraEnvs[$((gatewayExtraEnvsCtr + 0))].name=TYK_GW_HTTPSERVEROPTIONS_CERTIFICATES" \
-  --set "gateway.extraEnvs[$((gatewayExtraEnvsCtr + 0))].value=$certs" \
-  --set "gateway.extraEnvs[$((gatewayExtraEnvsCtr + 1))].name=TYK_GW_HTTPSERVEROPTIONS_SSLINSECURESKIPVERIFY" \
-  --set-string "gateway.extraEnvs[$((gatewayExtraEnvsCtr + 1))].value=true");
+  --set "tyk-gateway.gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 0))].name=$certsSecretName" \
+  --set "tyk-gateway.gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 0))].mountPath=$CACertsMountPath/$CACertFilename" \
+  --set "tyk-gateway.gateway.extraVolumeMounts[$((gatewayExtraVolumeMountsCtr + 0))].subPath=$CACertFilename");
 
 dashExtraVolumesCtr=$((dashExtraVolumesCtr + 1));
 dashExtraVolumeMountsCtr=$((dashExtraVolumeMountsCtr + 3));
 dashExtraEnvsCtr=$((dashExtraEnvsCtr + 2));
 
-gatewayExtraVolumesCtr=$((gatewayExtraVolumesCtr + 1));
-gatewayExtraVolumeMountsCtr=$((gatewayExtraVolumeMountsCtr + 3));
-gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 2));
+gatewayExtraVolumeMountsCtr=$((gatewayExtraVolumeMountsCtr + 1));
+gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 1));
 
 addDeploymentArgs "${args[@]}";

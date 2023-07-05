@@ -42,20 +42,20 @@ if [[ -f .env ]]; then
       export "${var[0]}=${var[1]}";
 
       if [[ "${var[0]}" == "$gatewayPrefix"* ]]; then
-        extraEnvs+=(--set-string "gateway.extraEnvs[$gatewayExtraEnvsCtr].name=${var[0]}" \
-          --set-string "gateway.extraEnvs[$gatewayExtraEnvsCtr].value=${var[1]}");
+        extraEnvs+=(--set-string "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].name=${var[0]}" \
+          --set-string "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].value=${var[1]}");
         gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 1));
       elif [[ "${var[0]}" == "$dashboardPrefix"* ]]; then
-        extraEnvs+=(--set-string "dash.extraEnvs[$dashExtraEnvsCtr].name=${var[0]}" \
-          --set-string "dash.extraEnvs[$dashExtraEnvsCtr].value=${var[1]}");
+        extraEnvs+=(--set-string "tyk-dashboard.dashboard.extraEnvs[$dashExtraEnvsCtr].name=${var[0]}" \
+          --set-string "tyk-dashboard.dashboard.extraEnvs[$dashExtraEnvsCtr].value=${var[1]}");
         dashExtraEnvsCtr=$((dashExtraEnvsCtr + 1));
       elif [[ "${var[0]}" == "$mdcbPrefix"* ]]; then
-        extraEnvs+=(--set-string "mdcb.extraEnvs[$mdcbExtraEnvsCtr].name=${var[0]}" \
-          --set-string "mdcb.extraEnvs[$mdcbExtraEnvsCtr].value=${var[1]}");
+        extraEnvs+=(--set-string "tyk-mdcb.mdcb.extraEnvs[$mdcbExtraEnvsCtr].name=${var[0]}" \
+          --set-string "tyk-mdcb.mdcb.extraEnvs[$mdcbExtraEnvsCtr].value=${var[1]}");
         mdcbExtraEnvsCtr=$((mdcbExtraEnvsCtr + 1));
       elif [[ "${var[0]}" == "$pumpPrefix"* ]]; then
-        extraEnvs+=(--set-string "pump.extraEnvs[$pumpExtraEnvsCtr].name=${var[0]}" \
-          --set-string "pump.extraEnvs[$pumpExtraEnvsCtr].value=${var[1]}");
+        extraEnvs+=(--set-string "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].name=${var[0]}" \
+          --set-string "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].value=${var[1]}");
         pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 1));
       fi
     fi
@@ -69,14 +69,14 @@ helmFlags=(--wait --atomic);
 if $isDebug; then
   helmFlags+=(--debug);
 
-  extraEnvs+=(--set "gateway.extraEnvs[$gatewayExtraEnvsCtr].name=TYK_LOGLEVEL" \
-    --set "gateway.extraEnvs[$gatewayExtraEnvsCtr].value=DEBUG" \
-    --set "dash.extraEnvs[$dashExtraEnvsCtr].name=TYK_LOGLEVEL" \
-    --set "dash.extraEnvs[$dashExtraEnvsCtr].value=DEBUG" \
-    --set "mdcb.extraEnvs[$mdcbExtraEnvsCtr].name=TYK_LOGLEVEL" \
-    --set "mdcb.extraEnvs[$mdcbExtraEnvsCtr].value=DEBUG" \
-    --set "pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_LOGLEVEL" \
-    --set "pump.extraEnvs[$pumpExtraEnvsCtr].value=DEBUG");
+  extraEnvs+=(--set "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].name=TYK_LOGLEVEL" \
+    --set "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].value=DEBUG" \
+    --set "tyk-dashboard.dashboard.extraEnvs[$dashExtraEnvsCtr].name=TYK_LOGLEVEL" \
+    --set "tyk-dashboard.dashboard.extraEnvs[$dashExtraEnvsCtr].value=DEBUG" \
+    --set "tyk-mdcb.mdcb.extraEnvs[$mdcbExtraEnvsCtr].name=TYK_LOGLEVEL" \
+    --set "tyk-mdcb.mdcb.extraEnvs[$mdcbExtraEnvsCtr].value=DEBUG" \
+    --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_LOGLEVEL" \
+    --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].value=DEBUG");
 
   gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 1));
   dashExtraEnvsCtr=$((dashExtraEnvsCtr + 1));

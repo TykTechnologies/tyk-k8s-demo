@@ -1,11 +1,11 @@
 source src/main/storage/main.sh;
 
-args=(--set "dash.license=$LICENSE" \
-  --set "dash.adminUser.email=$USERNAME" \
-  --set "dash.adminUser.password=$PASSWORD" \
-  --set "dash.image.tag=$DASHBOARD_VERSION" \
-  --set "gateway.image.tag=$GATEWAY_VERSION" \
-  --set "pump.image.tag=$PUMP_VERSION" \
+args=(--set "global.license.dashboard=$LICENSE" \
+  --set "tyk-bootstrap.adminUser.email=$USERNAME" \
+  --set "tyk-bootstrap.adminUser.password=$PASSWORD" \
+  --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
+  --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
+  --set "tyk-pump.pump.image.tag=$PUMP_VERSION" \
   --set "pump.image.repository=tykio/tyk-pump-docker-pub");
 
 tykReleaseName="tyk-cp";
