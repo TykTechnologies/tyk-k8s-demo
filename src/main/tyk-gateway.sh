@@ -1,6 +1,3 @@
-source src/main/namespace.sh;
-source src/main/redis/main.sh;
-
 args=(--set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.service.port=8080" \
