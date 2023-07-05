@@ -7,5 +7,5 @@
 **/terraform.tfstate
 **/terraform.tfstate.backup
 
-src/main/ssl/certs/*[.crt,.csr,.key,.pem,.slr,.ext]
-src/deployments/k6/k6-operator
+**/certs/*[.crt,.csr,.key,.pem,.slr,.ext]
+**/k6/k6-operator
