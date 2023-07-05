@@ -35,7 +35,14 @@ if [ "$AWS" == "$cloud" ] || [ "$GCP" == "$cloud" ]  || [ "$AZURE" == "$cloud" ]
   source src/helpers/up/tf-apply.sh;
 fi
 
+source src/main/namespace.sh;
+
+if [ "$SSL" == "$SSLMode" ]; then
+  source src/main/ssl/main.sh;
+fi
+
 logger "$INFO" "installing $mode in $flavor k8s environment";
+source src/main/redis/main.sh;
 source "src/main/$mode.sh";
 
 if ! [[ -z $deployments ]]; then

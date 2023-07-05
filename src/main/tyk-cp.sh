@@ -1,5 +1,3 @@
-source src/main/namespace.sh;
-source src/main/redis/main.sh;
 source src/main/storage/main.sh;
 
 args=(--set "dash.license=$LICENSE" \

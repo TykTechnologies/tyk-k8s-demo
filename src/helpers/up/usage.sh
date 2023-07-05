@@ -17,4 +17,5 @@ usage() {
   echo -e "  -s, --storage     \tenum   \t database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'";
   echo -e "  -d, --deployments \tstring \t comma separated list of deployments to launch";
   echo -e "  -c, --cloud       \tenum   \t stand up k8s infrastructure in 'aws', 'gcp' or 'azure'. This will require Terraform and the CLIs associate with the cloud of choice";
+  echo -e "  -l, --ssl         \tbool   \t enable ssl on deployments";
 }

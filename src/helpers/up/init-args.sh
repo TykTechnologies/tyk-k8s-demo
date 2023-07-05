@@ -13,6 +13,7 @@ DEFAULTNAMESPACE="tyk";
 AWS="aws";
 GCP="gcp";
 AZURE="azure";
+SSL="SSL";
 
 # Default values
 namespace=$DEFAULTNAMESPACE;
@@ -22,6 +23,7 @@ isDebug=false;
 dryRun=false;
 expose=$PORTFORWARD;
 cloud=$NONE;
+SSLMode=$NONE;
 portsWait=15;
 deployments=$();
 
@@ -49,13 +51,14 @@ for arg in "$@"; do
     '--deployments') set -- "$@" '-d'   ;;
     '--dry-run')     set -- "$@" '-z'   ;;
     '--cloud')       set -- "$@" '-c'   ;;
+    '--ssl')         set -- "$@" '-l'   ;;
     *)               set -- "$@" "$arg" ;;
   esac
 done
 
 # Parse short options
 OPTIND=1;
-while getopts "hvn:f:e:r:s:d:zc:" opt
+while getopts "hvn:f:e:r:s:d:zc:l" opt
 do
   case "$opt" in
     'h') usage; exit 0                 ;;
@@ -67,6 +70,7 @@ do
     'z') dryRun=true                   ;;
     'c') cloud=$OPTARG                 ;;
     's') storage=$OPTARG               ;;
+    'l') SSLMode=$SSL                  ;;
     'd')
         IFS=',' read -r -a deployments <<< "$OPTARG";
         ;;

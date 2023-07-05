@@ -1,6 +1,3 @@
-source src/main/namespace.sh;
-source src/main/redis/main.sh;
-
 cluster=$(kubectl config current-context);
 
 args=(--set "global.remoteControlPlane.connectionString=$TYK_WORKER_CONNECTIONSTRING" \
