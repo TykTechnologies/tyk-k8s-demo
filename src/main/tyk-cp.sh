@@ -1,8 +1,8 @@
 source src/main/storage/main.sh;
 
 args=(--set "global.license.dashboard=$LICENSE" \
-  --set "tyk-bootstrap.adminUser.email=$USERNAME" \
-  --set "tyk-bootstrap.adminUser.password=$PASSWORD" \
+  --set "tyk-dashboard.dashboard.adminUser.email=$USERNAME" \
+  --set "tyk-dashboard.dashboard.adminUser.password=$PASSWORD" \
   --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-pump.pump.image.tag=$PUMP_VERSION" \

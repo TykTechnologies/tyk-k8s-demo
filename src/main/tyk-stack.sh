@@ -5,8 +5,8 @@ args=(--set "global.license.dashboard=$LICENSE" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-pump.pump.image.repository=tykio/tyk-pump-docker-pub" \
   --set "tyk-pump.pump.image.tag=$PUMP_VERSION" \
-  --set "tyk-bootstrap.adminUser.email=$USERNAME" \
-  --set "tyk-bootstrap.adminUser.password=$PASSWORD" \
+  --set "tyk-dashboard.dashboard.adminUser.email=$USERNAME" \
+  --set "tyk-dashboard.dashboard.adminUser.password=$PASSWORD" \
   --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION");
 
 tykReleaseName="tyk-stack";
