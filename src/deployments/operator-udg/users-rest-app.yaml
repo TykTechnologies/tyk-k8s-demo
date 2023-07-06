@@ -28,7 +28,7 @@ spec:
         app: users-rest
     spec:
       containers:
-        - image: zalbiraw/go-api-test-service:v2.0
+        - image: zalbiraw/go-api-test-service:v3.0
           imagePullPolicy: IfNotPresent
           name: users-rest
           command:
