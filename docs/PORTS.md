@@ -1,25 +1,29 @@
 # Ports
 All the ports that this library uses.
 
-| Service                |  Port  |
-|------------------------|:------:|
-| gateway                | `8080` |
-| dashboard              | `3000` |
-| MDCB                   | `9090` |
-| datadog                | `5555` |
-| elastcisearch          | `9200` |
-| kibana                 | `5601` |
-| keyclaok               | `7001` |
-| users-subgraph         | `4201` |
-| posts-subgraph         | `4202` |
-| comments-subgraph      | `4203` |
-| notifications-subgraph | `4204` |
-| httpbin                | `8000` |
-| users-rest             | `3101` |
-| posts-rest             | `3102` |
-| comments-rest          | `3103` |
-| portal                 | `3001` |
-| prometheus pump        | `9091` |
-| prometheus             | `9080` |
-| grafana                | `9081` |
-| resurface-coordinator  | `7700` |
+| Deployment          | Service                |  Port  |
+|---------------------|------------------------|:------:|
+| -                   | gateway                | `8080` |
+| -                   | dashboard              | `3000` |
+| -                   | MDCB                   | `9090` |
+| datadog             | datadog                | `5555` |
+| elastcisearch       | elastcisearch          | `9200` |
+| keyclaok            | keyclaok               | `7001` |
+| operator-federation | users-subgraph         | `4201` |
+| operator-federation | posts-subgraph         | `4202` |
+| operator-federation | comments-subgraph      | `4203` |
+| operator-federation | notifications-subgraph | `4204` |
+| operator-federation | users-subgraph         | `4201` |
+| operator-federation | posts-subgraph         | `4202` |
+| operator-federation | comments-subgraph      | `4203` |
+| operator-federation | notifications-subgraph | `4204` |
+| gateway             | kibana                 | `5601` |
+| gateway             | httpbin                | `8000` |
+| gateway             | users-rest             | `3101` |
+| gateway             | posts-rest             | `3102` |
+| gateway             | comments-rest          | `3103` |
+| gateway             | portal                 | `3001` |
+| gateway             | prometheus pump        | `9091` |
+| gateway             | prometheus             | `9080` |
+| gateway             | grafana                | `9081` |
+| gateway             | resurface-coordinator  | `7700` |
