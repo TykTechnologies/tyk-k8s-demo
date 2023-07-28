@@ -19,17 +19,16 @@ kubectl create secret generic "$certsSecretName" \
   --dry-run=client -o=yaml | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
-args=(--set-string "tyk-bootstrap.bootstrap.dashboard.sslInsecureSkipVerify=true" \
+args=(--set "tyk-bootstrap.bootstrap.dashboard.sslInsecureSkipVerify=true" \
+  --set "global.tls.useDefaultTykCertificate=false" \
 
   --set "global.tls.dashboard=true" \
-  --set-string "tyk-dashboard.dashboard.tls.useDefaultTykCertificate=false" \
   --set "tyk-dashboard.dashboard.tls.secretName=$certsSecretName" \
-  --set-string "tyk-dashboard.dashboard.tls.insecureSkipVerify=true" \
+  --set "tyk-dashboard.dashboard.tls.insecureSkipVerify=true" \
 
   --set "global.tls.gateway=true" \
-  --set-string "tyk-gateway.gateway.tls.useDefaultTykCertificate=false" \
   --set "tyk-gateway.gateway.tls.secretName=$certsSecretName" \
-  --set-string "tyk-gateway.gateway.tls.insecureSkipVerify=true" \
+  --set "tyk-gateway.gateway.tls.insecureSkipVerify=true" \
 
   --set "tyk-dashboard.dashboard.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 0))].name=$certsSecretName" \
   --set "tyk-dashboard.dashboard.extraVolumeMounts[$((dashExtraVolumeMountsCtr + 0))].mountPath=$CACertsMountPath/$CACertFilename" \
