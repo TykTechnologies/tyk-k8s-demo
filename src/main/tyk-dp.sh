@@ -5,10 +5,10 @@ args=(--set "global.remoteControlPlane.connectionString=$TYK_WORKER_CONNECTIONST
   --set "global.remoteControlPlane.userApiKey=$TYK_WORKER_AUTHTOKEN" \
   --set "global.remoteControlPlane.useSSL=$TYK_WORKER_USESSL" \
   --set "global.remoteControlPlane.groupId=$(echo "$cluster/$namespace" | base64)" \
+  --set "global.servicePorts.gateway=$TYK_WORKER_GW_PORT" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.sharding.enabled=$TYK_WORKER_SHARDING_ENABLED" \
-  --set "tyk-gateway.gateway.sharding.tags=$TYK_WORKER_SHARDING_TAGS" \
-  --set "tyk-gateway.gateway.service.port=$TYK_WORKER_GW_PORT");
+  --set "tyk-gateway.gateway.sharding.tags=$TYK_WORKER_SHARDING_TAGS");
 
 if [ -z "$TYK_WORKER_SHARDING_TAGS" ]
 then
