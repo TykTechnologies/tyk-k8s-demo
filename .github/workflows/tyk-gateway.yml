@@ -48,9 +48,7 @@ jobs:
           start-args: '--force'
 
       - name: Install helm
-        uses: Azure/setup-helm@v1.1
-        with:
-          version: v3.5.3
+        uses: Azure/setup-helm@v3.5
 
       - name: Install newman
         run: |
