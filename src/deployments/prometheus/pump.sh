@@ -4,14 +4,10 @@ args=(--set "global.components.pump=true" \
   --set "tyk-pump.pump.backend[$pumpBackendsCtr]=prometheus" \
   --set "tyk-pump.pump.prometheusPump.host=0.0.0.0" \
   --set "tyk-pump.pump.prometheusPump.path=$PROMETHEUS_PUMP_PATH" \
-  --set "tyk-pump.pump.prometheusPump.port=$PROMETHEUS_PUMP_PORT" \
+  --set "tyk-pump.pump.containerPort=$PROMETHEUS_PUMP_PORT" \
   --set "tyk-pump.pump.prometheusPump.customMetrics=$customMetrics");
 
 addService "pump-svc-$tykReleaseName-tyk-pump";
 addDeploymentArgs "${args[@]}";
 upgradeTyk;
-
 pumpBackendsCtr=$((pumpBackendsCtr + 1));
-sed "s/replace_release_name/$tykReleaseName-tyk-pump/g" "$prometheusDeploymentPath/pump-svc.yaml" | \
-  sed "s/replace_pump_port/$PROMETHEUS_PUMP_PORT/g" | \
-  kubectl apply --namespace "$namespace" -f - > /dev/null;
