@@ -10,18 +10,11 @@ kubectl create secret generic "$keycloakName-initial-admin" \
   --dry-run=client -o=yaml | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
-logger "$DEBUG" "keycloak: creating keycloak tls secret...";
-kubectl create secret tls keycloak-tls-secret \
-  --cert "$selfSignedCertsDeploymentPath/certs/tyk.local.crt" \
-  --key "$selfSignedCertsDeploymentPath/certs/tyk.local.key" \
-  --dry-run=client -o=yaml | \
-  kubectl apply --namespace "$namespace" -f - > /dev/null;
-
-addService "https-$keycloakName-service";
+addService "$keycloakName-service";
 sed "s/replace_name/$keycloakName/g" "$keycloakDeploymentPath/keycloak-template.yaml" | \
-  sed "s/replace_host/tyk-$keycloakDBName-postgres-postgresql.$namespace.svc/g" | \
-  sed "s/replace_port/$keycloakDBPort/g" | \
-  sed "s/replace_database/$keycloakDBName/g" | \
+  sed "s/replace_db_host/tyk-$keycloakDBName-postgres-postgresql.$namespace.svc/g" | \
+  sed "s/replace_db_port/$keycloakDBPort/g" | \
+  sed "s/replace_db_name/$keycloakDBName/g" | \
   sed "s/replace_service_port/$KEYCLOAK_SERVICE_PORT/g" | \
 	kubectl apply --namespace "$namespace" -f - > /dev/null;
 
