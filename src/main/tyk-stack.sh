@@ -1,5 +1,6 @@
 source src/main/storage/main.sh;
 
+tykReleaseName="tyk-stack";
 args=(--set "global.license.dashboard=$LICENSE" \
   --set "tyk-gateway.gateway.service.port=8080" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
@@ -7,9 +8,9 @@ args=(--set "global.license.dashboard=$LICENSE" \
   --set "tyk-pump.pump.image.tag=$PUMP_VERSION" \
   --set "tyk-dashboard.dashboard.adminUser.email=$USERNAME" \
   --set "tyk-dashboard.dashboard.adminUser.password=$PASSWORD" \
-  --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION");
+  --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
+  --set "tyk-bootstrap.bootstrap.dashboard.deploymentName=dashboard-$tykReleaseName-tyk-dashboard");
 
-tykReleaseName="tyk-stack";
 addService "dashboard-svc-$tykReleaseName-tyk-dashboard";
 addService "gateway-svc-$tykReleaseName-tyk-gateway";
 addServiceArgs "dash";
