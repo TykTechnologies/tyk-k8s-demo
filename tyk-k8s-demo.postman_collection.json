@@ -210,7 +210,7 @@
 								"header": [],
 								"url": {
 									"raw": "http://localhost:{{keycloak.port}}/health",
-									"protocol": "https",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
@@ -311,7 +311,7 @@
 								},
 								"url": {
 									"raw": "http://localhost:{{keycloak.port}}/realms/jwt/protocol/openid-connect/token",
-									"protocol": "https",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
@@ -405,7 +405,7 @@
 								},
 								"url": {
 									"raw": "http://localhost:{{keycloak.port}}/realms/jwt/protocol/openid-connect/token",
-									"protocol": "https",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
