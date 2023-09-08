@@ -26,7 +26,6 @@ getPort() {
 
 terminatePorts() {
   for service in "${services[@]}"; do
-    service=${service#"https-"};
     getPort "$service";
 
     set +e;
@@ -45,18 +44,11 @@ exposeServices() {
   if [[ $PORTFORWARD == "$expose" ]]; then
     terminatePorts;
     for service in "${services[@]}"; do
-      if [[ $service == https-* ]]; then
-        proto="https";
-      else
-        proto="http";
-      fi
-
-      service=${service#"https-"}
       getPort "$service";
       kubectl port-forward "svc/$service" --namespace "$namespace" $port > /dev/null &
 
-      logger "$DEBUG" "forwarding to $proto://localhost:$port \tfrom\t svc/$service:$port";
-      servicesSummary="$servicesSummary\n\t$(printf "%-50s" "$service") $proto://localhost:$port";
+      logger "$DEBUG" "forwarding to http://localhost:$port \tfrom\t svc/$service:$port";
+      servicesSummary="$servicesSummary\n\t$(printf "%-50s" "$service") http://localhost:$port";
     done
   else
     logger "$DEBUG" "expose not set to port-forward";

@@ -24,12 +24,12 @@ fi
 
 sed "s/replace_service_url/httpbin-svc.$namespace.svc:8000/g" "$keycloakJWTDeploymentPath/api-template.yaml" | \
   sed "s/replace_namespace/$namespace/g" | \
-  sed "s/replace_realm_url/https:\/\/$keycloakName-service.$namespace.svc:$KEYCLOAK_SERVICE_PORT\/realms\/jwt/g" | \
+  sed "s/replace_realm_url/http:\/\/$keycloakName-service.$namespace.svc:$KEYCLOAK_SERVICE_PORT\/realms\/jwt/g" | \
   kubectl apply -n "$namespace" -f - > /dev/null;
 
 addSummary "\tJWT Authentication Example deployed. To generate your JWT:\n \
 \tPassword Grant request:\n \
-\ttoken=\$(curl -L --insecure -s -X POST 'https://localhost:$KEYCLOAK_SERVICE_PORT/realms/jwt/protocol/openid-connect/token' \\\\\n\
+\ttoken=\$(curl -L --insecure -s -X POST 'http://localhost:$KEYCLOAK_SERVICE_PORT/realms/jwt/protocol/openid-connect/token' \\\\\n\
 \t\t-H 'Content-Type: application/x-www-form-urlencoded' \\\\\n\
 \t\t--data-urlencode 'client_id=keycloak-jwt' \\\\\n\
 \t\t--data-urlencode 'grant_type=password' \\\\\n\
@@ -38,7 +38,7 @@ addSummary "\tJWT Authentication Example deployed. To generate your JWT:\n \
 \t\t--data-urlencode 'username=$USERNAME' \\\\\n\
 \t\t--data-urlencode 'password=$PASSWORD' | jq -r '.access_token')\n
 \tClient Credentials request:\n \
-\ttoken=\$(curl -L --insecure -s -X POST 'https://localhost:$KEYCLOAK_SERVICE_PORT/realms/jwt/protocol/openid-connect/token' \\\\\n\
+\ttoken=\$(curl -L --insecure -s -X POST 'http://localhost:$KEYCLOAK_SERVICE_PORT/realms/jwt/protocol/openid-connect/token' \\\\\n\
 \t\t-H 'Content-Type: application/x-www-form-urlencoded' \\\\\n\
 \t\t--data-urlencode 'client_id=keycloak-jwt' \\\\\n\
 \t\t--data-urlencode 'grant_type=client_credentials' \\\\\n\

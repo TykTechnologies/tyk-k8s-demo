@@ -4,7 +4,7 @@ Sets up an example API with JWT Authentication enabled through Keycloak
 ### Password Grant
 Example curl to fetch the token through password grant flow
 ```
-curl -L --insecure -s -X POST 'https://localhost:7001/realms/jwt/protocol/openid-connect/token' \
+curl -L -s -X POST 'http://localhost:7001/realms/jwt/protocol/openid-connect/token' \
 		-H 'Content-Type: application/x-www-form-urlencoded' \
 		--data-urlencode 'client_id=keycloak-jwt' \
 		--data-urlencode 'grant_type=password' \
@@ -18,7 +18,7 @@ curl -L --insecure -s -X POST 'https://localhost:7001/realms/jwt/protocol/openid
 ### Client Credentials
 Example curl to fetch the token through password grant flow
 ```
-curl -L --insecure -s -X POST 'https://localhost:7001/realms/jwt/protocol/openid-connect/token' \
+curl -L -s -X POST 'http://localhost:7001/realms/jwt/protocol/openid-connect/token' \
 		-H 'Content-Type: application/x-www-form-urlencoded' \
 		--data-urlencode 'client_id=keycloak-jwt' \
 		--data-urlencode 'grant_type=client_credentials' \
