@@ -5,7 +5,7 @@ source src/helpers/logger.sh;
 source src/helpers/helm-release-exists.sh;
 source src/helpers/check-deps.sh;
 source src/helpers/up/usage.sh;
-source src/helpers/up/init-args.sh;
+source src/helpers/up/init-args.sh; # contains a cluster dependency
 source src/helpers/init-vars.sh;
 source src/helpers/up/check-tyk-release.sh;
 source src/helpers/expose-services.sh;

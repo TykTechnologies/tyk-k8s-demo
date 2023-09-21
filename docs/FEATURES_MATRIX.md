@@ -1,30 +1,31 @@
 # Features, Tests, and Support matrices
 
-| Deployment           | OpenShift Support  |    ARM Support     |      CI Tests      |    Postman Test    |
-|----------------------|:------------------:|:------------------:|:------------------:|:------------------:|
-| tyk-gateway          | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| tyk-dp               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| tyk-stack            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| tyk-cp               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| datadog              | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: |
-| elasticsearch        | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: |
-| elasticsearch-kibana | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: |
-| k6                   |        :x:         |        :x:         | :white_check_mark: |        :x:         |
-| k6-slo-traffic       |        :x:         |        :x:         | :white_check_mark: |        :x:         |
-| keycloak             |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |
-| keycloak-dcr         |        :x:         |        :x:         | :white_check_mark: |        :x:         |
-| keycloak-sso         |        :x:         |        :x:         | :white_check_mark: |        :x:         |
-| keycloak-jwt         |        :x:         |        :x:         |        :x:         | :white_check_mark: |
-| operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
-| operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator-jwt-hmac    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| portal               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| resurface            |        :x:         |        :x:         | :white_check_mark: |        :x:         |
+| Deployment           | OpenShift Support  |    ARM Support     |      CI Tests      |    Postman Test    |        SSL         |
+|----------------------|:------------------:|:------------------:|:------------------:|:------------------:|:------------------:|
+| tyk-gateway          | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| tyk-dp               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| tyk-stack            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| tyk-cp               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| cert-manager         | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |        N/A         |
+| datadog              | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: |        N/A         |
+| elasticsearch        | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: | :white_check_mark: |
+| elasticsearch-kibana | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: |        :x:         |
+| k6                   |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
+| k6-slo-traffic       |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
+| keycloak             |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
+| keycloak-dcr         |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
+| keycloak-sso         |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
+| keycloak-jwt         |        :x:         |        :x:         |        :x:         | :white_check_mark: |        :x:         |
+| operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |        :x:         |
+| operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| operator-jwt-hmac    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| portal               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| resurface            |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
 
 
 ## Integrations compatible with Tyk deployments
