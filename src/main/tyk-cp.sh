@@ -3,7 +3,7 @@ source src/main/redis/main.sh;
 source src/main/storage/main.sh;
 
 args=(--set "dash.license=$LICENSE" \
-  --set "dash.adminUser.email=$USERNAME" \
+  --set "dash.adminUser.email=$TYKUSERNAME" \
   --set "dash.adminUser.password=$PASSWORD" \
   --set "dash.image.tag=$DASHBOARD_VERSION" \
   --set "gateway.image.tag=$GATEWAY_VERSION" \
@@ -56,7 +56,7 @@ if [[ $NONE != $expose ]]; then
 fi
 
 addSummary "\tTyk Control Plane deployed\n \
-\tDashboard username: $USERNAME\n \
+\tDashboard username: $TYKUSERNAME\n \
 \tDashboard password: $PASSWORD\n \
 \tMDCB connection string: $ip:$port\n \
 \tOrganisation ID: $orgID\n\n \

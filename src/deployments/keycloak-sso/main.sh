@@ -7,7 +7,7 @@ checkKeycloakRealmImportCRExists "$crName";
 if ! $keycloakRealmImportCRExists; then
   sed "s/replace_cr_name/$crName/g" "$keycloakSSODeploymentPath/realm-template.yaml" | \
     sed "s/replace_keycloak/$keycloakName/g" | \
-    sed "s/replace_username/$USERNAME/g" | \
+    sed "s/replace_username/$TYKUSERNAME/g" | \
     sed "s/replace_password/$PASSWORD/g" | \
     sed "s/replace_secret/$secret/g" | \
     kubectl apply --namespace "$namespace" -f - > /dev/null;
@@ -26,5 +26,5 @@ source "$keycloakSSODeploymentPath/create-sso-profile.sh";
 
 addSummary "\tDashboard Keycloak SSO Credentials:\n \
 \tLogin URL: http://localhost:3000/auth/keycloak/openid-connect\n \
-\tUsername: $USERNAME\n \
+\tUsername: $TYKUSERNAME\n \
 \tPassword: $PASSWORD";
