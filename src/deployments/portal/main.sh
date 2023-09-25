@@ -14,4 +14,6 @@ args=(--set "enterprisePortal.license=$PORTAL_LICENSE" \
   "${portalSecurityContextArgs[@]}");
 
 addDeploymentArgs "${args[@]}";
+# Bug fix, will have better fix in v3
+addDeploymentArgs "${servicesArgs[@]}";
 upgradeTyk;
