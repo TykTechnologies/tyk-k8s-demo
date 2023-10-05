@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0963e502-3c4a-4791-8a01-8adee5312852",
+		"_postman_id": "dfb37ce2-d2f5-4f7a-a647-76dd8682f9ce",
 		"name": "tyk-k8s-demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13702323"
@@ -187,6 +187,14 @@
 					]
 				},
 				{
+					"name": "k6",
+					"item": []
+				},
+				{
+					"name": "k6-slo-traffic",
+					"item": []
+				},
+				{
 					"name": "keycloak",
 					"item": [
 						{
@@ -223,6 +231,10 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "keycloak-dcr",
+					"item": []
 				},
 				{
 					"name": "keycloak-jwt",
@@ -532,6 +544,14 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "keycloak-sso",
+					"item": []
+				},
+				{
+					"name": "operator",
+					"item": []
 				},
 				{
 					"name": "operator-graphql",
