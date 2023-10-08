@@ -10,6 +10,7 @@ addServiceArgs "enterprisePortal";
 args=(--set "global.components.enterprisePortal=true" \
   --set "tyk-enterprise-portal.license=$PORTAL_LICENSE" \
   --set "tyk-enterprise-portal.image.tag=$PORTAL_VERSION" \
+  --set "tyk-enterprise-portal.containerPort=$PORTAL_SERVICE_PORT" \
   --set "tyk-enterprise-portal.database.type=postgres" \
   --set "tyk-enterprise-portal.database.connectionString=host\=tyk-$portalDBName-postgres-postgresql.$namespace.svc port\=$portalDBPort user\=postgres password\=$PASSWORD database\=$portalDBName sslmode\=disable" \
   "${portalSecurityContextArgs[@]}");
