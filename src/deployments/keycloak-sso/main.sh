@@ -14,12 +14,12 @@ if ! $keycloakRealmImportCRExists; then
 
   logger "$DEBUG" "keycloak-sso: waiting for $crName to be created";
   waitForPods "job-name=$crName" "$crName";
-  kubectl wait --namespace "$namespace" jobs "$crName" --for=condition=complete --timeout=120s > /dev/null;
+  kubectl wait --namespace "$namespace" jobs "$crName" --for=condition=complete --timeout="$TYK_TIMEOUT" > /dev/null;
 
   logger "$INFO" "waiting for keycloak to be ready...";
-  kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-name=$keycloakName-0" --for=delete --timeout=60s > /dev/null;
+  kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-name=$keycloakName-0" --for=delete --timeout"$TYK_TIMEOUT" > /dev/null;
   waitForPods "statefulset.kubernetes.io/pod-name=$keycloakName-0" "$keycloakName-0";
-  kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-name=$keycloakName-0" --for=condition=Ready --timeout=180s > /dev/null;
+  kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-name=$keycloakName-0" --for=condition=Ready --timeout="$TYK_TIMEOUT" > /dev/null;
 fi
 
 source "$keycloakSSODeploymentPath/create-sso-profile.sh";

@@ -1,6 +1,24 @@
 apiVersion: tyk.tyk.io/v1alpha1
 kind: ApiDefinition
 metadata:
+  name: httpbin-keyless
+spec:
+  name: httpbin-keyless
+  protocol: http
+  active: true
+  proxy:
+    target_url: http://replace_service_url
+    listen_path: /httpbin-keyless
+    strip_listen_path: true
+  enable_detailed_recording: true
+  use_standard_auth: true
+  auth_configs:
+    authToken:
+      auth_header_name: Authorization
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
   name: httpbin
 spec:
   name: httpbin
