@@ -29,7 +29,7 @@ and they will be mapped to the respective `extraEnvs` section in the helm charts
 | PUMP_VERSION                |        `v1.8`         | Pump version                                                                                                    |
 | PORTAL_VERSION              |        `v1.6`         | Portal version                                                                                                  |
 | TYK_HELM_CHART_PATH         |      `tyk-helm`       | Path to charts, can be a local directory or a helm repo                                                         |
-| USERNAME                    | `default@example.com` | Default password for all the services deployed                                                                  |
+| TYKUSERNAME                    | `default@example.com` | Default password for all the services deployed                                                                  |
 | PASSWORD                    |  `topsecretpassword`  | Default password for all the services deployed                                                                  |
 | LICENSE                     |                       | Dashboard license                                                                                               |
 | MDCB_LICENSE                |                       | MDCB license                                                                                                    |

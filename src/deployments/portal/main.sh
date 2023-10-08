@@ -16,4 +16,6 @@ args=(--set "global.components.enterprisePortal=true" \
   "${portalSecurityContextArgs[@]}");
 
 addDeploymentArgs "${args[@]}";
+# Bug fix, will have better fix in v3
+addDeploymentArgs "${servicesArgs[@]}";
 upgradeTyk;
