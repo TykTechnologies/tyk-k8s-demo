@@ -5,7 +5,7 @@ sed "s/replace_namespace/$namespace/g" "$sslPath/tyk.local.template.ext" > "$cer
 openssl genrsa \
   -des3 \
   -out "$certsPath/tykCA.key" \
-  -passout "pass:$PASSWORD" \
+  -passout "pass:$TYK_PASSWORD" \
   2048 > /dev/null;
 
 openssl req \
@@ -16,7 +16,7 @@ openssl req \
   -sha256 \
   -days 825 \
   -out "$certsPath/tykCA.pem" \
-  -passin "pass:$PASSWORD" \
+  -passin "pass:$TYK_PASSWORD" \
   -subj "/C=CA/ST=Ontario/L=London/O=Tyk/CN=tyk.local/emailAddress=zaid@tyk.io" > /dev/null;
 
 openssl genrsa \
@@ -27,7 +27,7 @@ openssl req \
   -new \
   -key "$certsPath/tyk.local.key" \
   -out "$certsPath/tyk.local.csr" \
-  -subj "/C=CA/ST=Ontario/L=London/O=Tyk/CN=tyk.local/emailAddress=zaid@tyk.io,challengePassword=$PASSWORD" > /dev/null;
+  -subj "/C=CA/ST=Ontario/L=London/O=Tyk/CN=tyk.local/emailAddress=zaid@tyk.io,challengePassword=$TYK_PASSWORD" > /dev/null;
 
 openssl x509 \
   -req \
@@ -39,4 +39,4 @@ openssl x509 \
   -days 825 \
   -sha256 \
   -extfile "$certsPath/tyk.local.ext" \
-  -passin "pass:$PASSWORD" > /dev/null;
+  -passin "pass:$TYK_PASSWORD" > /dev/null;

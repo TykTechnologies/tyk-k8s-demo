@@ -31,7 +31,7 @@ helm upgrade $mongoReleaseName bitnami/mongodb --version 13.6.1 \
   --set "externalAccess.autoDiscovery.image.repository=zalbiraw/kubectl" \
   --set "externalAccess.autoDiscovery.image.tag=1.25.3-debian-11" \
   \
-  --set "auth.rootPassword=$PASSWORD" \
+  --set "auth.rootPassword=$TYK_PASSWORD" \
   --set "replicaSet.enabled=true" \
   "${securityContextArgs[@]}" \
   "${helmFlags[@]}" > /dev/null;

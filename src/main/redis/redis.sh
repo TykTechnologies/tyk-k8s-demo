@@ -1,6 +1,6 @@
 logger "$DEBUG" "redis.sh: setting tyk related redis configuration";
 args=(--set "global.redis.addrs[0]=$redisReleaseName-master.$namespace.svc:6379" \
-  --set "global.redis.pass=$PASSWORD");
+  --set "global.redis.pass=$TYK_PASSWORD");
 
 if [[ $OPENSHIFT == "$flavor" ]]; then
   logger "$DEBUG" "redis.sh: setting openshift related redis configuration";
@@ -39,7 +39,7 @@ helm upgrade $redisReleaseName bitnami/redis --version 17.3.2 \
   --set "sysctl.image.repository=zalbiraw/bitnami-shell" \
   --set "sysctl.image.tag=11.0.0-debian-11" \
   \
-  --set "auth.password=$PASSWORD" \
+  --set "auth.password=$TYK_PASSWORD" \
   "${securityContextArgs[@]}" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

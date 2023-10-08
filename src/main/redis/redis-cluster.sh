@@ -1,6 +1,6 @@
 logger "$DEBUG" "redis-cluster.sh: setting tyk related redis cluster configuration";
 args=(--set "global.redis.addrs[0]=$redisReleaseName-redis-cluster.$namespace.svc:6379" \
-  --set "global.redis.pass=$PASSWORD" \
+  --set "global.redis.pass=$TYK_PASSWORD" \
   --set "global.redis.enableCluster=true");
 
 if [[ $OPENSHIFT == "$flavor" ]]; then
@@ -31,7 +31,7 @@ helm upgrade "$redisReleaseName" bitnami/redis-cluster --version 7.6.4 \
   --set "sysctlImage.repository=zalbiraw/bitnami-shell" \
   --set "sysctlImage.tag=11.0.0-debian-11" \
   \
-  --set "password=$PASSWORD" \
+  --set "password=$TYK_PASSWORD" \
   "${securityContextArgs[@]}" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

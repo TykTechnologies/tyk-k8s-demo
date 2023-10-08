@@ -6,8 +6,8 @@ args=(--set "global.license.dashboard=$LICENSE" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-pump.pump.image.repository=tykio/tyk-pump-docker-pub" \
   --set "tyk-pump.pump.image.tag=$PUMP_VERSION" \
-  --set "tyk-dashboard.dashboard.adminUser.email=$TYKUSERNAME" \
-  --set "tyk-dashboard.dashboard.adminUser.password=$PASSWORD" \
+  --set "tyk-dashboard.dashboard.adminUser.email=$TYK_USERNAME" \
+  --set "tyk-dashboard.dashboard.adminUser.password=$TYK_PASSWORD" \
   --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
   --set "tyk-bootstrap.bootstrap.dashboard.deploymentName=dashboard-$tykReleaseName-tyk-dashboard");
 
@@ -56,8 +56,8 @@ if [[ $NONE != $expose ]]; then
 fi
 
 addSummary "\tTyk Control Plane deployed\n \
-\tDashboard username: $TYKUSERNAME\n \
-\tDashboard password: $PASSWORD\n \
+\tDashboard username: $TYK_USERNAME\n \
+\tDashboard password: $TYK_PASSWORD\n \
 \tMDCB connection string: $ip:$port\n \
 \tOrganisation ID: $orgID\n\n \
 You can deploy a worker gateway and connect it to this Control Plane by running the following command:\n\n \

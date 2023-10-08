@@ -1,6 +1,6 @@
 logger "$DEBUG" "redis.sh: setting tyk related redis sentinel configuration";
 args=(--set "global.redis.addrs[0]=$redisReleaseName.$namespace.svc:6379" \
-  --set "global.redis.pass=$PASSWORD");
+  --set "global.redis.pass=$TYK_PASSWORD");
 
 securityContextArgs=();
 if [[ $OPENSHIFT == "$flavor" ]]; then
@@ -38,7 +38,7 @@ helm upgrade "$redisReleaseName" bitnami/redis --version 17.3.2 \
   --set "sysctl.image.repository=zalbiraw/bitnami-shell" \
   --set "sysctl.image.tag=11.0.0-debian-11" \
   \
-  --set "auth.password=$PASSWORD" \
+  --set "auth.password=$TYK_PASSWORD" \
   --set "sentinel.enabled=true" \
   "${securityContextArgs[@]}" \
   "${helmFlags[@]}" > /dev/null;

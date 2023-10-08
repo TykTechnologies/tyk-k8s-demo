@@ -5,8 +5,8 @@ source "$keycloakDeploymentPath/storage.sh";
 
 logger "$DEBUG" "keycloak: creating keycloak initial credentials...";
 kubectl create secret generic "$keycloakName-initial-admin" \
-  --from-literal="username=$TYKUSERNAME" \
-  --from-literal="password=$PASSWORD" \
+  --from-literal="username=$TYK_USERNAME" \
+  --from-literal="password=$TYK_PASSWORD" \
   --dry-run=client -o=yaml | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 

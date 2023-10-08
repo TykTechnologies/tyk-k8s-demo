@@ -7,8 +7,8 @@ checkKeycloakRealmImportCRExists "$crName";
 if ! $keycloakRealmImportCRExists; then
 sed "s/replace_cr_name/$crName/g" "$keycloakJWTDeploymentPath/realm-template.yaml" | \
     sed "s/replace_keycloak/$keycloakName/g" | \
-    sed "s/replace_username/$TYKUSERNAME/g" | \
-    sed "s/replace_password/$PASSWORD/g" | \
+    sed "s/replace_username/$TYK_USERNAME/g" | \
+    sed "s/replace_password/$TYK_PASSWORD/g" | \
     sed "s/replace_secret/$secret/g" | \
     kubectl apply --namespace "$namespace" -f - > /dev/null;
 
@@ -35,8 +35,8 @@ addSummary "\tJWT Authentication Example deployed. To generate your JWT:\n \
 \t\t--data-urlencode 'grant_type=password' \\\\\n\
 \t\t--data-urlencode 'client_secret=$secret' \\\\\n\
 \t\t--data-urlencode 'scope=openid' \\\\\n\
-\t\t--data-urlencode 'username=$TYKUSERNAME' \\\\\n\
-\t\t--data-urlencode 'password=$PASSWORD' | jq -r '.access_token')\n
+\t\t--data-urlencode 'username=$TYK_USERNAME' \\\\\n\
+\t\t--data-urlencode 'password=$TYK_PASSWORD' | jq -r '.access_token')\n
 \tClient Credentials request:\n \
 \ttoken=\$(curl -L --insecure -s -X POST 'http://localhost:$KEYCLOAK_SERVICE_PORT/realms/jwt/protocol/openid-connect/token' \\\\\n\
 \t\t-H 'Content-Type: application/x-www-form-urlencoded' \\\\\n\
