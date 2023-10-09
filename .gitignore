@@ -6,6 +6,6 @@
 **/.terraform.*
 **/terraform.tfstate
 **/terraform.tfstate.backup
-
-**/certs/*[.crt,.csr,.key,.pem,.slr,.ext]
+**/certs/*
+!**/certs/.gitkeep
 **/k6/k6-operator

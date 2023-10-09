@@ -41,19 +41,22 @@ terminatePorts() {
 
 exposeServices() {
   servicesSummary="";
+  protocol="http";
+  if [ "$SSL" == "$SSLMode" ]; then
+    protocol="https";
+  fi
   if [[ $PORTFORWARD == "$expose" ]]; then
     terminatePorts;
     for service in "${services[@]}"; do
       getPort "$service";
       kubectl port-forward "svc/$service" --namespace "$namespace" $port > /dev/null &
 
-      logger "$DEBUG" "forwarding to http://localhost:$port \tfrom\t svc/$service:$port";
-      servicesSummary="$servicesSummary\n\t$(printf "%-50s" "$service") http://localhost:$port";
+      logger "$DEBUG" "forwarding to $protocol://localhost:$port \tfrom\t svc/$service:$port";
+      servicesSummary="$servicesSummary\n\t$(printf "%-50s" "$service") $protocol://localhost:$port";
     done
   else
     logger "$DEBUG" "expose not set to port-forward";
   fi
-  ## TODO add LOADBALANCER and INGRESS support.
 
   if [[ $NONE != "$expose" ]]; then
     addSummary "\tExposed Services$servicesSummary";

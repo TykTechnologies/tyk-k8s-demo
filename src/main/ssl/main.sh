@@ -1,6 +1,7 @@
 sslPath="src/main/ssl"
 certsPath="$sslPath/certs"
 certsSecretName="ssl-secret";
+CACertsSecretName="ca-ssl-secret";
 CACertsMountPath="/etc/ssl/certs";
 CACertFilename="tykCA.pem";
 
@@ -10,10 +11,8 @@ fi
 
 logger "$INFO" "creating self-signed certs secret...";
 
-kubectl create secret generic "$certsSecretName" \
+kubectl create secret generic "$CACertsSecretName" \
   --from-file="$CACertFilename=$certsPath/$CACertFilename" \
-  --from-file="tls.crt=$certsPath/tyk.local.crt" \
-  --from-file="tls.key=$certsPath/tyk.local.key" \
   --dry-run=client -o=yaml | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
@@ -24,7 +23,6 @@ args=(--set "tyk-bootstrap.bootstrap.dashboard.sslInsecureSkipVerify=true" \
   --set "tyk-dashboard.dashboard.tls.insecureSkipVerify=true" \
 
   --set "global.tls.gateway=true" \
-  --set "tyk-gateway.gateway.tls.useDefaultTykCertificate=false" \
   --set "tyk-gateway.gateway.tls.secretName=$certsSecretName" \
   --set "tyk-gateway.gateway.tls.insecureSkipVerify=true" \
 
