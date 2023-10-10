@@ -37,7 +37,9 @@ fi
 
 source src/main/namespace.sh;
 
+protocol="http";
 if [ "$SSL" == "$SSLMode" ]; then
+  protocol="https";
   source src/main/ssl/main.sh;
 fi
 

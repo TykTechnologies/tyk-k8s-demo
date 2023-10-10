@@ -1,6 +1,7 @@
 tags="method\,response_code\,api_version\,api_name\,api_id\,org_id\,tracked\,path\,oauth_id";
 
-args=(--set "global.components.pump=true" \
+args=(
+  --set "global.components.pump=true" \
   --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_PMP_PUMPS_DOGSTATSD_TYPE" \
   --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].value=dogstatsd" \
   --set "tyk-pump.pump.extraEnvs[$(($pumpExtraEnvsCtr + 1))].name=TYK_PMP_PUMPS_DOGSTATSD_META_NAMESPACE" \
@@ -18,7 +19,9 @@ args=(--set "global.components.pump=true" \
   --set "tyk-pump.pump.extraEnvs[$(($pumpExtraEnvsCtr + 7))].name=TYK_PMP_PUMPS_DOGSTATSD_META_SAMPLERATE" \
   --set-string "tyk-pump.pump.extraEnvs[$(($pumpExtraEnvsCtr + 7))].value=0.9999999999" \
   --set "tyk-pump.pump.extraEnvs[$(($pumpExtraEnvsCtr + 8))].name=TYK_PMP_PUMPS_DOGSTATSD_META_TAGS" \
-  --set "tyk-pump.pump.extraEnvs[$(($pumpExtraEnvsCtr + 8))].value=$tags");
+  --set "tyk-pump.pump.extraEnvs[$(($pumpExtraEnvsCtr + 8))].value=$tags" \
+);
+
 pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 9));
 
 addDeploymentArgs "${args[@]}";

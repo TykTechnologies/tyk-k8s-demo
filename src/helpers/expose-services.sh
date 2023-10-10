@@ -41,10 +41,6 @@ terminatePorts() {
 
 exposeServices() {
   servicesSummary="";
-  protocol="http";
-  if [ "$SSL" == "$SSLMode" ]; then
-    protocol="https";
-  fi
   if [[ $PORTFORWARD == "$expose" ]]; then
     terminatePorts;
     for service in "${services[@]}"; do

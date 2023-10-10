@@ -5,5 +5,6 @@ helm upgrade "$operatorReleaseName" tyk-helm/tyk-operator \
   --install \
   --namespace "$namespace" \
   "${operatorSecurityContextArgs[@]}" \
+  "${operatorSSLArgs[@]}" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

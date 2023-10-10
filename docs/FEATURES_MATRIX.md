@@ -9,23 +9,25 @@
 | cert-manager         | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |        N/A         |
 | datadog              | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: |        N/A         |
 | elasticsearch        | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: | :white_check_mark: |
-| elasticsearch-kibana | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: |        :x:         |
-| k6                   |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
-| k6-slo-traffic       |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
+| elasticsearch-kibana | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: | :white_check_mark: |
+| jaeger               |        :x:         |        :x:         |        :x:         |        :x:         |        :x:         |
+| k6                   |        :x:         |        :x:         | :white_check_mark: |        :x:         |        N/A         |
+| k6-slo-traffic       |        :x:         |        :x:         | :white_check_mark: |        :x:         |        N/A         |
 | keycloak             |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
-| keycloak-dcr         |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
-| keycloak-sso         |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
-| keycloak-jwt         |        :x:         |        :x:         |        :x:         | :white_check_mark: |        :x:         |
-| operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |        :x:         |
-| operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
-| operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
-| operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| keycloak-dcr         |        :x:         |        :x:         | :white_check_mark: |        :x:         |        N/A         |
+| keycloak-sso         |        :x:         |        :x:         | :white_check_mark: |        :x:         |        N/A         |
+| keycloak-jwt         |        :x:         |        :x:         |        :x:         | :white_check_mark: |        N/A         |
+| operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |        N/A         |
 | operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
-| operator-jwt-hmac    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| operator-jwt-hmac    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |
+| operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | portal               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | resurface            |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
+| vault                |        :x:         |        :x:         |        :x:         |        :x:         |        :x:         |
 
 
 ## Integrations compatible with Tyk deployments
@@ -34,12 +36,13 @@
 | datadog              | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | elasticsearch        | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | elasticsearch-kibana | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| jaeger               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | k6                   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | k6-slo-traffic       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak-dcr         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
-| keycloak-jwt         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
 | keycloak-sso         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| keycloak-jwt         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
 | operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
@@ -50,6 +53,7 @@
 | prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | resurface            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| vault                | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 ## `--expose` flag support
 | Deployment           |    port-froward    |      ingress       |   load-balancer    |
@@ -61,13 +65,10 @@
 | datadog              | :white_check_mark: |        :v:         |        :x:         |
 | elasticsearch        | :white_check_mark: |        :x:         |        :x:         |
 | elasticsearch-kibana | :white_check_mark: |        :x:         |        :x:         |
+| jaeger               | :white_check_mark: |        :x:         |        :x:         |
 | keycloak             | :white_check_mark: |        :x:         |        :x:         |
-| operator-httpbin     | :white_check_mark: |        :x:         |        :x:         |
-| operator-graphql     | :white_check_mark: |        :x:         |        :x:         |
-| operator-udg         | :white_check_mark: |        :x:         |        :x:         |
-| operator-federation  | :white_check_mark: |        :x:         |        :x:         |
-| operator-jwt-hmac    | :white_check_mark: |        :x:         |        :x:         |
 | portal               | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus           | :white_check_mark: |        :x:         |        :x:         |
 | prometheus-grafana   | :white_check_mark: |        :x:         |        :x:         |
 | resurface            | :white_check_mark: |        :x:         |        :x:         |
+| vault                | :white_check_mark: |        :x:         |        :x:         |

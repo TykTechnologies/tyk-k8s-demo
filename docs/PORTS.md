@@ -1,29 +1,30 @@
 # Ports
 All the ports that this library uses.
 
-| Deployment           | Service                |  Port  |
-|----------------------|------------------------|:------:|
-| -                    | gateway                | `8080` |
-| -                    | dashboard              | `3000` |
-| -                    | MDCB                   | `9090` |
-| datadog              | datadog                | `5555` |
-| elastcisearch        | elastcisearch          | `9200` |
-| keyclaok             | keyclaok               | `7001` |
-| operator-udg         | users-graph            | `4201` |
-| operator-udg         | posts-graph            | `4202` |
-| operator-udg         | comments-graph         | `4203` |
-| operator-udg         | notifications-graph    | `4204` |
-| operator-federation  | users-subgraph         | `4201` |
-| operator-federation  | posts-subgraph         | `4202` |
-| operator-federation  | comments-subgraph      | `4203` |
-| operator-federation  | notifications-subgraph | `4204` |
-| elasticsearch-kibana | kibana                 | `5601` |
-| gateway              | httpbin                | `8000` |
-| gateway              | users-rest             | `3101` |
-| gateway              | posts-rest             | `3102` |
-| gateway              | comments-rest          | `3103` |
-| gateway              | portal                 | `3001` |
-| gateway              | prometheus pump        | `9091` |
-| gateway              | prometheus             | `9080` |
-| gateway              | grafana                | `9081` |
-| gateway              | resurface-coordinator  | `7700` |
+| Deployment           | Service                       |  Port   |
+|----------------------|-------------------------------|:-------:|
+| tyk-stack, tyk-cp    | dashboard-svc-*-tyk-dashboard | `3000`  |
+| portal               | portal-svc-*-tyk-portal       | `3001`  |
+| operator-udg         | users-rest-svc                | `3101`  |
+| operator-udg         | posts-rest-svc                | `3102`  |
+| operator-udg         | comments-rest-svc             | `3103`  |
+| operator-graphql     | users-graph-svc               | `4101`  |
+| operator-graphql     | posts-graph-svc               | `4102`  |
+| operator-graphql     | comments-graph-svc            | `4103`  |
+| operator-graphql     | notifications-graph-svc       | `4104`  |
+| operator-federation  | users-subgraph-svc            | `4201`  |
+| operator-federation  | posts-subgraph-svc            | `4202`  |
+| operator-federation  | comments-subgraph-svc         | `4203`  |
+| operator-federation  | notifications-subgraph-svc    | `4204`  |
+| elasticsearch-kibana | elasticsearch-kibana          | `5601`  |
+| keyclaok             | keycloak-service              | `7001`  |
+| resurface            | coordinator                   | `7700`  |
+| operator-httpbin     | httpbin-svc                   | `8000`  |
+| all                  | gateway-svc-*-tyk-gateway     | `8080`  |
+| vault                | vault                         | `8200`  |
+| prometheus           | prometheus-server             | `9080`  |
+| prometheus-grafana   | prometheus-grafana            | `9081`  |
+| tyk-cp               | mdcb-svc-*-tyk-mdcb           | `9090`  |
+| prometheus           | pump-svc-*-tyk-pump           | `9091`  |
+| elasticsearch        | elasticsearch                 | `9200`  |
+| jaeger               | tyk-jaeger-query              | `16686` |
