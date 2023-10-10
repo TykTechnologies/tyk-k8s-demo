@@ -4,7 +4,7 @@ metadata:
   name: httpbin-keyless
 spec:
   name: httpbin-keyless
-  protocol: http
+  protocol: replace_protocol
   active: true
   proxy:
     target_url: http://replace_service_url
@@ -22,7 +22,7 @@ metadata:
   name: httpbin
 spec:
   name: httpbin
-  protocol: http
+  protocol: replace_protocol
   active: true
   proxy:
     target_url: http://replace_service_url
