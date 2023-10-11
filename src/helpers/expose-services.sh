@@ -48,7 +48,7 @@ exposeServices() {
       kubectl port-forward "svc/$service" --namespace "$namespace" $port > /dev/null &
 
       logger "$DEBUG" "forwarding to $protocol://localhost:$port \tfrom\t svc/$service:$port";
-      servicesSummary="$servicesSummary\n\t$(printf "%-50s" "$service") $protocol://localhost:$port";
+      servicesSummary="$servicesSummary\n\t$(printf "%-60s" "$service") $protocol://localhost:$port";
     done
   else
     logger "$DEBUG" "expose not set to port-forward";

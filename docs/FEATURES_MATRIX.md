@@ -14,15 +14,15 @@
 | k6                   |        :x:         |        :x:         | :white_check_mark: |        N/A         |        N/A         |
 | k6-slo-traffic       |        :x:         |        :x:         | :white_check_mark: |        N/A         |        N/A         |
 | keycloak             |        :x:         |   Not Supported    | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| keycloak-dcr         |        N/A         |        N/A         | :white_check_mark: |        :x:         |        N/A         |
-| keycloak-sso         |        N/A         |        N/A         | :white_check_mark: |        :x:         |        N/A         |
+| keycloak-dcr         |        N/A         |        N/A         | :white_check_mark: |        N/A         |        N/A         |
 | keycloak-jwt         |        N/A         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
-| operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |        N/A         |
-| operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
-| operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
-| operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| keycloak-sso         |        N/A         |        N/A         | :white_check_mark: |        N/A         |        N/A         |
+| operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |
+| operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
+| operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
+| operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
 | operator-jwt-hmac    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |
-| operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
 | portal               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
@@ -41,8 +41,8 @@
 | k6-slo-traffic       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak-dcr         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
-| keycloak-sso         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak-jwt         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
+| keycloak-sso         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |

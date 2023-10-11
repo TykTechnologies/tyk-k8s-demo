@@ -2,7 +2,8 @@ sslPath="src/main/ssl"
 certsPath="$sslPath/certs"
 certsSecretName="ssl-secret";
 CACertsSecretName="ca-ssl-secret";
-CACertsMountPath="/etc/ssl/certs";
+selfSignedCertsSecretName="self-signed-ssl-secret";
+certsMountPath="/etc/ssl/certs";
 CACertFilename="tykCA.pem";
 CAKeyFilename="tykCA.key";
 certFilename="tyk.local.crt";
@@ -19,6 +20,12 @@ kubectl create secret generic "$CACertsSecretName" \
   --dry-run=client -o=yaml | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
+kubectl create secret generic "$selfSignedCertsSecretName" \
+  --from-file="$certFilename=$certsPath/$certFilename" \
+  --from-file="$keyFilename=$certsPath/$keyFilename" \
+  --dry-run=client -o=yaml | \
+  kubectl apply --namespace "$namespace" -f - > /dev/null;
+
 args=(--set "tyk-bootstrap.bootstrap.dashboard.sslInsecureSkipVerify=true" \
 
   --set "global.tls.dashboard=true" \
@@ -32,25 +39,25 @@ args=(--set "tyk-bootstrap.bootstrap.dashboard.sslInsecureSkipVerify=true" \
   --set "tyk-dashboard.dashboard.extraVolumes[$dashExtraVolumesCtr].name=$CACertsSecretName" \
   --set "tyk-dashboard.dashboard.extraVolumes[$dashExtraVolumesCtr].secret.secretName=$CACertsSecretName" \
   --set "tyk-dashboard.dashboard.extraVolumeMounts[$dashExtraVolumeMountsCtr].name=$CACertsSecretName" \
-  --set "tyk-dashboard.dashboard.extraVolumeMounts[$dashExtraVolumeMountsCtr].mountPath=$CACertsMountPath/$CACertFilename" \
+  --set "tyk-dashboard.dashboard.extraVolumeMounts[$dashExtraVolumeMountsCtr].mountPath=$certsMountPath/$CACertFilename" \
   --set "tyk-dashboard.dashboard.extraVolumeMounts[$dashExtraVolumeMountsCtr].subPath=$CACertFilename" \
 
   --set "tyk-gateway.gateway.extraVolumes[$gatewayExtraVolumesCtr].name=$CACertsSecretName" \
   --set "tyk-gateway.gateway.extraVolumes[$gatewayExtraVolumesCtr].secret.secretName=$CACertsSecretName" \
   --set "tyk-gateway.gateway.extraVolumeMounts[$gatewayExtraVolumeMountsCtr].name=$CACertsSecretName" \
-  --set "tyk-gateway.gateway.extraVolumeMounts[$gatewayExtraVolumeMountsCtr].mountPath=$CACertsMountPath/$CACertFilename" \
+  --set "tyk-gateway.gateway.extraVolumeMounts[$gatewayExtraVolumeMountsCtr].mountPath=$certsMountPath/$CACertFilename" \
   --set "tyk-gateway.gateway.extraVolumeMounts[$gatewayExtraVolumeMountsCtr].subPath=$CACertFilename"\
 
   --set "tyk-pump.pump.extraVolumes[$pumpExtraVolumesCtr].name=$CACertsSecretName" \
   --set "tyk-pump.pump.extraVolumes[$pumpExtraVolumesCtr].secret.secretName=$CACertsSecretName" \
   --set "tyk-pump.pump.extraVolumeMounts[$pumpExtraVolumeMountsCtr].name=$CACertsSecretName" \
-  --set "tyk-pump.pump.extraVolumeMounts[$pumpExtraVolumeMountsCtr].mountPath=$CACertsMountPath/$CACertFilename" \
+  --set "tyk-pump.pump.extraVolumeMounts[$pumpExtraVolumeMountsCtr].mountPath=$certsMountPath/$CACertFilename" \
   --set "tyk-pump.pump.extraVolumeMounts[$pumpExtraVolumeMountsCtr].subPath=$CACertFilename"\
 
   --set "tyk-mdcb.mdcb.extraVolumes[$mdcbExtraVolumesCtr].name=$CACertsSecretName" \
   --set "tyk-mdcb.mdcb.extraVolumes[$mdcbExtraVolumesCtr].secret.secretName=$CACertsSecretName" \
   --set "tyk-mdcb.mdcb.extraVolumeMounts[$mdcbExtraVolumeMountsCtr].name=$CACertsSecretName" \
-  --set "tyk-mdcb.mdcb.extraVolumeMounts[$mdcbExtraVolumeMountsCtr].mountPath=$CACertsMountPath/$CACertFilename" \
+  --set "tyk-mdcb.mdcb.extraVolumeMounts[$mdcbExtraVolumeMountsCtr].mountPath=$certsMountPath/$CACertFilename" \
   --set "tyk-mdcb.mdcb.extraVolumeMounts[$mdcbExtraVolumeMountsCtr].subPath=$CACertFilename"\
 );
 
@@ -67,3 +74,10 @@ mdcbExtraVolumesCtr=$((mdcbExtraVolumesCtr + 1));
 mdcbExtraVolumeMountsCtr=$((mdcbExtraVolumeMountsCtr + 1));
 
 addDeploymentArgs "${args[@]}";
+
+addSummary "\tSSL enabled. Self-signed certificates generated. To add the generated certs to your trust store on MAC run the following: \n \
+\tsudo security add-trusted-cert \\ \n \
+\t\t-d \\ \n \
+\t\t-r trustRoot \\ \n \
+\t\t-k /Library/Keychains/System.keychain \\ \n \
+\t\t$certsPath/tykCA.pem";
