@@ -7,16 +7,16 @@
 | tyk-stack            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | tyk-cp               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | cert-manager         | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |
-| datadog              | :white_check_mark: | :white_check_mark: |        N/A         | :white_check_mark: |        N/A         |
-| elasticsearch        | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: | :white_check_mark: |
-| elasticsearch-kibana | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: | :white_check_mark: |
-| jaeger               |        :x:         |        :x:         |        :x:         |        :x:         |   Not Supported    |
-| k6                   |        :x:         |        :x:         | :white_check_mark: |        :x:         |        N/A         |
-| k6-slo-traffic       |        :x:         |        :x:         | :white_check_mark: |        :x:         |        N/A         |
+| datadog              | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: |        N/A         |
+| elasticsearch        | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| elasticsearch-kibana | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| jaeger               |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |   Not Supported    |
+| k6                   |        :x:         |        :x:         | :white_check_mark: |        N/A         |        N/A         |
+| k6-slo-traffic       |        :x:         |        :x:         | :white_check_mark: |        N/A         |        N/A         |
 | keycloak             |        :x:         |   Not Supported    | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak-dcr         |        N/A         |        N/A         | :white_check_mark: |        :x:         |        N/A         |
 | keycloak-sso         |        N/A         |        N/A         | :white_check_mark: |        :x:         |        N/A         |
-| keycloak-jwt         |        N/A         |        N/A         |        :x:         | :white_check_mark: |        N/A         |
+| keycloak-jwt         |        N/A         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
 | operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |        N/A         |
 | operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
@@ -27,7 +27,7 @@
 | prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | resurface            |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
-| vault                |        :x:         |        :x:         |        :x:         |        :x:         |        :x:         |
+| vault                |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
 
 
 ## Integrations compatible with Tyk deployments

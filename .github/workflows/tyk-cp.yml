@@ -20,14 +20,15 @@ jobs:
       matrix:
         deployment:
 #          - datadog
-#          - elasticsearch
-#          - elasticsearch-kibana
+          - elasticsearch
+          - elasticsearch-kibana
+          - jaeger
           - k6
           - k6-slo-traffic
           - keycloak
           - keycloak-sso
           - keycloak-dcr
-#          - keycloak-jwt
+          - keycloak-jwt
           - operator
           - operator-httpbin
           - operator-graphql
@@ -38,6 +39,7 @@ jobs:
           - prometheus
           - prometheus-grafana
 #          - resurface
+          - vault
       max-parallel: 3
     steps:
       - uses: actions/checkout@v2
