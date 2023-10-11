@@ -35,7 +35,13 @@ args=(--set-string "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].name=TYK
   --set-string "tyk-gateway.gateway.extraEnvs[$(($gatewayExtraEnvsCtr + 2))].value=tyk-otel-collector-opentelemetry-collector:4317");
 
 gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 3));
+
 addDeploymentArgs "${args[@]}";
-addService "$jaegerReleaseName-query";
 upgradeTyk;
 
+sed "s/replace_release_name/$jaegerReleaseName/g" "$jaegerDeploymentPath/jaeger-health-svc-template.yaml" | \
+  sed "s/replace_namespace/$namespace/g" | \
+  kubectl apply --namespace "$namespace" -f - > /dev/null;
+
+addService "$jaegerReleaseName-query";
+addService "$jaegerReleaseName-health";

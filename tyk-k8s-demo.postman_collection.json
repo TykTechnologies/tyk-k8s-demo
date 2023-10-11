@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dfb37ce2-d2f5-4f7a-a647-76dd8682f9ce",
+		"_postman_id": "d84db6c9-6286-4e1d-9c8d-bb73320102ea",
 		"name": "tyk-k8s-demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13702323"
@@ -179,6 +179,45 @@
 									"path": [
 										"api",
 										"status"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "jaeger",
+					"item": [
+						{
+							"name": "health",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Jaeger status is UP\", function () {",
+											"    var health = pm.response.json();",
+											"    pm.expect(health.status).to.eql(\"Server available\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{jaeger.health-port}}/health",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{jaeger.health-port}}",
+									"path": [
+										"health"
 									]
 								}
 							},
@@ -983,6 +1022,10 @@
 		{
 			"key": "grafana.port",
 			"value": "9081"
+		},
+		{
+			"key": "jaeger.health-port",
+			"value": "14269"
 		}
 	]
 }
