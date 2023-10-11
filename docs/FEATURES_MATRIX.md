@@ -6,17 +6,17 @@
 | tyk-dp               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | tyk-stack            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | tyk-cp               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| cert-manager         | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |        N/A         |
-| datadog              | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: |        N/A         |
+| cert-manager         | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |
+| datadog              | :white_check_mark: | :white_check_mark: |        N/A         | :white_check_mark: |        N/A         |
 | elasticsearch        | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: | :white_check_mark: |
 | elasticsearch-kibana | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: | :white_check_mark: |
-| jaeger               |        :x:         |        :x:         |        :x:         |        :x:         |        :x:         |
+| jaeger               |        :x:         |        :x:         |        :x:         |        :x:         |   Not Supported    |
 | k6                   |        :x:         |        :x:         | :white_check_mark: |        :x:         |        N/A         |
 | k6-slo-traffic       |        :x:         |        :x:         | :white_check_mark: |        :x:         |        N/A         |
-| keycloak             |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
-| keycloak-dcr         |        :x:         |        :x:         | :white_check_mark: |        :x:         |        N/A         |
-| keycloak-sso         |        :x:         |        :x:         | :white_check_mark: |        :x:         |        N/A         |
-| keycloak-jwt         |        :x:         |        :x:         |        :x:         | :white_check_mark: |        N/A         |
+| keycloak             |        :x:         |   Not Supported    | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| keycloak-dcr         |        N/A         |        N/A         | :white_check_mark: |        :x:         |        N/A         |
+| keycloak-sso         |        N/A         |        N/A         | :white_check_mark: |        :x:         |        N/A         |
+| keycloak-jwt         |        N/A         |        N/A         |        :x:         | :white_check_mark: |        N/A         |
 | operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |        N/A         |
 | operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
