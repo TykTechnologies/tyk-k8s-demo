@@ -5,7 +5,6 @@ portalDBPort=54321;
 source src/main/storage/pgsql.sh $portalDBName $portalDBPort;
 
 addService "enterprise-portal-svc-$tykReleaseName-tyk-enterprise-portal";
-addServiceArgs "enterprisePortal";
 
 args=(
   --set "global.components.enterprisePortal=true" \
@@ -16,6 +15,8 @@ args=(
   --set "tyk-enterprise-portal.database.connectionString=host\=tyk-$portalDBName-postgres-postgresql.$namespace.svc port\=$portalDBPort user\=postgres password\=$TYK_PASSWORD database\=$portalDBName sslmode\=disable" \
   "${portalSecurityContextArgs[@]}" \
   "${portalSSLArgs[@]}" \
+  "${portalLoadbalancerArgs[@]}" \
+  "${portalIngressArgs[@]}" \
 );
 
 addDeploymentArgs "${args[@]}";

@@ -6,13 +6,13 @@ args=(--set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway" \
 
 tykReleaseName="tyk-oss";
 addService "gateway-svc-$tykReleaseName-tyk-gateway";
-addServiceArgs "gateway";
 checkTykRelease;
 
 addDeploymentArgs "${args[@]}";
 addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
-addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
+addDeploymentArgs "${loadbalancerArgs[@]}";
+addDeploymentArgs "${ingressArgs[@]}";
 upgradeTyk;
 
 kubectl create secret generic tyk-operator-conf \

@@ -5,10 +5,10 @@ metadata:
   namespace: replace_namespace
 spec:
   ports:
-    - name: http
-      port: 14269
-      protocol: TCP
-      targetPort: 14269
+  - name: http
+    port: 14269
+    protocol: TCP
+    targetPort: 14269
   selector:
     app: jaeger
     app.kubernetes.io/component: all-in-one

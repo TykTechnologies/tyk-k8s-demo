@@ -19,14 +19,14 @@ fi
 logger "$DEBUG" "tykReleaseName=$tykReleaseName";
 
 addService "gateway-svc-$tykReleaseName-tyk-gateway";
-addServiceArgs "gateway";
 checkTykRelease;
 
 addDeploymentArgs "${args[@]}";
 addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
 addDeploymentArgs "${tykSecurityContextArgs[@]}";
-addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
+addDeploymentArgs "${loadbalancerArgs[@]}";
+addDeploymentArgs "${ingressArgs[@]}";
 upgradeTyk;
 
 if [[ -n "$TYK_WORKER_OPERATOR_CONNECTIONSTRING" ]]; then

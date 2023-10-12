@@ -28,6 +28,8 @@ helm upgrade "$grafanaReleaseName" grafana/grafana --version 6.52.7 \
   --set "extraConfigmapMounts[0].configMap=grafana-dashboards-configmap" \
   --set "extraConfigmapMounts[0].readOnly=true" \
   "${prometheusGrafanaSecurityContextArgs[@]}" \
+  "${prometheusGrafanaLoadbalancerArgs[@]}" \
+  "${prometheusGrafanaIngressArgs[@]}" \
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

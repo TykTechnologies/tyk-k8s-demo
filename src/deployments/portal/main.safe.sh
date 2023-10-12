@@ -12,5 +12,7 @@ if [ -z "$portalRegistered" ]; then
   source "$portalDeploymentPath/checks.sh";
   source "$portalDeploymentPath/ssl.sh";
   source "$portalDeploymentPath/openshift.sh";
+  source "$portalDeploymentPath/load-balancer.sh";
+  source "$portalDeploymentPath/ingress.sh";
   source "$portalDeploymentPath/main.sh";
 fi

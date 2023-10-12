@@ -6,7 +6,10 @@ helm upgrade "$jaegerReleaseName" jaegertracing/jaeger-operator --version v2.46.
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
 
-kubectl apply -n "$namespace" -f "$jaegerDeploymentPath/jaeger.yaml" > /dev/null;
+sed "s/replace_service_type/$JAEGER_SERVICE_TYPE/g" "$jaegerDeploymentPath/jaeger.yaml" | \
+  sed "s/replace_enabled_ingress/$JAEGER_INGRESS_ENABLED/g" | \
+  sed "s/replace_ingress_className/$INGRESS_CLASSNAME/g" | \
+  kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 helm upgrade tyk-otel-collector open-telemetry/opentelemetry-collector --version 0.62.0 \
   --install \

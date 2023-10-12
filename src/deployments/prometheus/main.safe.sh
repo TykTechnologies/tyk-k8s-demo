@@ -8,5 +8,7 @@ if [ -z "$prometheusRegistered" ]; then
   prometheusDeploymentPath="src/deployments/prometheus";
 
   source "$prometheusDeploymentPath/openshift.sh";
+  source "$prometheusDeploymentPath/load-balancer.sh";
+  source "$prometheusDeploymentPath/ingress.sh";
   source "$prometheusDeploymentPath/main.sh";
 fi

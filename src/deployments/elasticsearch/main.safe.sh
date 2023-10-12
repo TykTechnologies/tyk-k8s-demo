@@ -7,5 +7,7 @@ if [ -z "$elasticsearchRegistered" ]; then
 
   source "$elasticsearchDeploymentPath/ssl.sh";
   source "$elasticsearchDeploymentPath/openshift.sh";
+  source "$elasticsearchDeploymentPath/load-balancer.sh";
+  source "$elasticsearchDeploymentPath/ingress.sh";
   source "$elasticsearchDeploymentPath/main.sh";
 fi

@@ -10,6 +10,8 @@ helm upgrade "$elasticsearchKibanaReleaseName" bitnami/kibana --version 10.5.6 \
   --set "service.ports.http=$KIBANA_SERVICE_PORT" \
   "${elasticsearchKibanaSecurityContextArgs[@]}" \
   "${elasticsearchKibanaSSLArgs[@]}" \
+  "${elasticsearchKibanaLoadbalancerArgs[@]}" \
+  "${elasticsearchKibanaIngressArgs[@]}" \
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

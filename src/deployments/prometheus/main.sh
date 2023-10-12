@@ -27,6 +27,8 @@ helm upgrade "$prometheusReleaseName" prometheus-community/prometheus --version 
   --set "serverFiles.prometheus\.yml.scrape_configs[0].metrics_path=$PROMETHEUS_PUMP_PATH" \
   --set "serverFiles.prometheus\.yml.scrape_configs[0].static_configs[0].targets={pump-svc-$tykReleaseName-tyk-pump.$namespace.svc:$PROMETHEUS_PUMP_PORT}" \
   "${prometheusSecurityContextArgs[@]}" \
+  "${prometheusLoadbalancerArgs[@]}" \
+  "${prometheusIngressArgs[@]}" \
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

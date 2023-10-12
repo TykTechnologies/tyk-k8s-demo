@@ -13,15 +13,14 @@ args=(--set "global.license.dashboard=$LICENSE" \
 
 addService "dashboard-svc-$tykReleaseName-tyk-dashboard";
 addService "gateway-svc-$tykReleaseName-tyk-gateway";
-addServiceArgs "dash";
-addServiceArgs "gateway";
 checkTykRelease;
 
 addDeploymentArgs "${args[@]}";
 addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
 addDeploymentArgs "${tykSecurityContextArgs[@]}";
-addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
+addDeploymentArgs "${loadbalancerArgs[@]}";
+addDeploymentArgs "${ingressArgs[@]}";
 upgradeTyk;
 
 addSummary "\tTyk Stack deployed\n \

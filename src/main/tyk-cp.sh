@@ -1,7 +1,8 @@
 source src/main/storage/main.sh;
 
 tykReleaseName="tyk-cp";
-args=(--set "global.license.dashboard=$LICENSE" \
+args=(
+  --set "global.license.dashboard=$LICENSE" \
   --set "global.adminUser.email=$TYK_USERNAME" \
   --set "global.adminUser.password=$TYK_PASSWORD" \
   --set "tyk-bootstrap.bootstrap.dashboard.deploymentName=dashboard-$tykReleaseName-tyk-dashboard" \
@@ -9,19 +10,17 @@ args=(--set "global.license.dashboard=$LICENSE" \
   --set "tyk-gateway.gateway.service.port=8080" \
   --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
   --set "tyk-pump.pump.image.repository=tykio/tyk-pump-docker-pub" \
-  --set "tyk-pump.pump.image.tag=$PUMP_VERSION");
+  --set "tyk-pump.pump.image.tag=$PUMP_VERSION" \
+);
 
 addService "dashboard-svc-$tykReleaseName-tyk-dashboard";
 addService "gateway-svc-$tykReleaseName-tyk-gateway";
-addServiceArgs "dash";
-addServiceArgs "gateway";
 checkTykRelease;
 checkMDCBRelease;
 
 addDeploymentArgs "${args[@]}";
 addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
 addDeploymentArgs "${tykSecurityContextArgs[@]}";
-addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
 
 if ! $mdcbExists; then
@@ -35,15 +34,16 @@ else
 fi
 
 addService "mdcb-svc-$tykReleaseName-tyk-mdcb";
-addServiceArgs "mdcb";
 
 mdcbArgs=(--set "mdcb.enabled=true" \
   --set "mdcb.license=$MDCB_LICENSE" \
+  --set "mdcb.service.type=NodePort" \
   --set "mdcb.image.tag=$MDCB_VERSION");
 
 addDeploymentArgs "${mdcbArgs[@]}";
-addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${mdcbSecurityContextArgs[@]}";
+addDeploymentArgs "${loadbalancerArgs[@]}";
+addDeploymentArgs "${ingressArgs[@]}";
 upgradeTyk;
 
 if ! $dryRun; then

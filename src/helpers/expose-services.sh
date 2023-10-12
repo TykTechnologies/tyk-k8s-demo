@@ -1,21 +1,7 @@
 services=();
-servicesArgs=();
 
 addService() {
   services+=($1);
-}
-
-addServiceArgs() {
-  if [[ "mdcb" == $1 ]] && [[ $LOADBALANCER != "$expose" ]]; then
-    servicesArgs+=(--set "mdcb.service.type=NodePort");
-  else
-    if [[ $LOADBALANCER == "$expose" ]]; then
-      servicesArgs+=(--set "$1.service.type=LoadBalancer");
-    elif [[ $INGRESS == "$expose" ]]; then
-      servicesArgs+=(--set "$1.ingress.enabled=true");
-      servicesArgs+=(--set "$1.ingress.className=$INGRESS_CLASSNAME");
-    fi
-  fi
 }
 
 getPort() {
@@ -43,19 +29,19 @@ exposeServices() {
   servicesSummary="";
   if [[ $PORTFORWARD == "$expose" ]]; then
     terminatePorts;
+    logger "$DEBUG" "expose set to port-forward";
+
     for service in "${services[@]}"; do
       getPort "$service";
       kubectl port-forward "svc/$service" --namespace "$namespace" $port > /dev/null &
-
       logger "$DEBUG" "forwarding to $protocol://localhost:$port \tfrom\t svc/$service:$port";
       servicesSummary="$servicesSummary\n\t$(printf "%-60s" "$service") $protocol://localhost:$port";
     done
-  else
-    logger "$DEBUG" "expose not set to port-forward";
-  fi
-
-  if [[ $NONE != "$expose" ]]; then
     addSummary "\tExposed Services$servicesSummary";
+  elif [[ $INGRESS == "$expose" ]]; then
+    addSummary "\tServices can be access through ingress...";
+  elif [[ $LOADBALANCER == "$expose" ]]; then
+      addSummary "\tServices can be access through loadbalancers...";
   fi
 }
 

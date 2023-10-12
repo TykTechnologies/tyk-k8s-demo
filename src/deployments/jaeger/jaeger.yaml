@@ -2,3 +2,8 @@ apiVersion: jaegertracing.io/v1
 kind: Jaeger
 metadata:
   name: tyk-jaeger
+spec:
+  serviceType: replace_service_type
+  ingress:
+    enabled: replace_enabled_ingress
+    ingressClassName: replace_ingress_className

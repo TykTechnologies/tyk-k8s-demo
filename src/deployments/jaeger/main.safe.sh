@@ -5,5 +5,7 @@ if [ -z "$jaegerRegistered" ]; then
   jaegerDeploymentPath="src/deployments/jaeger";
 
   source "src/deployments/cert-manager/main.safe.sh";
+  source "$jaegerDeploymentPath/load-balancer.sh";
+  source "$jaegerDeploymentPath/ingress.sh";
   source "$jaegerDeploymentPath/main.sh";
 fi

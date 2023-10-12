@@ -9,6 +9,8 @@ helm upgrade "$elasticsearchReleaseName" bitnami/elasticsearch --version 19.13.1
   --set "sysctlImage.enabled=false" \
   "${elasticsearchSecurityContextArgs[@]}" \
   "${elasticsearchSSLArgs[@]}" \
+  "${elasticsearchLoadbalancerArgs[@]}" \
+  "${elasticsearchIngressArgs[@]}" \
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
