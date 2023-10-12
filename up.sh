@@ -45,6 +45,8 @@ fi
 
 logger "$INFO" "installing $mode in $flavor k8s environment";
 source src/main/redis/main.sh;
+source "src/main/load-balancer.sh";
+source "src/main/ingress.sh";
 source "src/main/$mode.sh";
 
 if ! [[ -z $deployments ]]; then
