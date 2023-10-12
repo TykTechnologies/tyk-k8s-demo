@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         deployment:
-#          - datadog
+          - datadog
           - elasticsearch
           - elasticsearch-kibana
           - jaeger
