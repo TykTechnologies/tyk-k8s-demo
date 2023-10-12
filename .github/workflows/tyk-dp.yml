@@ -35,7 +35,6 @@ jobs:
           - operator-jwt-hmac
           - prometheus
           - prometheus-grafana
-#          - resurface
           - vault
       max-parallel: 3
     steps:
@@ -71,6 +70,8 @@ jobs:
             TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
             TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
               --namespace tyk-dp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
@@ -89,6 +90,8 @@ jobs:
             TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
             TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
               --namespace tyk-dp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
@@ -105,6 +108,8 @@ jobs:
             TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
             TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
               --namespace tyk-dp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \

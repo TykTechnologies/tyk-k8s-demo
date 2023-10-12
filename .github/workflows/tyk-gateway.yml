@@ -35,7 +35,6 @@ jobs:
           - operator-jwt-hmac
           - prometheus
           - prometheus-grafana
-#          - resurface
           - vault
       max-parallel: 3
     steps:
@@ -67,6 +66,8 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           command: |
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
               --namespace tyk-gateway-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
@@ -81,6 +82,8 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
               --namespace tyk-gateway-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
@@ -93,6 +96,8 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
               --namespace tyk-gateway-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \

@@ -1,5 +1,3 @@
-
-
 if [ -z "$keycloakSSORegistered" ]; then
   keycloakSSORegistered=true;
 

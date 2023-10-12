@@ -39,7 +39,7 @@ gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 3));
 addDeploymentArgs "${args[@]}";
 upgradeTyk;
 
-sed "s/replace_release_name/$jaegerReleaseName/g" "$jaegerDeploymentPath/jaeger-health-svc-template.yaml" | \
+sed "s/replace_release_name/$jaegerReleaseName/g" "$jaegerDeploymentPath/health-svc-template.yaml" | \
   sed "s/replace_namespace/$namespace/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 

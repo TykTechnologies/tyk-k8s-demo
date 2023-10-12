@@ -5,7 +5,7 @@ secret="wcl7lBoslXBMAHKinMwa1bbEuBQSCUtI";
 
 checkKeycloakRealmImportCRExists "$crName";
 if ! $keycloakRealmImportCRExists; then
-sed "s/replace_cr_name/$crName/g" "$keycloakJWTDeploymentPath/realm-template.yaml" | \
+  sed "s/replace_cr_name/$crName/g" "$keycloakJWTDeploymentPath/realm-template.yaml" | \
     sed "s/replace_keycloak/$keycloakName/g" | \
     sed "s/replace_username/$TYK_USERNAME/g" | \
     sed "s/replace_password/$TYK_PASSWORD/g" | \
