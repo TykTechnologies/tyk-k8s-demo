@@ -907,7 +907,7 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Elasticsearch status is green\", function () {",
+											"pm.test(\"Grafana status is ok\", function () {",
 											"    var health = pm.response.text();",
 											"    pm.expect(health).to.eql(\"Ok\");",
 											"});"
@@ -937,7 +937,43 @@
 				},
 				{
 					"name": "vault",
-					"item": []
+					"item": [
+						{
+							"name": "health",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Vault is initialized\", function () {",
+											"    var health = pm.response.json();",
+											"    pm.expect(health.initialized).to.eql(true);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{vault.port}}/v1/sys/health",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{vault.port}}",
+									"path": [
+										"v1",
+										"sys",
+										"health"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			],
 			"event": [
@@ -1030,6 +1066,10 @@
 		{
 			"key": "jaeger.health-port",
 			"value": "14269"
+		},
+		{
+			"key": "vault.port",
+			"value": "8200"
 		}
 	]
 }
