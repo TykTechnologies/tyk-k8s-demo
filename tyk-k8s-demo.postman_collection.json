@@ -934,6 +934,10 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "vault",
+					"item": []
 				}
 			],
 			"event": [
