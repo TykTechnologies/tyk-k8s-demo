@@ -3,7 +3,8 @@ kind: Jaeger
 metadata:
   name: tyk-jaeger
 spec:
-  serviceType: replace_service_type
+  query:
+    serviceType: replace_service_type
   ingress:
     enabled: replace_enabled_ingress
     ingressClassName: replace_ingress_className
