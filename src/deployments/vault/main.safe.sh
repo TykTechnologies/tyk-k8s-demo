@@ -5,6 +5,5 @@ if [ -z "$vaultRegistered" ]; then
   vaultReleaseName="vault";
   vaultDeploymentPath="src/deployments/vault";
 
-  source "$vaultDeploymentPath/ssl.sh";
   source "$vaultDeploymentPath/main.sh";
 fi
