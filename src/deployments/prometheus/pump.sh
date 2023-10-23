@@ -3,10 +3,11 @@ customMetrics="[{\"name\": \"tyk_http_requests_total\"\,\"description\": \"Total
 args=(
   --set "global.components.pump=true" \
   --set "tyk-pump.pump.service.enabled=true" \
+  --set "tyk-pump.pump.service.port=$PROMETHEUS_PUMP_PORT" \
+  --set "tyk-pump.pump.containerPort=$PROMETHEUS_PUMP_PORT" \
   --set "tyk-pump.pump.backend[$pumpBackendsCtr]=prometheus" \
   --set "tyk-pump.pump.prometheusPump.host=0.0.0.0" \
   --set "tyk-pump.pump.prometheusPump.path=$PROMETHEUS_PUMP_PATH" \
-  --set "tyk-pump.pump.containerPort=$PROMETHEUS_PUMP_PORT" \
   --set "tyk-pump.pump.prometheusPump.customMetrics=$customMetrics" \
 );
 
