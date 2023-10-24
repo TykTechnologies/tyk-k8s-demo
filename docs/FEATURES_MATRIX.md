@@ -27,7 +27,7 @@
 | prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
 | prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
 | resurface            |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
-| vault                |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
+| vault                |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
 
 
 ## Integrations compatible with Tyk deployments
