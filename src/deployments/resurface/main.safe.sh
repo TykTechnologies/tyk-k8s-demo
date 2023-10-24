@@ -7,5 +7,4 @@ if [ -z "$resurfaceRegistered" ]; then
   resurfaceDeploymentPath="src/deployments/resurface";
 
   source "$resurfaceDeploymentPath/main.sh";
-  source "src/deployments/k6-slo-traffic/main.safe.sh";
 fi

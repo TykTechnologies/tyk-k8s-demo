@@ -8,5 +8,4 @@ if [ -z "$datadogRegistered" ]; then
 
   source "$datadogDeploymentPath/checks.sh";
   source "$datadogDeploymentPath/main.sh";
-  source "src/deployments/k6-slo-traffic/main.safe.sh";
 fi
