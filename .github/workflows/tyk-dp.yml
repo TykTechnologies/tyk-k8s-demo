@@ -73,6 +73,7 @@ jobs:
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
+              --redis redis \
               --namespace tyk-dp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
               tyk-dp
@@ -93,6 +94,7 @@ jobs:
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
+              --redis redis \
               --namespace tyk-dp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
               tyk-dp && sleep 180
@@ -111,6 +113,7 @@ jobs:
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
+              --redis redis \
               --namespace tyk-dp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
               tyk-dp && sleep 180

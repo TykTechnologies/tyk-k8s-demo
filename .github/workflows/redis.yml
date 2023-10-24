@@ -46,7 +46,7 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy tyk-cp with ${{ matrix.redis }}
+      - name: Deploy tyk-stack with ${{ matrix.redis }}
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
@@ -57,7 +57,7 @@ jobs:
             ./up.sh -v \
               --namespace tyk-${{ matrix.redis }} \
               --redis ${{ matrix.redis }} \
-              tyk-cp
+              tyk-stack
 
       - name: Sleep 1 minute
         run: sleep 60

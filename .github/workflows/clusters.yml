@@ -46,7 +46,7 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy tyk-cp on ${{ matrix.cluster }}
+      - name: Deploy tyk-stack on ${{ matrix.cluster }}
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
@@ -54,7 +54,7 @@ jobs:
           command: |
             LICENSE="${{ secrets.LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
-            ./up.sh -v tyk-cp
+            ./up.sh -v tyk-stack
 
       - name: Sleep 1 minute
         run: sleep 60

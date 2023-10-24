@@ -24,6 +24,7 @@ setVerbose;
 helm upgrade $redisReleaseName bitnami/redis --version 17.3.2 \
   --install \
   --namespace "$namespace" \
+  --set "replica.replicaCount=0" \
   --set "image.repository=zalbiraw/redis" \
   --set "image.tag=6.2.7-debian-11" \
   \
