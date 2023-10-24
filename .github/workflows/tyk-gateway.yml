@@ -19,20 +19,20 @@ jobs:
       fail-fast: false
       matrix:
         deployment:
+          - cert-manager
           - datadog
           - elasticsearch
-          - elasticsearch-kibana
           - jaeger
           - k6
           - k6-slo-traffic
           - keycloak
           - keycloak-jwt
           - operator
-          - operator-httpbin
-          - operator-graphql
-          - operator-udg
           - operator-federation
+          - operator-graphql
+          - operator-httpbin
           - operator-jwt-hmac
+          - operator-udg
           - prometheus
           - prometheus-grafana
           - vault
