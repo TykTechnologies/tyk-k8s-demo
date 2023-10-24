@@ -25,5 +25,3 @@ if [[ "$SSL" == "$SSLMode" ]]; then
 
   addDeploymentArgs "${args[@]}";
 fi
-
-upgradeTyk;

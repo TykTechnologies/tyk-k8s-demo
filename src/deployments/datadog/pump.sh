@@ -25,4 +25,3 @@ args=(
 pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 9));
 
 addDeploymentArgs "${args[@]}";
-upgradeTyk;

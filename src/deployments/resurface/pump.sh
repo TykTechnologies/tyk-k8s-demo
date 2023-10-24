@@ -8,4 +8,3 @@ args=(--set "global.components.pump=true" \
 pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 3));
 
 addDeploymentArgs "${args[@]}";
-upgradeTyk;

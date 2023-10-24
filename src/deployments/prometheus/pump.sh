@@ -15,4 +15,3 @@ pumpBackendsCtr=$((pumpBackendsCtr + 1));
 
 addService "pump-svc-$tykReleaseName-tyk-pump";
 addDeploymentArgs "${args[@]}";
-upgradeTyk;
