@@ -5,5 +5,6 @@ if [ -z "$vaultRegistered" ]; then
   vaultReleaseName="vault";
   vaultDeploymentPath="src/deployments/vault";
 
+  source "$vaultDeploymentPath/openshift.sh";
   source "$vaultDeploymentPath/main.sh";
 fi

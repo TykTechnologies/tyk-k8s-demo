@@ -11,5 +11,6 @@ helm upgrade "$vaultReleaseName" hashicorp/vault \
   --set "ui.externalPort=$VAULT_SERVICE_PORT" \
   --set "u.targetPort=$VAULT_SERVICE_PORT" \
   --set "server.dev.enabled=true" \
+  "${vaultSecurityContextArgs[@]}" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
