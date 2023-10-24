@@ -3,7 +3,7 @@ logger "$INFO" "installing $prometheusReleaseName in $namespace namespace...";
 addService "$prometheusReleaseName-server";
 
 setVerbose;
-helm upgrade "$prometheusReleaseName" prometheus-community/prometheus --version 20.1.0 \
+helm upgrade "$prometheusReleaseName" prometheus-community/prometheus --version 25.3.0 \
   --install \
   --set "prometheus-pushgateway.enabled=false" \
   --set "prometheus-node-exporter.hostRootFsMount.enabled=false" \

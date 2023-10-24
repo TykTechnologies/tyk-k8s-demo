@@ -1,6 +1,7 @@
 prometheusSecurityContextArgs=();
 if [[ $OPENSHIFT == "$flavor" ]]; then
-  prometheusSecurityContextArgs=(--set "server.securityContext.runAsUser=$OS_UID_RANGE" \
+  prometheusSecurityContextArgs=(
+    --set "server.securityContext.runAsUser=$OS_UID_RANGE" \
     --set "server.securityContext.runAsGroup=$OS_UID_RANGE" \
     --set "server.securityContext.fsGroup=$OS_UID_RANGE" \
     --set "server.containerSecurityContext.allowPrivilegeEscalation=false" \
@@ -29,5 +30,6 @@ if [[ $OPENSHIFT == "$flavor" ]]; then
     --set "prometheus-node-exporter.securityContext.fsGroup=$OS_UID_RANGE" \
     --set "prometheus-node-exporter.containerSecurityContext.allowPrivilegeEscalation=false" \
     --set "prometheus-node-exporter.containerSecurityContext.capabilities.drop[0]=ALL" \
-    --set "prometheus-node-exporter.containerSecurityContext.seccompProfile.type=RuntimeDefault");
+    --set "prometheus-node-exporter.containerSecurityContext.seccompProfile.type=RuntimeDefault" \
+  );
 fi
