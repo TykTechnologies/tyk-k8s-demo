@@ -19,7 +19,6 @@ setVerbose;
 helm upgrade "$redisReleaseName" bitnami/redis-cluster --version 7.6.4 \
   --install \
   --namespace "$namespace" \
-  --set "cluster.nodes=3" \
   --set "image.repository=zalbiraw/redis-cluster" \
   --set "image.tag=6.2.7-debian-11" \
   \
