@@ -22,9 +22,6 @@ TYKCP="tyk-cp";
 TYKDP="tyk-dp";
 TYKGATEWAY="tyk-gateway";
 
-source src/helpers/up/check-vars.sh;
-source src/helpers/up/update-helm.sh;
-
 if [[ $TYKSTACK != "$mode" ]] && [[ $TYKCP != "$mode" ]] && [[ $TYKDP != "$mode" ]] && [[ $TYKGATEWAY != "$mode" ]]; then
   logger "$ERROR" "invalid selection";
   usage; exit 1;
@@ -34,6 +31,9 @@ if [ "$AWS" == "$cloud" ] || [ "$GCP" == "$cloud" ]  || [ "$AZURE" == "$cloud" ]
   logger "$INFO" "standing up $cloud k8s cluster. This may take 10-30 minutes depending on the cloud provider...";
   source src/helpers/up/tf-apply.sh;
 fi
+
+source src/helpers/up/check-vars.sh;
+source src/helpers/up/update-helm.sh;
 
 source src/main/namespace.sh;
 
