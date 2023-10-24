@@ -40,7 +40,6 @@ args=(--set-string "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].name=TYK
 gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 3));
 
 addDeploymentArgs "${args[@]}";
-upgradeTyk;
 
 sed "s/replace_release_name/$jaegerReleaseName/g" "$jaegerDeploymentPath/health-svc-template.yaml" | \
   sed "s/replace_namespace/$namespace/g" | \

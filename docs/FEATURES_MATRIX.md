@@ -9,25 +9,25 @@
 | cert-manager         | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |
 | datadog              | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |
 | elasticsearch        | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| elasticsearch-kibana | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| jaeger               |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |   Not Supported    |
-| k6                   |        :x:         |        :x:         | :white_check_mark: |        N/A         |        N/A         |
-| k6-slo-traffic       |        :x:         |        :x:         | :white_check_mark: |        N/A         |        N/A         |
-| keycloak             |        :x:         |   Not Supported    | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| elasticsearch-kibana | :white_check_mark: | :white_check_mark: |        :x:         | :white_check_mark: | :white_check_mark: |
+| jaeger               |        :x:         | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |
+| k6                   | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |
+| k6-slo-traffic       |        N/A         |        N/A         | :white_check_mark: |        N/A         |        N/A         |
+| keycloak             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak-dcr         |        N/A         |        N/A         | :white_check_mark: |        N/A         |        N/A         |
 | keycloak-jwt         |        N/A         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
 | keycloak-sso         |        N/A         |        N/A         | :white_check_mark: |        N/A         |        N/A         |
 | operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |
-| operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
-| operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
-| operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
+| operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | operator-jwt-hmac    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |
-| operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
+| operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | portal               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
-| prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |   Not Supported    |
+| prometheus           |     :no_entry:     | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |
+| prometheus-grafana   |     :warning:      | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |
 | resurface            |        :x:         |        :x:         | :white_check_mark: |        :x:         |        :x:         |
-| vault                |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |        :x:         |
+| vault                | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |
 
 
 ## Integrations compatible with Tyk deployments
@@ -68,7 +68,7 @@
 | jaeger               | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | k6                   |        N/A         |        N/A         |        N/A         |
 | k6-slo-traffic       |        N/A         |        N/A         |        N/A         |
-| keycloak             | :white_check_mark: |   Not Supported    |   Not Supported    |
+| keycloak             | :white_check_mark: |     :no_entry:     |     :no_entry:     |
 | keycloak-dcr         |        N/A         |        N/A         |        N/A         |
 | keycloak-jwt         |        N/A         |        N/A         |        N/A         |
 | keycloak-sso         |        N/A         |        N/A         |        N/A         |
@@ -83,3 +83,10 @@
 | prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | resurface            | :white_check_mark: |        :x:         |        :x:         |
 | vault                | :white_check_mark: |        :x:         |        :x:         |
+
+|        Icon        |        Description        |
+|:------------------:|:-------------------------:|
+| :white_check_mark: |   Supported and tested    |
+|     :warning:      |        Not tested         |
+|        :x:         |       Not supported       |
+|     :no_entry:     | Not supported by the tool |

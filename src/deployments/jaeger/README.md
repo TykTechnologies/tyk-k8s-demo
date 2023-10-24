@@ -1,22 +1,24 @@
-## Elasticsearch—Kibana
-Deploys the Elasticsearch deployment using the `bitnami/elasticsearch` chart
-version `19.13.1` as well as a Kibana deployment using the `bitnami/kibana`
-chart version `10.5.6` and creates a Kibana dashboard for you to view the
-analytics.
+## Jaeger
+Deploys the Jaeger operator using the `jaegertracing/jaeger-operator` chart
+version `v2.46.2`, a Jaeger instance using the Jaeger `jaegertracing.io/v1`
+CRD, and the OpenTelemetry collector using the
+`open-telemetryopentelemetry-collector` chart version `0.62.0` and configures
+the Tyk deployment to send telemetry data to Jaeger through the OpenTelemetry
+collector.
 
 ### Example
 ```
-./up.sh --deployments elasticsearch-kibana,k6-slo-traffic tyk-stack
+./up.sh --deployments jaeger tyk-stack
 ```
 
 ### Support
 |     Item     |       Status       |
 |:------------:|:------------------:|
-|  OpenShift   | :white_check_mark: |
+|  OpenShift   |        :x:         |
 |     ARM      | :white_check_mark: |
 |   CI Tests   | :white_check_mark: |
 | Postman Test | :white_check_mark: |
-|     SSL      | :white_check_mark: |
+|     SSL      |     :no_entry:     |
 
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|

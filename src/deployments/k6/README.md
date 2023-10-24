@@ -1,2 +1,24 @@
 ## K6 Operator
-Install k6 operator
+Deploys a Grafana K6 Operator using the `grafana/k6-operator` chart version
+`1.2.0`.
+
+### Example
+```
+./up.sh --deployments k6 tyk-stack
+```
+
+### Support
+|     Item     |       Status       |
+|:------------:|:------------------:|
+|  OpenShift   | :white_check_mark: |
+|     ARM      | :white_check_mark: |
+|   CI Tests   | :white_check_mark: |
+| Postman Test |        N/A         |
+|     SSL      |        N/A         |
+
+|        Icon        |        Description        |
+|:------------------:|:-------------------------:|
+| :white_check_mark: |   Supported and tested    |
+|     :warning:      |        Not tested         |
+|        :x:         |       Not supported       |
+|     :no_entry:     | Not supported by the tool |

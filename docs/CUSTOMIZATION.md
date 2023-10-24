@@ -27,7 +27,7 @@ and they will be mapped to the respective `extraEnvs` section in the helm charts
 | GATEWAY_VERSION                      |        `v5.2`         | Gateway version                                                                                                 |
 | MDCB_VERSION                         |        `v2.3`         | MDCB version                                                                                                    |
 | PUMP_VERSION                         |        `v1.8`         | Pump version                                                                                                    |
-| PORTAL_VERSION                       |        `v1.6`         | Portal version                                                                                                  |
+| PORTAL_VERSION                       |        `v1.7`         | Portal version                                                                                                  |
 | TYK_HELM_CHART_PATH                  |      `tyk-helm`       | Path to charts, can be a local directory or a helm repo                                                         |
 | TYK_USERNAME                         | `default@example.com` | Default password for all the services deployed                                                                  |
 | TYK_PASSWORD                         |  `topsecretpassword`  | Default password for all the services deployed                                                                  |
