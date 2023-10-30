@@ -19,7 +19,7 @@ gatewayPrefix="TYK_GW_";
 dashboardPrefix="TYK_DB_";
 mdcbPrefix="TYK_MDCB_";
 pumpPrefix="TYK_PMP_";
-portalPrefix="PORTAL_";
+enterprisePortalPrefix="PORTAL_";
 
 gatewayExtraEnvsCtr=0;
 dashExtraEnvsCtr=0;
@@ -58,7 +58,7 @@ if [[ -f .env ]]; then
         extraEnvs+=(--set-string "pump.extraEnvs[$pumpExtraEnvsCtr].name=${var[0]}" \
           --set-string "pump.extraEnvs[$pumpExtraEnvsCtr].value=${var[1]}");
         pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 1));
-      elif [[ "${var[0]}" == "$portalPrefix"* ]]; then
+      elif [[ "${var[0]}" == "$enterprisePortalPrefix"* ]]; then
         extraEnvs+=(--set-string "enterprisePortal.extraEnvs[$enterprisePortalExtraEnvsCtr].name=${var[0]}" \
           --set-string "enterprisePortal.extraEnvs[$enterprisePortalExtraEnvsCtr].value=${var[1]}");
         enterprisePortalExtraEnvsCtr=$((portalExtraEnvsCtr + 1));
