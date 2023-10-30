@@ -19,11 +19,13 @@ gatewayPrefix="TYK_GW_";
 dashboardPrefix="TYK_DB_";
 mdcbPrefix="TYK_MDCB_";
 pumpPrefix="TYK_PMP_";
+enterprisePortalPrefix="PORTAL_";
 
 gatewayExtraEnvsCtr=0;
 dashExtraEnvsCtr=0;
 mdcbExtraEnvsCtr=0;
 pumpExtraEnvsCtr=0;
+enterprisePortalExtraEnvsCtr=0;
 gatewayExtraVolumesCtr=0;
 dashExtraVolumesCtr=0;
 mdcbExtraVolumesCtr=0;
@@ -56,6 +58,10 @@ if [[ -f .env ]]; then
         extraEnvs+=(--set-string "pump.extraEnvs[$pumpExtraEnvsCtr].name=${var[0]}" \
           --set-string "pump.extraEnvs[$pumpExtraEnvsCtr].value=${var[1]}");
         pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 1));
+      elif [[ "${var[0]}" == "$enterprisePortalPrefix"* ]]; then
+        extraEnvs+=(--set-string "enterprisePortal.extraEnvs[$enterprisePortalExtraEnvsCtr].name=${var[0]}" \
+          --set-string "enterprisePortal.extraEnvs[$enterprisePortalExtraEnvsCtr].value=${var[1]}");
+        enterprisePortalExtraEnvsCtr=$((portalExtraEnvsCtr + 1));
       fi
     fi
   done < .env
@@ -75,7 +81,9 @@ if $isDebug; then
     --set "mdcb.extraEnvs[$mdcbExtraEnvsCtr].name=TYK_LOGLEVEL" \
     --set "mdcb.extraEnvs[$mdcbExtraEnvsCtr].value=DEBUG" \
     --set "pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_LOGLEVEL" \
-    --set "pump.extraEnvs[$pumpExtraEnvsCtr].value=DEBUG");
+    --set "pump.extraEnvs[$pumpExtraEnvsCtr].value=DEBUG" \
+    --set "enterprisePortal.extraEnvs[$enterprisePortalExtraEnvsCtr].name=PORTAL_LOG_LEVEL" \
+    --set "enterprisePortal.extraEnvs[$enterprisePortalExtraEnvsCtr].value=DEBUG");
 
   gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 1));
   dashExtraEnvsCtr=$((dashExtraEnvsCtr + 1));
