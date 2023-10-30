@@ -90,6 +90,3 @@ if $isDebug; then
   mdcbExtraEnvsCtr=$((mdcbExtraEnvsCtr + 1));
   pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 1));
 fi
-
-extraEnvs+=(--set "enterprisePortal.extraEnvs[$enterprisePortalExtraEnvsCtr].name=TMPDIR" \
-  --set "enterprisePortal[$enterprisePortalExtraEnvsCtr].value=/tmp/tyk-portal");
