@@ -2,8 +2,8 @@ source src/main/storage/main.sh;
 
 tykReleaseName="tyk-stack";
 args=(--set "global.license.dashboard=$LICENSE" \
-  --set "global.adminUser.email=$TYK_USERNAME" \
-  --set "global.adminUser.password=$TYK_PASSWORD" \
+  --set "tyk-bootstrap.adminUser.email=$TYK_USERNAME" \
+  --set "tyk-bootstrap.adminUser.password=$TYK_PASSWORD" \
   --set "tyk-bootstrap.bootstrap.dashboard.deploymentName=dashboard-$tykReleaseName-tyk-dashboard" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.service.port=8080" \
