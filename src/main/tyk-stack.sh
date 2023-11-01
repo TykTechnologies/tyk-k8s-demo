@@ -4,7 +4,6 @@ tykReleaseName="tyk-stack";
 args=(--set "global.license.dashboard=$LICENSE" \
   --set "tyk-bootstrap.adminUser.email=$TYK_USERNAME" \
   --set "tyk-bootstrap.adminUser.password=$TYK_PASSWORD" \
-  --set "tyk-bootstrap.bootstrap.dashboard.deploymentName=dashboard-$tykReleaseName-tyk-dashboard" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.service.port=8080" \
   --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
