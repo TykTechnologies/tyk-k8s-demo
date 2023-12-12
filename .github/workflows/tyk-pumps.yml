@@ -48,8 +48,6 @@ jobs:
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             LICENSE="${{ secrets.LICENSE }}" \
             ./up.sh -v \
-              --redis redis \
-              --namespace tyk-pumps \
               --deployments datadog,elasticsearch-kibana,prometheus-grafana,k6-slo-traffic \
               tyk-stack
 
@@ -66,8 +64,6 @@ jobs:
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             LICENSE="${{ secrets.LICENSE }}" \
             ./up.sh -v \
-              --redis redis \
-              --namespace tyk-pumps \
               --deployments datadog,elasticsearch-kibana,prometheus-grafana,k6-slo-traffic \
               tyk-stack
           command: newman run --folder gateway --env-var "deployment=tyk-stack" tyk-k8s-demo.postman_collection.json
