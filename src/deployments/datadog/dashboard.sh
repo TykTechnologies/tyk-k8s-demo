@@ -20,6 +20,8 @@ if [[ -z $search ]]; then
    -H "DD-API-KEY: $DATADOG_APIKEY" \
    -H "DD-APPLICATION-KEY: $DATADOG_APPKEY" \
    -d "$dashboard");
+
+  logger "$DEBUG" "datadog/dashboard.sh: creating dashboard result: $dashboard";
 else
   logger "$DEBUG" "datadog/dashboard.sh: dashboard already exists...skipping";
   dashboard="$(echo "$dashboards" | jq '.dashboards | .[] | select(.title="Tyk Dashboard")')";
