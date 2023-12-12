@@ -24,7 +24,6 @@ jobs:
           - elasticsearch
           - jaeger
           - k6
-          - k6-slo-traffic
           - keycloak
           - keycloak-sso
           - keycloak-dcr
