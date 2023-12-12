@@ -13,8 +13,8 @@ args=(
   --set "tyk-dev-portal.containerPort=$PORTAL_SERVICE_PORT" \
   --set "tyk-dev-portal.kind=Deployment" \
   --set "tyk-dev-portal.storage.type=db" \
-  --set "tyk-dev-portal.storage.database.dialect=postgres" \
-  --set "tyk-dev-portal.storage.database.connectionString=host\=tyk-$portalDBName-postgres-postgresql.$namespace.svc port\=$portalDBPort user\=postgres password\=$TYK_PASSWORD database\=$portalDBName sslmode\=disable" \
+  --set "tyk-dev-portal.database.dialect=postgres" \
+  --set "tyk-dev-portal.database.connectionString=host\=tyk-$portalDBName-postgres-postgresql.$namespace.svc port\=$portalDBPort user\=postgres password\=$TYK_PASSWORD database\=$portalDBName sslmode\=disable" \
   "${portalSecurityContextArgs[@]}" \
   "${portalSSLArgs[@]}" \
   "${portalLoadbalancerArgs[@]}" \
