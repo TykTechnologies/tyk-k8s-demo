@@ -1,4 +1,4 @@
-name: Tyk Stack Tests
+name: Tyk Pumps Test
 
 # Controls when the workflow will run
 on:
