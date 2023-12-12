@@ -16,6 +16,8 @@ then
 else
       tykReleaseName="tyk-dp-$TYK_WORKER_SHARDING_TAGS";
 fi
+tykReleaseVersion="1.1.0";
+
 logger "$DEBUG" "tykReleaseName=$tykReleaseName";
 
 addService "gateway-svc-$tykReleaseName-tyk-gateway";

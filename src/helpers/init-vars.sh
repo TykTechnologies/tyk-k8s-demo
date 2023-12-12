@@ -7,7 +7,7 @@ addDeploymentArgs() {
 
 upgradeTyk() {
   setVerbose;
-  helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" --devel \
+  helm upgrade "$tykReleaseName" "$TYK_HELM_CHART_PATH/$chart" --devel --version "$tykReleaseVersion" \
     --install \
     --namespace "$namespace" \
     "${deploymentsArgs[@]}" \

@@ -1,6 +1,8 @@
 source src/main/storage/main.sh;
 
 tykReleaseName="tyk-cp";
+tykReleaseVersion="";
+
 args=(
   --set "global.license.dashboard=$LICENSE" \
   --set "global.adminUser.email=$TYK_USERNAME" \
