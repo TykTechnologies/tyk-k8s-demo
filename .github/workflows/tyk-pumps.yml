@@ -38,7 +38,7 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy tyk-stack-${{ matrix.deployment }}
+      - name: Deploy tyk-stack
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
