@@ -13,7 +13,7 @@ env:
   TIMEOUT: 30
 
 jobs:
-  tyk-stack:
+  tyk-pumps:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
