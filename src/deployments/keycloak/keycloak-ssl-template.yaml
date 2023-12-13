@@ -1,0 +1,25 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: replace_name
+spec:
+  instances: 1
+  db:
+    vendor: postgres
+    host: replace_db_host
+    port: replace_db_port
+    database: replace_db_name
+    usernameSecret:
+      name: keycloak-db-secret
+      key: username
+    passwordSecret:
+      name: keycloak-db-secret
+      key: password
+  http:
+    httpsPort: replace_service_port
+    tlsSecret: keycloak-tls-secret
+  hostname:
+    strict: false
+    strictBackchannel: false
+  ingress:
+    enabled: false

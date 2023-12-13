@@ -18,7 +18,7 @@ waitForPods() {
 
 terminateDashboardPort() {
   set +e;
-  pid=$(pgrep -f "svc/dashboard-svc-$tykReleaseName-$chart");
+  pid=$(pgrep -f "svc/dashboard-svc-$tykReleaseName");
   set -e;
 
   if [[ -n "$pid" ]]; then

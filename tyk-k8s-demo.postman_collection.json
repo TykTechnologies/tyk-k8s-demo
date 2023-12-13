@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dfb37ce2-d2f5-4f7a-a647-76dd8682f9ce",
+		"_postman_id": "d84db6c9-6286-4e1d-9c8d-bb73320102ea",
 		"name": "tyk-k8s-demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13702323"
@@ -70,6 +70,10 @@
 		{
 			"name": "Deployments",
 			"item": [
+				{
+					"name": "cert-manager",
+					"item": []
+				},
 				{
 					"name": "datadog",
 					"item": [
@@ -187,6 +191,45 @@
 					]
 				},
 				{
+					"name": "jaeger",
+					"item": [
+						{
+							"name": "health",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Jaeger status is UP\", function () {",
+											"    var health = pm.response.json();",
+											"    pm.expect(health.status).to.eql(\"Server available\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{jaeger.health-port}}/health",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{jaeger.health-port}}",
+									"path": [
+										"health"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "k6",
 					"item": []
 				},
@@ -217,8 +260,8 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:{{keycloak.port}}/health",
-									"protocol": "https",
+									"raw": "http://localhost:{{keycloak.port}}/health",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
@@ -322,8 +365,8 @@
 									]
 								},
 								"url": {
-									"raw": "https://localhost:{{keycloak.port}}/realms/jwt/protocol/openid-connect/token",
-									"protocol": "https",
+									"raw": "http://localhost:{{keycloak.port}}/realms/jwt/protocol/openid-connect/token",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
@@ -416,8 +459,8 @@
 									]
 								},
 								"url": {
-									"raw": "https://localhost:{{keycloak.port}}/realms/jwt/protocol/openid-connect/token",
-									"protocol": "https",
+									"raw": "http://localhost:{{keycloak.port}}/realms/jwt/protocol/openid-connect/token",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
@@ -868,7 +911,7 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Elasticsearch status is green\", function () {",
+											"pm.test(\"Grafana status is ok\", function () {",
 											"    var health = pm.response.text();",
 											"    pm.expect(health).to.eql(\"Ok\");",
 											"});"
@@ -895,6 +938,54 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "vault",
+					"item": [
+						{
+							"name": "health",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Vault is initialized\", function () {",
+											"    var health = pm.response.json();",
+											"    pm.expect(health.initialized).to.eql(true);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{vault.port}}/v1/sys/health",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{vault.port}}",
+									"path": [
+										"v1",
+										"sys",
+										"health"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"event": [
@@ -983,6 +1074,14 @@
 		{
 			"key": "grafana.port",
 			"value": "9081"
+		},
+		{
+			"key": "jaeger.health-port",
+			"value": "14269"
+		},
+		{
+			"key": "vault.port",
+			"value": "8200"
 		}
 	]
 }

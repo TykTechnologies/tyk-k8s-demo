@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifications-graph-svc
+  labels:
+    app: notifications-graph
+spec:
+  ports:
+    - name: http
+      port: 4104
+      targetPort: 4104
+  selector:
+    app: notifications-graph
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-graph
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifications-graph
+  template:
+    metadata:
+      labels:
+        app: notifications-graph
+    spec:
+      containers:
+        - image: zalbiraw/go-api-test-service:v3.0
+          imagePullPolicy: IfNotPresent
+          name: notifications-graph
+          command:
+            - ./services/graphql/notifications/server
+          ports:
+            - containerPort: 4104
+          env:
+            - name: PORT
+              value: "4104"

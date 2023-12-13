@@ -1,9 +1,9 @@
 logger "$INFO" "creating datadog dashboard...";
 
 dashboards=$(curl -s -X GET "https://api.$DATADOG_SITE/api/v1/dashboard" \
--H "Accept: application/json" \
--H "DD-API-KEY: $DATADOG_APIKEY" \
--H "DD-APPLICATION-KEY: $DATADOG_APPKEY");
+  -H "Accept: application/json" \
+  -H "DD-API-KEY: $DATADOG_APIKEY" \
+  -H "DD-APPLICATION-KEY: $DATADOG_APPKEY");
 
 set +e;
 search=$(echo "$dashboards" | grep -e "\"title\":\"Tyk Dashboard\"");
@@ -20,6 +20,8 @@ if [[ -z $search ]]; then
    -H "DD-API-KEY: $DATADOG_APIKEY" \
    -H "DD-APPLICATION-KEY: $DATADOG_APPKEY" \
    -d "$dashboard");
+
+  logger "$DEBUG" "datadog/dashboard.sh: creating dashboard result: $dashboard";
 else
   logger "$DEBUG" "datadog/dashboard.sh: dashboard already exists...skipping";
   dashboard="$(echo "$dashboards" | jq '.dashboards | .[] | select(.title="Tyk Dashboard")')";

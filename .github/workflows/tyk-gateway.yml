@@ -19,23 +19,23 @@ jobs:
       fail-fast: false
       matrix:
         deployment:
-#          - datadog
-#          - elasticsearch
-#          - elasticsearch-kibana
+          - cert-manager
+          - datadog
+          - elasticsearch
+          - elasticsearch-kibana
+          - jaeger
           - k6
-          - k6-slo-traffic
           - keycloak
-#          - keycloak-jwt
+          - keycloak-jwt
           - operator
-          - operator-httpbin
-          - operator-graphql
-          - operator-udg
           - operator-federation
-#          - operator-jwt-hmac
-#          - prometheus
-#          - prometheus-grafana
-#          - resurface
-      max-parallel: 3
+          - operator-graphql
+          - operator-httpbin
+          - operator-jwt-hmac
+          - operator-udg
+          - prometheus
+          - prometheus-grafana
+          - vault
     steps:
       - uses: actions/checkout@v2
 
@@ -44,13 +44,11 @@ jobs:
         with:
           kubernetes-version: v1.23.13
           extra-config: 'kubelet.max-pods=100'
-          addons: 'ingress'
+          addons: 'default-storageclass,storage-provisioner,ingress'
           start-args: '--force'
 
       - name: Install helm
-        uses: Azure/setup-helm@v1.1
-        with:
-          version: v3.5.3
+        uses: Azure/setup-helm@v3.5
 
       - name: Install newman
         run: |
@@ -67,7 +65,10 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           command: |
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
+              --redis redis \
               --namespace tyk-gateway-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
               tyk-gateway
@@ -81,7 +82,10 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
+              --redis redis \
               --namespace tyk-gateway-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
               tyk-gateway && sleep 180
@@ -93,7 +97,10 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
+              --redis redis \
               --namespace tyk-gateway-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
               tyk-gateway && sleep 180

@@ -639,7 +639,7 @@ spec:
         clientAuthenticatorType: client-secret
         secret: 'replace_secret'
         redirectUris:
-          - "http://localhost:3000/auth/keycloak/openid-connect/callback"
+          - "replace_protocol://localhost:3000/auth/keycloak/openid-connect/callback"
         webOrigins:
           - /*
         notBefore: 0
@@ -1105,17 +1105,17 @@ spec:
         firstBrokerLoginFlowAlias: first broker login
         config:
           userInfoUrl: >-
-            http://localhost:7001/realms/keycloak-sso/protocol/openid-connect/userinfo
+            replace_protocol://localhost:7001/realms/keycloak-sso/protocol/openid-connect/userinfo
           validateSignature: 'true'
           clientId: tyk-sso
-          tokenUrl: 'http://localhost:7001/realms/keycloak-sso/protocol/openid-connect/token'
-          jwksUrl: 'http://localhost:7001/realms/keycloak-sso/protocol/openid-connect/certs'
-          issuer: 'http://localhost:7001/realms/keycloak-sso'
+          tokenUrl: 'replace_protocol://localhost:7001/realms/keycloak-sso/protocol/openid-connect/token'
+          jwksUrl: 'replace_protocol://localhost:7001/realms/keycloak-sso/protocol/openid-connect/certs'
+          issuer: 'replace_protocol://localhost:7001/realms/keycloak-sso'
           useJwksUrl: 'true'
           pkceEnabled: 'false'
-          authorizationUrl: 'http://localhost:7001/realms/keycloak-sso/protocol/openid-connect/auth'
+          authorizationUrl: 'replace_protocol://localhost:7001/realms/keycloak-sso/protocol/openid-connect/auth'
           clientAuthMethod: client_secret_post
-          logoutUrl: 'http://localhost:7001/realms/keycloak-sso/protocol/openid-connect/logout'
+          logoutUrl: 'replace_protocol://localhost:7001/realms/keycloak-sso/protocol/openid-connect/logout'
           clientSecret: 'SLYnJetvXaGWkWlw4JwLboL6MGyUYB3A'
     identityProviderMappers: [ ]
     components:

@@ -4,16 +4,22 @@ portalDBName=portal;
 portalDBPort=54321;
 source src/main/storage/pgsql.sh $portalDBName $portalDBPort;
 
-addService "enterprise-portal-svc-$tykReleaseName-$chart";
-addServiceArgs "enterprisePortal";
+addService "dev-portal-svc-$tykReleaseName-tyk-dev-portal";
 
-args=(--set "enterprisePortal.license=$PORTAL_LICENSE" \
-  --set "enterprisePortal.enabled=true" \
-  --set "enterprisePortal.image.tag=$PORTAL_VERSION" \
-  --set "enterprisePortal.storage.database.connectionString=host\=tyk-$portalDBName-postgres-postgresql.$namespace.svc port\=$portalDBPort user\=postgres password\=$PASSWORD database\=$portalDBName sslmode\=disable" \
-  "${portalSecurityContextArgs[@]}");
+args=(
+  --set "global.components.devPortal=true" \
+  --set "tyk-dev-portal.license=$PORTAL_LICENSE" \
+  --set "tyk-dev-portal.image.tag=$PORTAL_VERSION" \
+  --set "tyk-dev-portal.containerPort=$PORTAL_SERVICE_PORT" \
+  --set "tyk-dev-portal.kind=Deployment" \
+  --set "tyk-dev-portal.storage.type=db" \
+  --set "tyk-dev-portal.database.dialect=postgres" \
+  --set "tyk-dev-portal.database.connectionString=host\=tyk-$portalDBName-postgres-postgresql.$namespace.svc port\=$portalDBPort user\=postgres password\=$TYK_PASSWORD database\=$portalDBName sslmode\=disable" \
+  "${portalSecurityContextArgs[@]}" \
+  "${portalSSLArgs[@]}" \
+  "${portalLoadbalancerArgs[@]}" \
+  "${portalIngressArgs[@]}" \
+);
 
 addDeploymentArgs "${args[@]}";
-# Bug fix, will have better fix in v3
-addDeploymentArgs "${servicesArgs[@]}";
 upgradeTyk;

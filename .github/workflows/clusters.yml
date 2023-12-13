@@ -22,7 +22,6 @@ jobs:
           - v1.21.14
           - v1.22.15
           - v1.23.13
-      max-parallel: 3
     steps:
       - uses: actions/checkout@v2
 
@@ -31,13 +30,11 @@ jobs:
         with:
           kubernetes-version: "${{ matrix.cluster }}"
           extra-config: 'kubelet.max-pods=100'
-          addons: 'ingress'
+          addons: 'default-storageclass,storage-provisioner,ingress'
           start-args: '--force'
 
       - name: Install helm
-        uses: Azure/setup-helm@v1.1
-        with:
-          version: v3.5.3
+        uses: Azure/setup-helm@v3.5
 
       - name: Install newman
         run: |
@@ -48,7 +45,7 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy tyk-cp on ${{ matrix.cluster }}
+      - name: Deploy tyk-stack on ${{ matrix.cluster }}
         uses: nick-invision/retry@v2
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
@@ -56,7 +53,7 @@ jobs:
           command: |
             LICENSE="${{ secrets.LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
-            ./up.sh -v tyk-cp
+            ./up.sh -v tyk-stack
 
       - name: Sleep 1 minute
         run: sleep 60

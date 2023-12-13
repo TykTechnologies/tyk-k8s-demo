@@ -6,7 +6,7 @@ setVerbose;
 kubectl apply -f "$prometheusGrafanaDeploymentPath/grafana-dashboards-configmap.yaml" --namespace "$namespace" > /dev/null;
 helm upgrade "$grafanaReleaseName" grafana/grafana --version 6.52.7 \
   --install \
-  --set "adminPassword=$PASSWORD" \
+  --set "adminPassword=$TYK_PASSWORD" \
   --set "service.port=$GRAFANA_SERVICE_PORT" \
   --set "datasources.datasources\.yaml.apiVersion=1" \
   --set "datasources.datasources\.yaml.datasources[0].name=Prometheus" \
@@ -28,6 +28,8 @@ helm upgrade "$grafanaReleaseName" grafana/grafana --version 6.52.7 \
   --set "extraConfigmapMounts[0].configMap=grafana-dashboards-configmap" \
   --set "extraConfigmapMounts[0].readOnly=true" \
   "${prometheusGrafanaSecurityContextArgs[@]}" \
+  "${prometheusGrafanaLoadbalancerArgs[@]}" \
+  "${prometheusGrafanaIngressArgs[@]}" \
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

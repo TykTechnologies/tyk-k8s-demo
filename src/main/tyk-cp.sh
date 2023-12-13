@@ -1,27 +1,27 @@
-source src/main/namespace.sh;
-source src/main/redis/main.sh;
 source src/main/storage/main.sh;
 
-args=(--set "dash.license=$LICENSE" \
-  --set "dash.adminUser.email=$TYKUSERNAME" \
-  --set "dash.adminUser.password=$PASSWORD" \
-  --set "dash.image.tag=$DASHBOARD_VERSION" \
-  --set "gateway.image.tag=$GATEWAY_VERSION" \
-  --set "pump.image.tag=$PUMP_VERSION" \
-  --set "pump.image.repository=tykio/tyk-pump-docker-pub");
-
 tykReleaseName="tyk-cp";
-addService "dashboard-svc-$tykReleaseName-$chart";
-addService "gateway-svc-$tykReleaseName-$chart";
-addServiceArgs "dash";
-addServiceArgs "gateway";
+tykReleaseVersion="";
+
+args=(
+  --set "global.license.dashboard=$LICENSE" \
+  --set "global.adminUser.email=$TYK_USERNAME" \
+  --set "global.adminUser.password=$TYK_PASSWORD" \
+  --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
+  --set "tyk-gateway.gateway.service.port=8080" \
+  --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
+  --set "tyk-pump.pump.image.repository=tykio/tyk-pump-docker-pub" \
+  --set "tyk-pump.pump.image.tag=$PUMP_VERSION" \
+);
+
+addService "dashboard-svc-$tykReleaseName-tyk-dashboard";
+addService "gateway-svc-$tykReleaseName-tyk-gateway";
 checkTykRelease;
 checkMDCBRelease;
 
 addDeploymentArgs "${args[@]}";
 addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
 addDeploymentArgs "${tykSecurityContextArgs[@]}";
-addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
 
 if ! $mdcbExists; then
@@ -34,16 +34,17 @@ else
   logger "$INFO" "MDCB exists skipping $tykReleaseName install..."
 fi
 
-addService "mdcb-svc-$tykReleaseName-$chart";
-addServiceArgs "mdcb";
+addService "mdcb-svc-$tykReleaseName-tyk-mdcb";
 
 mdcbArgs=(--set "mdcb.enabled=true" \
   --set "mdcb.license=$MDCB_LICENSE" \
+  --set "mdcb.service.type=NodePort" \
   --set "mdcb.image.tag=$MDCB_VERSION");
 
 addDeploymentArgs "${mdcbArgs[@]}";
-addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${mdcbSecurityContextArgs[@]}";
+addDeploymentArgs "${loadbalancerArgs[@]}";
+addDeploymentArgs "${ingressArgs[@]}";
 upgradeTyk;
 
 if ! $dryRun; then
@@ -56,8 +57,8 @@ if [[ $NONE != $expose ]]; then
 fi
 
 addSummary "\tTyk Control Plane deployed\n \
-\tDashboard username: $TYKUSERNAME\n \
-\tDashboard password: $PASSWORD\n \
+\tDashboard username: $TYK_USERNAME\n \
+\tDashboard password: $TYK_PASSWORD\n \
 \tMDCB connection string: $ip:$port\n \
 \tOrganisation ID: $orgID\n\n \
 You can deploy a worker gateway and connect it to this Control Plane by running the following command:\n\n \

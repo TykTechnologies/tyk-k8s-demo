@@ -20,19 +20,19 @@ if [[ $OPENSHIFT == "$flavor" ]]; then
 
   logger "$INFO" "using $OS_UID_RANGE for OpenShift security context values";
   # Set Tyk args
-  tykSecurityContextArgs=(--set "dash.securityContext.fsGroup=$OS_UID_RANGE" \
-    --set "dash.securityContext.runAsUser=$OS_UID_RANGE" \
-    --set "dash.securityContext.seccompProfile.type=RuntimeDefault" \
-    --set "pump.securityContext.fsGroup=$OS_UID_RANGE" \
-    --set "pump.securityContext.runAsUser=$OS_UID_RANGE" \
-    --set "pump.securityContext.seccompProfile.type=RuntimeDefault");
+  tykSecurityContextArgs=(--set "tyk-dashboard.dashboard.securityContext.fsGroup=$OS_UID_RANGE" \
+    --set "tyk-dashboard.dashboard.securityContext.runAsUser=$OS_UID_RANGE" \
+    --set "tyk-dashboard.dashboard.securityContext.seccompProfile.type=RuntimeDefault" \
+    --set "tyk-pump.pump.securityContext.fsGroup=$OS_UID_RANGE" \
+    --set "tyk-pump.pump.securityContext.runAsUser=$OS_UID_RANGE" \
+    --set "tyk-pump.pump.securityContext.seccompProfile.type=RuntimeDefault");
 
-  gatewaySecurityContextArgs=(--set "gateway.securityContext.fsGroup=$OS_UID_RANGE" \
-    --set "gateway.securityContext.runAsUser=$OS_UID_RANGE" \
-    --set "gateway.securityContext.seccompProfile.type=RuntimeDefault");
+  gatewaySecurityContextArgs=(--set "tyk-gateway.gateway.securityContext.fsGroup=$OS_UID_RANGE" \
+    --set "tyk-gateway.gateway.securityContext.runAsUser=$OS_UID_RANGE" \
+    --set "tyk-gateway.gateway.securityContext.seccompProfile.type=RuntimeDefault");
 
   # Set MDCB args
-  mdcbSecurityContextArgs=(--set "mdcb.securityContext.fsGroup=$OS_UID_RANGE" \
-    --set "mdcb.securityContext.runAsUser=$OS_UID_RANGE" \
-    --set "mdcb.securityContext.seccompProfile.type=RuntimeDefault");
+  mdcbSecurityContextArgs=(--set "tyk-mdcb.mdcb.securityContext.fsGroup=$OS_UID_RANGE" \
+    --set "tyk-mdcb.mdcb.securityContext.runAsUser=$OS_UID_RANGE" \
+    --set "tyk-mdcb.mdcb.securityContext.seccompProfile.type=RuntimeDefault");
 fi

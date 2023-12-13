@@ -27,7 +27,7 @@ helm upgrade "$postgresReleaseName" bitnami/postgresql --version 11.9.7 \
   --set "metrics.image.tag=0.11.1-debian-11" \
   \
   --set "auth.database=$1" \
-  --set "auth.postgresPassword=$PASSWORD" \
+  --set "auth.postgresPassword=$TYK_PASSWORD" \
   --set "containerPorts.postgresql=$2" \
   --set "primary.service.ports.postgresql=$2" \
   "${securityContextArgs[@]}" \

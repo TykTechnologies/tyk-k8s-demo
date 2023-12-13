@@ -19,23 +19,23 @@ jobs:
       fail-fast: false
       matrix:
         deployment:
-#          - datadog
-#          - elasticsearch
-#          - elasticsearch-kibana
+          - cert-manager
+          - datadog
+          - elasticsearch
+          - elasticsearch-kibana
+          - jaeger
           - k6
           - keycloak
-#          - keycloak-jwt
-          - k6-slo-traffic
+          - keycloak-jwt
           - operator
-          - operator-httpbin
-          - operator-graphql
-          - operator-udg
           - operator-federation
+          - operator-graphql
+          - operator-httpbin
           - operator-jwt-hmac
-#          - prometheus
-#          - prometheus-grafana
-#          - resurface
-      max-parallel: 3
+          - operator-udg
+          - prometheus
+          - prometheus-grafana
+          - vault
     steps:
       - uses: actions/checkout@v2
 
@@ -44,13 +44,11 @@ jobs:
         with:
           kubernetes-version: v1.23.13
           extra-config: 'kubelet.max-pods=100'
-          addons: 'ingress'
+          addons: 'default-storageclass,storage-provisioner,ingress'
           start-args: '--force'
 
       - name: Install helm
-        uses: Azure/setup-helm@v1.1
-        with:
-          version: v3.5.3
+        uses: Azure/setup-helm@v3.5
 
       - name: Install newman
         run: |
@@ -71,7 +69,10 @@ jobs:
             TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
             TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
+              --redis redis \
               --namespace tyk-dp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
               tyk-dp
@@ -89,7 +90,10 @@ jobs:
             TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
             TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
+              --redis redis \
               --namespace tyk-dp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
               tyk-dp && sleep 180
@@ -105,7 +109,10 @@ jobs:
             TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
             TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
+            DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             ./up.sh -v \
+              --redis redis \
               --namespace tyk-dp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
               tyk-dp && sleep 180

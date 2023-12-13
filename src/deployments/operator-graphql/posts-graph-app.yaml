@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-graph-svc
+  labels:
+    app: posts-graph
+spec:
+  ports:
+    - name: http
+      port: 4102
+      targetPort: 4102
+  selector:
+    app: posts-graph
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-graph
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts-graph
+  template:
+    metadata:
+      labels:
+        app: posts-graph
+    spec:
+      containers:
+        - image: zalbiraw/go-api-test-service:v3.0
+          imagePullPolicy: IfNotPresent
+          name: posts-graph
+          command:
+            - ./services/graphql/posts/server
+          ports:
+            - containerPort: 4102
+          env:
+            - name: PORT
+              value: "4102"

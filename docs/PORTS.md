@@ -1,25 +1,29 @@
 # Ports
 All the ports that this library uses.
 
-| Service                |  Port  |
-|------------------------|:------:|
-| gateway                | `8080` |
-| dashboard              | `3000` |
-| MDCB                   | `9090` |
-| datadog                | `5555` |
-| elastcisearch          | `9200` |
-| kibana                 | `5601` |
-| keyclaok               | `7001` |
-| users-subgraph         | `4201` |
-| posts-subgraph         | `4202` |
-| comments-subgraph      | `4203` |
-| notifications-subgraph | `4204` |
-| httpbin                | `8000` |
-| users-rest             | `3101` |
-| posts-rest             | `3102` |
-| comments-rest          | `3103` |
-| portal                 | `3001` |
-| prometheus pump        | `9091` |
-| prometheus             | `9080` |
-| grafana                | `9081` |
-| resurface-coordinator  | `7700` |
+| Deployment           | Service                                |  Port   |
+|----------------------|----------------------------------------|:-------:|
+| tyk-stack, tyk-cp    | dashboard-svc-*-tyk-dashboard          | `3000`  |
+| portal               | enterprise-portal-svc-*-tyk-dev-portal | `3001`  |
+| operator-udg         | users-rest-svc                         | `3101`  |
+| operator-udg         | posts-rest-svc                         | `3102`  |
+| operator-udg         | comments-rest-svc                      | `3103`  |
+| operator-graphql     | users-graph-svc                        | `4101`  |
+| operator-graphql     | posts-graph-svc                        | `4102`  |
+| operator-graphql     | comments-graph-svc                     | `4103`  |
+| operator-graphql     | notifications-graph-svc                | `4104`  |
+| operator-federation  | users-subgraph-svc                     | `4201`  |
+| operator-federation  | posts-subgraph-svc                     | `4202`  |
+| operator-federation  | comments-subgraph-svc                  | `4203`  |
+| operator-federation  | notifications-subgraph-svc             | `4204`  |
+| elasticsearch-kibana | elasticsearch-kibana                   | `5601`  |
+| keyclaok             | keycloak-service                       | `7001`  |
+| operator-httpbin     | httpbin-svc                            | `8000`  |
+| all                  | gateway-svc-*-tyk-gateway              | `8080`  |
+| vault                | vault                                  | `8200`  |
+| prometheus           | prometheus-server                      | `9080`  |
+| prometheus-grafana   | prometheus-grafana                     | `9081`  |
+| tyk-cp               | mdcb-svc-*-tyk-mdcb                    | `9090`  |
+| prometheus           | pump-svc-*-tyk-pump                    | `9091`  |
+| elasticsearch        | elasticsearch                          | `9200`  |
+| jaeger               | tyk-jaeger-query                       | `16686` |

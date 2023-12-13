@@ -1,36 +1,36 @@
-source src/main/namespace.sh;
-source src/main/redis/main.sh;
-
 cluster=$(kubectl config current-context);
 
-args=(--set "gateway.image.tag=$GATEWAY_VERSION" \
-  --set "gateway.rpc.connString=$TYK_WORKER_CONNECTIONSTRING" \
-  --set "gateway.rpc.rpcKey=$TYK_WORKER_ORGID" \
-  --set "gateway.rpc.apiKey=$TYK_WORKER_AUTHTOKEN" \
-  --set "gateway.rpc.useSSL=$TYK_WORKER_USESSL" \
-  --set "gateway.rpc.groupId=$(echo "$cluster/$namespace" | base64)" \
-  --set "gateway.sharding.enabled=$TYK_WORKER_SHARDING_ENABLED" \
-  --set "gateway.sharding.tags=$TYK_WORKER_SHARDING_TAGS" \
-  --set "gateway.service.port=$TYK_WORKER_GW_PORT");
+args=(--set "global.remoteControlPlane.connectionString=$TYK_WORKER_CONNECTIONSTRING" \
+  --set "global.remoteControlPlane.orgId=$TYK_WORKER_ORGID" \
+  --set "global.remoteControlPlane.userApiKey=$TYK_WORKER_AUTHTOKEN" \
+  --set "global.remoteControlPlane.useSSL=$TYK_WORKER_USESSL" \
+  --set "global.remoteControlPlane.groupId=$(echo "$cluster/$namespace" | base64)" \
+  --set "global.servicePorts.gateway=$TYK_WORKER_GW_PORT" \
+  --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
+  --set "tyk-gateway.gateway.sharding.enabled=$TYK_WORKER_SHARDING_ENABLED" \
+  --set "tyk-gateway.gateway.sharding.tags=$TYK_WORKER_SHARDING_TAGS");
 
 if [ -z "$TYK_WORKER_SHARDING_TAGS" ]
 then
-      tykReleaseName="tyk-dp-tyk-hybrid";
+      tykReleaseName="tyk-dp";
 else
-      tykReleaseName="tyk-dp-tyk-hybrid-$TYK_WORKER_SHARDING_TAGS";
+      tykReleaseName="tyk-dp-$TYK_WORKER_SHARDING_TAGS";
 fi
+tykReleaseVersion="1.1.0";
+
 logger "$DEBUG" "tykReleaseName=$tykReleaseName";
 
-addService "gateway-svc-$tykReleaseName";
-addServiceArgs "gateway";
+addService "gateway-svc-$tykReleaseName-tyk-gateway";
 checkTykRelease;
 
 addDeploymentArgs "${args[@]}";
 addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
 addDeploymentArgs "${tykSecurityContextArgs[@]}";
-addDeploymentArgs "${servicesArgs[@]}";
 addDeploymentArgs "${extraEnvs[@]}";
+addDeploymentArgs "${loadbalancerArgs[@]}";
+addDeploymentArgs "${ingressArgs[@]}";
 upgradeTyk;
+
 if [[ -n "$TYK_WORKER_OPERATOR_CONNECTIONSTRING" ]]; then
   logger "$INFO" "creating tyk-operator secret...";
   kubectl create secret generic tyk-operator-conf \

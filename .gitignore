@@ -6,6 +6,6 @@
 **/.terraform.*
 **/terraform.tfstate
 **/terraform.tfstate.backup
-
-src/deployments/self-signed-certs/certs/*[.crt,.csr,.key,.pem,.slr]
-src/deployments/k6/k6-operator
+**/certs/*
+!**/certs/.gitkeep
+**/k6/k6-operator

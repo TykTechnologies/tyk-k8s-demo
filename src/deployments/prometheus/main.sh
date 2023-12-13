@@ -3,7 +3,7 @@ logger "$INFO" "installing $prometheusReleaseName in $namespace namespace...";
 addService "$prometheusReleaseName-server";
 
 setVerbose;
-helm upgrade "$prometheusReleaseName" prometheus-community/prometheus --version 20.1.0 \
+helm upgrade "$prometheusReleaseName" prometheus-community/prometheus --version 25.3.0 \
   --install \
   --set "prometheus-pushgateway.enabled=false" \
   --set "prometheus-node-exporter.hostRootFsMount.enabled=false" \
@@ -25,8 +25,10 @@ helm upgrade "$prometheusReleaseName" prometheus-community/prometheus --version 
   --set "serverFiles.recording_rules\.yml.groups[1].rules[1].expr=(1 - job:slo_errors_per_request:ratio_rate10m) * 100" \
   --set "serverFiles.prometheus\.yml.scrape_configs[0].job_name=tyk" \
   --set "serverFiles.prometheus\.yml.scrape_configs[0].metrics_path=$PROMETHEUS_PUMP_PATH" \
-  --set "serverFiles.prometheus\.yml.scrape_configs[0].static_configs[0].targets={pump-svc-$tykReleaseName-$chart.$namespace.svc:$PROMETHEUS_PUMP_PORT}" \
+  --set "serverFiles.prometheus\.yml.scrape_configs[0].static_configs[0].targets={pump-svc-$tykReleaseName-tyk-pump.$namespace.svc:$PROMETHEUS_PUMP_PORT}" \
   "${prometheusSecurityContextArgs[@]}" \
+  "${prometheusLoadbalancerArgs[@]}" \
+  "${prometheusIngressArgs[@]}" \
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

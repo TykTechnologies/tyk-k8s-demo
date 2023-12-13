@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: comments-graph-svc
+  labels:
+    app: comments-graph
+spec:
+  ports:
+    - name: http
+      port: 4103
+      targetPort: 4103
+  selector:
+    app: comments-graph
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comments-graph
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comments-graph
+  template:
+    metadata:
+      labels:
+        app: comments-graph
+    spec:
+      containers:
+        - image: zalbiraw/go-api-test-service:v3.0
+          imagePullPolicy: IfNotPresent
+          name: comments-graph
+          command:
+            - ./services/graphql/comments/server
+          ports:
+            - containerPort: 4103
+          env:
+            - name: PORT
+              value: "4103"

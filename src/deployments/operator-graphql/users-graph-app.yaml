@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-graph-svc
+  labels:
+    app: users-graph
+spec:
+  ports:
+    - name: http
+      port: 4101
+      targetPort: 4101
+  selector:
+    app: users-graph
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-graph
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-graph
+  template:
+    metadata:
+      labels:
+        app: users-graph
+    spec:
+      containers:
+        - image: zalbiraw/go-api-test-service:v3.0
+          imagePullPolicy: IfNotPresent
+          name: users-graph
+          command:
+            - ./services/graphql/users/server
+          ports:
+            - containerPort: 4101
+          env:
+            - name: PORT
+              value: "4101"
