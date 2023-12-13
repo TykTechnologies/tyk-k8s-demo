@@ -1,5 +1,6 @@
 ## Tyk Operator
-Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency
+Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-operator)
+using the `tyk-helm/tyk-operator` chart version `0.15.1`and its dependency
 [cert-manager](https://github.com/jetstack/cert-manager).
 
 ### Minikube
@@ -23,6 +24,13 @@ minikube addons enable ingress
 |   CI Tests   | :white_check_mark: |
 | Postman Test |        N/A         |
 |     SSL      |        N/A         |
+
+### Supported Service Types with `--expose` flag
+|     Item      | Status |
+|:-------------:|:------:|
+| Port Forward  |  N/A   |
+|    Ingress    |  N/A   |
+| Load Balancer |  N/A   |
 
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|

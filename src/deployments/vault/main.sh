@@ -2,7 +2,7 @@ logger "$INFO" "installing $vaultReleaseName in $namespace namespace...";
 
 addService "$vaultReleaseName";
 setVerbose;
-helm upgrade "$vaultReleaseName" hashicorp/vault \
+helm upgrade "$vaultReleaseName" hashicorp/vault --version 1.15.2 \
   --install \
   --namespace "$namespace" \
   --set "server.service.targetPort=$VAULT_SERVICE_PORT" \

@@ -25,6 +25,13 @@ DATADOG_SITE=datadoghq.com
 | Postman Test | :white_check_mark: |
 |     SSL      |        N/A         |
 
+### Supported Service Types with `--expose` flag
+|     Item      |       Status       |
+|:-------------:|:------------------:|
+| Port Forward  | :white_check_mark: |
+|    Ingress    |        N/A         |
+| Load Balancer |        N/A         |
+
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|
 | :white_check_mark: |   Supported and tested    |

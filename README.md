@@ -97,8 +97,7 @@ Please see this [page](docs/FEATURES_MATRIX.md) for Tyk deployments compatibilit
 - [portal](src/deployments/portal): deploys the [Tyk Enterprise Developer Portal](https://tyk.io/docs/tyk-developer-portal/tyk-enterprise-developer-portal/) as well as its dependency PostgreSQL.
 - [prometheus](src/deployments/prometheus): deploys Prometheus and stands up a Tyk pump to push analytics data from the Tyk platform to Prometheus.
 	- [prometheus-grafana](src/deployments/prometheus-grafana): deploys the Prometheus deployment as well as a Grafana deployment and creates a Grafana dashboard for you to view the analytics.
-- [resurface](src/deployments/resurface): deploys Resurface.io and stands up a Tyk pump to push analytics data from the Tyk platform to Resurface.io.
-- [vault](src/deployments/resurface): deploys Vault Operator and a Vault instance.
+- [vault](src/deployments/vault): deploys Vault Operator and a Vault instance.
 
 If you are running a POC and would like an example of how to integrate a
 specific tool. Please submit a request through the repository [here](https://github.com/TykTechnologies/tyk-k8s-demo/issues).

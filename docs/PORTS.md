@@ -18,7 +18,6 @@ All the ports that this library uses.
 | operator-federation  | notifications-subgraph-svc             | `4204`  |
 | elasticsearch-kibana | elasticsearch-kibana                   | `5601`  |
 | keyclaok             | keycloak-service                       | `7001`  |
-| resurface            | coordinator                            | `7700`  |
 | operator-httpbin     | httpbin-svc                            | `8000`  |
 | all                  | gateway-svc-*-tyk-gateway              | `8080`  |
 | vault                | vault                                  | `8200`  |

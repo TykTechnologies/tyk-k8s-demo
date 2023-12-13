@@ -25,6 +25,13 @@ localhost.
 | Postman Test |        N/A         |
 |     SSL      |        N/A         |
 
+### Supported Service Types with `--expose` flag
+|     Item      | Status |
+|:-------------:|:------:|
+| Port Forward  |  N/A   |
+|    Ingress    |  N/A   |
+| Load Balancer |  N/A   |
+
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|
 | :white_check_mark: |   Supported and tested    |

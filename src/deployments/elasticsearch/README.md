@@ -16,6 +16,13 @@ Stands up a Tyk pump to push analytics data from the Tyk platform to Elasticsear
 | Postman Test | :white_check_mark: |
 |     SSL      | :white_check_mark: |
 
+### Supported Service Types with `--expose` flag
+|     Item      |       Status       |
+|:-------------:|:------------------:|
+| Port Forward  | :white_check_mark: |
+|    Ingress    | :white_check_mark: |
+| Load Balancer | :white_check_mark: |
+
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|
 | :white_check_mark: |   Supported and tested    |

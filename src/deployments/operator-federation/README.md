@@ -29,8 +29,15 @@ minikube addons enable ingress
 |  OpenShift   | :white_check_mark: |
 |     ARM      | :white_check_mark: |
 |   CI Tests   | :white_check_mark: |
-| Postman Test |        N/A         |
+| Postman Test | :white_check_mark: |
 |     SSL      |        N/A         |
+
+### Supported Service Types with `--expose` flag
+|     Item      |       Status       |
+|:-------------:|:------------------:|
+| Port Forward  | :white_check_mark: |
+|    Ingress    |        :x:         |
+| Load Balancer |        :x:         |
 
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|
