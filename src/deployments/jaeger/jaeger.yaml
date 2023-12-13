@@ -5,6 +5,15 @@ metadata:
 spec:
   query:
     serviceType: replace_service_type
+    containerSecurityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      seccompProfile:
+        type: RuntimeDefault
   ingress:
     enabled: replace_enabled_ingress
     ingressClassName: replace_ingress_className
+    security: "none"

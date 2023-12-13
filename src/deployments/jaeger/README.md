@@ -14,7 +14,7 @@ collector.
 ### Support
 |     Item     |       Status       |
 |:------------:|:------------------:|
-|  OpenShift   |        :x:         |
+|  OpenShift   | :white_check_mark: |
 |     ARM      | :white_check_mark: |
 |   CI Tests   | :white_check_mark: |
 | Postman Test | :white_check_mark: |
