@@ -1,6 +1,6 @@
 ## Vault
 Deploys Vault Operator and a Vault instance using the `hashicorp/vault` chart
-version `1.15.2`.
+version `0.27.0`.
 
 ### Example
 ```

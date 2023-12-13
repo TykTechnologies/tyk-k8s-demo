@@ -26,7 +26,7 @@
 | portal               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-dev-portal                     |  1.0.0  |
 | prometheus           |     :no_entry:     | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |          [prometheus-community](https://prometheus-community.github.io/helm-charts)/prometheus           | 25.3.0  |
 | prometheus-grafana   |     :warning:      | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |                         [grafana](https://grafana.github.io/helm-charts)/grafana                         | 6.52.7  |
-| vault                | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |                          [hashicorp](https://helm.releases.hashicorp.com)/vault                          | 1.15.2  |
+| vault                | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |                          [hashicorp](https://helm.releases.hashicorp.com)/vault                          | 0.27.0  |
 
 
 ## Integrations compatible with Tyk deployments
