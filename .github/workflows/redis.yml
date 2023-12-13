@@ -22,7 +22,6 @@ jobs:
           - redis
           - redis-cluster
           - redis-sentinel
-      max-parallel: 3
     steps:
       - uses: actions/checkout@v2
 

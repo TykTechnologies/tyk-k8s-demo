@@ -22,6 +22,7 @@ jobs:
           - cert-manager
           - datadog
           - elasticsearch
+          - elasticsearch-kibana
           - jaeger
           - k6
           - keycloak
@@ -35,7 +36,6 @@ jobs:
           - prometheus
           - prometheus-grafana
           - vault
-      max-parallel: 3
     steps:
       - uses: actions/checkout@v2
 

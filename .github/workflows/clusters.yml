@@ -22,7 +22,6 @@ jobs:
           - v1.21.14
           - v1.22.15
           - v1.23.13
-      max-parallel: 3
     steps:
       - uses: actions/checkout@v2
 
