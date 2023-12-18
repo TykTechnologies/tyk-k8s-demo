@@ -16,7 +16,6 @@ helm upgrade "$datadogReleaseName" datadog/datadog --version 3.25.1 \
   --set "datadog.dogstatsd.originDetection=true" \
   --set "datadog.dogstatsd.nonLocalTraffic=true" \
   --set "agents.containers.agent.healthPort=$DATADOG_AGENT_HEALTH_SERVICE_PORT" \
-  "${datadogSecurityContextArgs[@]}" \
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
