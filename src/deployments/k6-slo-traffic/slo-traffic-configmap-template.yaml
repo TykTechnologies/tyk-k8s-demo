@@ -16,38 +16,38 @@ data:
           executor: 'constant-vus',
           exec: 'success',
           vus: 50,
-          duration: '15m',
+          duration: '60m',
         },
         failure: {
           executor: 'constant-vus',
           exec: 'error',
           vus: 10,
-          duration: '15m',
+          duration: '60m',
         },
         status: {
           executor: 'constant-vus',
           exec: 'status',
           vus: 50,
-          duration: '15m',
+          duration: '60m',
         },
         differentPath: {
           executor: 'constant-vus',
           exec: 'differentPath',
           vus: 100,
-          duration: '15m',
+          duration: '60m',
         },
         differentMethod: {
           executor: 'constant-vus',
           exec: 'differentMethod',
           vus: 100,
-          duration: '15m',
+          duration: '60m',
         },
         breakingSlo: {
           executor: 'per-vu-iterations',
           exec: 'breakingSlo',
           vus: 50,
           iterations: 100,
-          maxDuration: '5m',
+          maxDuration: '15m',
         }
       }
     };
