@@ -16,21 +16,9 @@ fi
 
 addDeploymentArgs "${args[@]}";
 setVerbose;
-helm upgrade "$redisReleaseName" bitnami/redis-cluster --version 7.6.4 \
+helm upgrade "$redisReleaseName" bitnami/redis-cluster --version 10.0.1 \
   --install \
   --namespace "$namespace" \
-  --set "image.repository=zalbiraw/redis-cluster" \
-  --set "image.tag=6.2.7-debian-11" \
-  \
-  --set "metrics.image.repository=zalbiraw/redis-exporter" \
-  --set "metrics.image.tag=1.45.0-debian-11" \
-  \
-  --set "volumePermissions.image.repository=zalbiraw/bitnami-shell" \
-  --set "volumePermissions.image.tag=11.0.0-debian-11" \
-  \
-  --set "sysctlImage.repository=zalbiraw/bitnami-shell" \
-  --set "sysctlImage.tag=11.0.0-debian-11" \
-  \
   --set "password=$TYK_PASSWORD" \
   "${securityContextArgs[@]}" \
   "${helmFlags[@]}" > /dev/null;
