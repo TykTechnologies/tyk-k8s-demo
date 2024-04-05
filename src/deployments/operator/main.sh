@@ -1,7 +1,7 @@
 logger "$INFO" "installing tyk-operator in $namespace namespace...";
 
 setVerbose;
-helm upgrade "$operatorReleaseName" tyk-helm/tyk-operator --version 0.15.1 \
+helm upgrade "$operatorReleaseName" tyk-helm/tyk-operator --version 0.17.0 \
   --install \
   --namespace "$namespace" \
   "${operatorSecurityContextArgs[@]}" \

@@ -68,5 +68,5 @@ jobs:
               tyk-stack
           command: newman run --folder gateway --env-var "deployment=tyk-stack" tyk-k8s-demo.postman_collection.json
 
-      - name: Sleep 20 minute to allow for k6 jobs to finish
-        run: sleep 1200
+      - name: Sleep 65 minute to allow for k6 jobs to finish
+        run: sleep 3900
