@@ -5,7 +5,7 @@ args=(--set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway" \
   --set "tyk-pump.pump.image.repository=tykio/tyk-pump-docker-pub");
 
 tykReleaseName="tyk-oss";
-tykReleaseVersion="1.2.0";
+tykReleaseVersion="1.3.0";
 addService "gateway-svc-$tykReleaseName-tyk-gateway";
 checkTykRelease;
 
