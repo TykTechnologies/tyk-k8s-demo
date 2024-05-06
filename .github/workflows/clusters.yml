@@ -23,7 +23,7 @@ jobs:
           - v1.22.15
           - v1.23.13
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: start Minikube
         uses: medyagh/setup-minikube@latest
@@ -34,7 +34,7 @@ jobs:
           start-args: '--force'
 
       - name: Install helm
-        uses: Azure/setup-helm@v3.5
+        uses: Azure/setup-helm@v4
 
       - name: Install newman
         run: |
@@ -46,12 +46,12 @@ jobs:
         run: cp .env.example .env
 
       - name: Deploy tyk-stack on ${{ matrix.cluster }}
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@v3
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           command: |
-            LICENSE="${{ secrets.LICENSE }}" \
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
             ./up.sh -v tyk-stack
 

@@ -40,7 +40,7 @@ jobs:
           - prometheus-grafana
           - vault
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: start Minikube
         uses: medyagh/setup-minikube@latest
@@ -51,7 +51,7 @@ jobs:
           start-args: '--force'
 
       - name: Install helm
-        uses: Azure/setup-helm@v3.5
+        uses: Azure/setup-helm@v4
 
       - name: Install newman
         run: |
@@ -63,14 +63,14 @@ jobs:
         run: cp .env.example .env
 
       - name: Deploy tyk-stack-${{ matrix.deployment }}
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@v3
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
-            LICENSE="${{ secrets.LICENSE }}" \
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
@@ -82,14 +82,14 @@ jobs:
         run: sleep 60
 
       - name: Test Tyk deployment
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@v3
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
-            LICENSE="${{ secrets.LICENSE }}" \
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
@@ -99,14 +99,14 @@ jobs:
           command: newman run --folder gateway --env-var "deployment=tyk-stack" tyk-k8s-demo.postman_collection.json
 
       - name: Test ${{ matrix.deployment }}
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@v3
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
-            LICENSE="${{ secrets.LICENSE }}" \
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
             ./up.sh -v \
               --redis redis \

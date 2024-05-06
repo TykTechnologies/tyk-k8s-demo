@@ -36,6 +36,8 @@ if [[ $NONE != $expose ]]; then
   exposeWorker=" --expose $expose";
 fi
 
+source src/helpers/up/set-cp-args.sh;
+
 addSummary "\tTyk Control Plane deployed\n \
 \tDashboard username: $TYK_USERNAME\n \
 \tDashboard password: $TYK_PASSWORD\n \

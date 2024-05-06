@@ -1,4 +1,4 @@
-name: Tyk OSS Tests
+name: Tyk Control Plane Tests
 
 # Controls when the workflow will run
 on:
@@ -13,7 +13,7 @@ env:
   TIMEOUT: 30
 
 jobs:
-  tyk-oss:
+  tyk-cp:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -26,6 +26,8 @@ jobs:
           - jaeger
           - k6
           - keycloak
+          - keycloak-sso
+          - keycloak-dcr
           - keycloak-jwt
           - operator
           - operator-federation
@@ -33,16 +35,17 @@ jobs:
           - operator-httpbin
           - operator-jwt-hmac
           - operator-udg
+          - portal
           - prometheus
           - prometheus-grafana
           - vault
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@latest
 
       - name: start Minikube
         uses: medyagh/setup-minikube@latest
         with:
-          kubernetes-version: v1.23.13
+          kubernetes-version: "stable"
           extra-config: 'kubelet.max-pods=100'
           addons: 'default-storageclass,storage-provisioner,ingress'
           start-args: '--force'
@@ -59,7 +62,7 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy tyk-gateway-${{ matrix.deployment }}
+      - name: Deploy tyk-cp-${{ matrix.deployment }}
         uses: nick-invision/retry@v3
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
@@ -67,11 +70,13 @@ jobs:
           command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
-              --namespace tyk-gateway-${{ matrix.deployment }} \
+              --namespace tyk-cp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
-              tyk-gateway
+              tyk-cp
 
       - name: Sleep 1 minute
         run: sleep 60
@@ -84,12 +89,14 @@ jobs:
           on_retry_command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
-              --namespace tyk-gateway-${{ matrix.deployment }} \
+              --namespace tyk-cp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
-              tyk-gateway && sleep 180
-          command: newman run --folder gateway tyk-k8s-demo.postman_collection.json
+              tyk-cp && sleep 180
+          command: newman run --folder gateway --env-var "deployment=tyk-cp" tyk-k8s-demo.postman_collection.json
 
       - name: Test ${{ matrix.deployment }}
         uses: nick-invision/retry@v3
@@ -99,9 +106,11 @@ jobs:
           on_retry_command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
-              --namespace tyk-gateway-${{ matrix.deployment }} \
+              --namespace tyk-cp-${{ matrix.deployment }} \
               --deployments ${{ matrix.deployment }} \
-              tyk-gateway && sleep 180
+              tyk-cp && sleep 180
           command: newman run --folder ${{ matrix.deployment }} --insecure -n 1 tyk-k8s-demo.postman_collection.json
