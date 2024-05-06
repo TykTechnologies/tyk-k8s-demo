@@ -40,7 +40,7 @@ jobs:
           - prometheus-grafana
           - vault
     steps:
-      - uses: actions/checkout@latest
+      - uses: actions/checkout@v4
 
       - name: start Minikube
         uses: medyagh/setup-minikube@latest
