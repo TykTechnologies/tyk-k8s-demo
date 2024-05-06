@@ -71,7 +71,7 @@ jobs:
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
-            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-stack-${{ matrix.deployment }} \
@@ -90,7 +90,7 @@ jobs:
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
-            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-stack-${{ matrix.deployment }} \
@@ -107,7 +107,7 @@ jobs:
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
-            PORTAL_LICENSE="${{ secrets.PORTAL_LICENSE }}" \
+            PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-stack-${{ matrix.deployment }} \
