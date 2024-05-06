@@ -62,7 +62,7 @@ Tyk Enterprise Portal and the Tyk Operator and httpbin CRD example.
 
 ## Possible deployments
 - `tyk-stack`: Tyk single region self-managed deployment
-- `tyk-cp`: Tyk self-managed multi region control plane (Will be available in Q1 2024 with new Tyk Charts, please use the [v2 tag](https://github.com/TykTechnologies/tyk-k8s-demo/tree/v2) if you would like to deploy this.)
+- `tyk-cp`: Tyk self-managed multi region control plane
 - `tyk-dp`: Tyk self-managed data plane, this can connect to Tyk Cloud or a Tyk Control Plane
 - `tyk-gateway`: Tyk oss self-managed single region
 

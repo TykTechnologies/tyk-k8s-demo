@@ -1,7 +1,7 @@
 source src/main/storage/main.sh;
 
 tykReleaseName="tyk-cp";
-tykReleaseVersion="";
+tykReleaseVersion="1.4.0";
 
 args=(
   --set "global.license.dashboard=$LICENSE" \
@@ -12,44 +12,24 @@ args=(
   --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
   --set "tyk-pump.pump.image.repository=tykio/tyk-pump-docker-pub" \
   --set "tyk-pump.pump.image.tag=$PUMP_VERSION" \
+  --set "tyk-mdcb.mdcb.license=$MDCB_LICENSE" \
+  --set "tyk-mdcb.mdcb.image.tag=$MDCB_VERSION" \
+  --set "tyk-mdcb.mdcb.service.type=NodePort" \
 );
 
 addService "dashboard-svc-$tykReleaseName-tyk-dashboard";
 addService "gateway-svc-$tykReleaseName-tyk-gateway";
+addService "mdcb-svc-$tykReleaseName-tyk-mdcb";
 checkTykRelease;
-checkMDCBRelease;
 
 addDeploymentArgs "${args[@]}";
 addDeploymentArgs "${gatewaySecurityContextArgs[@]}";
 addDeploymentArgs "${tykSecurityContextArgs[@]}";
-addDeploymentArgs "${extraEnvs[@]}";
-
-if ! $mdcbExists; then
-  upgradeTyk;
-
-  if ! $dryRun; then
-    source src/helpers/up/update-org.sh $tykReleaseName;
-  fi
-else
-  logger "$INFO" "MDCB exists skipping $tykReleaseName install..."
-fi
-
-addService "mdcb-svc-$tykReleaseName-tyk-mdcb";
-
-mdcbArgs=(--set "mdcb.enabled=true" \
-  --set "mdcb.license=$MDCB_LICENSE" \
-  --set "mdcb.service.type=NodePort" \
-  --set "mdcb.image.tag=$MDCB_VERSION");
-
-addDeploymentArgs "${mdcbArgs[@]}";
 addDeploymentArgs "${mdcbSecurityContextArgs[@]}";
 addDeploymentArgs "${loadbalancerArgs[@]}";
 addDeploymentArgs "${ingressArgs[@]}";
+addDeploymentArgs "${extraEnvs[@]}";
 upgradeTyk;
-
-if ! $dryRun; then
-  source src/helpers/up/set-cp-args.sh;
-fi
 
 exposeWorker="";
 if [[ $NONE != $expose ]]; then
