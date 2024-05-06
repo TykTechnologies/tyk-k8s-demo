@@ -1,3 +1,15 @@
+checkHelmReleaseExists() {
+  set +e;
+  search=$(helm ls --namespace "$namespace" | awk '{print $1}' | grep -e "^$1$");
+  logger "$DEBUG" "checkHelmReleaseExists: search result $search";
+  set -e;
+
+  releaseExists=true;
+  if [[ -z $search ]]; then
+    releaseExists=false;
+  fi
+}
+
 waitForPods() {
   logger "$DEBUG" "helpers.sh: waiting for pods to start...";
 
@@ -14,15 +26,4 @@ waitForPods() {
 
     logger "$DEBUG" "pod $1 not found";
   done
-}
-
-terminateDashboardPort() {
-  set +e;
-  pid=$(pgrep -f "svc/dashboard-svc-$tykReleaseName");
-  set -e;
-
-  if [[ -n "$pid" ]]; then
-    logger "$DEBUG" "terminating dashboard port-forwarding ($pid)";
-    kill -9 "$pid" 2>&1;
-  fi
 }

@@ -1,6 +1,7 @@
 # tyk-k8s-demo
 [![tyk-gateway](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-gateway.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-gateway.yml?query=branch%3Amain)
 [![tyk-stack](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-stack.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-stack.yml?query=branch%3Amain)
+[![tyk-cp](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-cp.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-cp.yml?query=branch%3Amain)
 [![tyk-dp](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-dp.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-dp.yml?query=branch%3Amain)
 [![Clusters](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/clusters.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/clusters.yml?query=branch%3Amain)
 [![Redis](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/redis.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/redis.yml?query=branch%3Amain)
@@ -62,7 +63,7 @@ Tyk Enterprise Portal and the Tyk Operator and httpbin CRD example.
 
 ## Possible deployments
 - `tyk-stack`: Tyk single region self-managed deployment
-- `tyk-cp`: Tyk self-managed multi region control plane (Will be available in Q1 2024 with new Tyk Charts, please use the [v2 tag](https://github.com/TykTechnologies/tyk-k8s-demo/tree/v2) if you would like to deploy this.)
+- `tyk-cp`: Tyk self-managed multi region control plane
 - `tyk-dp`: Tyk self-managed data plane, this can connect to Tyk Cloud or a Tyk Control Plane
 - `tyk-gateway`: Tyk oss self-managed single region
 

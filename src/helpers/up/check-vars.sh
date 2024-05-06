@@ -20,6 +20,7 @@ if [[ $TYKSTACK == "$mode" ]] || [[ $TYKCP == "$mode" ]]; then
 fi
 
 if [[ $TYKCP == "$mode" ]]; then
+  chart="tyk-control-plane";
   if [[ -z "$MDCB_LICENSE" ]]; then
     logger "$ERROR" "please make sure the MDCB_LICENSE variable is set in your .env file";
     invalid=true;
