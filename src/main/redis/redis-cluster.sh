@@ -24,7 +24,7 @@ helm upgrade "$redisReleaseName" bitnami/redis-cluster --version 10.0.1 \
   --install \
   --namespace "$namespace" \
   --set "password=$TYK_PASSWORD" \
-  --set "redis.resourcesPreset=large" \
+  --set "redis.resourcesPreset=none" \
   "${securityContextArgs[@]}" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

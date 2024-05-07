@@ -30,8 +30,8 @@ helm upgrade $redisReleaseName bitnami/redis --version 19.0.2 \
   --namespace "$namespace" \
   --set "replica.replicaCount=0" \
   --set "auth.password=$TYK_PASSWORD" \
-  --set "master.resourcesPreset=large" \
-  --set "replica.resourcesPreset=large" \
+  --set "master.resourcesPreset=none" \
+  --set "replica.resourcesPreset=none" \
   "${securityContextArgs[@]}" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
