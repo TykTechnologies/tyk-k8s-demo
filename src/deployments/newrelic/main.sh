@@ -1,10 +1,11 @@
 logger "$INFO" "installing $newrelicReleaseName in $namespace namespace...";
 
 setVerbose;
-helm upgrade "$newrelicReleaseName" newrelic/nri-bundle --version 5.0.56 \
+helm upgrade "$newrelicReleaseName" newrelic/nri-bundle --version 5.0.75 \
   --install \
   --set global.licenseKey=$NEWRELIC_LICENSEKEY \
-  --set global.cluster=tyk-integration \
+  --set global.cluster=$NEWRELIC_CLUSTER \
+  --set global.lowDataMode=true \
   --set newrelic-infrastructure.privileged=true \
   --set kube-state-metrics.image.tag=v2.10.0 \
   --set kube-state-metrics.enabled=true \

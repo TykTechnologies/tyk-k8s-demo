@@ -1,19 +1,18 @@
 ## New Relic
-Deploys Datadog agent using the `datadog/datadog` chart version `3.25.1`.
-Stands up a Tyk pump to push analytics data from the Tyk platform to Datadog.
-It will also create a Datadog dashboard for you to view the analytics.
+Deploys New Relic using the `newrelic/nri-bundle` chart version `5.0.75`.
+Stands up a Tyk pump to print analytics data to the Tyk pump STDOUT to allow
+New Relic to scrape it.
 
 ### Requirements
 The following options must be set in your `.env` file.
 ```
-DATADOG_APIKEY=59937fe2b222e4fbbd56106e4f9da331
-DATADOG_APPKEY=85e5ffd803b0b11acb1ddc420431c5aeac815734
-DATADOG_SITE=datadoghq.com
+NEWRELIC_LICENSEKEY=7aaf3ae6bde1430ca8d83bebf5a1780fFFFFNRAL
+NEWRELIC_CLUSTER=minikube
 ```
 
 ### Example
 ```
-./up.sh --deployments datadog,k6-slo-traffic tyk-stack
+./up.sh --deployments newrelic,k6-slo-traffic tyk-stack
 ```
 
 ### Support
@@ -22,15 +21,15 @@ DATADOG_SITE=datadoghq.com
 |  OpenShift   | :white_check_mark: |
 |     ARM      | :white_check_mark: |
 |   CI Tests   | :white_check_mark: |
-| Postman Test | :white_check_mark: |
+| Postman Test |        :x:         |
 |     SSL      |        N/A         |
 
 ### Supported Service Types with `--expose` flag
-|     Item      |       Status       |
-|:-------------:|:------------------:|
-| Port Forward  | :white_check_mark: |
-|    Ingress    |        N/A         |
-| Load Balancer |        N/A         |
+|     Item      | Status |
+|:-------------:|:------:|
+| Port Forward  |  N/A   |
+|    Ingress    |  N/A   |
+| Load Balancer |  N/A   |
 
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|
