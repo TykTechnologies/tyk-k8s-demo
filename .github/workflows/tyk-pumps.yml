@@ -46,9 +46,10 @@ jobs:
           command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
+            NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
-              --deployments datadog,elasticsearch-kibana,prometheus-grafana,k6-slo-traffic \
+              --deployments datadog,elasticsearch-kibana,newrelic,prometheus-grafana,k6-slo-traffic \
               tyk-stack
 
       - name: Sleep 1 minute
@@ -62,6 +63,7 @@ jobs:
           on_retry_command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
+            NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
               --deployments datadog,elasticsearch-kibana,prometheus-grafana,k6-slo-traffic \

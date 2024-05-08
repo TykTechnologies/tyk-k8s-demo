@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d84db6c9-6286-4e1d-9c8d-bb73320102ea",
+		"_postman_id": "70f56ff6-623d-4843-b2ab-5e5e00bc11a1",
 		"name": "tyk-k8s-demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13702323"
@@ -84,12 +84,13 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Datadog status is health\", function () {",
+											"pm.test(\"Datadog status is healthy\", function () {",
 											"    var health = pm.response.json();",
 											"    pm.expect(health.Unhealthy).to.eql(null);",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -105,6 +106,45 @@
 									"port": "{{datadog.port}}",
 									"path": [
 										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "newrelic",
+					"item": [
+						{
+							"name": "healthz",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Newrelic status is healthy\", function () {",
+											"    var health = pm.response.text();",
+											"    pm.expect(health).to.eql(\"OK\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{newrelic.port}}/healthz",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{newrelic.port}}",
+									"path": [
+										"healthz"
 									]
 								}
 							},
@@ -325,8 +365,7 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/x-www-form-urlencoded",
-										"type": "text"
+										"value": "application/x-www-form-urlencoded"
 									}
 								],
 								"body": {
@@ -434,8 +473,7 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/x-www-form-urlencoded",
-										"type": "text"
+										"value": "application/x-www-form-urlencoded"
 									}
 								],
 								"body": {
@@ -512,8 +550,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "{{client-creds-token}}",
-										"type": "text"
+										"value": "{{client-creds-token}}"
 									}
 								],
 								"url": {
@@ -567,8 +604,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "{{pass-grant-token}}",
-										"type": "text"
+										"value": "{{pass-grant-token}}"
 									}
 								],
 								"url": {
@@ -815,8 +851,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.8TKYxZ1838CRmpf7cZ2tU673Jm1swSfb-Mgp9AwzIv0",
-										"type": "text"
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.8TKYxZ1838CRmpf7cZ2tU673Jm1swSfb-Mgp9AwzIv0"
 									}
 								],
 								"url": {
@@ -978,14 +1013,6 @@
 							"response": []
 						}
 					]
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
 				}
 			],
 			"event": [
@@ -1082,6 +1109,11 @@
 		{
 			"key": "vault.port",
 			"value": "8200"
+		},
+		{
+			"key": "newrelic.port",
+			"value": "5556",
+			"type": "string"
 		}
 	]
 }

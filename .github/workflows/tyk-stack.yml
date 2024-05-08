@@ -29,6 +29,7 @@ jobs:
           - keycloak-sso
           - keycloak-dcr
           - keycloak-jwt
+          - newrelic
           - operator
           - operator-federation
           - operator-graphql
@@ -70,6 +71,7 @@ jobs:
           command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
+            NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
@@ -89,6 +91,7 @@ jobs:
           on_retry_command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
+            NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
@@ -106,6 +109,7 @@ jobs:
           on_retry_command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
+            NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \

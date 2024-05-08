@@ -27,6 +27,7 @@ jobs:
           - k6
           - keycloak
           - keycloak-jwt
+          - newrelic
           - operator
           - operator-federation
           - operator-graphql
@@ -67,6 +68,7 @@ jobs:
           command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
+            NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-gateway-${{ matrix.deployment }} \
@@ -84,6 +86,7 @@ jobs:
           on_retry_command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
+            NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-gateway-${{ matrix.deployment }} \
@@ -99,6 +102,7 @@ jobs:
           on_retry_command: |
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
+            NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-gateway-${{ matrix.deployment }} \

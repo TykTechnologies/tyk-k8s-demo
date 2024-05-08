@@ -16,6 +16,8 @@ All the ports that this library uses.
 | operator-federation  | posts-subgraph-svc                     | `4202`  |
 | operator-federation  | comments-subgraph-svc                  | `4203`  |
 | operator-federation  | notifications-subgraph-svc             | `4204`  |
+| datadog              | datadog-agent-health-svc               | `5555`  |
+| newrelic             | newrelic-kube-state-metrics-health-svc | `5556`  |
 | elasticsearch-kibana | elasticsearch-kibana                   | `5601`  |
 | keyclaok             | keycloak-service                       | `7001`  |
 | operator-httpbin     | httpbin-svc                            | `8000`  |
