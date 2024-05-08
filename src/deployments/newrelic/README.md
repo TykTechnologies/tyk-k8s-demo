@@ -21,7 +21,7 @@ NEWRELIC_CLUSTER=minikube
 |  OpenShift   | :white_check_mark: |
 |     ARM      | :white_check_mark: |
 |   CI Tests   | :white_check_mark: |
-| Postman Test |        :x:         |
+| Postman Test | :white_check_mark: |
 |     SSL      |        N/A         |
 
 ### Supported Service Types with `--expose` flag
