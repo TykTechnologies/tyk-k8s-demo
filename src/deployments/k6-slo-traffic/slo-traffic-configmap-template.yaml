@@ -16,32 +16,24 @@ data:
           executor: 'constant-vus',
           exec: 'success',
           vus: 50,
-          rate: 1,
-          timeUnit: '1s',
           duration: '180m',
         },
         failure: {
           executor: 'constant-vus',
           exec: 'error',
           vus: 10,
-          rate: 1,
-          timeUnit: '1s',
           duration: '180m',
         },
         status: {
           executor: 'constant-vus',
           exec: 'status',
           vus: 50,
-          rate: 1,
-          timeUnit: '1s',
           duration: '180m',
         },
         differentPath: {
           executor: 'constant-vus',
           exec: 'differentPath',
           vus: 100,
-          rate: 1,
-          timeUnit: '1s',
           duration: '180m',
         },
         differentMethod: {
@@ -62,14 +54,17 @@ data:
 
     function sendStatus(status) {
       http.get('replace_gateway_url/replace_listen_path/status/' + status);
+      sleep(1);
     }
 
     export function success() {
       sendStatus(200);
+      sleep(1);
     }
 
     export function breakingSlo() {
       sendStatus(502);
+      sleep(1);
     }
 
     export function status() {
@@ -81,6 +76,7 @@ data:
         default:
           sendStatus(200);
       }
+      sleep(1);
     }
 
     export function error() {
@@ -115,8 +111,8 @@ data:
 
       if (randomIntBetween(1, 7) === 1) {
         sendStatus(500);
-        sleep(1); // sleep between 1
       }
+      sleep(1);
     }
 
     export function differentMethod() {
@@ -150,4 +146,5 @@ data:
           http.post("replace_gateway_url/replace_listen_path/response-headers", payload, params);
           break;
       }
+      sleep(1);
     }
