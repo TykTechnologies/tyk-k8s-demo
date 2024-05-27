@@ -24,12 +24,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_CLUSTER_LOCATION }}
 
-      - name: Install gcloud CLI
-        uses: google-github-actions/setup-gcloud@v2.1.0
-
-      - name: Install gcloud k8s auth component
-        run: gcloud components install gke-gcloud-auth-plugin
-
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
         with:

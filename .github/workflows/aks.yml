@@ -12,7 +12,7 @@ concurrency:
   group: azure
 
 jobs:
-  ask:
+  aks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,12 +21,6 @@ jobs:
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Install gcloud CLI
-        uses: google-github-actions/setup-gcloud@v2.1.0
-
-      - name: Install gcloud k8s auth component
-        run: gcloud components install gke-gcloud-auth-plugin
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
