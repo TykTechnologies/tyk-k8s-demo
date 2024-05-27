@@ -1,0 +1,84 @@
+name: EKS Tyk Tests
+
+# Controls when the workflow will run
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: aws
+
+jobs:
+  eks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_CLUSTER_LOCATION }}
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          terraform_version: "1.8.2"
+
+      - name: Install helm
+        uses: Azure/setup-helm@v4
+
+      - name: Install newman
+        run: |
+          sudo apt update && \
+          sudo apt install nodejs npm -y && \
+          npm install -g newman
+
+      - name: Copy .env file
+        run: cp .env.example .env
+
+      - name: Create Terraform Cloud descriptor
+        run: cp .github/tfc/aws.tf src/clouds/aws/terraform.cloud.tf
+
+      - name: Deploy CP tyk-cp
+        run: |
+          LICENSE="${{ secrets.DASH_LICENSE }}" \
+          MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+          CLUSTER_LOCATION="${{ vars.AWS_CLUSTER_LOCATION }}" \
+          CLUSTER_MACHINE_TYPE="${{ vars.AWS_CLUSTER_MACHINE_TYPE }}" \
+          CLUSTER_NODE_COUNT="${{ vars.CLUSTER_NODE_COUNT }}" \
+          ./up.sh -v -c aws tyk-cp
+
+      - name: Sleep 1 minute
+        run: sleep 60
+
+      - name: Test Tyk deployment
+        run: newman run --folder gateway --env-var "deployment=tyk-cp" tyk-k8s-demo.postman_collection.json
+
+      - name: Deploy tyk-dp
+        run: |
+          TYK_WORKER_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
+          TYK_WORKER_ORGID=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d) \
+          TYK_WORKER_AUTHTOKEN=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d) \
+          TYK_WORKER_USESSL=false \
+          ./up.sh --namespace tyk-dp tyk-dp
+
+      - name: Sleep 1 minute
+        run: sleep 60
+
+      - name: Test Tyk DP deployment
+        run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
+
+
+      - name: Destroy tyk-cp
+        run: |
+          CLUSTER_LOCATION="${{ vars.AWS_CLUSTER_LOCATION }}" \
+          CLUSTER_MACHINE_TYPE="${{ vars.AWS_CLUSTER_MACHINE_TYPE }}" \
+          CLUSTER_NODE_COUNT="${{ vars.CLUSTER_NODE_COUNT }}" \
+          ./down.sh -v -c aws tyk-cp
+
