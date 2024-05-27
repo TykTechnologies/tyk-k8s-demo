@@ -1,0 +1,63 @@
+name: EKS Tyk Control Plane Tests
+
+# Controls when the workflow will run
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: eks
+
+jobs:
+  eks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_CLUSTER_LOCATION }}
+
+      - name: Install gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2.1.0
+
+      - name: Install gcloud k8s auth component
+        run: gcloud components install gke-gcloud-auth-plugin
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.8.2"
+
+      - name: Install helm
+        uses: Azure/setup-helm@v4
+
+      - name: Install newman
+        run: |
+          sudo apt update && \
+          sudo apt install nodejs npm -y && \
+          npm install -g newman
+
+      - name: Copy .env file
+        run: cp .env.example .env
+
+      - name: Deploy tyk-cp
+        run: |
+          LICENSE="${{ secrets.DASH_LICENSE }}" \
+          MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+          CLUSTER_LOCATION="${{ vars.AWS_CLUSTER_LOCATION }}" \
+          CLUSTER_MACHINE_TYPE="${{ vars.AWS_CLUSTER_MACHINE_TYPE }}" \
+          CLUSTER_NODE_COUNT="${{ vars.CLUSTER_NODE_COUNT }}" \
+          ./up.sh -v tyk-cp
+
+      - name: Sleep 1 minute
+        run: sleep 60
+
+      - name: Test Tyk deployment
+        run: newman run --folder gateway --env-var "deployment=tyk-cp" tyk-k8s-demo.postman_collection.json

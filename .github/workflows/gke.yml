@@ -1,0 +1,62 @@
+name: GKE Tyk Control Plane Tests
+
+# Controls when the workflow will run
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: gke
+
+jobs:
+  gke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate into gcloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Install gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2.1.0
+
+      - name: Install gcloud k8s auth component
+        run: gcloud components install gke-gcloud-auth-plugin
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.8.2"
+
+      - name: Install helm
+        uses: Azure/setup-helm@v4
+
+      - name: Install newman
+        run: |
+          sudo apt update && \
+          sudo apt install nodejs npm -y && \
+          npm install -g newman
+
+      - name: Copy .env file
+        run: cp .env.example .env
+
+      - name: Deploy tyk-cp
+        run: |
+          LICENSE="${{ secrets.DASH_LICENSE }}" \
+          MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+          GCP_PROJECT="${{ secrets.GCP_PROJECT }}" \
+          CLUSTER_LOCATION="${{ vars.GCP_CLUSTER_LOCATION }}" \
+          CLUSTER_MACHINE_TYPE="${{ vars.GCP_CLUSTER_MACHINE_TYPE }}" \
+          CLUSTER_NODE_COUNT="${{ vars.CLUSTER_NODE_COUNT }}" \
+          ./up.sh -v tyk-cp
+
+      - name: Sleep 1 minute
+        run: sleep 60
+
+      - name: Test Tyk deployment
+        run: newman run --folder gateway --env-var "deployment=tyk-cp" tyk-k8s-demo.postman_collection.json
