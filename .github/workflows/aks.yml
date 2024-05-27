@@ -25,6 +25,7 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
         with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
           terraform_version: "1.8.2"
 
       - name: Install helm
@@ -38,6 +39,9 @@ jobs:
 
       - name: Copy .env file
         run: cp .env.example .env
+
+      - name: Create Terraform Cloud descriptor
+        run: cp .github/tfc/azure.tf src/clouds/azure/terraform.cloud.tf
 
       - name: Deploy tyk-cp
         run: |

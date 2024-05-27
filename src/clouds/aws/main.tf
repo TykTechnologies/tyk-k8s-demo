@@ -9,7 +9,7 @@ data "aws_caller_identity" "this" {}
 module "vpc" {
 	source = "terraform-aws-modules/vpc/aws"
 
-	name                 = "pt-${var.cluster_location}-vpc"
+	name                 = "tyk-demo-${var.cluster_location}-vpc"
 	cidr                 = "10.0.0.0/16"
 	azs                  = data.aws_availability_zones.this.names
 	private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
@@ -23,7 +23,7 @@ module "eks" {
 	source  = "terraform-aws-modules/eks/aws"
 	version = "20.8.2"
 
-	cluster_name    = "pt-${var.cluster_location}"
+	cluster_name    = "tyk-demo-${var.cluster_location}"
 	cluster_version = "1.29"
 
 	vpc_id     = module.vpc.vpc_id

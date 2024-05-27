@@ -20,6 +20,7 @@ jobs:
       - name: Authenticate into gcloud
         uses: google-github-actions/auth@v2
         with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Install gcloud CLI
@@ -44,6 +45,9 @@ jobs:
 
       - name: Copy .env file
         run: cp .env.example .env
+
+      - name: Create Terraform Cloud descriptor
+        run: cp .github/tfc/gcp.tf src/clouds/gcp/terraform.cloud.tf
 
       - name: Deploy tyk-cp
         run: |
