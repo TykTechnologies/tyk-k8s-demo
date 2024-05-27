@@ -1,4 +1,4 @@
-name: AKS Tyk Control Plane Tests
+name: AKS Tyk Tests
 
 # Controls when the workflow will run
 on:
@@ -9,7 +9,7 @@ on:
       - main
 
 concurrency:
-  group: aks
+  group: azure
 
 jobs:
   ask:

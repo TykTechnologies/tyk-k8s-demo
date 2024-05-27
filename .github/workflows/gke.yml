@@ -1,4 +1,4 @@
-name: GKE Tyk Control Plane Tests
+name: GKE Tyk Tests
 
 # Controls when the workflow will run
 on:
@@ -9,7 +9,7 @@ on:
       - main
 
 concurrency:
-  group: gke
+  group: gcp
 
 jobs:
   gke:

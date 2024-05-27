@@ -1,4 +1,4 @@
-name: EKS Tyk Control Plane Tests
+name: EKS Tyk Tests
 
 # Controls when the workflow will run
 on:
@@ -9,7 +9,7 @@ on:
       - main
 
 concurrency:
-  group: eks
+  group: aws
 
 jobs:
   eks:
