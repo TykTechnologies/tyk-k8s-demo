@@ -60,3 +60,11 @@ jobs:
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=tyk-cp" tyk-k8s-demo.postman_collection.json
+
+      - name: Destroy tyk-cp
+        run: |
+          GCP_PROJECT="${{ secrets.GCP_PROJECT }}" \
+          CLUSTER_LOCATION="${{ vars.GCP_CLUSTER_LOCATION }}" \
+          CLUSTER_MACHINE_TYPE="${{ vars.GCP_CLUSTER_MACHINE_TYPE }}" \
+          CLUSTER_NODE_COUNT="${{ vars.CLUSTER_NODE_COUNT }}" \
+          ./down.sh -v -c gcp tyk-cp
