@@ -43,7 +43,7 @@ jobs:
       - name: Create Terraform Cloud descriptor
         run: cp .github/tfc/azure.tf src/clouds/azure/terraform.cloud.tf
 
-      - name: Deploy tyk-cp
+      - name: Deploy CP tyk-cp
         run: |
           LICENSE="${{ secrets.DASH_LICENSE }}" \
           MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
@@ -57,6 +57,21 @@ jobs:
 
       - name: Test Tyk deployment
         run: newman run --folder gateway --env-var "deployment=tyk-cp" tyk-k8s-demo.postman_collection.json
+
+      - name: Deploy tyk-dp
+        run: |
+          TYK_WORKER_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
+          TYK_WORKER_ORGID=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d) \
+          TYK_WORKER_AUTHTOKEN=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d) \
+          TYK_WORKER_USESSL=false \
+          ./up.sh --namespace tyk-dp tyk-dp
+
+      - name: Sleep 1 minute
+        run: sleep 60
+
+      - name: Test Tyk DP deployment
+        run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
+
 
       - name: Destroy tyk-cp
         run: |
