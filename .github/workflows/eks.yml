@@ -54,7 +54,7 @@ jobs:
           CLUSTER_LOCATION="${{ vars.AWS_CLUSTER_LOCATION }}" \
           CLUSTER_MACHINE_TYPE="${{ vars.AWS_CLUSTER_MACHINE_TYPE }}" \
           CLUSTER_NODE_COUNT="${{ vars.CLUSTER_NODE_COUNT }}" \
-          ./up.sh -v tyk-cp
+          ./up.sh -v -c aws tyk-cp
 
       - name: Sleep 1 minute
         run: sleep 60
