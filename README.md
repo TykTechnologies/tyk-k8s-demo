@@ -94,6 +94,7 @@ Please see this [page](docs/FEATURES_MATRIX.md) for Tyk deployments compatibilit
 	- [keycloak-jwt](src/deployments/keycloak-jwt): stands up a Keycloak JWT Authentication example with Tyk.
 	- [keycloak-sso](src/deployments/keycloak-sso): stands up a Keycloak SSO example with the Tyk dashboard.
 - [newrelic](src/deployments/newrelic): deploys Newrelic and stands up a Tyk pump to push analytics data from the Tyk platform to Newrelic.
+- [opa](src/deployments/opa): enables Open Policy Agent to allow for Dashboard APIs governance.
 - [operator](src/deployments/operator): deploys the [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency [cert-manager](https://github.com/jetstack/cert-manager).
 	- [operator-federation](src/deployments/operator-federation): stands up a Federation v1 API examples using the tyk-operator.
 	- [operator-graphql](src/deployments/operator-graphql): stands up a GraphQL API examples using the tyk-operator.
