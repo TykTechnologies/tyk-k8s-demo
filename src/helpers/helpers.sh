@@ -10,6 +10,18 @@ checkHelmReleaseExists() {
   fi
 }
 
+checkHelmReleaseExistsAllNamespaces() {
+  set +e;
+  search=$(helm ls --all-namespaces | awk '{print $1}' | grep -e "^$1$");
+  logger "$DEBUG" "checkHelmReleaseExists: search result $search";
+  set -e;
+
+  releaseExists=true;
+  if [[ -z $search ]]; then
+    releaseExists=false;
+  fi
+}
+
 waitForPods() {
   logger "$DEBUG" "helpers.sh: waiting for pods to start...";
 
