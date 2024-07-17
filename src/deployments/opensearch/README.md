@@ -1,22 +1,20 @@
-## Grafana-Prometheus
-Deploys Prometheus using the `prometheus-community/prometheus` chart
-version `25.3.0` as well as a Grafana deployment using the `grafana/grafana`
-chart version `6.52.7` and creates a Grafana dashboard for you to view the
-analytics.
+## Opensearch
+Deploys Opensearch using the `bitnami/opensearch` chart version `1.2.7`.
+Stands up a Tyk pump to push analytics data from the Tyk platform to Opensearch.
 
 ### Example
 ```
-./up.sh --deployments prometheus-grafana tyk-stack
+./up.sh --deployments opensearch,k6-slo-traffic tyk-stack
 ```
 
 ### Support
 |     Item     |       Status       |
 |:------------:|:------------------:|
-|  OpenShift   |     :warning:      |
+|  OpenShift   | :white_check_mark: |
 |     ARM      | :white_check_mark: |
 |   CI Tests   | :white_check_mark: |
 | Postman Test | :white_check_mark: |
-|     SSL      |     :no_entry:     |
+|     SSL      | :white_check_mark: |
 
 ### Supported Service Types with `--expose` flag
 |     Item      |       Status       |

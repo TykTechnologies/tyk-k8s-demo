@@ -18,7 +18,6 @@ if [[ "$SSL" == "$SSLMode" ]]; then
     --set-string "security.tls.usePemCerts=true" \
     --set "security.tls.keyPassword=$TYK_PASSWORD" \
     --set "security.tls.master.existingSecret=$elasticsearchSSLSecretName" \
-    --set "security.tls.master.existingSecret=$elasticsearchSSLSecretName" \
     --set "security.tls.data.existingSecret=$elasticsearchSSLSecretName" \
     --set "security.tls.ingest.existingSecret=$elasticsearchSSLSecretName" \
     --set "security.tls.coordinating.existingSecret=$elasticsearchSSLSecretName" \

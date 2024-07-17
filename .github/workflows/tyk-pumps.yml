@@ -49,7 +49,7 @@ jobs:
             NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
-              --deployments datadog,elasticsearch-kibana,newrelic,prometheus-grafana,k6-slo-traffic \
+              --deployments datadog,elasticsearch-kibana,newrelic,opensearch,prometheus-grafana,k6-slo-traffic \
               tyk-stack
 
       - name: Sleep 1 minute

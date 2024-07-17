@@ -19,6 +19,7 @@
 | keycloak-sso         |        N/A         |        N/A         | :white_check_mark: |        N/A         |        N/A         |                                                   N/A                                                    |   N/A   |
 | newrelic             |     :warning:      | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |                             [nri-bundle](https://helm-charts.newrelic.com/)                              | 5.0.75  |
 | opa                  |        N/A         |        N/A         |        N/A         |        N/A         |        N/A         |                                                   N/A                                                    |   N/A   |
+| opensearch           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                         [bitnami](https://charts.bitnami.com/bitnami)/opensearch                         |  1.2.7  |
 | operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |                     [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-operator                      | 0.17.0  |
 | operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |                                                   N/A                                                    |   N/A   |
 | operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |                                                   N/A                                                    |   N/A   |
@@ -76,6 +77,7 @@
 | keycloak-sso         |        N/A         |        N/A         |        N/A         |
 | newrelic             |        N/A         |        N/A         |        N/A         |
 | opa                  |        N/A         |        N/A         |        N/A         |
+| opensearch           | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator             |        N/A         |        N/A         |        N/A         |
 | operator-federation  | :white_check_mark: |        :x:         |        :x:         |
 | operator-graphql     |        N/A         |        N/A         |        N/A         |

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "70f56ff6-623d-4843-b2ab-5e5e00bc11a1",
+		"_postman_id": "8e320278-1224-42db-829c-8753244485b5",
 		"name": "tyk-k8s-demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13702323"
@@ -181,6 +181,53 @@
 										"localhost"
 									],
 									"port": "{{elasticsearch.port}}",
+									"path": [
+										"_cluster",
+										"health"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "opensearch",
+					"item": [
+						{
+							"name": "health",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Opensearch status is green\", function () {",
+											"    var health = pm.response.json();",
+											"    pm.expect(health.status).to.eql(\"green\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{opensearch.port}}/_cluster/health",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{opensearch.port}}",
 									"path": [
 										"_cluster",
 										"health"
@@ -1114,6 +1161,10 @@
 			"key": "newrelic.port",
 			"value": "5556",
 			"type": "string"
+		},
+		{
+			"key": "opensearch.port",
+			"value": "9201"
 		}
 	]
 }

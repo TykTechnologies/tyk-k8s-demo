@@ -14,7 +14,6 @@ addDeploymentArgs "${args[@]}";
 
 if [[ "$SSL" == "$SSLMode" ]]; then
   args=(
-    --set "global.components.pump=true" \
     --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_PMP_PUMPS_ELASTICSEARCH_META_USERNAME" \
     --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].value=elastic" \
     --set "tyk-pump.pump.extraEnvs[$(($pumpExtraEnvsCtr + 1))].name=TYK_PMP_PUMPS_ELASTICSEARCH_META_PASSWORD" \
