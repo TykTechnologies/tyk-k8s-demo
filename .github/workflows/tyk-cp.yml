@@ -30,6 +30,7 @@ jobs:
           - keycloak-dcr
           - keycloak-jwt
           - newrelic
+          - opensearch
           - operator
           - operator-federation
           - operator-graphql

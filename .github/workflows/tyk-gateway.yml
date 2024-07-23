@@ -28,6 +28,7 @@ jobs:
           - keycloak
           - keycloak-jwt
           - newrelic
+          - opensearch
           - operator
           - operator-federation
           - operator-graphql
