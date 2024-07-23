@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: portal-bootstrap-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: portal-bootstrap
+          image: pnnlmiscscripts/curl-jq:latest
+          command: ["/bin/sh", "/scripts/bootstrap.sh"]
+          env:
+            - name: PORTAL_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: portal-bootstrap-secrets
+                  key: PORTAL_API_KEY
+            - name: DASHBOARD_ORG_ID
+              valueFrom:
+                secretKeyRef:
+                  name: portal-bootstrap-secrets
+                  key: DASHBOARD_ORG_ID
+            - name: DASHBOARD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: portal-bootstrap-secrets
+                  key: DASHBOARD_API_KEY
+          volumeMounts:
+            - name: portal-bootstrap-volume
+              mountPath: /scripts/bootstrap.sh
+              subPath: bootstrap.sh
+      restartPolicy: Never
+      volumes:
+        - name: portal-bootstrap-volume
+          configMap:
+            name: portal-bootstrap-configmap
+            items:
+              - key: bootstrap.sh
+                path: bootstrap.sh

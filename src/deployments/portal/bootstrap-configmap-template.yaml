@@ -1,0 +1,79 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: portal-bootstrap-configmap
+data:
+  bootstrap.sh: |
+    # Create provider
+    res=$(curl -vvv --location 'replace_url/portal-api/providers' \
+      --header 'Content-Type: application/json' \
+      --header 'Accept: application/json' \
+      --header "Authorization: $PORTAL_API_KEY" \
+      --data '{
+        "Configuration": {
+          "MetaData": "{\"URL\":\"replace_dashboard_url\",\"Secret\":\"'$DASHBOARD_API_KEY'\",\"OrgID\":\"'$DASHBOARD_ORG_ID'\",\"Gateway\":\"\",\"PoliciesTags\":[],\"InsecureSkipVerify\":true}"
+        },
+        "Name": "Tyk Dashboard",
+        "Type": "tyk-pro"
+        }' );
+    providerID=$(echo $res | jq -r .ID);
+
+    # Sync provider
+    curl -vvv --location --request PUT "replace_url/portal-api/providers/$providerID/synchronize" \
+      --header "Accept: application/json" \
+      --header "Authorization: $PORTAL_API_KEY"
+
+    # Create Orgs
+    curl -vvv --location 'replace_url/portal-api/organisations' \
+      --header 'Content-Type: application/json' \
+      --header 'Accept: application/json' \
+      --header "Authorization: $PORTAL_API_KEY" \
+      --data '{
+        "Name": "Internal Developers Organization"
+      }'
+
+    curl -vvv --location 'replace_url/portal-api/organisations' \
+      --header 'Content-Type: application/json' \
+      --header 'Accept: application/json' \
+      --header "Authorization: $PORTAL_API_KEY" \
+      --data '{
+        "Name": "External Developers and Partners Organization"
+      }'
+
+    # Create Users
+    res=$(curl -vvv --location 'replace_url/portal-api/users' \
+    --header 'Content-Type: application/json' \
+    --header 'Accept: application/json' \
+    --header "Authorization: $PORTAL_API_KEY" \
+    --data-raw '{
+      "Active": "true",
+      "Email": "api-developer@internal.org",
+      "First": "Internal",
+      "Last": "User",
+      "Organisation": {"ID": "2"},
+      "Role": "consumer-admin",
+      "Provider": "password",
+      "ResetPassword": "false",
+      "Teams": "2",
+      "Password": "password"
+    }')
+    internalUserID=$(echo $res | jq -r .ID);
+
+    res=$(curl -vvv --location 'replace_url/portal-api/users' \
+    --header 'Content-Type: application/json' \
+    --header 'Accept: application/json' \
+    --header "Authorization: $PORTAL_API_KEY" \
+    --data-raw '{
+      "Active": "true",
+      "Email": "api-developer@external.org",
+      "First": "External",
+      "Last": "User",
+      "Organisation": {"ID": "3"},
+      "Role": "consumer-admin",
+      "Provider": "password",
+      "ResetPassword": "false",
+      "Teams": "3",
+      "Password": "password"
+    }')
+    externalUserID=$(echo $res | jq -r .ID);

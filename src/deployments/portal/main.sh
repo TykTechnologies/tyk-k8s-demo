@@ -1,8 +1,8 @@
-logger "$INFO" "installing portal in $namespace namespace...";
-
 portalDBName=portal;
 portalDBPort=54321;
 source src/main/storage/pgsql.sh $portalDBName $portalDBPort;
+
+logger "$INFO" "installing portal in $namespace namespace...";
 
 addService "dev-portal-svc-$tykReleaseName-tyk-dev-portal";
 
@@ -23,3 +23,5 @@ args=(
 
 addDeploymentArgs "${args[@]}";
 upgradeTyk;
+
+source "$portalDeploymentPath/bootstrap.sh";
