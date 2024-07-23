@@ -23,11 +23,11 @@ and they will be mapped to the respective `extraEnvs` section in the helm charts
 
 | Variable                             |        Default        | Comments                                                                                                        |
 |--------------------------------------|:---------------------:|-----------------------------------------------------------------------------------------------------------------|
-| DASHBOARD_VERSION                    |        `v5.2`         | Dashboard version                                                                                               |
-| GATEWAY_VERSION                      |        `v5.2`         | Gateway version                                                                                                 |
-| MDCB_VERSION                         |        `v2.3`         | MDCB version                                                                                                    |
-| PUMP_VERSION                         |        `v1.8`         | Pump version                                                                                                    |
-| PORTAL_VERSION                       |        `v1.8`         | Portal version                                                                                                  |
+| DASHBOARD_VERSION                    |        `v5.4`         | Dashboard version                                                                                               |
+| GATEWAY_VERSION                      |        `v5.4`         | Gateway version                                                                                                 |
+| MDCB_VERSION                         |        `v2.6`         | MDCB version                                                                                                    |
+| PUMP_VERSION                         |        `v1.10`        | Pump version                                                                                                    |
+| PORTAL_VERSION                       |        `v1.10`        | Portal version                                                                                                  |
 | TYK_HELM_CHART_PATH                  |      `tyk-helm`       | Path to charts, can be a local directory or a helm repo                                                         |
 | TYK_USERNAME                         | `default@example.com` | Default password for all the services deployed                                                                  |
 | TYK_PASSWORD                         |  `topsecretpassword`  | Default password for all the services deployed                                                                  |
