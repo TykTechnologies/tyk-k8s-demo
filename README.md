@@ -5,7 +5,6 @@
 [![tyk-dp](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-dp.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-dp.yml?query=branch%3Amain)
 [![Clusters](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/clusters.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/clusters.yml?query=branch%3Amain)
 [![Redis](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/redis.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/redis.yml?query=branch%3Amain)
-[![Pumps](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-pumps.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-pumps.yml?query=branch%3Amain)
 [![AKS](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/aks.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/aks.yml?query=branch%3Amain)
 [![EKS](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/eks.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/eks.yml?query=branch%3Amain)
 [![GKE](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/gke.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/gke.yml?query=branch%3Amain)
