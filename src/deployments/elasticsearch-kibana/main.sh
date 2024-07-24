@@ -8,7 +8,7 @@ helm upgrade "$elasticsearchKibanaReleaseName" bitnami/kibana --version 11.2.14 
   --set "elasticsearch.hosts[0]=$elasticsearchReleaseName.$namespace.svc" \
   --set "elasticsearch.port=$ELASTICSEARCH_SERVICE_PORT" \
   --set "service.ports.http=$KIBANA_SERVICE_PORT" \
-  --set "resourcesPreset=micro" \
+  --set "resourcesPreset=nano" \
   "${elasticsearchKibanaSecurityContextArgs[@]}" \
   "${elasticsearchKibanaSSLArgs[@]}" \
   "${elasticsearchKibanaLoadbalancerArgs[@]}" \
