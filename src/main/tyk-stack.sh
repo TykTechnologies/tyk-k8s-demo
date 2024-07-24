@@ -1,7 +1,7 @@
 source src/main/storage/main.sh;
 
 tykReleaseName="tyk-stack";
-tykReleaseVersion="1.4.0";
+tykReleaseVersion="1.5.0";
 
 args=(
   --set "global.license.dashboard=$LICENSE" \
