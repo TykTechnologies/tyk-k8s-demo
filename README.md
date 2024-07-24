@@ -5,6 +5,7 @@
 [![tyk-dp](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-dp.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/tyk-dp.yml?query=branch%3Amain)
 [![Clusters](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/clusters.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/clusters.yml?query=branch%3Amain)
 [![Redis](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/redis.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/redis.yml?query=branch%3Amain)
+[![Storage](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/storage.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/storage.yml?query=branch%3Amain)
 [![AKS](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/aks.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/aks.yml?query=branch%3Amain)
 [![EKS](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/eks.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/eks.yml?query=branch%3Amain)
 [![GKE](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/gke.yml/badge.svg?query=branch%3Amain)](https://github.com/TykTechnologies/tyk-k8s-demo/actions/workflows/gke.yml?query=branch%3Amain)
@@ -148,7 +149,7 @@ Flags:
   -f, --flavor          enum     k8s environment flavor. This option can be set 'openshift' and defaults to 'vanilla'
   -e, --expose          enum     set this option to 'port-forward' to expose the services as port-forwards or to 'load-balancer' to expose the services as load balancers or 'ingress' which exposes services as a k8s ingress object
   -r, --redis           enum     the redis mode that tyk stack will use. This option can be set 'redis', 'redis-sentinel' and defaults to 'redis-cluster'
-  -s, --storage         enum     database the tyk stack will use. This option can be set 'postgres' and defaults to 'mongo'
+  -s, --storage         enum     database the tyk stack will use. This option can be set 'mongo' (amd only) and defaults to 'postgres'
   -d, --deployments     string   comma separated list of deployments to launch
   -c, --cloud           enum     stand up k8s infrastructure in 'aws', 'gcp' or 'azure'. This will require Terraform and the CLIs associate with the cloud of choice
   -l, --ssl             bool     enable ssl on deployments
