@@ -14,6 +14,7 @@ sed "s/replace_service_type/$JAEGER_SERVICE_TYPE/g" "$jaegerDeploymentPath/jaege
 helm upgrade tyk-otel-collector open-telemetry/opentelemetry-collector --version 0.99.0 \
   --install \
   --set "mode=deployment" \
+  --set "image.repository=otel/opentelemetry-collector-k8s" \
   --set "config.receivers.otlp.protocols.http.endpoint=0.0.0.0:4318" \
   --set "config.receivers.otlp.protocols.grpc.endpoint=0.0.0.0:4317" \
   --set "config.exporters.jaeger.endpoint=$jaegerReleaseName-collector.$namespace.svc:14250" \

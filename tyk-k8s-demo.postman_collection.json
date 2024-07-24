@@ -347,12 +347,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:{{keycloak.port}}/health",
+									"raw": "http://localhost:{{keycloak-management.port}}/health",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "{{keycloak.port}}",
+									"port": "{{keycloak-management.port}}",
 									"path": [
 										"health"
 									]
@@ -451,12 +451,12 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost:{{keycloak.port}}/realms/jwt/protocol/openid-connect/token",
+									"raw": "http://localhost:{{keycloak-service.port}}/realms/jwt/protocol/openid-connect/token",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "{{keycloak.port}}",
+									"port": "{{keycloak-service.port}}",
 									"path": [
 										"realms",
 										"jwt",
@@ -544,12 +544,12 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost:{{keycloak.port}}/realms/jwt/protocol/openid-connect/token",
+									"raw": "http://localhost:{{keycloak-service.port}}/realms/jwt/protocol/openid-connect/token",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "{{keycloak.port}}",
+									"port": "{{keycloak-service.port}}",
 									"path": [
 										"realms",
 										"jwt",
@@ -1129,10 +1129,14 @@
 			"key": "datadog.port",
 			"value": "5555"
 		},
-		{
-			"key": "keycloak.port",
-			"value": "7002"
-		},
+    {
+      "key": "keycloak-service.port",
+      "value": "7001"
+    },
+    {
+      "key": "keycloak-management.port",
+      "value": "7002"
+    },
 		{
 			"key": "portal.port",
 			"value": "3000"
