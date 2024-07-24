@@ -16,11 +16,14 @@ sed "s/replace_name/$keycloakName/g" "$keycloakDeploymentPath/$keycloakTemplate"
   sed "s/replace_db_port/$keycloakDBPort/g" | \
   sed "s/replace_db_name/$keycloakDBName/g" | \
   sed "s/replace_service_port/$KEYCLOAK_SERVICE_PORT/g" | \
+  sed "s/replace_management_port/$KEYCLOAK_MANAGEMENT_PORT/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
 logger "$INFO" "waiting for $keycloakName pods to come up...";
 waitForPods "statefulset.kubernetes.io/pod-name=$keycloakName-0" "$keycloakName-0";
 kubectl wait pods --namespace "$namespace" -l "statefulset.kubernetes.io/pod-name=$keycloakName-0" --for=condition=Ready --timeout="$TYK_TIMEOUT" > /dev/null;
+
+source "$keycloakDeploymentPath/health.sh";
 
 addSummary "\tKeycloak deployed\n \
 \tUsername: $(kubectl get secret "$keycloakName-initial-admin" -o jsonpath='{.data.username}' --namespace "$namespace" | base64 --decode)\n \

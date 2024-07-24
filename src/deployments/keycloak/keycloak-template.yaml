@@ -18,6 +18,8 @@ spec:
   http:
     httpEnabled: true
     httpPort: replace_service_port
+  httpManagement:
+    port: replace_management_port
   hostname:
     strict: false
     strictBackchannel: false

@@ -1131,7 +1131,7 @@
 		},
 		{
 			"key": "keycloak.port",
-			"value": "7001"
+			"value": "7002"
 		},
 		{
 			"key": "portal.port",

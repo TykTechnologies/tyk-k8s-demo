@@ -20,7 +20,8 @@ All the ports that this library uses.
 | newrelic              | newrelic-kube-state-metrics-health-svc | `5556`  |
 | elasticsearch-kibana  | elasticsearch-kibana                   | `5601`  |
 | opensearch-dashboards | opensearch-dashboards                  | `5602`  |
-| keyclaok              | keycloak-service                       | `7001`  |
+| keycloak              | keycloak-service (http)                | `7001`  |
+| keycloak              | keycloak-service (management)          | `7002`  |
 | operator-httpbin      | httpbin-svc                            | `8000`  |
 | all                   | gateway-svc-*-tyk-gateway              | `8080`  |
 | vault                 | vault                                  | `8200`  |
