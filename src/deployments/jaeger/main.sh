@@ -1,7 +1,7 @@
 logger "$INFO" "installing $jaegerReleaseName in $namespace namespace...";
 
 setVerbose;
-helm upgrade "$jaegerReleaseName" jaegertracing/jaeger-operator --version v2.54.0 \
+helm upgrade "$jaegerReleaseName" jaegertracing/jaeger-operator --version v2.46.2 \
   --install \
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
@@ -17,8 +17,8 @@ helm upgrade tyk-otel-collector open-telemetry/opentelemetry-collector --version
   --set "image.repository=otel/opentelemetry-collector-k8s" \
   --set "config.receivers.otlp.protocols.http.endpoint=0.0.0.0:4318" \
   --set "config.receivers.otlp.protocols.grpc.endpoint=0.0.0.0:4317" \
-  --set "config.exporters.jaeger.endpoint=$jaegerReleaseName-collector.$namespace.svc:14250" \
-  --set "config.exporters.jaeger.tls.insecure=true" \
+  --set "config.exporters.otlphttp.endpoint=$jaegerReleaseName-collector.$namespace.svc:14250" \
+  --set "config.exporters.otlphttp.tls.insecure=true" \
   --set "config.extensions.pprof.endpoint=\:1888" \
   --set "config.extensions.zpages.endpoint=\:55679" \
   --set "config.service.extensions[0]=pprof" \
@@ -26,7 +26,7 @@ helm upgrade tyk-otel-collector open-telemetry/opentelemetry-collector --version
   --set "config.service.extensions[2]=health_check" \
   --set "config.service.pipelines.traces.receivers[0]=otlp" \
   --set "config.service.pipelines.traces.processors[0]=batch" \
-  --set "config.service.pipelines.traces.exporters[0]=jaeger" \
+  --set "config.service.pipelines.traces.exporters[0]=otlphttp" \
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
