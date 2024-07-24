@@ -13,7 +13,7 @@ if [[ $OPENSHIFT == "$flavor" ]]; then
 fi
 
 setVerbose;
-helm upgrade $mongoReleaseName bitnami/mongodb --version 13.18.5 \
+helm upgrade $mongoReleaseName bitnami/mongodb --version 15.6.15 \
   --install \
   --namespace "$namespace" \
   --set "image.repository=zalbiraw/mongodb" \

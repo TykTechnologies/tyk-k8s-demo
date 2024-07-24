@@ -1,6 +1,6 @@
 ## Tyk Operator
 Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-operator)
-using the `tyk-helm/tyk-operator` chart version `0.17.0`and its dependency
+using the `tyk-helm/tyk-operator` chart version `0.18.0`and its dependency
 [cert-manager](https://github.com/jetstack/cert-manager).
 
 ### Minikube

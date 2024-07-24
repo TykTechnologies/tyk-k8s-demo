@@ -1,7 +1,7 @@
 logger "$INFO" "installing $jaegerReleaseName in $namespace namespace...";
 
 setVerbose;
-helm upgrade "$jaegerReleaseName" jaegertracing/jaeger-operator --version v2.46.2 \
+helm upgrade "$jaegerReleaseName" jaegertracing/jaeger-operator --version v2.54.0 \
   --install \
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
@@ -11,7 +11,7 @@ sed "s/replace_service_type/$JAEGER_SERVICE_TYPE/g" "$jaegerDeploymentPath/jaege
   sed "s/replace_ingress_className/$INGRESS_CLASSNAME/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
-helm upgrade tyk-otel-collector open-telemetry/opentelemetry-collector --version 0.62.0 \
+helm upgrade tyk-otel-collector open-telemetry/opentelemetry-collector --version 0.105.0 \
   --install \
   --set "mode=deployment" \
   --set "config.receivers.otlp.protocols.http.endpoint=0.0.0.0:4318" \

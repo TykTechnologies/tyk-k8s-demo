@@ -20,7 +20,7 @@ fi
 
 addDeploymentArgs "${args[@]}";
 setVerbose;
-helm upgrade "$redisReleaseName" bitnami/redis-cluster --version 10.0.1 \
+helm upgrade "$redisReleaseName" bitnami/redis-cluster --version 10.2.7 \
   --install \
   --namespace "$namespace" \
   --set "password=$TYK_PASSWORD" \

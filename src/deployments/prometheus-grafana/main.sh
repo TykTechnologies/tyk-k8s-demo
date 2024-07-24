@@ -4,7 +4,7 @@ addService "$grafanaReleaseName";
 
 setVerbose;
 kubectl apply -f "$prometheusGrafanaDeploymentPath/grafana-dashboards-configmap.yaml" --namespace "$namespace" > /dev/null;
-helm upgrade "$grafanaReleaseName" grafana/grafana --version 6.52.7 \
+helm upgrade "$grafanaReleaseName" grafana/grafana --version 8.3.6 \
   --install \
   --set "adminPassword=$TYK_PASSWORD" \
   --set "service.port=$GRAFANA_SERVICE_PORT" \

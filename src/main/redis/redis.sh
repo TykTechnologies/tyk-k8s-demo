@@ -25,7 +25,7 @@ fi
 
 addDeploymentArgs "${args[@]}";
 setVerbose;
-helm upgrade $redisReleaseName bitnami/redis --version 19.0.2 \
+helm upgrade $redisReleaseName bitnami/redis --version 19.6.2 \
   --install \
   --namespace "$namespace" \
   --set "replica.replicaCount=0" \

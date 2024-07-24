@@ -1,7 +1,7 @@
 logger "$INFO" "installing $newrelicReleaseName in $namespace namespace...";
 
 setVerbose;
-helm upgrade "$newrelicReleaseName" newrelic/nri-bundle --version 5.0.75 \
+helm upgrade "$newrelicReleaseName" newrelic/nri-bundle --version 5.0.87 \
   --install \
   --set global.licenseKey=$NEWRELIC_LICENSEKEY \
   --set global.cluster=$NEWRELIC_CLUSTER \

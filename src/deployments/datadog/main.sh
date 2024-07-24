@@ -1,7 +1,7 @@
 logger "$INFO" "installing $datadogReleaseName in $namespace namespace...";
 
 setVerbose;
-helm upgrade "$datadogReleaseName" datadog/datadog --version 3.25.1 \
+helm upgrade "$datadogReleaseName" datadog/datadog --version 3.69.0 \
   --install \
   --set "datadog.apiKey=$DATADOG_APIKEY" \
   --set "datadog.site=$DATADOG_SITE" \

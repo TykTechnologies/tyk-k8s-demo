@@ -1,5 +1,5 @@
 ## Cert Manager
-Deploys cert-manager using the `jetstack/cert-manager` chart version `v1.10.1`.
+Deploys cert-manager using the `jetstack/cert-manager` chart version `v1.15.1`.
 This is a requirement for the Tyk Operator.
 
 ### Example

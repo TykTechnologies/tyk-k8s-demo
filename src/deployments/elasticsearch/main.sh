@@ -3,7 +3,7 @@ logger "$INFO" "installing $elasticsearchReleaseName in $namespace namespace..."
 addService "$elasticsearchReleaseName";
 
 setVerbose;
-helm upgrade "$elasticsearchReleaseName" bitnami/elasticsearch --version 19.13.1 \
+helm upgrade "$elasticsearchReleaseName" bitnami/elasticsearch --version 21.3.5 \
   --install \
   --set "global.elasticsearch.service.ports.restAPI=$ELASTICSEARCH_SERVICE_PORT" \
   --set "sysctlImage.enabled=false" \

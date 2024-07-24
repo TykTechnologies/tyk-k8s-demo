@@ -1,5 +1,5 @@
 ## New Relic
-Deploys New Relic using the `newrelic/nri-bundle` chart version `5.0.75`.
+Deploys New Relic using the `newrelic/nri-bundle` chart version `5.0.87`.
 Stands up a Tyk pump to print analytics data to the Tyk pump STDOUT to allow
 New Relic to scrape it.
 

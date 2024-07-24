@@ -1,5 +1,5 @@
 ## DataDog
-Deploys Datadog agent using the `datadog/datadog` chart version `3.25.1`.
+Deploys Datadog agent using the `datadog/datadog` chart version `3.69.0`.
 Stands up a Tyk pump to push analytics data from the Tyk platform to Datadog.
 It will also create a Datadog dashboard for you to view the analytics.
 
