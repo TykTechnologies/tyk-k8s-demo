@@ -8,9 +8,13 @@ helm upgrade "$elasticsearchReleaseName" bitnami/elasticsearch --version 21.3.5 
   --set "global.elasticsearch.service.ports.restAPI=$ELASTICSEARCH_SERVICE_PORT" \
   --set "sysctlImage.enabled=false" \
   --set "master.replicaCount=1" \
+  --set "master.resourcesPreset=nano" \
   --set "data.replicaCount=1" \
+  --set "data.resourcesPreset=nano" \
   --set "coordinating.replicaCount=1" \
+  --set "coordinating.resourcesPreset=nano" \
   --set "ingest.replicaCount=1" \
+  --set "ingest.resourcesPreset=nano" \
   "${elasticsearchSecurityContextArgs[@]}" \
   "${elasticsearchSSLArgs[@]}" \
   "${elasticsearchLoadbalancerArgs[@]}" \
