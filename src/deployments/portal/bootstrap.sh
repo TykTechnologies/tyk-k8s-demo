@@ -12,7 +12,6 @@ if [[ -z $search ]]; then
   # Create secret
   kubectl create secret generic "portal-bootstrap-secrets" --namespace "$namespace" \
     --from-literal="PORTAL_API_KEY=$jwt" \
-    --from-literal="DASHBOARD_ORG_ID=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d)" \
     --from-literal="DASHBOARD_API_KEY=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d)" \
     > /dev/null;
 

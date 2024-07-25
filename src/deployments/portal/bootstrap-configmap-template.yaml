@@ -7,39 +7,41 @@ data:
   bootstrap.sh: |
     # Create provider
     res=$(curl -vvv --location 'replace_url/portal-api/providers' \
-      --header 'Content-Type: application/json' \
-      --header 'Accept: application/json' \
-      --header "Authorization: $PORTAL_API_KEY" \
-      --data '{
-        "Configuration": {
-          "MetaData": "{\"URL\":\"replace_dashboard_url\",\"Secret\":\"'$DASHBOARD_API_KEY'\",\"OrgID\":\"'$DASHBOARD_ORG_ID'\",\"Gateway\":\"\",\"PoliciesTags\":[],\"InsecureSkipVerify\":true}"
-        },
-        "Name": "Tyk Dashboard",
-        "Type": "tyk-pro"
-        }' );
+    --header 'Content-Type: application/json' \
+    --header 'Accept: application/json' \
+    --header "Authorization: $PORTAL_API_KEY" \
+    --data '{
+    "Configuration": {
+      "MetaData": "{\"URL\":\"replace_dashboard_url\",\"Secret\":\"'$DASHBOARD_API_KEY'\",\"OrgID\":\"\",\"Gateway\":\"\",\"PoliciesTags\":[],\"InsecureSkipVerify\":true}"
+    },
+    "Name": "Tyk Dashboard",
+    "Type": "tyk-pro"
+    }' );
     providerID=$(echo $res | jq -r .ID);
 
     # Sync provider
     curl -vvv --location --request PUT "replace_url/portal-api/providers/$providerID/synchronize" \
-      --header "Accept: application/json" \
-      --header "Authorization: $PORTAL_API_KEY"
+    --header "Accept: application/json" \
+    --header "Authorization: $PORTAL_API_KEY"
 
     # Create Orgs
-    curl -vvv --location 'replace_url/portal-api/organisations' \
-      --header 'Content-Type: application/json' \
-      --header 'Accept: application/json' \
-      --header "Authorization: $PORTAL_API_KEY" \
-      --data '{
-        "Name": "Internal Developers Organization"
-      }'
+    res=$(curl -vvv --location 'replace_url/portal-api/organisations' \
+    --header 'Content-Type: application/json' \
+    --header 'Accept: application/json' \
+    --header "Authorization: $PORTAL_API_KEY" \
+    --data '{
+    "Name": "Internal Developers Organization"
+    }')
+    internalOrgID=$(echo $res | jq -r .ID);
 
-    curl -vvv --location 'replace_url/portal-api/organisations' \
-      --header 'Content-Type: application/json' \
-      --header 'Accept: application/json' \
-      --header "Authorization: $PORTAL_API_KEY" \
-      --data '{
-        "Name": "External Developers and Partners Organization"
-      }'
+    res=$(curl -vvv --location 'replace_url/portal-api/organisations' \
+    --header 'Content-Type: application/json' \
+    --header 'Accept: application/json' \
+    --header "Authorization: $PORTAL_API_KEY" \
+    --data '{
+    "Name": "External Developers and Partners Organization"
+    }')
+    externalOrgID=$(echo $res | jq -r .ID);
 
     # Create Users
     res=$(curl -vvv --location 'replace_url/portal-api/users' \
@@ -47,16 +49,16 @@ data:
     --header 'Accept: application/json' \
     --header "Authorization: $PORTAL_API_KEY" \
     --data-raw '{
-      "Active": "true",
-      "Email": "api-developer@internal.org",
-      "First": "Internal",
-      "Last": "User",
-      "Organisation": {"ID": "2"},
-      "Role": "consumer-admin",
-      "Provider": "password",
-      "ResetPassword": "false",
-      "Teams": "2",
-      "Password": "password"
+    "Active": "true",
+    "Email": "api-developer@internal.org",
+    "First": "Internal",
+    "Last": "User",
+    "Organisation": {"ID": "'$internalOrgID'"},
+    "Role": "consumer-admin",
+    "Provider": "password",
+    "ResetPassword": "false",
+    "Teams": "'$internalOrgID'",
+    "Password": "password"
     }')
     internalUserID=$(echo $res | jq -r .ID);
 
@@ -65,15 +67,127 @@ data:
     --header 'Accept: application/json' \
     --header "Authorization: $PORTAL_API_KEY" \
     --data-raw '{
-      "Active": "true",
-      "Email": "api-developer@external.org",
-      "First": "External",
-      "Last": "User",
-      "Organisation": {"ID": "3"},
-      "Role": "consumer-admin",
-      "Provider": "password",
-      "ResetPassword": "false",
-      "Teams": "3",
-      "Password": "password"
+    "Active": "true",
+    "Email": "api-developer@external.org",
+    "First": "External",
+    "Last": "User",
+    "Organisation": {"ID": "'$externalOrgID'"},
+    "Role": "consumer-admin",
+    "Provider": "password",
+    "ResetPassword": "false",
+    "Teams": "'$externalOrgID'",
+    "Password": "password"
     }')
     externalUserID=$(echo $res | jq -r .ID);
+
+    res=$(curl -vvv --location 'replace_url/portal-api/catalogues' \
+    --header 'Content-Type: application/json' \
+    --header 'Accept: application/json' \
+    --header "Authorization: $PORTAL_API_KEY" \
+    --data-raw '{
+      "Name": "Red Catalogue",
+      "NameWithSlug": "red-catalogue",
+      "Plans": [],
+      "Products": [],
+      "VisibilityStatus": "Private",
+      "OrgCatalogues": [{
+        "OrganisationID": '$internalOrgID',
+        "TeamID": '$internalOrgID'
+      }]
+    }')
+    redCatalogueID=$(echo $res | jq -r .ID);
+
+    res=$(curl -vvv --location 'replace_url/portal-api/catalogues' \
+    --header 'Content-Type: application/json' \
+    --header 'Accept: application/json' \
+    --header "Authorization: $PORTAL_API_KEY" \
+    --data-raw '{
+      "Name": "Blue Catalogue",
+      "NameWithSlug": "blue-catalogue",
+      "Plans": [],
+      "Products": [],
+      "VisibilityStatus": "Private",
+      "OrgCatalogues": [{
+        "OrganisationID": '$externalOrgID',
+        "TeamID": '$externalOrgID'
+      },{
+        "OrganisationID": '$internalOrgID',
+        "TeamID": '$internalOrgID'
+      }]
+    }')
+    blueCatalogueID=$(echo $res | jq -r .ID);
+
+    res=$(curl -vvv --location 'replace_url/portal-api/catalogues' \
+    --header 'Content-Type: application/json' \
+    --header 'Accept: application/json' \
+    --header "Authorization: $PORTAL_API_KEY" \
+    --data-raw '{
+      "Name": "Green Catalogue",
+      "NameWithSlug": "green-catalogue",
+      "Plans": [],
+      "Products": [],
+      "VisibilityStatus": "Public",
+      "OrgCatalogues": []
+    }')
+    greenCatalogueID=$(echo $res | jq -r .ID);
+
+    products=$(curl -vvv --location 'replace_url/portal-api/products' \
+    --header 'Accept: application/json' \
+    --header "Authorization: $PORTAL_API_KEY")
+
+    echo "$products" | jq -c '.[]' | while read -r product; do
+      # Extract product ID and Name
+      product_id=$(echo "$product" | jq -r '.ID')
+      product_name=$(echo "$product" | jq -r '.Name')
+
+      # Determine the CatalogueID based on the product name
+      if [[ "$product_name" == "Product Red" ]]; then
+        CatalogueID=$redCatalogueID
+      elif [[ "$product_name" == "Product Blue" ]]; then
+        CatalogueID=$blueCatalogueID
+      else
+        CatalogueID=$greenCatalogueID
+      fi
+
+      payload=$(echo "$product" | jq -c \
+          --arg DisplayName "$product_name" \
+          --arg OASUrl "https://httpbin.org/spec.json" \
+          --arg CatalogueID $CatalogueID \
+          '.DisplayName = $DisplayName | .APIDetails[0].OASUrl = $OASUrl | .Catalogues[0] = $CatalogueID')
+
+      # Make the PUT request to update the product
+      curl -s --location --request PUT "replace_url/portal-api/products/$product_id" \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/json' \
+          --header "Authorization: $PORTAL_API_KEY" \
+          --data "$payload"
+    done
+
+    plans=$(curl -vvv --location 'replace_url/portal-api/plans' \
+    --header 'Accept: application/json' \
+    --header "Authorization: $PORTAL_API_KEY")
+
+    echo "$plans" | jq -c '.[]' | while read -r plan; do
+      # Extract plan Name
+      plan_name=$(echo "$plan" | jq -r '.Name')
+      plan_id=$(echo "$plan" | jq -r '.ID')
+
+      autoApprove=false;
+      if [[ "$plan_name" == "Basic Plan" ]]; then
+        autoApprove=true;
+      fi
+
+      payload=$(echo "$plan" | jq -c \
+          --arg Red "$redCatalogueID" \
+          --arg Blue "$blueCatalogueID" \
+          --arg Green "$greenCatalogueID" \
+          --arg AutoApprove "$autoApprove" \
+          '.AutoApproveAccessRequests = $AutoApprove | .Catalogues = [$Red,$Blue,$Green] | .Quota = -1')
+
+      # Make the PUT request to update the product
+      curl -s --location --request PUT "replace_url/portal-api/plans/$plan_id" \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/json' \
+          --header "Authorization: $PORTAL_API_KEY" \
+          --data "$payload"
+    done

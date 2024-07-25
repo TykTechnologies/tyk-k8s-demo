@@ -15,11 +15,6 @@ spec:
                 secretKeyRef:
                   name: portal-bootstrap-secrets
                   key: PORTAL_API_KEY
-            - name: DASHBOARD_ORG_ID
-              valueFrom:
-                secretKeyRef:
-                  name: portal-bootstrap-secrets
-                  key: DASHBOARD_ORG_ID
             - name: DASHBOARD_API_KEY
               valueFrom:
                 secretKeyRef:
