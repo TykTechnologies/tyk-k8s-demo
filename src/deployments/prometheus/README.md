@@ -1,5 +1,5 @@
 ## Prometheus Pump Deployment
-Deploys Prometheus using the `prometheus-community/prometheus` chart version `25.3.0`
+Deploys Prometheus using the `prometheus-community/prometheus` chart version `25.24.1`
 and stands up a Tyk pump to push analytics data from the Tyk platform to
 Prometheus.
 

@@ -11,13 +11,14 @@ sed "s/replace_service_type/$JAEGER_SERVICE_TYPE/g" "$jaegerDeploymentPath/jaege
   sed "s/replace_ingress_className/$INGRESS_CLASSNAME/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
-helm upgrade tyk-otel-collector open-telemetry/opentelemetry-collector --version 0.62.0 \
+helm upgrade tyk-otel-collector open-telemetry/opentelemetry-collector --version 0.99.0 \
   --install \
   --set "mode=deployment" \
+  --set "image.repository=otel/opentelemetry-collector-k8s" \
   --set "config.receivers.otlp.protocols.http.endpoint=0.0.0.0:4318" \
   --set "config.receivers.otlp.protocols.grpc.endpoint=0.0.0.0:4317" \
-  --set "config.exporters.jaeger.endpoint=$jaegerReleaseName-collector.$namespace.svc:14250" \
-  --set "config.exporters.jaeger.tls.insecure=true" \
+  --set "config.exporters.otlphttp.endpoint=$jaegerReleaseName-collector.$namespace.svc:14250" \
+  --set "config.exporters.otlphttp.tls.insecure=true" \
   --set "config.extensions.pprof.endpoint=\:1888" \
   --set "config.extensions.zpages.endpoint=\:55679" \
   --set "config.service.extensions[0]=pprof" \
@@ -25,7 +26,7 @@ helm upgrade tyk-otel-collector open-telemetry/opentelemetry-collector --version
   --set "config.service.extensions[2]=health_check" \
   --set "config.service.pipelines.traces.receivers[0]=otlp" \
   --set "config.service.pipelines.traces.processors[0]=batch" \
-  --set "config.service.pipelines.traces.exporters[0]=jaeger" \
+  --set "config.service.pipelines.traces.exporters[0]=otlphttp" \
   --namespace "$namespace" \
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;

@@ -1,5 +1,5 @@
 ## Elasticsearch
-Deploys Elasticsearch using the `bitnami/elasticsearch` chart version `19.13.1`.
+Deploys Elasticsearch using the `bitnami/elasticsearch` chart version `21.3.5`.
 Stands up a Tyk pump to push analytics data from the Tyk platform to Elasticsearch.
 
 ### Example

@@ -1,6 +1,6 @@
 ## K6 Operator
 Deploys a Grafana K6 Operator using the `grafana/k6-operator` chart version
-`1.2.0`.
+`3.7.0`.
 
 ### Example
 ```

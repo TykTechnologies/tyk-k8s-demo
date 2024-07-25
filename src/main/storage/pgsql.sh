@@ -14,7 +14,7 @@ if [[ $OPENSHIFT == "$flavor" ]]; then
 fi
 
 setVerbose;
-helm upgrade "$postgresReleaseName" bitnami/postgresql --version 12.12.10 \
+helm upgrade "$postgresReleaseName" bitnami/postgresql --version 15.5.18 \
   --install \
   --namespace "$namespace" \
   --set "auth.database=$1" \

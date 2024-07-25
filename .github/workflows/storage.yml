@@ -1,0 +1,64 @@
+name: Tyk Storage Tests
+
+# Controls when the workflow will run
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+env:
+  MAX_ATTEMPTS: 3
+  TIMEOUT: 30
+
+jobs:
+  tyk-redis:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        storage:
+          - postgres
+          - mongo
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: start Minikube
+        uses: medyagh/setup-minikube@latest
+        with:
+          kubernetes-version: v1.23.13
+          extra-config: 'kubelet.max-pods=100'
+          addons: 'default-storageclass,storage-provisioner,ingress'
+          start-args: '--force'
+
+      - name: Install helm
+        uses: Azure/setup-helm@v4
+
+      - name: Install newman
+        run: |
+          sudo apt update && \
+          sudo apt install nodejs npm -y && \
+          npm install -g newman
+
+      - name: Copy .env file
+        run: cp .env.example .env
+
+      - name: Deploy tyk-stack with ${{ matrix.redis }}
+        uses: nick-invision/retry@v3
+        with:
+          max_attempts: ${{ env.MAX_ATTEMPTS }}
+          timeout_minutes: ${{ env.TIMEOUT }}
+          command: |
+            LICENSE="${{ secrets.DASH_LICENSE }}" \
+            MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+            ./up.sh -v \
+              --namespace tyk-${{ matrix.storage }} \
+              --storage ${{ matrix.storage }} \
+              tyk-stack
+
+      - name: Sleep 1 minute
+        run: sleep 60
+
+      - name: Test Tyk deployment
+        run: newman run --folder gateway --env-var "deployment=control-plane" tyk-k8s-demo.postman_collection.json

@@ -2,7 +2,7 @@
 Deploys the Keycloak Operator and a Keycloak instance.
 
 Keycloak Operator is installed using the
-[21.0.1](https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/21.0.1/kubernetes)
+[25.0.2](https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/25.0.2/kubernetes)
 Keycloak resource.
 
 ### Example

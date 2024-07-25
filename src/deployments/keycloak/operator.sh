@@ -1,4 +1,4 @@
-keycloak_url=https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/21.0.1/kubernetes;
+keycloak_url=https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/25.0.2/kubernetes;
 
 logger "$INFO" "installing keycloak operator in $namespace namespace...";
 kubectl apply -f "$keycloak_url/keycloaks.k8s.keycloak.org-v1.yml" --namespace "$namespace" > /dev/null;

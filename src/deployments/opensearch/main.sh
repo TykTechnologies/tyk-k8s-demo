@@ -4,7 +4,7 @@ addService "$opensearchReleaseName";
 addService "$opensearchReleaseName-dashboards";
 
 setVerbose;
-helm upgrade "$opensearchReleaseName" bitnami/opensearch --version 1.2.7 \
+helm upgrade "$opensearchReleaseName" bitnami/opensearch --version 1.2.8 \
   --install \
   --set "service.ports.restAPI=$OPENSEARCH_SERVICE_PORT" \
   --set "dashboards.enabled=true" \
