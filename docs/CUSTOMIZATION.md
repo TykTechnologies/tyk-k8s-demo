@@ -25,8 +25,8 @@ and they will be mapped to the respective `extraEnvs` section in the helm charts
 |--------------------------------------|:---------------------:|-----------------------------------------------------------------------------------------------------------------|
 | DASHBOARD_VERSION                    |        `v5.5`         | Dashboard version                                                                                               |
 | GATEWAY_VERSION                      |        `v5.5`         | Gateway version                                                                                                 |
-| MDCB_VERSION                         |        `v2.6`         | MDCB version                                                                                                    |
-| PUMP_VERSION                         |        `v1.10`        | Pump version                                                                                                    |
+| MDCB_VERSION                         |        `v2.7`         | MDCB version                                                                                                    |
+| PUMP_VERSION                         |        `v1.11`        | Pump version                                                                                                    |
 | PORTAL_VERSION                       |        `v1.10`        | Portal version                                                                                                  |
 | TYK_HELM_CHART_PATH                  |      `tyk-helm`       | Path to charts, can be a local directory or a helm repo                                                         |
 | TYK_USERNAME                         | `default@example.com` | Default password for all the services deployed                                                                  |
