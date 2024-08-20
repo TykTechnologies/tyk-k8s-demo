@@ -18,12 +18,12 @@ to get you started.
 
 ## Purpose
 Minimize the amount of effort needed to stand up the Tyk infrastructure and
-show examples of how Tyk can be setup in k8s using different deployment
+show examples of how Tyk can be set up in k8s using different deployment
 architectures as well as different integrations.
 
-## Getting started
+## Prerequisite
 
-#### Requirements
+### Required Packages
 You will need the following tools to be able to run this library.
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Helm](https://helm.sh/docs/intro/install/)
@@ -33,13 +33,24 @@ You will need the following tools to be able to run this library.
 
 Tested on Linux/Unix based systems on AMD64 and ARM architectures
 
-#### Initial setup
-Create `.env` file and update the appropriate fields with your licenses.
-If you require a trial license, you can obtain one [here](https://tyk.io/sign-up/).
-If you are looking to use the `tyk-gateway` deployment only you will
-not require any licensing as that is the open-source deployment.
+### License Key
 
-```
+#### When and how to obtain a license key
+If you are looking to use Tyk OSS (`tyk-gateway` deployment only) you will not require any licensing as that is the
+open-source demo deployment.
+
+For the other deployments that are using our licensed product, you will need to sign up below (and
+choose "Get in touch"). Take advantage of a free guided evaluation of the Tyk Dashboard & Developer Portal, and receive
+your temporary license along with installation instructions during the process. Alternatively, to get started quickly,
+without infrastructure, or the need to install, get a 48-hour trial of Tyk Cloud and try the Tyk platform and get access
+to all the features and capabilities.
+
+{{< button_left href="https://tyk.io/sign-up#self" color="green" content="Get started" >}}
+
+#### How to use the license key
+Once you obtained the license key, create `.env` file and update the appropriate fields with your licenses as follows:
+
+```bash
 git clone https://github.com/TykTechnologies/tyk-k8s-demo.git
 cd tyk-k8s-demo
 cp .env.example .env
@@ -49,26 +60,26 @@ Depending on the deployments you would like install set values of the
 `LICENSE`, `MDCB_LICENSE` and `PORTAL_LICENSE` inside the `.env` file.
 
 ### Minikube
-If you are deploying this on Minikube, you will need to enable the ingress
-addon. You do so by running the following:
-```
+If you are deploying this demo on [Minikube](https://minikube.sigs.k8s.io/docs/start),
+you will need to enable the **ingress addon**. You can do so by running the following commands:
+
+```bash
 minikube start
 minikube addons enable ingress
 ```
 
 ## Quick Start
-
-```
+```bash
 ./up.sh --deployments portal,operator-httpbin tyk-stack
 ```
-This quick start command will stand up the entire Tyk stack along with the
-Tyk Enterprise Portal and the Tyk Operator and httpbin CRD example.
+This quick start command will start up the entire Tyk stack along with the
+Tyk Enterprise Portal, Tyk Operator, and httpbin CRD example.
 
 ## Possible deployments
-- `tyk-stack`: Tyk single region self-managed deployment
-- `tyk-cp`: Tyk self-managed multi region control plane
-- `tyk-dp`: Tyk self-managed data plane, this can connect to Tyk Cloud or a Tyk Control Plane
-- `tyk-gateway`: Tyk oss self-managed single region
+- `tyk-stack`: Tyk Self Managed in a single region deployment
+- `tyk-cp`: Tyk Self Managed in a multi region deployment
+- `tyk-dp`: Tyk Self Managed data plane. This deployment is used for the hybrid gateways that can connect to Tyk Cloud or a Tyk Control Plane
+- `tyk-gateway`: Tyk OSS self-managed in a single region
 
 ## Dependencies Options
 ### Redis Options
@@ -108,20 +119,20 @@ Please see this [page](docs/FEATURES_MATRIX.md) for Tyk deployments compatibilit
 - [vault](src/deployments/vault): deploys Vault Operator and a Vault instance.
 
 If you are running a POC and would like an example of how to integrate a
-specific tool. Please submit a request through the repository [here](https://github.com/TykTechnologies/tyk-k8s-demo/issues).
+specific tool, you are welcome to submit a [feature request](https://github.com/TykTechnologies/tyk-k8s-demo/issues/new/choose)
 
 ### Example
-```
+```bash
 ./up.sh \
   --storage postgres \
   --deployments prometheus-grafana,k6-slo-traffic \
   tyk-stack
 ```
 
-The deployment will take 10 minutes as the installation is sequential and the
+The deployment will take 10 minutes, as the installation is sequential and the
 dependencies require a bit of time before they are stood up. Once the
 installation is complete, the script will print out a list of all the services
-that were stood up and how those can be accessed. The k6 job will start running
+that were started and how to access them. The k6 job will start running
 after the script is finished and will run in the background for 15 minutes to
 generate traffic over that period of time. To visualize the live traffic, you
 can use the credentials provided by the script to access Grafana or the Tyk
@@ -132,7 +143,7 @@ Dashboard.
 ### Start Tyk deployment
 Create and start up the deployments
 
-```
+```bash
 Usage:
   ./up.sh [flags] [command]
 
@@ -158,7 +169,7 @@ Flags:
 ### Stop Tyk deployment
 Shutdown deployment
 
-```
+```bash
 Usage:
   ./down.sh [flags]
 
