@@ -15,7 +15,7 @@ terminatePorts() {
     getPort "$service";
 
     set +e;
-    pid=$(pgrep -f "$service --namespace");
+    pid=$(pgrep -f "$service --namespace $namespace");
     set -e;
 
     if [[ -n "$pid" ]]; then
@@ -33,9 +33,16 @@ exposeServices() {
 
     for service in "${services[@]}"; do
       getPort "$service";
-      kubectl port-forward "svc/$service" --namespace "$namespace" $port > /dev/null &
-      logger "$DEBUG" "forwarding to $protocol://localhost:$port \tfrom\t svc/$service:$port";
-      servicesSummary="$servicesSummary\n\t$(printf "%-60s" "$service") $protocol://localhost:$port";
+      
+      # Apply the portforwardOffset if it is set, otherwise use the original port
+      localPort=$port
+      if [[ -n "$portforwardOffset" ]]; then
+        localPort=$((port + portforwardOffset))
+      fi
+      
+      kubectl port-forward "svc/$service" --namespace "$namespace" $localPort:$port > /dev/null &
+      logger "$DEBUG" "forwarding to $protocol://localhost:$localPort \tfrom\t svc/$service:$port";
+      servicesSummary="$servicesSummary\n\t$(printf "%-60s" "$service") $protocol://localhost:$localPort";
     done
     addSummary "\tExposed Services$servicesSummary";
   elif [[ $INGRESS == "$expose" ]]; then
