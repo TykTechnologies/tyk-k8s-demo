@@ -27,6 +27,7 @@ SSLMode=$NONE;
 portsWait=15;
 deployments=$();
 flavor=$VANILLA;
+portforwardOffset=0;
 
 
 # Translate long argument flags into short ones.
@@ -44,13 +45,14 @@ for arg in "$@"; do
     '--dry-run')     set -- "$@" '-z'   ;;
     '--cloud')       set -- "$@" '-c'   ;;
     '--ssl')         set -- "$@" '-l'   ;;
+    '--port-offset') set -- "$@" '-p'   ;;
     *)               set -- "$@" "$arg" ;;
   esac
 done
 
 # Parse short options
 OPTIND=1;
-while getopts "hvn:f:e:r:s:d:zc:l" opt
+while getopts "hvn:f:e:r:s:d:zc:lp:" opt
 do
   case "$opt" in
     'h') usage; exit 0                 ;;
@@ -63,6 +65,7 @@ do
     'c') cloud=$OPTARG                 ;;
     's') storage=$OPTARG               ;;
     'l') SSLMode=$SSL                  ;;
+    'p') portforwardOffset=$OPTARG     ;;
     'd')
         IFS=',' read -r -a deployments <<< "$OPTARG";
         ;;
