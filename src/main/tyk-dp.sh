@@ -4,7 +4,7 @@ args=(--set "global.remoteControlPlane.connectionString=$TYK_WORKER_CONNECTIONST
   --set "global.remoteControlPlane.orgId=$TYK_WORKER_ORGID" \
   --set "global.remoteControlPlane.userApiKey=$TYK_WORKER_AUTHTOKEN" \
   --set "global.remoteControlPlane.useSSL=$TYK_WORKER_USESSL" \
-  --set "global.remoteControlPlane.groupId=$(echo "$cluster/$namespace" | base64)" \
+  --set "global.remoteControlPlane.groupID=$(echo "$cluster/$namespace" | base64)" \
   --set "global.servicePorts.gateway=$TYK_WORKER_GW_PORT" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.sharding.enabled=$TYK_WORKER_SHARDING_ENABLED" \
