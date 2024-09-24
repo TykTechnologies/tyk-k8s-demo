@@ -1,21 +1,23 @@
-cluster=$(kubectl config current-context);
+if [ -z "$TYK_WORKER_GROUPID" ]; then
+  TYK_WORKER_GROUPID=$(echo "$(kubectl config current-context)/$namespace" | base64);
+fi
 
 args=(--set "global.remoteControlPlane.connectionString=$TYK_WORKER_CONNECTIONSTRING" \
   --set "global.remoteControlPlane.orgId=$TYK_WORKER_ORGID" \
   --set "global.remoteControlPlane.userApiKey=$TYK_WORKER_AUTHTOKEN" \
   --set "global.remoteControlPlane.useSSL=$TYK_WORKER_USESSL" \
-  --set "global.remoteControlPlane.groupID=$(echo "$cluster/$namespace" | base64)" \
+  --set "global.remoteControlPlane.groupID=$TYK_WORKER_GROUPID" \
   --set "global.servicePorts.gateway=$TYK_WORKER_GW_PORT" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.sharding.enabled=$TYK_WORKER_SHARDING_ENABLED" \
   --set "tyk-gateway.gateway.sharding.tags=$TYK_WORKER_SHARDING_TAGS");
 
-if [ -z "$TYK_WORKER_SHARDING_TAGS" ]
-then
+if [ -z "$TYK_WORKER_SHARDING_TAGS" ]; then
       tykReleaseName="tyk-dp";
 else
       tykReleaseName="tyk-dp-$TYK_WORKER_SHARDING_TAGS";
 fi
+
 tykReleaseVersion="1.6.0";
 
 logger "$DEBUG" "tykReleaseName=$tykReleaseName";
