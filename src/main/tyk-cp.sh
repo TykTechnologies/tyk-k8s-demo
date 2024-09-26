@@ -15,6 +15,7 @@ args=(
   --set "tyk-mdcb.mdcb.license=$MDCB_LICENSE" \
   --set "tyk-mdcb.mdcb.image.tag=$MDCB_VERSION" \
   --set "tyk-mdcb.mdcb.service.type=NodePort" \
+  --set "tyk-dashboard.tib.enabled=true" \
 );
 
 addService "dashboard-svc-$tykReleaseName-tyk-dashboard";
