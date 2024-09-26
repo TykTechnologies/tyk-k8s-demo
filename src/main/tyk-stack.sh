@@ -12,6 +12,7 @@ args=(
   --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
   --set "tyk-pump.pump.image.tag=$PUMP_VERSION" \
   --set "tyk-pump.pump.image.repository=tykio/tyk-pump-docker-pub" \
+  --set "tyk-dashboard.tib.enabled=true" \
 );
 
 addService "dashboard-svc-$tykReleaseName-tyk-dashboard";
