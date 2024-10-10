@@ -1,0 +1,35 @@
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: httpbin-classic-keyless
+spec:
+  name: httpbin-classic-keyless
+  protocol: replace_protocol
+  active: true
+  proxy:
+    target_url: http://replace_service_url
+    listen_path: /httpbin-classic-keyless
+    strip_listen_path: true
+  enable_detailed_recording: true
+  use_keyless: true
+  auth_configs:
+    authToken:
+      auth_header_name: Authorization
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: httpbin-classic
+spec:
+  name: httpbin-classic
+  protocol: replace_protocol
+  active: true
+  proxy:
+    target_url: http://replace_service_url
+    listen_path: /httpbin-classic
+    strip_listen_path: true
+  enable_detailed_recording: true
+  use_standard_auth: true
+  auth_configs:
+    authToken:
+      auth_header_name: Authorization

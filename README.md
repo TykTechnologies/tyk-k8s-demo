@@ -48,8 +48,8 @@ cd tyk-k8s-demo
 cp .env.example .env
 ```
 
-Depending on the deployments you would like to install set values of the `LICENSE`, `MDCB_LICENSE`, and `PORTAL_LICENSE`
-inside the `.env` file.
+Depending on the deployments you would like to install set values of the `LICENSE`, `MDCB_LICENSE`, `PORTAL_LICENSE`
+`OPERATOR_LICENSE`, inside the `.env` file.
 
 ### Minikube
 If you are deploying this demo on [Minikube](https://minikube.sigs.k8s.io/docs/start),

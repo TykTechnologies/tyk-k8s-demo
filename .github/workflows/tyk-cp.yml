@@ -76,6 +76,7 @@ jobs:
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
+            OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-cp-${{ matrix.deployment }} \
@@ -97,6 +98,7 @@ jobs:
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
+            OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-cp-${{ matrix.deployment }} \
@@ -116,6 +118,7 @@ jobs:
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
+            OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-cp-${{ matrix.deployment }} \

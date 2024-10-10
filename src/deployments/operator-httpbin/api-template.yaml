@@ -1,38 +1,116 @@
-apiVersion: tyk.tyk.io/v1alpha1
-kind: ApiDefinition
+apiVersion: v1
+kind: ConfigMap
 metadata:
-  name: httpbin-keyless
-spec:
-  name: httpbin-keyless
-  protocol: replace_protocol
-  active: true
-  proxy:
-    target_url: http://replace_service_url
-    listen_path: /httpbin-keyless
-    strip_listen_path: true
-  enable_detailed_recording: true
-  use_keyless: true
-  auth_configs:
-    authToken:
-      auth_header_name: Authorization
+  name: httpbin-keyless-oas
+  namespace: replace_namespace
+data:
+  httpbin-keyless-oas.json: |-
+    {
+      "info": {
+        "title": "httpbin-keyless",
+        "version": "1.0.0"
+      },
+      "openapi": "3.0.3",
+      "components": {},
+      "paths": {},
+      "x-tyk-api-gateway": {
+        "info": {
+          "name": "httpbin-keyless",
+          "state": {
+            "active": true
+          }
+        },
+        "server": {
+          "listenPath": {
+            "strip": true,
+            "value": "/httpbin-keyless/"
+          }
+        },
+        "upstream": {
+          "url": "http://replace_service_url"
+        }
+      }
+    }
 ---
 apiVersion: tyk.tyk.io/v1alpha1
-kind: ApiDefinition
+kind: TykOasApiDefinition
+metadata:
+  name: httpbin-keyless
+  namespace: replace_namespace
+spec:
+  tykOAS:
+    configmapRef:
+      name: httpbin-keyless-oas
+      namespace: replace_namespace
+      keyName: httpbin-keyless-oas.json
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: httpbin-oas
+  namespace: replace_namespace
+data:
+  httpbin-oas.json: |-
+    {
+      "info": {
+        "title": "httpbin",
+        "version": "1.0.0"
+      },
+      "openapi": "3.0.3",
+      "security": [
+        {
+          "authToken": []
+        }
+      ],
+      "paths": {},
+      "components": {
+        "securitySchemes": {
+          "authToken": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "Authorization"
+          }
+        }
+      },
+      "x-tyk-api-gateway": {
+        "info": {
+          "name": "httpbin",
+          "state": {
+            "active": true
+          }
+        },
+        "server": {
+          "authentication": {
+            "enabled": true,
+            "securitySchemes": {
+              "authToken": {
+                "enabled": true
+              }
+            }
+          },
+          "listenPath": {
+            "strip": true,
+            "value": "/httpbin/"
+          }
+        },
+        "upstream": {
+          "url": "http://replace_service_url"
+        }
+      }
+    }
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: TykOasApiDefinition
 metadata:
   name: httpbin
+  namespace: replace_namespace
 spec:
-  name: httpbin
-  protocol: replace_protocol
-  active: true
-  proxy:
-    target_url: http://replace_service_url
-    listen_path: /httpbin
-    strip_listen_path: true
-  enable_detailed_recording: true
-  use_standard_auth: true
-  auth_configs:
-    authToken:
-      auth_header_name: Authorization
+  tykOAS:
+    configmapRef:
+      name: httpbin-oas
+      namespace: replace_namespace
+      keyName: httpbin-oas.json
+
 ---
 apiVersion: tyk.tyk.io/v1alpha1
 kind: SecurityPolicy

@@ -1,10 +1,11 @@
 source src/main/storage/main.sh;
 
 tykReleaseName="tyk-cp";
-tykReleaseVersion="1.6.0";
+tykReleaseVersion="2.1.0";
 
 args=(
   --set "global.license.dashboard=$LICENSE" \
+  --set "global.license.operator=$OPERATOR_LICENSE" \
   --set "global.adminUser.email=$TYK_USERNAME" \
   --set "global.adminUser.password=$TYK_PASSWORD" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
