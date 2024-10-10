@@ -18,7 +18,7 @@ else
       tykReleaseName="tyk-dp-$TYK_WORKER_SHARDING_TAGS";
 fi
 
-tykReleaseVersion="1.6.0";
+tykReleaseVersion="2.1.0";
 
 logger "$DEBUG" "tykReleaseName=$tykReleaseName";
 
