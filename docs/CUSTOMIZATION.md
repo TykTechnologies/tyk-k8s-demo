@@ -34,6 +34,7 @@ and they will be mapped to the respective `extraEnvs` section in the helm charts
 | LICENSE                              |                       | Dashboard license                                                                                               |
 | MDCB_LICENSE                         |                       | MDCB license                                                                                                    |
 | PORTAL_LICENSE                       |                       | Portal license                                                                                                  |
+| OPERATOR_LICENSE                     |                       | Portal license                                                                                                  |
 | TYK_WORKER_CONNECTIONSTRING          |                       | MDCB URL for worker connection                                                                                  |
 | TYK_WORKER_ORGID                     |                       | Org ID of dashboard user                                                                                        |
 | TYK_WORKER_AUTHTOKEN                 |                       | Auth token of dashboard user                                                                                    |
