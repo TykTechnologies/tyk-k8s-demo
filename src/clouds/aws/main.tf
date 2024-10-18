@@ -5,7 +5,6 @@ provider "aws" {
 data "aws_availability_zones" "this" {}
 data "aws_caller_identity" "this" {}
 
-
 module "vpc" {
 	source = "terraform-aws-modules/vpc/aws"
 
@@ -21,7 +20,6 @@ module "vpc" {
 
 module "eks" {
 	source  = "terraform-aws-modules/eks/aws"
-	version = "20.8.2"
 
 	cluster_name    = "tyk-demo-${var.cluster_location}"
 	cluster_version = "1.29"
@@ -29,20 +27,26 @@ module "eks" {
 	vpc_id     = module.vpc.vpc_id
 	subnet_ids = module.vpc.private_subnets
 
+	create_cloudwatch_log_group = false
+
 	cluster_endpoint_public_access = true
 	enable_cluster_creator_admin_permissions = true
 }
 
 module "eks_node_groups" {
 	source   = "terraform-aws-modules/eks/aws//modules/eks-managed-node-group"
-	version  = "20.8.2"
 
-	name            = "${module.eks.cluster_name}-np"
-	cluster_name    = module.eks.cluster_name
-	cluster_version = module.eks.cluster_version
-	subnet_ids      = module.vpc.private_subnets
-	desired_size    = var.cluster_node_count
-	instance_types  = [var.cluster_machine_type]
+	name                 = "${module.eks.cluster_name}-np"
+	cluster_name         = module.eks.cluster_name
+	cluster_version      = module.eks.cluster_version
+
+	subnet_ids           = module.vpc.private_subnets
+	cluster_primary_security_group_id = module.eks.cluster_primary_security_group_id
+	vpc_security_group_ids            = [module.eks.node_security_group_id]
+	cluster_service_cidr = module.eks.cluster_service_cidr
+
+	desired_size         = var.cluster_node_count
+	instance_types       = [var.cluster_machine_type]
 }
 
 module "ebs_csi_controller_role" {
