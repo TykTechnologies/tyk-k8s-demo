@@ -2,10 +2,10 @@
 
 | Deployment           | OpenShift Support  |    ARM Support     |      CI Tests      |    Postman Test    |        SSL         |                                              Chart/Manifest                                              | Version |
 |----------------------|:------------------:|:------------------:|:------------------:|:------------------:|:------------------:|:--------------------------------------------------------------------------------------------------------:|:-------:|
-| tyk-gateway          | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                        [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-oss                        |  1.6.0  |
-| tyk-dp               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-data-plane                     |  1.6.0  |
-| tyk-stack            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                       [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-stack                       |  1.6.0  |
-| tyk-cp               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                   [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-control-plane                   |  1.6.0  |
+| tyk-gateway          | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                        [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-oss                        |  2.1.0  |
+| tyk-dp               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-data-plane                     |  2.1.0  |
+| tyk-stack            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                       [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-stack                       |  2.1.0  |
+| tyk-cp               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                   [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-control-plane                   |  2.1.0  |
 | cert-manager         | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |        N/A         |                           [jetstack](https://charts.jetstack.io)/cert-manager                            | 1.15.1  |
 | datadog              | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |                              [datadog](https://helm.datadoghq.com)/datadog                               | 3.69.0  |
 | elasticsearch        | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                       [bitnami](https://charts.bitnami.com/bitnami)/elasticsearch                        | 21.3.5  |
@@ -26,7 +26,7 @@
 | operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |                                                   N/A                                                    |   N/A   |
 | operator-jwt-hmac    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |                                                   N/A                                                    |   N/A   |
 | operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |                                                   N/A                                                    |   N/A   |
-| portal               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-dev-portal                     |  1.6.0  |
+| portal               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-dev-portal                     |  2.1.0  |
 | prometheus           |     :no_entry:     | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |          [prometheus-community](https://prometheus-community.github.io/helm-charts)/prometheus           | 25.24.1 |
 | prometheus-grafana   |     :warning:      | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |                         [grafana](https://grafana.github.io/helm-charts)/grafana                         |  8.3.6  |
 | vault                | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |                          [hashicorp](https://helm.releases.hashicorp.com)/vault                          | 0.28.1  |
@@ -40,19 +40,19 @@
 | elasticsearch-kibana | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | jaeger               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | k6                   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| k6-slo-traffic       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| k6-slo-traffic       |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak-dcr         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
-| keycloak-jwt         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| keycloak-jwt         |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak-sso         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
 | newrelic             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| opa                  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator-federation  | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator-jwt-hmac    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| opa                  |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator             |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-federation  |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-graphql     |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-httpbin     |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-jwt-hmac    |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-udg         |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | portal               |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus-grafana   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |

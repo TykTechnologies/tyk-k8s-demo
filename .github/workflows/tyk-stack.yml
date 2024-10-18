@@ -75,6 +75,7 @@ jobs:
             NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
+            OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-stack-${{ matrix.deployment }} \
@@ -95,6 +96,7 @@ jobs:
             NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
+            OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-stack-${{ matrix.deployment }} \
@@ -113,6 +115,7 @@ jobs:
             NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
             LICENSE="${{ secrets.DASH_LICENSE }}" \
             PORTAL_LICENSE="${{ secrets.DASH_LICENSE }}" \
+            OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             ./up.sh -v \
               --redis redis \
               --namespace tyk-stack-${{ matrix.deployment }} \

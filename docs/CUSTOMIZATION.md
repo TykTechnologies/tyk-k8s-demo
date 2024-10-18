@@ -23,17 +23,18 @@ and they will be mapped to the respective `extraEnvs` section in the helm charts
 
 | Variable                             |        Default        | Comments                                                                                                        |
 |--------------------------------------|:---------------------:|-----------------------------------------------------------------------------------------------------------------|
-| DASHBOARD_VERSION                    |        `v5.5`         | Dashboard version                                                                                               |
-| GATEWAY_VERSION                      |        `v5.5`         | Gateway version                                                                                                 |
+| DASHBOARD_VERSION                    |        `v5.6`         | Dashboard version                                                                                               |
+| GATEWAY_VERSION                      |        `v5.6`         | Gateway version                                                                                                 |
 | MDCB_VERSION                         |        `v2.7`         | MDCB version                                                                                                    |
 | PUMP_VERSION                         |        `v1.11`        | Pump version                                                                                                    |
-| PORTAL_VERSION                       |        `v1.10`        | Portal version                                                                                                  |
+| PORTAL_VERSION                       |        `v1.11`        | Portal version                                                                                                  |
 | TYK_HELM_CHART_PATH                  |      `tyk-helm`       | Path to charts, can be a local directory or a helm repo                                                         |
 | TYK_USERNAME                         | `default@example.com` | Default password for all the services deployed                                                                  |
 | TYK_PASSWORD                         |  `topsecretpassword`  | Default password for all the services deployed                                                                  |
 | LICENSE                              |                       | Dashboard license                                                                                               |
 | MDCB_LICENSE                         |                       | MDCB license                                                                                                    |
 | PORTAL_LICENSE                       |                       | Portal license                                                                                                  |
+| OPERATOR_LICENSE                     |                       | Portal license                                                                                                  |
 | TYK_WORKER_CONNECTIONSTRING          |                       | MDCB URL for worker connection                                                                                  |
 | TYK_WORKER_ORGID                     |                       | Org ID of dashboard user                                                                                        |
 | TYK_WORKER_AUTHTOKEN                 |                       | Auth token of dashboard user                                                                                    |

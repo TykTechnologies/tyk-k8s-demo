@@ -71,6 +71,7 @@ jobs:
             TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
             TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
@@ -93,6 +94,7 @@ jobs:
             TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
             TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
@@ -113,6 +115,7 @@ jobs:
             TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
             TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
             TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
             NEWRELIC_LICENSEKEY="${{ secrets.NEWRELIC_LICENSEKEY }}" \
