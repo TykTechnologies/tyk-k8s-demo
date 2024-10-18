@@ -40,10 +40,10 @@
 | elasticsearch-kibana | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | jaeger               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | k6                   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| k6-slo-traffic       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| k6-slo-traffic       |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak-dcr         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
-| keycloak-jwt         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| keycloak-jwt         |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | keycloak-sso         |        N/A         | :white_check_mark: | :white_check_mark: |        N/A         |
 | newrelic             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | opa                  |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |

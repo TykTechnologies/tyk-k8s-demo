@@ -26,7 +26,6 @@ jobs:
           - jaeger
           - k6
           - keycloak
-          - keycloak-jwt
           - newrelic
           - opensearch
           - prometheus
