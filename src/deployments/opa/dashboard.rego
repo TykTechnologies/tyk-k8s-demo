@@ -102,9 +102,16 @@ deny[x] {
 	x := "You are not permitted you use Custom Go Plugin Authetication."
 }
 
+apply_group_ownership = ownership {
+  input.request.body["x-tyk-api-gateway"] != null
+  ownership := {}
+} else = ownership {
+  ownership := {"user_group_owners": [input.user.group_id]}
+}
+
 patch_request[x] {
-	request_permission[_] == "apis"
-	request_intent = "write"
-	x := {"api_definition": {"config_data":{"OPARule": "Injected"}}}
+  request_permission[_] == "apis"
+  request_intent == "write"
+  x := apply_group_ownership
 }
 # --------- End "custom" rules ----------
