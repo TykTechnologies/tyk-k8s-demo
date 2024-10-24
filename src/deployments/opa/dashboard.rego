@@ -102,11 +102,16 @@ deny[x] {
 	x := "You are not permitted you use Custom Go Plugin Authetication."
 }
 
-apply_group_ownership = ownership {
-  input.request.body["x-tyk-api-gateway"] != null
-  ownership := {}
-} else = ownership {
-  ownership := {"user_group_owners": [input.user.group_id]}
+apply_group_ownership = payload {
+  input.request.body["api_definition"] != null
+  input.user.group_id != ""
+  payload := {"user_group_owners": [input.user.group_id]}
+} else = payload {
+  endswith(input.request.path, "/access")
+  input.user.group_id != ""
+  payload := {"userGroupIds": [input.user.group_id]}
+} else = payload {
+  payload := {}
 }
 
 patch_request[x] {
