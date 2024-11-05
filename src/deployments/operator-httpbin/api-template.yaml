@@ -20,7 +20,20 @@ data:
             "active": true
           }
         },
+        "middleware": {
+          "global": {
+            "trafficLogs": {
+              "enabled": true
+            }
+          }
+        },
         "server": {
+          "detailedActivityLogs": {
+            "enabled": true
+          },
+          "detailedTracing": {
+            "enabled": true
+          },
           "listenPath": {
             "strip": true,
             "value": "/httpbin-keyless/"
@@ -79,6 +92,13 @@ data:
             "active": true
           }
         },
+        "middleware": {
+          "global": {
+            "trafficLogs": {
+              "enabled": true
+            }
+          }
+        },
         "server": {
           "authentication": {
             "enabled": true,
@@ -87,6 +107,12 @@ data:
                 "enabled": true
               }
             }
+          },
+          "detailedActivityLogs": {
+            "enabled": true
+          },
+          "detailedTracing": {
+            "enabled": true
           },
           "listenPath": {
             "strip": true,
