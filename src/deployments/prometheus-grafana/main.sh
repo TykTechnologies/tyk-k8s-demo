@@ -14,6 +14,11 @@ helm upgrade "$grafanaReleaseName" grafana/grafana --version 8.3.6 \
   --set "datasources.datasources\.yaml.datasources[0].url=http://$prometheusReleaseName-server:$PROMETHEUS_SERVICE_PORT" \
   --set "datasources.datasources\.yaml.datasources[0].access=proxy" \
   --set "datasources.datasources\.yaml.datasources[0].isDefault=true" \
+  --set "datasources.datasources\.yaml.datasources[1].name=Tempo" \
+  --set "datasources.datasources\.yaml.datasources[1].type=tempo" \
+  --set "datasources.datasources\.yaml.datasources[1].url=http://$tempoReleaseName:3100" \
+  --set "datasources.datasources\.yaml.datasources[1].access=proxy" \
+  --set "datasources.datasources\.yaml.datasources[1].isDefault=false" \
   --set "dashboardProviders.dashboardproviders\.yaml.apiVersion=1" \
   --set "dashboardProviders.dashboardproviders\.yaml.providers[0].name=Tyk" \
   --set "dashboardProviders.dashboardproviders\.yaml.providers[0].orgId=1" \
