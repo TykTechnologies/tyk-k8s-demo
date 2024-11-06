@@ -33,7 +33,6 @@ minikube addons enable ingress
 |     Item     |       Status       |
 |:------------:|:------------------:|
 |  OpenShift   |        N/A         |
-|     ARM      |        N/A         |
 |   CI Tests   | :white_check_mark: |
 | Postman Test | :white_check_mark: |
 |     SSL      |        N/A         |

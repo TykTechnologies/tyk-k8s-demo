@@ -13,7 +13,6 @@ analytics.
 |     Item     |       Status       |
 |:------------:|:------------------:|
 |  OpenShift   |     :warning:      |
-|     ARM      | :white_check_mark: |
 |   CI Tests   | :white_check_mark: |
 | Postman Test | :white_check_mark: |
 |     SSL      |     :no_entry:     |

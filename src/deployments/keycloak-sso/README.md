@@ -20,7 +20,6 @@ localhost.
 |     Item     |       Status       |
 |:------------:|:------------------:|
 |  OpenShift   |        N/A         |
-|     ARM      |        N/A         |
 |   CI Tests   | :white_check_mark: |
 | Postman Test |        N/A         |
 |     SSL      |        N/A         |

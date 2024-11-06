@@ -1,18 +1,18 @@
-## Open Policy Agent
-Enables Open Policy Agent to manage Tyk Dashboard API.
+## Tempo
+Deploys the Tempo using the `grafana/tempo` chart version `v1.10.3`.
 
 ### Example
 ```
-./up.sh --deployments opa tyk-stack
+./up.sh --deployments tempo tyk-stack
 ```
 
 ### Support
-|     Item     | Status |
-|:------------:|:------:|
-|  OpenShift   |  N/A   |
-|   CI Tests   |  N/A   |
-| Postman Test |  N/A   |
-|     SSL      |  N/A   |
+|     Item     |       Status       |
+|:------------:|:------------------:|
+|  OpenShift   |     :warning:      |
+|   CI Tests   | :white_check_mark: |
+| Postman Test |        :x:         |
+|     SSL      |        N/A         |
 
 ### Supported Service Types with `--expose` flag
 |     Item      | Status |
@@ -27,4 +27,3 @@ Enables Open Policy Agent to manage Tyk Dashboard API.
 |     :warning:      |        Not tested         |
 |        :x:         |       Not supported       |
 |     :no_entry:     | Not supported by the tool |
-

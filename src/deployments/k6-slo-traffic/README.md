@@ -10,7 +10,6 @@ Deploys a k6 CRD to generate a load of traffic to seed analytics data.
 |     Item     |       Status       |
 |:------------:|:------------------:|
 |  OpenShift   |        N/A         |
-|     ARM      |        N/A         |
 |   CI Tests   | :white_check_mark: |
 | Postman Test |        N/A         |
 |     SSL      |        N/A         |

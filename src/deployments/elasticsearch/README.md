@@ -11,7 +11,6 @@ Stands up a Tyk pump to push analytics data from the Tyk platform to Elasticsear
 |     Item     |       Status       |
 |:------------:|:------------------:|
 |  OpenShift   | :white_check_mark: |
-|     ARM      | :white_check_mark: |
 |   CI Tests   | :white_check_mark: |
 | Postman Test | :white_check_mark: |
 |     SSL      | :white_check_mark: |
