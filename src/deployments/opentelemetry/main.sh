@@ -1,7 +1,7 @@
 logger "$INFO" "installing $opentelemetrReleaseName in $namespace namespace...";
 
 setVerbose;
-helm upgrade tyk-otel-collector open-telemetry/opentelemetry-collector --version 0.108.1 \
+helm upgrade tyk-otel-collector opentelemetry/opentelemetry-collector --version 0.108.1 \
   --install \
   --set "mode=deployment" \
   --set "image.repository=otel/opentelemetry-collector-contrib" \

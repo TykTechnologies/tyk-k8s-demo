@@ -1,10 +1,5 @@
 ## Jaeger
-Deploys the Jaeger operator using the `jaegertracing/jaeger-operator` chart
-version `v2.46.2`, a Jaeger instance using the Jaeger `jaegertracing.io/v1`
-CRD, and the OpenTelemetry collector using the
-`open-telemetryopentelemetry-collector` chart version `0.99.0` and configures
-the Tyk deployment to send telemetry data to Jaeger through the OpenTelemetry
-collector.
+Deploys a Grafana Tempo deployment which exposes a Jaeger UI.
 
 ### Example
 ```
@@ -14,18 +9,17 @@ collector.
 ### Support
 |     Item     |       Status       |
 |:------------:|:------------------:|
-|  OpenShift   | :white_check_mark: |
-|     ARM      | :white_check_mark: |
-|   CI Tests   | :white_check_mark: |
+|  OpenShift   |     :warning:      |
+|   CI Tests   |        :x:         |
 | Postman Test | :white_check_mark: |
-|     SSL      |     :no_entry:     |
+|     SSL      |        :x:         |
 
 ### Supported Service Types with `--expose` flag
 |     Item      |       Status       |
 |:-------------:|:------------------:|
 | Port Forward  | :white_check_mark: |
-|    Ingress    | :white_check_mark: |
-| Load Balancer | :white_check_mark: |
+|    Ingress    |        :x:         |
+| Load Balancer |        :x:         |
 
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|

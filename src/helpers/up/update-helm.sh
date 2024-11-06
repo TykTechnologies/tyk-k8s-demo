@@ -6,7 +6,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo add grafana https://grafana.github.io/helm-charts > /dev/null;
 helm repo add datadog https://helm.datadoghq.com > /dev/null;
 helm repo add jaegertracing https://jaegertracing.github.io/helm-charts > /dev/null;
-helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts > /dev/null;
+helm repo add opentelemetry https://open-telemetry.github.io/opentelemetry-helm-charts > /dev/null;
 helm repo add hashicorp https://helm.releases.hashicorp.com > /dev/null;
 helm repo add newrelic https://helm-charts.newrelic.com > /dev/null;
 helm repo update > /dev/null;

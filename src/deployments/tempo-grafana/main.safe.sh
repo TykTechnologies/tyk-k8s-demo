@@ -2,7 +2,7 @@ if [ -z "$tempoRegistered" ]; then
   tempoRegistered=true;
 
   tempoReleaseName="tyk-tempo";
-  tempoDeploymentPath="src/deployments/tempo";
+  tempoDeploymentPath="src/deployments/tempo-grafana";
 
   source "src/deployments/opentelemetry/main.safe.sh";
   source "src/deployments/prometheus-grafana/main.safe.sh";

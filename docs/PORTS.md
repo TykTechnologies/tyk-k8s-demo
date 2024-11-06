@@ -31,4 +31,4 @@ All the ports that this library uses.
 | prometheus            | pump-svc-*-tyk-pump                    | `9091`  |
 | elasticsearch         | elasticsearch                          | `9200`  |
 | opensearch            | opensearch                             | `9201`  |
-| jaeger                | tyk-jaeger-query                       | `16686` |
+| jaeger                | tyk-jaeger                             | `16686` |

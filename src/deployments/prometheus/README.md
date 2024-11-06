@@ -35,7 +35,6 @@ This deployment will do the following:
 |     Item     |       Status       |
 |:------------:|:------------------:|
 |  OpenShift   |     :no_entry:     |
-|     ARM      | :white_check_mark: |
 |   CI Tests   | :white_check_mark: |
 | Postman Test | :white_check_mark: |
 |     SSL      |     :no_entry:     |

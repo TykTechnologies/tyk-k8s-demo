@@ -1,8 +1,7 @@
 ## OpenTelemetry
-Deploys the OpenTelemetry collector using the
-`open-telemetryopentelemetry-collector` chart version `0.108.1` and configures
-the Tyk deployment to send telemetry data to Grafana Tempo through the OpenTelemetry
-collector.
+Deploys the OpenTelemetry collector using the `opentelemetry-collector` chart
+version `0.108.1` and configures the Tyk deployment to send telemetry data to
+Grafana Tempo through the OpenTelemetry collector.
 
 ### Example
 ```
@@ -12,10 +11,9 @@ collector.
 ### Support
 |     Item     |       Status       |
 |:------------:|:------------------:|
-|  OpenShift   | :white_check_mark: |
-|     ARM      | :white_check_mark: |
-|   CI Tests   |        N/A         |
-| Postman Test |        N/A         |
+|  OpenShift   |     :warning:      |
+|   CI Tests   | :white_check_mark: |
+| Postman Test |        :x:         |
 |     SSL      |        N/A         |
 
 ### Supported Service Types with `--expose` flag

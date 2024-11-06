@@ -9,18 +9,17 @@ Deploys the Tempo using the `grafana/tempo` chart version `v1.10.3`.
 ### Support
 |     Item     |       Status       |
 |:------------:|:------------------:|
-|  OpenShift   | :white_check_mark: |
-|     ARM      | :white_check_mark: |
+|  OpenShift   |     :warning:      |
 |   CI Tests   | :white_check_mark: |
-| Postman Test | :white_check_mark: |
-|     SSL      |     :no_entry:     |
+| Postman Test |        :x:         |
+|     SSL      |        N/A         |
 
 ### Supported Service Types with `--expose` flag
-|     Item      |       Status       |
-|:-------------:|:------------------:|
-| Port Forward  | :white_check_mark: |
-|    Ingress    | :white_check_mark: |
-| Load Balancer | :white_check_mark: |
+|     Item      | Status |
+|:-------------:|:------:|
+| Port Forward  |  N/A   |
+|    Ingress    |  N/A   |
+| Load Balancer |  N/A   |
 
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|

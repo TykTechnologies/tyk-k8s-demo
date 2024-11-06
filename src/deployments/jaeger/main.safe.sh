@@ -4,6 +4,6 @@ if [ -z "$jaegerRegistered" ]; then
   jaegerReleaseName="tyk-jaeger";
   jaegerDeploymentPath="src/deployments/jaeger";
 
-  source "src/deployments/tempo/main.safe.sh";
+  source "src/deployments/tempo-grafana/main.safe.sh";
   source "$jaegerDeploymentPath/main.sh";
 fi

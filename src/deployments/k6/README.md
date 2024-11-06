@@ -11,7 +11,6 @@ Deploys a Grafana K6 Operator using the `grafana/k6-operator` chart version
 |     Item     |       Status       |
 |:------------:|:------------------:|
 |  OpenShift   | :white_check_mark: |
-|     ARM      | :white_check_mark: |
 |   CI Tests   | :white_check_mark: |
 | Postman Test |        N/A         |
 |     SSL      |        N/A         |

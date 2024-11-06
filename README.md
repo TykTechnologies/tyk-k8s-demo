@@ -32,7 +32,7 @@ You will need the following tools to be able to run this project.
 - [git](https://git-scm.com/downloads) - CLI used to obtain the project from GitHub
 - [Terraform](https://www.terraform.io/) (only when using `--cloud` flag)
 
-Tested on Linux/Unix based systems on AMD64 and ARM architectures
+Tested on Linux/Unix based systems
 
 ### License Requirements
 - **Tyk OSS**: No license required as it is open-source.

@@ -10,7 +10,6 @@ Enables Open Policy Agent to manage Tyk Dashboard API.
 |     Item     | Status |
 |:------------:|:------:|
 |  OpenShift   |  N/A   |
-|     ARM      |  N/A   |
 |   CI Tests   |  N/A   |
 | Postman Test |  N/A   |
 |     SSL      |  N/A   |

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8e320278-1224-42db-829c-8753244485b5",
+		"_postman_id": "685ff936-782b-4941-be66-7312e2eae6f6",
 		"name": "tyk-k8s-demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13702323"
@@ -114,45 +114,6 @@
 					]
 				},
 				{
-					"name": "newrelic",
-					"item": [
-						{
-							"name": "healthz",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Newrelic status is healthy\", function () {",
-											"    var health = pm.response.text();",
-											"    pm.expect(health).to.eql(\"OK\");",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:{{newrelic.port}}/healthz",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "{{newrelic.port}}",
-									"path": [
-										"healthz"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "elasticsearch",
 					"item": [
 						{
@@ -181,53 +142,6 @@
 										"localhost"
 									],
 									"port": "{{elasticsearch.port}}",
-									"path": [
-										"_cluster",
-										"health"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "opensearch",
-					"item": [
-						{
-							"name": "health",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Opensearch status is green\", function () {",
-											"    var health = pm.response.json();",
-											"    pm.expect(health.status).to.eql(\"green\");",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"packages": {},
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:{{opensearch.port}}/_cluster/health",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "{{opensearch.port}}",
 									"path": [
 										"_cluster",
 										"health"
@@ -279,42 +193,7 @@
 				},
 				{
 					"name": "jaeger",
-					"item": [
-						{
-							"name": "health",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Jaeger status is UP\", function () {",
-											"    var health = pm.response.json();",
-											"    pm.expect(health.status).to.eql(\"Server available\");",
-											"});",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:{{jaeger.health-port}}/health",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "{{jaeger.health-port}}",
-									"path": [
-										"health"
-									]
-								}
-							},
-							"response": []
-						}
-					]
+					"item": []
 				},
 				{
 					"name": "k6",
@@ -676,6 +555,96 @@
 					"item": []
 				},
 				{
+					"name": "newrelic",
+					"item": [
+						{
+							"name": "healthz",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Newrelic status is healthy\", function () {",
+											"    var health = pm.response.text();",
+											"    pm.expect(health).to.eql(\"OK\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{newrelic.port}}/healthz",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{newrelic.port}}",
+									"path": [
+										"healthz"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "opensearch",
+					"item": [
+						{
+							"name": "health",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Opensearch status is green\", function () {",
+											"    var health = pm.response.json();",
+											"    pm.expect(health.status).to.eql(\"green\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:{{opensearch.port}}/_cluster/health",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{opensearch.port}}",
+									"path": [
+										"_cluster",
+										"health"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "opentelemetry",
+					"item": []
+				},
+				{
 					"name": "operator",
 					"item": []
 				},
@@ -1022,6 +991,10 @@
 					]
 				},
 				{
+					"name": "tempo-grafana",
+					"item": []
+				},
+				{
 					"name": "vault",
 					"item": [
 						{
@@ -1129,14 +1102,14 @@
 			"key": "datadog.port",
 			"value": "5555"
 		},
-    {
-      "key": "keycloak-service.port",
-      "value": "7001"
-    },
-    {
-      "key": "keycloak-management.port",
-      "value": "7002"
-    },
+		{
+			"key": "keycloak-service.port",
+			"value": "7001"
+		},
+		{
+			"key": "keycloak-management.port",
+			"value": "7002"
+		},
 		{
 			"key": "portal.port",
 			"value": "3000"
