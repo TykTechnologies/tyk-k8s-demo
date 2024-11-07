@@ -1,4 +1,3 @@
-
 if [ -z "$operatorHTTPBinRegistered" ]; then
   operatorHTTPBinRegistered=true;
 

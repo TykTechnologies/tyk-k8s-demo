@@ -1,4 +1,4 @@
-## Tyk Operator HTTP Example
+## Tyk Operator HTTPBin Example
 Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency
 [cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a Federation v1 API
 example using the tyk-operator.
