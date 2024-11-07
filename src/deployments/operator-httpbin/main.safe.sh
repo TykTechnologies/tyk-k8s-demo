@@ -2,9 +2,9 @@
 if [ -z "$operatorHTTPBinRegistered" ]; then
   operatorHTTPBinRegistered=true;
 
-  operatorHTTPDeploymentPath="src/deployments/operator-httpbin";
+  operatorHTTPBinDeploymentPath="src/deployments/operator-httpbin";
 
   source "src/deployments/operator/main.safe.sh";
-  source "$operatorHTTPDeploymentPath/openshift.sh";
-  source "$operatorHTTPDeploymentPath/main.sh";
+  source "$operatorHTTPBinDeploymentPath/openshift.sh";
+  source "$operatorHTTPBinDeploymentPath/main.sh";
 fi
