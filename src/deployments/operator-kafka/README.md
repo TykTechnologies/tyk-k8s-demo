@@ -1,4 +1,4 @@
-## Tyk Operator Streams Example
+## Tyk Operator Kafka Example
 Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency
 [cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a Federation v1 API
 example using the tyk-operator.
@@ -16,7 +16,17 @@ minikube addons enable ingress
 
 ### Example
 ```
-./up.sh --deployments operator-streams tyk-stack
+./up.sh --deployments operator-kafka tyk-stack
+```
+
+To consume topic:
+```
+curl http://localhost:8080/http-to-kafka/consume
+```
+
+To produce:
+```
+curl -X POST http://localhost:8080/http-to-kafka/produce -d 'Hello, Tyk!'
 ```
 
 ### Support

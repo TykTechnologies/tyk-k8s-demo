@@ -1,7 +1,7 @@
-logger "$INFO" "installing $opentelemetrReleaseName in $namespace namespace...";
+logger "$INFO" "installing $opentelemetryReleaseName in $namespace namespace...";
 
 setVerbose;
-helm upgrade tyk-otel-collector opentelemetry/opentelemetry-collector --version 0.108.1 \
+helm upgrade "$opentelemetryReleaseName" opentelemetry/opentelemetry-collector --version 0.108.1 \
   --install \
   --set "mode=deployment" \
   --set "image.repository=otel/opentelemetry-collector-contrib" \
@@ -29,7 +29,7 @@ args=(--set-string "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].name=TYK
   --set-string "tyk-gateway.gateway.extraEnvs[$(($gatewayExtraEnvsCtr + 1))].name=TYK_GW_OPENTELEMETRY_EXPORTER" \
   --set-string "tyk-gateway.gateway.extraEnvs[$(($gatewayExtraEnvsCtr + 1))].value=grpc" \
   --set-string "tyk-gateway.gateway.extraEnvs[$(($gatewayExtraEnvsCtr + 2))].name=TYK_GW_OPENTELEMETRY_ENDPOINT" \
-  --set-string "tyk-gateway.gateway.extraEnvs[$(($gatewayExtraEnvsCtr + 2))].value=tyk-otel-collector-opentelemetry-collector:4317");
-
+  --set-string "tyk-gateway.gateway.extraEnvs[$(($gatewayExtraEnvsCtr + 2))].value=$opentelemetryReleaseName-opentelemetry-collector:4318");
+3
 gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 3));
 addDeploymentArgs "${args[@]}";

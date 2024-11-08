@@ -38,3 +38,5 @@ spec:
           env:
             - name: PORT
               value: "4103"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "tyk-opentelemetry-opentelemetry-collector:4317"
