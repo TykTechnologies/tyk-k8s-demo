@@ -150,6 +150,7 @@ spec:
     acl: true
   access_rights_array:
     - name: httpbin
+      kind: TykOasApiDefinition
       namespace: replace_namespace
       versions:
         - Default
@@ -166,6 +167,7 @@ spec:
     acl: true
   access_rights_array:
     - name: httpbin
+      kind: TykOasApiDefinition
       namespace: replace_namespace
       versions:
         - Default
@@ -182,6 +184,7 @@ spec:
     acl: true
   access_rights_array:
     - name: httpbin
+      kind: TykOasApiDefinition
       namespace: replace_namespace
       versions:
         - Default
@@ -200,6 +203,7 @@ spec:
   rate: 10000
   access_rights_array:
     - name: httpbin
+      kind: TykOasApiDefinition
       namespace: replace_namespace
       versions:
         - Default
@@ -218,6 +222,7 @@ spec:
     rate_limit: true
   access_rights_array:
     - name: httpbin
+      kind: TykOasApiDefinition
       namespace: replace_namespace
       versions:
         - Default
@@ -236,6 +241,7 @@ spec:
     rate_limit: true
   access_rights_array:
     - name: httpbin
+      kind: TykOasApiDefinition
       namespace: replace_namespace
       versions:
         - Default
@@ -254,6 +260,7 @@ spec:
     rate_limit: true
   access_rights_array:
     - name: httpbin
+      kind: TykOasApiDefinition
       namespace: replace_namespace
       versions:
         - Default
