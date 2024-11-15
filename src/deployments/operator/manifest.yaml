@@ -542,7 +542,7 @@ spec:
           envFrom:
             - secretRef:
                 name: tyk-operator-conf
-          image: buraksekili/tyk-operator:wip-streams
+          image: komalsukhani/tyk-operator:streams
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
