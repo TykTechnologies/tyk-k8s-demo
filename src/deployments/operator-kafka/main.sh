@@ -1,5 +1,12 @@
 logger "$INFO" "creating Tyk Operator Kafka example...";
 
+args=(
+  --set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway-ee" \
+);
+
+addDeploymentArgs "${args[@]}";
+upgradeTyk;
+
 setVerbose;
 sed "s/replace_namespace/$namespace/g" "$operatorKafkaDeploymentPath/kafka-producer-app.yaml" | \
   sed "s/replace_svc_name/$kafkaReleaseName/g" | \
