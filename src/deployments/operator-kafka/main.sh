@@ -1,9 +1,5 @@
 logger "$INFO" "creating Tyk Operator Kafka example...";
 
-args=(
-  --set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway-ee" \
-);
-
 addDeploymentArgs "${args[@]}";
 upgradeTyk;
 

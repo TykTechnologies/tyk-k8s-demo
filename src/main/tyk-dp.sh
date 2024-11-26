@@ -9,6 +9,7 @@ args=(
   --set "global.remoteControlPlane.useSSL=$TYK_WORKER_USESSL" \
   --set "global.remoteControlPlane.groupID=$TYK_WORKER_GROUPID" \
   --set "global.servicePorts.gateway=$TYK_WORKER_GW_PORT" \
+  --set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway-ee" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.sharding.enabled=$TYK_WORKER_SHARDING_ENABLED" \
   --set "tyk-gateway.gateway.sharding.tags=$TYK_WORKER_SHARDING_TAGS" \
