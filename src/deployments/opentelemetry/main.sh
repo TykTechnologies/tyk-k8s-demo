@@ -24,12 +24,14 @@ helm upgrade "$opentelemetryReleaseName" opentelemetry/opentelemetry-collector -
   "${helmFlags[@]}" > /dev/null;
 unsetVerbose;
 
-args=(--set-string "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].name=TYK_GW_OPENTELEMETRY_ENABLED" \
+args=(
+  --set-string "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].name=TYK_GW_OPENTELEMETRY_ENABLED" \
   --set-string "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].value=true" \
   --set-string "tyk-gateway.gateway.extraEnvs[$(($gatewayExtraEnvsCtr + 1))].name=TYK_GW_OPENTELEMETRY_EXPORTER" \
   --set-string "tyk-gateway.gateway.extraEnvs[$(($gatewayExtraEnvsCtr + 1))].value=grpc" \
   --set-string "tyk-gateway.gateway.extraEnvs[$(($gatewayExtraEnvsCtr + 2))].name=TYK_GW_OPENTELEMETRY_ENDPOINT" \
-  --set-string "tyk-gateway.gateway.extraEnvs[$(($gatewayExtraEnvsCtr + 2))].value=$opentelemetryReleaseName-opentelemetry-collector:4318");
-3
+  --set-string "tyk-gateway.gateway.extraEnvs[$(($gatewayExtraEnvsCtr + 2))].value=$opentelemetryReleaseName-opentelemetry-collector:4318" \
+);
+
 gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 3));
 addDeploymentArgs "${args[@]}";
