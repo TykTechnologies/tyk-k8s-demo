@@ -28,7 +28,7 @@ spec:
         app: comments-rest
     spec:
       containers:
-        - image: zalbiraw/go-api-test-service:v3.40
+        - image: zalbiraw/go-api-test-service:v3.4
           imagePullPolicy: IfNotPresent
           name: comments-rest
           command:
