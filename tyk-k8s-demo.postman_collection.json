@@ -204,6 +204,10 @@
 					"item": []
 				},
 				{
+					"name": "kafka",
+					"item": []
+				},
+				{
 					"name": "keycloak",
 					"item": [
 						{
