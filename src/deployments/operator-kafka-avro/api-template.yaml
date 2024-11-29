@@ -23,7 +23,7 @@ data:
             "input": {
               "kafka": {
                 "addresses": [
-                  "tyk-kafka.tyk.svc:9092"
+                  "replace_svc_name:replace_svc_port"
                 ],
                 "client_id": "tyk",
                 "consumer_group": "avro",
@@ -34,7 +34,8 @@ data:
             },
             "output": {
               "http_server": {
-                "stream_path": "/consume"
+                "stream_path": "/consume/stream",
+                "ws_path": "/consume/ws"
               }
             },
             "pipeline": {

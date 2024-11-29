@@ -1,6 +1,6 @@
 ## Tyk Operator Kafka Example
 Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency
-[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a Federation v1 API
+[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a Kafka AVRO to JSON API
 example using the tyk-operator.
 
 The following API definitions will be created with this deployment:
@@ -25,19 +25,19 @@ curl http://localhost:8080/avro-to-json/consume
 ```
 
 ### Support
-|     Item     |  Status   |
-|:------------:|:---------:|
-|  OpenShift   | :warning: |
-|   CI Tests   |    :x:    |
-| Postman Test |    :x:    |
-|     SSL      |    N/A    |
+|     Item     |       Status       |
+|:------------:|:------------------:|
+|  OpenShift   |     :warning:      |
+|   CI Tests   | :white_check_mark: |
+| Postman Test | :white_check_mark: |
+|     SSL      |        N/A         |
 
 ### Supported Service Types with `--expose` flag
-|     Item      |       Status       |
-|:-------------:|:------------------:|
-| Port Forward  | :white_check_mark: |
-|    Ingress    |        :x:         |
-| Load Balancer |        :x:         |
+|     Item      | Status |
+|:-------------:|:------:|
+| Port Forward  |  N/A   |
+|    Ingress    |  N/A   |
+| Load Balancer |  N/A   |
 
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|

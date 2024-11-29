@@ -6,5 +6,6 @@ if [ -z "$kafkaRegistered" ]; then
   kafkaReleaseName="tyk-kafka";
   kafkaDeploymentPath="src/deployments/kafka";
 
+  source "$kafkaDeploymentPath/checks.sh";
   source "$kafkaDeploymentPath/main.sh";
 fi

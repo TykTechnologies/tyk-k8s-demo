@@ -23,7 +23,7 @@ data:
             "input": {
               "kafka": {
                 "addresses": [
-                  "replace_svc_name.replace_namespace.svc:replace_svc_port"
+                  "replace_svc_name:replace_svc_port"
                 ],
                 "consumer_group": "test",
                 "client_id": "tyk",
@@ -34,7 +34,8 @@ data:
             },
             "output": {
               "http_server": {
-                "stream_path": "/consume"
+                "stream_path": "/consume/stream",
+                "ws_path": "/consume/ws"
               }
             }
           },
@@ -47,7 +48,7 @@ data:
             "output": {
               "kafka": {
                 "addresses": [
-                  "replace_svc_name.replace_namespace.svc:replace_svc_port"
+                  "replace_svc_name:replace_svc_port"
                 ],
                 "topic": "test"
               }

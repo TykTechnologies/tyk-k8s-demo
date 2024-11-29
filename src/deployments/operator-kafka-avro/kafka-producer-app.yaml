@@ -13,7 +13,7 @@ spec:
         app: notifications-kafka-producer
     spec:
       containers:
-        - image: zalbiraw/go-api-test-service:v3.4.0
+        - image: zalbiraw/go-api-test-service:v3.4
           imagePullPolicy: IfNotPresent
           name: notifications-kafka-producer
           command:

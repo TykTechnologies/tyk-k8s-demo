@@ -28,7 +28,7 @@ spec:
         app: users-subgraph
     spec:
       containers:
-        - image: zalbiraw/go-api-test-service:v3.0
+        - image: zalbiraw/go-api-test-service:v3.40
           imagePullPolicy: IfNotPresent
           name: users-subgraph
           command:

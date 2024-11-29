@@ -1,5 +1,5 @@
 ## Kafka
-This deployment will stand up a Kafka broker along with a schema registry.
+This deployment will stand up a Kafka broker.
 
 ### Example
 ```
@@ -7,12 +7,12 @@ This deployment will stand up a Kafka broker along with a schema registry.
 ```
 
 ### Support
-|     Item     |  Status   |
-|:------------:|:---------:|
-|  OpenShift   | :warning: |
-|   CI Tests   |    :x:    |
-| Postman Test |    :x:    |
-|     SSL      |    N/A    |
+|     Item     |       Status       |
+|:------------:|:------------------:|
+|  OpenShift   |     :warning:      |
+|   CI Tests   | :white_check_mark: |
+| Postman Test |        :x:         |
+|     SSL      |        N/A         |
 
 ### Supported Service Types with `--expose` flag
 |     Item      |       Status       |

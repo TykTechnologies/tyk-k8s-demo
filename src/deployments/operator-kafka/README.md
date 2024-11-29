@@ -1,6 +1,6 @@
 ## Tyk Operator Kafka Example
 Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency
-[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a Federation v1 API
+[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a HTTP to Kafka API
 example using the tyk-operator.
 
 The following API definitions will be created with this deployment:
@@ -19,7 +19,7 @@ minikube addons enable ingress
 ./up.sh --deployments operator-kafka tyk-stack
 ```
 
-To consume topic:
+To consume:
 ```
 curl http://localhost:8080/http-to-kafka/consume
 ```
@@ -30,19 +30,19 @@ curl -X POST http://localhost:8080/http-to-kafka/produce -d 'Hello, Tyk!'
 ```
 
 ### Support
-|     Item     |  Status   |
-|:------------:|:---------:|
-|  OpenShift   | :warning: |
-|   CI Tests   |    :x:    |
-| Postman Test |    :x:    |
-|     SSL      |    N/A    |
+|     Item     |       Status       |
+|:------------:|:------------------:|
+|  OpenShift   |     :warning:      |
+|   CI Tests   | :white_check_mark: |
+| Postman Test | :white_check_mark: |
+|     SSL      |        N/A         |
 
 ### Supported Service Types with `--expose` flag
-|     Item      |       Status       |
-|:-------------:|:------------------:|
-| Port Forward  | :white_check_mark: |
-|    Ingress    |        :x:         |
-| Load Balancer |        :x:         |
+|     Item      | Status |
+|:-------------:|:------:|
+| Port Forward  |  N/A   |
+|    Ingress    |  N/A   |
+| Load Balancer |  N/A   |
 
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|

@@ -3,7 +3,7 @@ if [ -z "$operatorKafkaAvroRegistered" ]; then
 
   operatorKafkaAvroDeploymentPath="src/deployments/operator-kafka-avro";
 
-  source "src/deployments/operator/main.safe.sh";
   source "src/deployments/kafka/main.safe.sh";
+  source "src/deployments/operator/main.safe.sh";
   source "$operatorKafkaAvroDeploymentPath/main.sh";
 fi
