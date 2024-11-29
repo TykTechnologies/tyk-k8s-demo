@@ -26,7 +26,8 @@ kubectl create secret generic "$selfSignedCertsSecretName" \
   --dry-run=client -o=yaml | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 
-args=(--set "tyk-bootstrap.bootstrap.dashboard.sslInsecureSkipVerify=true" \
+args=(
+  --set "tyk-bootstrap.bootstrap.sslInsecureSkipVerify=true" \
 
   --set "global.tls.dashboard=true" \
   --set "tyk-dashboard.dashboard.tls.secretName=$certsSecretName" \

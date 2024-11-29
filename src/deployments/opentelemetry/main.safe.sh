@@ -1,7 +1,7 @@
 if [ -z "$opentelemetryRegistered" ]; then
   opentelemetryRegistered=true;
 
-  opentelemetrReleaseName="tyk-opentelemetry";
+  opentelemetryReleaseName="tyk-opentelemetry";
   opentelemetryDeploymentPath="src/deployments/opentelemetry";
 
   source "src/deployments/cert-manager/main.safe.sh";

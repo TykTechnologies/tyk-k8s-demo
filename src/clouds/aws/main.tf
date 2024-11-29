@@ -63,5 +63,12 @@ resource "aws_eks_addon" "this" {
 	addon_name                  = "aws-ebs-csi-driver"
 	resolve_conflicts_on_create = "OVERWRITE"
 	service_account_role_arn    = module.ebs_csi_controller_role.iam_role_arn
-	depends_on                  = [module.eks, module.eks_node_groups]
+
+	configuration_values = jsonencode({
+		defaultStorageClass = {
+			enabled = true
+		}
+	})
+
+	depends_on = [module.eks, module.eks_node_groups]
 }

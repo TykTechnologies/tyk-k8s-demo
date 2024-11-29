@@ -25,6 +25,7 @@ jobs:
           - elasticsearch-kibana
           - jaeger
           - k6
+          - kafka
           - keycloak
           - keycloak-sso
           - keycloak-dcr
@@ -36,6 +37,8 @@ jobs:
           - operator-graphql
           - operator-httpbin
           - operator-jwt-hmac
+          - operator-kafka
+          - operator-kafka-avro
           - operator-udg
           - portal
           - prometheus

@@ -1,10 +1,6 @@
 logger "$INFO" "installing tyk-operator in $namespace namespace...";
 
 setVerbose;
-helm upgrade "$operatorReleaseName" tyk-helm/tyk-operator --version 1.0.0 \
-  --install \
-  --namespace "$namespace" \
-  "${operatorSecurityContextArgs[@]}" \
-  "${operatorSSLArgs[@]}" \
-  "${helmFlags[@]}" > /dev/null;
+sed "s/replace_namespace/$namespace/g" "$operatorDeploymentPath/manifest.yaml" | \
+  kubectl apply -n "$namespace" -f - > /dev/null;
 unsetVerbose;
