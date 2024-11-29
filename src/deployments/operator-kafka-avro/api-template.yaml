@@ -26,7 +26,7 @@ data:
                   "tyk-kafka.tyk.svc:9092"
                 ],
                 "client_id": "tyk",
-                "consumer_group": "test",
+                "consumer_group": "avro",
                 "topics": [
                   "avro"
                 ]
@@ -43,24 +43,7 @@ data:
                   "avro": {
                     "operator": "to_json",
                     "encoding": "binary",
-                    "schema": {
-                      "type": "record",
-                      "name": "Notification",
-                      "fields": [
-                        {
-                          "name": "notificationType",
-                          "type": {
-                            "type": "enum",
-                            "name": "NotificationType",
-                            "symbols": ["LIKE", "SHARE", "COMMENT"]
-                          }
-                        },
-                        {
-                          "name": "msg",
-                          "type": "string"
-                        }
-                      ]
-                    }
+                    "schema": "{\"type\": \"record\",\"name\": \"Notification\",\"fields\":[{\"name\":\"NotificationType\",\"type\":{\"type\":\"enum\",\"name\":\"NotificationType\",\"symbols\":[\"LIKE\",\"SHARE\",\"COMMENT\"]}},{\"name\":\"msg\",\"type\":\"string\"}]}"
                   }
                 }
               ]
