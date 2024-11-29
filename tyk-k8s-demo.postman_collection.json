@@ -904,6 +904,13 @@
 										"type": "text/javascript",
 										"packages": {}
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
+									}
 								}
 							],
 							"request": {
@@ -919,14 +926,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:{{gateway.port}}/http-to-kafka/anything",
+									"raw": "http://localhost:{{gateway.port}}/avro-to-json/anything",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "{{gateway.port}}",
 									"path": [
-										"http-to-kafka",
+										"avro-to-json",
 										"anything"
 									]
 								}
