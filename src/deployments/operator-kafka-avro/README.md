@@ -4,7 +4,7 @@ Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-
 example using the tyk-operator.
 
 The following API definitions will be created with this deployment:
-- avro-to-jason
+- avro-to-json
 
 ### Minikube
 To run on `minikube` you must enable ingress addons
