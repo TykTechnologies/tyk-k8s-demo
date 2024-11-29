@@ -24,6 +24,6 @@ spec:
             - name: KAFKA_BROKER_URL
               value: "replace_svc_name:replace_svc_port"
             - name: KAFKA_TOPIC
-              value: "avro"
+              value: "replace_topic"
             - name: PRODUCE_INTERVAL
               value: "5s"

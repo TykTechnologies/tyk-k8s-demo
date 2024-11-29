@@ -1,0 +1,122 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: avro-to-json
+  namespace: replace_namespace
+data:
+  avro-to-json.json: |-
+    {
+      "info": {
+        "title": "avro-to-json",
+        "version": "1.0.0"
+      },
+      "openapi": "3.0.3",
+      "servers": [
+        {
+          "url": "http://tyk-gw.local/avro-to-json/"
+        }
+      ],
+      "x-tyk-streaming": {
+        "streams": {
+          "consumer": {
+            "input": {
+              "kafka": {
+                "addresses": [
+                  "tyk-kafka.tyk.svc:9092"
+                ],
+                "client_id": "tyk",
+                "consumer_group": "test",
+                "topics": [
+                  "avro"
+                ]
+              }
+            },
+            "output": {
+              "http_server": {
+                "stream_path": "/consume"
+              }
+            },
+            "pipeline": {
+              "processors": [
+                {
+                  "avro": {
+                    "operator": "to_json",
+                    "encoding": "binary",
+                    "schema": {
+                      "type": "record",
+                      "name": "Notification",
+                      "fields": [
+                        {
+                          "name": "notificationType",
+                          "type": {
+                            "type": "enum",
+                            "name": "NotificationType",
+                            "symbols": ["LIKE", "SHARE", "COMMENT"]
+                          }
+                        },
+                        {
+                          "name": "msg",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "security": [],
+      "paths": {},
+      "components": {
+        "securitySchemes": {}
+      },
+      "x-tyk-api-gateway": {
+        "info": {
+          "dbId": "6748c9495f2a990001ca0216",
+          "id": "dHlrL2F2cm8tdG8tanNvbg",
+          "orgId": "6748c9155f2a990001ca0214",
+          "name": "avro-to-json",
+          "state": {
+            "active": true,
+            "internal": false
+          }
+        },
+        "middleware": {
+          "global": {
+            "trafficLogs": {
+              "enabled": true
+            }
+          }
+        },
+        "server": {
+          "detailedActivityLogs": {
+            "enabled": true
+          },
+          "detailedTracing": {
+            "enabled": true
+          },
+          "listenPath": {
+            "strip": true,
+            "value": "/avro-to-json/"
+          }
+        },
+        "upstream": {
+          "url": "http://httpbin.org/"
+        }
+      }
+    }
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: TykStreamsApiDefinition
+metadata:
+  name: avro-to-json
+  namespace: replace_namespace
+spec:
+  tykStreams:
+    configmapRef:
+      name: avro-to-json
+      namespace: replace_namespace
+      keyName: avro-to-json.json

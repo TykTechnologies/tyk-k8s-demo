@@ -4,7 +4,7 @@ Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-
 example using the tyk-operator.
 
 The following API definitions will be created with this deployment:
-- http-to-kafka
+- avro-to-jason
 
 ### Minikube
 To run on `minikube` you must enable ingress addons
@@ -16,17 +16,12 @@ minikube addons enable ingress
 
 ### Example
 ```
-./up.sh --deployments operator-kafka tyk-stack
+./up.sh --deployments operator-kafka-avro tyk-stack
 ```
 
 To consume topic:
 ```
-curl http://localhost:8080/http-to-kafka/consume
-```
-
-To produce:
-```
-curl -X POST http://localhost:8080/http-to-kafka/produce -d 'Hello, Tyk!'
+curl http://localhost:8080/avro-to-json/consume
 ```
 
 ### Support
