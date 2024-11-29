@@ -1,8 +1,5 @@
 logger "$INFO" "creating Tyk Operator Kafka Avro to JSON example...";
 
-addDeploymentArgs "${args[@]}";
-upgradeTyk;
-
 setVerbose;
 sed "s/replace_namespace/$namespace/g" "$operatorKafkaAvroDeploymentPath/kafka-producer-app.yaml" | \
   sed "s/replace_svc_name/$kafkaReleaseName.$namespace.svc/g" | \
