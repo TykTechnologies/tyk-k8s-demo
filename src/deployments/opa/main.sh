@@ -11,12 +11,9 @@ if [[ $LOGLEVEL == $DEBUG ]]; then
 fi
 
 args+=( \
-  --set "tyk-dashboard.dashboard.extraEnvs[$dashExtraEnvsCtr].name=TYK_DB_SECURITY_OPENPOLICY_ENABLED" \
-  --set-string "tyk-dashboard.dashboard.extraEnvs[$dashExtraEnvsCtr].value=true" \
-  --set "tyk-dashboard.dashboard.extraEnvs[$((dashExtraEnvsCtr + 1))].name=TYK_DB_SECURITY_OPENPOLICY_ENABLEAPI" \
-  --set-string "tyk-dashboard.dashboard.extraEnvs[$((dashExtraEnvsCtr + 1))].value=true" \
-  --set "tyk-dashboard.dashboard.extraEnvs[$((dashExtraEnvsCtr + 2))].name=TYK_DB_SECURITY_OPENPOLICY_DEBUG" \
-  --set-string "tyk-dashboard.dashboard.extraEnvs[$((dashExtraEnvsCtr + 2))].value=$debug" \
+  --set "tyk-dashboard.dashboard.opa.enabled=true" \
+  --set "tyk-dashboard.dashboard.opa.api=true" \
+  --set "tyk-dashboard.dashboard.opa.debug=$debug" \
   --set "tyk-dashboard.dashboard.extraVolumes[$dashExtraVolumesCtr].name=opa-rules" \
   --set "tyk-dashboard.dashboard.extraVolumes[$dashExtraVolumesCtr].configMap.name=opa-rules" \
   --set "tyk-dashboard.dashboard.extraVolumeMounts[$dashExtraVolumeMountsCtr].name=opa-rules" \
@@ -24,7 +21,6 @@ args+=( \
   --set "tyk-dashboard.dashboard.extraVolumeMounts[$dashExtraVolumeMountsCtr].subPath=dashboard.rego" \
 );
 
-dashExtraEnvsCtr=$((dashExtraEnvsCtr + 3));
 dashExtraVolumesCtr=$((dashExtraVolumesCtr + 1));
 dashExtraVolumeMountsCtr=$((dashExtraVolumeMountsCtr + 1));
 

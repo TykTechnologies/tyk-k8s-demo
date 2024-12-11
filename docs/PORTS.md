@@ -29,6 +29,7 @@ All the ports that this library uses.
 | prometheus-grafana    | prometheus-grafana                     | `9081`  |
 | tyk-cp                | mdcb-svc-*-tyk-mdcb                    | `9090`  |
 | prometheus            | pump-svc-*-tyk-pump                    | `9091`  |
+| kafka                 | tyk-kafka                              | `9092`  |
 | elasticsearch         | elasticsearch                          | `9200`  |
 | opensearch            | opensearch                             | `9201`  |
 | jaeger                | tyk-jaeger                             | `16686` |

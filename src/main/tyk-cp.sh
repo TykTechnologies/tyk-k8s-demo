@@ -1,13 +1,14 @@
 source src/main/storage/main.sh;
 
 tykReleaseName="tyk-cp";
-tykReleaseVersion="2.1.0";
+tykReleaseVersion="2.2.0";
 
 args=(
   --set "global.license.dashboard=$LICENSE" \
   --set "global.license.operator=$OPERATOR_LICENSE" \
   --set "global.adminUser.email=$TYK_USERNAME" \
   --set "global.adminUser.password=$TYK_PASSWORD" \
+  --set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway-ee" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.service.port=8080" \
   --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
@@ -46,4 +47,4 @@ addSummary "\tTyk Control Plane deployed\n \
 \tMDCB connection string: $ip:$port\n \
 \tOrganisation ID: $orgID\n\n \
 You can deploy a worker gateway and connect it to this Control Plane by running the following command:\n\n \
-TYK_WORKER_CONNECTIONSTRING=$ip:$port TYK_WORKER_ORGID=$orgID TYK_WORKER_AUTHTOKEN=$authToken TYK_WORKER_USESSL=false ./up.sh --namespace tyk-dp$exposeWorker tyk-dp";
+TYK_DATA_PLANE_CONNECTIONSTRING=$ip:$port TYK_DATA_PLANE_ORGID=$orgID TYK_DATA_PLANE_AUTHTOKEN=$authToken TYK_DATA_PLANE_USESSL=false ./up.sh --namespace tyk-dp$exposeWorker tyk-dp";

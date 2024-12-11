@@ -13,7 +13,7 @@ env:
   TIMEOUT: 30
 
 jobs:
-  tyk-redis:
+  tyk-storage:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -44,7 +44,7 @@ jobs:
       - name: Copy .env file
         run: cp .env.example .env
 
-      - name: Deploy tyk-stack with ${{ matrix.redis }}
+      - name: Deploy tyk-stack with ${{ matrix.storage }}
         uses: nick-invision/retry@v3
         with:
           max_attempts: ${{ env.MAX_ATTEMPTS }}

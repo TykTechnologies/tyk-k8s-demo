@@ -1,13 +1,14 @@
 source src/main/storage/main.sh;
 
 tykReleaseName="tyk-stack";
-tykReleaseVersion="2.1.0";
+tykReleaseVersion="2.2.0";
 
 args=(
   --set "global.license.dashboard=$LICENSE" \
   --set "global.license.operator=$OPERATOR_LICENSE" \
   --set "global.adminUser.email=$TYK_USERNAME" \
   --set "global.adminUser.password=$TYK_PASSWORD" \
+  --set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway-ee" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.service.port=8080" \
   --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
