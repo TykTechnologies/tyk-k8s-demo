@@ -1,7 +1,7 @@
 source src/main/storage/main.sh;
 
 tykReleaseName="tyk-cp";
-tykReleaseVersion="2.1.0";
+tykReleaseVersion="2.2.0";
 
 args=(
   --set "global.license.dashboard=$LICENSE" \
