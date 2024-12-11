@@ -67,10 +67,10 @@ jobs:
 
       - name: Deploy tyk-dp
         run: |
-          TYK_WORKER_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
-          TYK_WORKER_ORGID=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d) \
-          TYK_WORKER_AUTHTOKEN=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d) \
-          TYK_WORKER_USESSL=false \
+          TYK_DATA_PLANE_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
+          TYK_DATA_PLANE_ORGID=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d) \
+          TYK_DATA_PLANE_AUTHTOKEN=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d) \
+          TYK_DATA_PLANE_USESSL=false \
           ./up.sh --namespace tyk-dp tyk-dp
 
       - name: Sleep 1 minute

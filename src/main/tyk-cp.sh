@@ -47,4 +47,4 @@ addSummary "\tTyk Control Plane deployed\n \
 \tMDCB connection string: $ip:$port\n \
 \tOrganisation ID: $orgID\n\n \
 You can deploy a worker gateway and connect it to this Control Plane by running the following command:\n\n \
-TYK_WORKER_CONNECTIONSTRING=$ip:$port TYK_WORKER_ORGID=$orgID TYK_WORKER_AUTHTOKEN=$authToken TYK_WORKER_USESSL=false ./up.sh --namespace tyk-dp$exposeWorker tyk-dp";
+TYK_DATA_PLANE_CONNECTIONSTRING=$ip:$port TYK_DATA_PLANE_ORGID=$orgID TYK_DATA_PLANE_AUTHTOKEN=$authToken TYK_DATA_PLANE_USESSL=false ./up.sh --namespace tyk-dp$exposeWorker tyk-dp";

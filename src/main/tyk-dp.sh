@@ -1,24 +1,24 @@
-if [ -z "$TYK_WORKER_GROUPID" ]; then
-  TYK_WORKER_GROUPID=$(echo "$(kubectl config current-context | base64)/$namespace");
+if [ -z "$TYK_DATA_PLANE_GROUPID" ]; then
+  TYK_DATA_PLANE_GROUPID=$(echo "$(kubectl config current-context | base64)/$namespace");
 fi
 
 args=(
-  --set "global.remoteControlPlane.connectionString=$TYK_WORKER_CONNECTIONSTRING" \
-  --set "global.remoteControlPlane.orgId=$TYK_WORKER_ORGID" \
-  --set "global.remoteControlPlane.userApiKey=$TYK_WORKER_AUTHTOKEN" \
-  --set "global.remoteControlPlane.useSSL=$TYK_WORKER_USESSL" \
-  --set "global.remoteControlPlane.groupID=$TYK_WORKER_GROUPID" \
-  --set "global.servicePorts.gateway=$TYK_WORKER_GW_PORT" \
+  --set "global.remoteControlPlane.connectionString=$TYK_DATA_PLANE_CONNECTIONSTRING" \
+  --set "global.remoteControlPlane.orgId=$TYK_DATA_PLANE_ORGID" \
+  --set "global.remoteControlPlane.userApiKey=$TYK_DATA_PLANE_AUTHTOKEN" \
+  --set "global.remoteControlPlane.useSSL=$TYK_DATA_PLANE_USESSL" \
+  --set "global.remoteControlPlane.groupID=$TYK_DATA_PLANE_GROUPID" \
+  --set "global.servicePorts.gateway=$TYK_DATA_PLANE_PORT" \
   --set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway-ee" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
-  --set "tyk-gateway.gateway.sharding.enabled=$TYK_WORKER_SHARDING_ENABLED" \
-  --set "tyk-gateway.gateway.sharding.tags=$TYK_WORKER_SHARDING_TAGS" \
+  --set "tyk-gateway.gateway.sharding.enabled=$TYK_DATA_PLANE_SHARDING_ENABLED" \
+  --set "tyk-gateway.gateway.sharding.tags=$TYK_DATA_PLANE_SHARDING_TAGS" \
 );
 
-if [ -z "$TYK_WORKER_SHARDING_TAGS" ]; then
+if [ -z "$TYK_DATA_PLANE_SHARDING_TAGS" ]; then
       tykReleaseName="tyk-dp";
 else
-      tykReleaseName="tyk-dp-$TYK_WORKER_SHARDING_TAGS";
+      tykReleaseName="tyk-dp-$TYK_DATA_PLANE_SHARDING_TAGS";
 fi
 
 tykReleaseVersion="2.2.0";
@@ -36,17 +36,17 @@ addDeploymentArgs "${loadbalancerArgs[@]}";
 addDeploymentArgs "${ingressArgs[@]}";
 upgradeTyk;
 
-if [[ -n "$TYK_WORKER_OPERATOR_CONNECTIONSTRING" ]]; then
+if [[ -n "$TYK_DATA_PLANE_OPERATOR_CONNECTIONSTRING" ]]; then
   logger "$INFO" "creating tyk-operator secret...";
   kubectl create secret generic tyk-operator-conf \
     --from-literal="TYK_MODE=pro" \
     --from-literal="TYK_OPERATOR_LICENSEKEY=$OPERATOR_LICENSE" \
-    --from-literal="TYK_URL=$TYK_WORKER_OPERATOR_CONNECTIONSTRING" \
-    --from-literal="TYK_AUTH=$TYK_WORKER_AUTHTOKEN" \
-    --from-literal="TYK_ORG=$TYK_WORKER_ORGID" \
+    --from-literal="TYK_URL=$TYK_DATA_PLANE_OPERATOR_CONNECTIONSTRING" \
+    --from-literal="TYK_AUTH=$TYK_DATA_PLANE_AUTHTOKEN" \
+    --from-literal="TYK_ORG=$TYK_DATA_PLANE_ORGID" \
     --dry-run=client -o=yaml | \
     kubectl apply --namespace "$namespace" -f - > /dev/null;
 fi
 
 addSummary "\tTyk Worker Gateway deployed\n
-\tMDCB Connection: $TYK_WORKER_CONNECTIONSTRING";
+\tMDCB Connection: $TYK_DATA_PLANE_CONNECTIONSTRING";

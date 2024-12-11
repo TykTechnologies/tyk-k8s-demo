@@ -35,20 +35,20 @@ fi
 
 if [[ $TYKDP == "$mode" ]]; then
   chart="tyk-data-plane";
-  if [[ -z "$TYK_WORKER_CONNECTIONSTRING" ]]; then
-    logger "$ERROR" "please make sure TYK_WORKER_CONNECTIONSTRING variable is set in your .env file";
+  if [[ -z "$TYK_DATA_PLANE_CONNECTIONSTRING" ]]; then
+    logger "$ERROR" "please make sure TYK_DATA_PLANE_CONNECTIONSTRING variable is set in your .env file";
     invalid=true;
   fi
-  if [[ -z "$TYK_WORKER_ORGID" ]]; then
-    logger "$ERROR" "please make sure TYK_WORKER_ORGID variable is set in your .env file";
+  if [[ -z "$TYK_DATA_PLANE_ORGID" ]]; then
+    logger "$ERROR" "please make sure TYK_DATA_PLANE_ORGID variable is set in your .env file";
     invalid=true;
   fi
-  if [[ -z "$TYK_WORKER_AUTHTOKEN" ]]; then
-    logger "$ERROR" "please make sure TYK_WORKER_AUTHTOKEN variable is set in your .env file";
+  if [[ -z "$TYK_DATA_PLANE_AUTHTOKEN" ]]; then
+    logger "$ERROR" "please make sure TYK_DATA_PLANE_AUTHTOKEN variable is set in your .env file";
     invalid=true;
   fi
-  if [[ -z "$TYK_WORKER_SHARDING_ENABLED" ]]; then
-    logger "$ERROR" "please make sure TYK_WORKER_SHARDING_ENABLED variable is set in your .env file";
+  if [[ -z "$TYK_DATA_PLANE_SHARDING_ENABLED" ]]; then
+    logger "$ERROR" "please make sure TYK_DATA_PLANE_SHARDING_ENABLED variable is set in your .env file";
     invalid=true;
   fi
 fi

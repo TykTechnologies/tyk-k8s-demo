@@ -70,10 +70,10 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           command: |
-            TYK_WORKER_CONNECTIONSTRING="${{ secrets.TYK_WORKER_CONNECTIONSTRING }}" \
-            TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
-            TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
-            TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            TYK_DATA_PLANE_CONNECTIONSTRING="${{ secrets.TYK_DATA_PLANE_CONNECTIONSTRING }}" \
+            TYK_DATA_PLANE_ORGID="${{ secrets.TYK_DATA_PLANE_ORGID }}" \
+            TYK_DATA_PLANE_AUTHTOKEN="${{ secrets.TYK_DATA_PLANE_AUTHTOKEN }}" \
+            TYK_DATA_PLANE_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_DATA_PLANE_OPERATOR_CONNECTIONSTRING }}" \
             OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
@@ -93,10 +93,10 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
-            TYK_WORKER_CONNECTIONSTRING="${{ secrets.TYK_WORKER_CONNECTIONSTRING }}" \
-            TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
-            TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
-            TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            TYK_DATA_PLANE_CONNECTIONSTRING="${{ secrets.TYK_DATA_PLANE_CONNECTIONSTRING }}" \
+            TYK_DATA_PLANE_ORGID="${{ secrets.TYK_DATA_PLANE_ORGID }}" \
+            TYK_DATA_PLANE_AUTHTOKEN="${{ secrets.TYK_DATA_PLANE_AUTHTOKEN }}" \
+            TYK_DATA_PLANE_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_DATA_PLANE_OPERATOR_CONNECTIONSTRING }}" \
             OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
@@ -114,10 +114,10 @@ jobs:
           max_attempts: ${{ env.MAX_ATTEMPTS }}
           timeout_minutes: ${{ env.TIMEOUT }}
           on_retry_command: |
-            TYK_WORKER_CONNECTIONSTRING="${{ secrets.TYK_WORKER_CONNECTIONSTRING }}" \
-            TYK_WORKER_ORGID="${{ secrets.TYK_WORKER_ORGID }}" \
-            TYK_WORKER_AUTHTOKEN="${{ secrets.TYK_WORKER_AUTHTOKEN }}" \
-            TYK_WORKER_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_WORKER_OPERATOR_CONNECTIONSTRING }}" \
+            TYK_DATA_PLANE_CONNECTIONSTRING="${{ secrets.TYK_DATA_PLANE_CONNECTIONSTRING }}" \
+            TYK_DATA_PLANE_ORGID="${{ secrets.TYK_DATA_PLANE_ORGID }}" \
+            TYK_DATA_PLANE_AUTHTOKEN="${{ secrets.TYK_DATA_PLANE_AUTHTOKEN }}" \
+            TYK_DATA_PLANE_OPERATOR_CONNECTIONSTRING="${{ secrets.TYK_DATA_PLANE_OPERATOR_CONNECTIONSTRING }}" \
             OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
             DATADOG_APIKEY="${{ secrets.DATADOG_APIKEY }}" \
             DATADOG_APPKEY="${{ secrets.DATADOG_APPKEY }}" \
