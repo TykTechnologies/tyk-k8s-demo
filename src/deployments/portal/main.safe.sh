@@ -4,10 +4,6 @@ if [ -z "$portalRegistered" ]; then
   PORTAL_SERVICE_PORT=3001;
   portalDeploymentPath="src/deployments/portal";
 
-  portalExtraEnvsCtr=0;
-  portalExtraVolumesCtr=0;
-  portalExtraVolumeMountsCtr=0;
-
   source "src/deployments/operator-httpbin/main.safe.sh"
   source "$portalDeploymentPath/checks.sh";
   source "$portalDeploymentPath/ssl.sh";

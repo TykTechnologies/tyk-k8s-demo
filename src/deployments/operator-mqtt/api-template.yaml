@@ -1,0 +1,100 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: http-to-mqtt
+  namespace: replace_namespace
+data:
+  http-to-mqtt.json: |-
+    {
+      "openapi": "3.0.3",
+      "info": {
+        "title": "http-to-mqtt",
+        "version": "1.0.0"
+      },
+      "security": [],
+      "paths": {},
+      "components": {
+        "securitySchemes": {}
+      },
+      "x-tyk-streaming": {
+        "streams": {
+          "consumer": {
+            "input": {
+              "mqtt": {
+                "urls": [
+                  "tcp://replace_svc_name:replace_svc_port"
+                ],
+                "client_id": "tyk",
+                "topics": [
+                  "test"
+                ]
+              }
+            },
+            "output": {
+              "http_server": {
+                "stream_path": "/consume/stream",
+                "ws_path": "/consume/ws"
+              }
+            }
+          },
+          "producer": {
+            "input": {
+              "http_server": {
+                "path": "/produce"
+              }
+            },
+            "output": {
+              "mqtt": {
+                "urls": [
+                  "tcp://replace_svc_name:replace_svc_port"
+                ],
+                "topic": "test"
+              }
+            }
+          }
+        }
+      },
+      "x-tyk-api-gateway": {
+        "info": {
+          "name": "http-to-mqtt",
+          "state": {
+            "active": true
+          }
+        },
+        "middleware": {
+          "global": {
+            "trafficLogs": {
+              "enabled": true
+            }
+          }
+        },
+        "server": {
+          "detailedActivityLogs": {
+            "enabled": true
+          },
+          "detailedTracing": {
+            "enabled": true
+          },
+          "listenPath": {
+            "strip": true,
+            "value": "/http-to-mqtt/"
+          }
+        },
+        "upstream": {
+          "url": "http://httpbin.org/"
+        }
+      }
+    }
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: TykStreamsApiDefinition
+metadata:
+  name: http-to-mqtt
+  namespace: replace_namespace
+spec:
+  tykStreams:
+    configmapRef:
+      name: http-to-mqtt
+      namespace: replace_namespace
+      keyName: http-to-mqtt.json
