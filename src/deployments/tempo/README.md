@@ -10,7 +10,6 @@ Deploys the Tempo using the `grafana/tempo` chart version `v1.10.3`.
 |     Item     |       Status       |
 |:------------:|:------------------:|
 |  OpenShift   | :white_check_mark: |
-|     ARM      | :white_check_mark: |
 |   CI Tests   | :white_check_mark: |
 | Postman Test | :white_check_mark: |
 |     SSL      |     :no_entry:     |
