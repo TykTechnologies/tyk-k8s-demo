@@ -27,8 +27,8 @@
 | operator-graphql     | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |                                                   N/A                                                    |   N/A   |
 | operator-httpbin     | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |                                                   N/A                                                    |   N/A   |
 | operator-jwt-hmac    | :white_check_mark: | :white_check_mark: | :white_check_mark: |        N/A         |                                                   N/A                                                    |   N/A   |
-| operator-kafka       |     :warning:      | :white_check_mark: | :white_check_mark: |        N/A         |                                                   N/A                                                    |   N/A   |
-| operator-kafka-avro  |     :warning:      | :white_check_mark: | :white_check_mark: |        N/A         |                                                   N/A                                                    |   N/A   |
+| operator-streams-kafka       |     :warning:      | :white_check_mark: | :white_check_mark: |        N/A         |                                                   N/A                                                    |   N/A   |
+| operator-streams-kafka-avro  |     :warning:      | :white_check_mark: | :white_check_mark: |        N/A         |                                                   N/A                                                    |   N/A   |
 | operator-udg         | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :no_entry:     |                                                   N/A                                                    |   N/A   |
 | portal               | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    [tyk-helm](https://helm.tyk.io/public/helm/charts)/tyk-dev-portal                     |  2.1.0  |
 | prometheus           |     :no_entry:     | :white_check_mark: | :white_check_mark: |     :no_entry:     |          [prometheus-community](https://prometheus-community.github.io/helm-charts)/prometheus           | 25.24.1 |
@@ -59,8 +59,8 @@
 | operator-graphql     |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-httpbin     |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-jwt-hmac    |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator-kafka       |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| operator-kafka-avro  |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-streams-kafka       |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| operator-streams-kafka-avro  |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | operator-udg         |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | portal               |        N/A         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
@@ -95,8 +95,8 @@
 | operator-graphql     |        N/A         |        N/A         |        N/A         |
 | operator-httpbin     | :white_check_mark: |        :x:         |        :x:         |
 | operator-jwt-hmac    |        N/A         |        N/A         |        N/A         |
-| operator-kafka       |        N/A         |        N/A         |        N/A         |
-| operator-kafka-avro  |        N/A         |        N/A         |        N/A         |
+| operator-streams-kafka       |        N/A         |        N/A         |        N/A         |
+| operator-streams-kafka-avro  |        N/A         |        N/A         |        N/A         |
 | operator-udg         | :white_check_mark: |        :x:         |        :x:         |
 | portal               | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | prometheus           | :white_check_mark: | :white_check_mark: | :white_check_mark: |

@@ -1,10 +1,10 @@
-## Tyk Operator Mosquitto MQTT Example
+## Tyk Operator Streams Kafka Avro Example
 Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency
-[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a HTTP to MQTT API
+[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a Kafka AVRO to JSON API
 example using the tyk-operator.
 
 The following API definitions will be created with this deployment:
-- mosquitto-http-to-mqtt
+- avro-to-json
 
 ### Minikube
 To run on `minikube` you must enable ingress addons
@@ -16,21 +16,12 @@ minikube addons enable ingress
 
 ### Example
 ```
-./up.sh --deployments operator-mosquitto-mqtt tyk-stack
+./up.sh --deployments operator-streams-kafka-avro tyk-stack
 ```
 
-To consume:
+To consume topic:
 ```
-curl http://localhost:8080/mosquitto-http-to-mqtt/consume/stream
-```
-or
-```
-websocat ws://localhost:8080/mosquitto-http-to-mqtt/consume/ws
-```
-
-To produce:
-```
-curl -X POST http://localhost:8080/mosquitto-http-to-mqtt/produce -d 'Hello, Tyk!'
+curl http://localhost:8080/avro-to-json/consume
 ```
 
 ### Support

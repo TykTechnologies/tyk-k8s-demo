@@ -1,10 +1,10 @@
-## Tyk Operator Mosquitto MQTT Example
+## Tyk Operator Streams ActiveMQ AMQP Example
 Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency
-[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a HTTP to MQTT API
+[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a HTTP to AMQP API
 example using the tyk-operator.
 
 The following API definitions will be created with this deployment:
-- activemq-http-to-mqtt
+- activemq-http-to-amqp
 
 ### Minikube
 To run on `minikube` you must enable ingress addons
@@ -16,21 +16,21 @@ minikube addons enable ingress
 
 ### Example
 ```
-./up.sh --deployments operator-activemq-mqtt tyk-stack
+./up.sh --deployments operator-streams-activemq-amqp tyk-stack
 ```
 
 To consume:
 ```
-curl http://localhost:8080/activemq-http-to-mqtt/consume/stream
+curl http://localhost:8080/activemq-http-to-amqp/consume/stream
 ```
 or
 ```
-websocat ws://localhost:8080/activemq-http-to-mqtt/consume/ws
+websocat ws://localhost:8080/activemq-http-to-amqp/consume/ws
 ```
 
 To produce:
 ```
-curl -X POST http://localhost:8080/activemq-http-to-mqtt/produce -d 'Hello, Tyk!'
+curl -X POST http://localhost:8080/activemq-http-to-amqp/produce -d 'Hello, Tyk!'
 ```
 
 ### Support
