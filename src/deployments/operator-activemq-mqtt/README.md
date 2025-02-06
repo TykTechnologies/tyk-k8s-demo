@@ -1,10 +1,10 @@
-## Tyk Operator Kafka Example
+## Tyk Operator Mosquitto MQTT Example
 Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency
-[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a HTTP to Kafka API
+[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a HTTP to MQTT API
 example using the tyk-operator.
 
 The following API definitions will be created with this deployment:
-- http-to-kafka
+- activemq-http-to-mqtt
 
 ### Minikube
 To run on `minikube` you must enable ingress addons
@@ -16,21 +16,21 @@ minikube addons enable ingress
 
 ### Example
 ```
-./up.sh --deployments operator-kafka tyk-stack
+./up.sh --deployments operator-activemq-mqtt tyk-stack
 ```
 
 To consume:
 ```
-curl http://localhost:8080/http-to-kafka/consume/stream
+curl http://localhost:8080/activemq-http-to-mqtt/consume/stream
 ```
 or
 ```
-websocat ws://localhost:8080/http-to-kafka/consume/ws
+websocat ws://localhost:8080/activemq-http-to-mqtt/consume/ws
 ```
 
 To produce:
 ```
-curl -X POST http://localhost:8080/http-to-kafka/produce -d 'Hello, Tyk!'
+curl -X POST http://localhost:8080/activemq-http-to-mqtt/produce -d 'Hello, Tyk!'
 ```
 
 ### Support
