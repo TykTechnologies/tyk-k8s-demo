@@ -34,12 +34,12 @@ curl -X POST http://localhost:8080/activemq-http-to-amqp/produce -d 'Hello, Tyk!
 ```
 
 ### Support
-|     Item     |       Status       |
-|:------------:|:------------------:|
-|  OpenShift   |     :warning:      |
-|   CI Tests   | :white_check_mark: |
-| Postman Test | :white_check_mark: |
-|     SSL      |        N/A         |
+|     Item     | Status |
+|:------------:|:------:|
+|  OpenShift   |  :x:   |
+|   CI Tests   |  :x:   |
+| Postman Test |  :x:   |
+|     SSL      |  N/A   |
 
 ### Supported Service Types with `--expose` flag
 |     Item      | Status |
