@@ -1,10 +1,10 @@
-## Tyk Operator Kafka Example
+## Tyk Operator Streams Kafka Avro Example
 Deploys the Tyke Operator [Tyk Operator](https://github.com/TykTechnologies/tyk-operator) and its dependency
-[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a HTTP to Kafka API
+[cert-manager](https://github.com/jetstack/cert-manager). This will also stand up a Kafka AVRO to JSON API
 example using the tyk-operator.
 
 The following API definitions will be created with this deployment:
-- http-to-kafka
+- avro-to-json
 
 ### Minikube
 To run on `minikube` you must enable ingress addons
@@ -16,17 +16,12 @@ minikube addons enable ingress
 
 ### Example
 ```
-./up.sh --deployments operator-kafka tyk-stack
+./up.sh --deployments operator-streams-kafka-avro tyk-stack
 ```
 
-To consume:
+To consume topic:
 ```
-curl http://localhost:8080/http-to-kafka/consume
-```
-
-To produce:
-```
-curl -X POST http://localhost:8080/http-to-kafka/produce -d 'Hello, Tyk!'
+curl http://localhost:8080/avro-to-json/consume
 ```
 
 ### Support

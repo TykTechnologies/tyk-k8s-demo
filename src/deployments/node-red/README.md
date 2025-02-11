@@ -1,25 +1,25 @@
-## Tempo
-Deploys the Tempo using the `grafana/tempo` chart version `v1.10.3`.
+## NodeRed
+This deployment will stand up a Node Red broker.
 
 ### Example
 ```
-./up.sh --deployments tempo tyk-stack
+./up.sh --deployments node-red tyk-stack
 ```
 
 ### Support
-|     Item     |       Status       |
-|:------------:|:------------------:|
-|  OpenShift   | :white_check_mark: |
-|   CI Tests   | :white_check_mark: |
-| Postman Test | :white_check_mark: |
-|     SSL      |     :no_entry:     |
+|     Item     | Status |
+|:------------:|:------:|
+|  OpenShift   |  :x:   |
+|   CI Tests   |  :x:   |
+| Postman Test |  :x:   |
+|     SSL      |  N/A   |
 
 ### Supported Service Types with `--expose` flag
 |     Item      |       Status       |
 |:-------------:|:------------------:|
 | Port Forward  | :white_check_mark: |
-|    Ingress    | :white_check_mark: |
-| Load Balancer | :white_check_mark: |
+|    Ingress    |        :x:         |
+| Load Balancer |        :x:         |
 
 |        Icon        |        Description        |
 |:------------------:|:-------------------------:|

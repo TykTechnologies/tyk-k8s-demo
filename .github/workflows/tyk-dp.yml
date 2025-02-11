@@ -35,8 +35,8 @@ jobs:
           - operator-graphql
           - operator-httpbin
           - operator-jwt-hmac
-          - operator-kafka
-          - operator-kafka-avro
+          - operator-streams-kafka
+          - operator-streams-kafka-avro
           - operator-udg
           - prometheus
           - prometheus-grafana

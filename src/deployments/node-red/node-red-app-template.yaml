@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: replace_name-svc
+  labels:
+    app: replace_name
+spec:
+  ports:
+    - name: http
+      port: replace_port
+      targetPort: replace_port
+  selector:
+    app: replace_name
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: replace_name
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: replace_name
+  template:
+    metadata:
+      labels:
+        app: replace_name
+    spec:
+      containers:
+        - image: nodered/node-red:latest
+          imagePullPolicy: IfNotPresent
+          name: replace_name
+          ports:
+            - containerPort: replace_port

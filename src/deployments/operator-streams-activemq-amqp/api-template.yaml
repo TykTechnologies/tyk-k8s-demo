@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: http-to-kafka
+  name: activemq-http-to-amqp
   namespace: replace_namespace
 data:
-  http-to-kafka.json: |-
+  activemq-http-to-amqp.json: |-
     {
       "openapi": "3.0.3",
       "info": {
-        "title": "http-to-kafka",
+        "title": "activemq-http-to-amqp",
         "version": "1.0.0"
       },
       "security": [],
@@ -19,22 +19,32 @@ data:
       },
       "x-tyk-streaming": {
         "streams": {
-          "consumer": {
+          "consumer-stream": {
             "input": {
-              "kafka": {
-                "addresses": [
-                  "replace_svc_name:replace_svc_port"
+              "amqp_1": {
+                "urls": [
+                  "amqp://replace_svc_name:replace_svc_port"
                 ],
-                "consumer_group": "test",
-                "client_id": "tyk",
-                "topics": [
-                  "test"
-                ]
+                "source_address": "/test"
               }
             },
             "output": {
               "http_server": {
-                "stream_path": "/consume/stream",
+                "stream_path": "/consume/stream"
+              }
+            }
+          },
+          "consumer-ws": {
+            "input": {
+              "amqp_1": {
+                "urls": [
+                  "amqp://replace_svc_name:replace_svc_port"
+                ],
+                "source_address": "/test"
+              }
+            },
+            "output": {
+              "http_server": {
                 "ws_path": "/consume/ws"
               }
             }
@@ -46,11 +56,11 @@ data:
               }
             },
             "output": {
-              "kafka": {
-                "addresses": [
-                  "replace_svc_name:replace_svc_port"
+              "amqp_1": {
+                "urls": [
+                  "amqp://replace_svc_name:replace_svc_port"
                 ],
-                "topic": "test"
+                "target_address": "/test"
               }
             }
           }
@@ -58,7 +68,7 @@ data:
       },
       "x-tyk-api-gateway": {
         "info": {
-          "name": "http-to-kafka",
+          "name": "activemq-http-to-amqp",
           "state": {
             "active": true
           }
@@ -79,7 +89,7 @@ data:
           },
           "listenPath": {
             "strip": true,
-            "value": "/http-to-kafka/"
+            "value": "/activemq-http-to-amqp/"
           }
         },
         "upstream": {
@@ -91,11 +101,11 @@ data:
 apiVersion: tyk.tyk.io/v1alpha1
 kind: TykStreamsApiDefinition
 metadata:
-  name: http-to-kafka
+  name: activemq-http-to-amqp
   namespace: replace_namespace
 spec:
   tykStreams:
     configmapRef:
-      name: http-to-kafka
+      name: activemq-http-to-amqp
       namespace: replace_namespace
-      keyName: http-to-kafka.json
+      keyName: activemq-http-to-amqp.json

@@ -1,0 +1,117 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto-http-to-mqtt
+  namespace: replace_namespace
+data:
+  mosquitto-http-to-mqtt.json: |-
+    {
+      "openapi": "3.0.3",
+      "info": {
+        "title": "mosquitto-http-to-mqtt",
+        "version": "1.0.0"
+      },
+      "security": [],
+      "paths": {},
+      "components": {
+        "securitySchemes": {}
+      },
+      "x-tyk-streaming": {
+        "streams": {
+          "consumer-stream": {
+            "input": {
+              "mqtt": {
+                "urls": [
+                  "tcp://replace_svc_name:replace_svc_port"
+                ],
+                "client_id": "tyk-stream",
+                "topics": [
+                  "test"
+                ]
+              }
+            },
+            "output": {
+              "http_server": {
+                "stream_path": "/consume/stream"
+              }
+            }
+          },
+          "consumer-ws": {
+            "input": {
+              "mqtt": {
+                "urls": [
+                  "tcp://replace_svc_name:replace_svc_port"
+                ],
+                "client_id": "tyk-ws",
+                "topics": [
+                  "test"
+                ]
+              }
+            },
+            "output": {
+              "http_server": {
+                "ws_path": "/consume/ws"
+              }
+            }
+          },
+          "producer": {
+            "input": {
+              "http_server": {
+                "path": "/produce"
+              }
+            },
+            "output": {
+              "mqtt": {
+                "urls": [
+                  "tcp://replace_svc_name:replace_svc_port"
+                ],
+                "topic": "test"
+              }
+            }
+          }
+        }
+      },
+      "x-tyk-api-gateway": {
+        "info": {
+          "name": "mosquitto-http-to-mqtt",
+          "state": {
+            "active": true
+          }
+        },
+        "middleware": {
+          "global": {
+            "trafficLogs": {
+              "enabled": true
+            }
+          }
+        },
+        "server": {
+          "detailedActivityLogs": {
+            "enabled": true
+          },
+          "detailedTracing": {
+            "enabled": true
+          },
+          "listenPath": {
+            "strip": true,
+            "value": "/mosquitto-http-to-mqtt/"
+          }
+        },
+        "upstream": {
+          "url": "http://httpbin.org/"
+        }
+      }
+    }
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: TykStreamsApiDefinition
+metadata:
+  name: mosquitto-http-to-mqtt
+  namespace: replace_namespace
+spec:
+  tykStreams:
+    configmapRef:
+      name: mosquitto-http-to-mqtt
+      namespace: replace_namespace
+      keyName: mosquitto-http-to-mqtt.json

@@ -842,7 +842,7 @@
 					]
 				},
 				{
-					"name": "operator-kafka",
+					"name": "operator-streams-kafka",
 					"item": [
 						{
 							"name": "anything",
@@ -891,7 +891,7 @@
 					]
 				},
 				{
-					"name": "operator-kafka-avro",
+					"name": "operator-streams-kafka-avro",
 					"item": [
 						{
 							"name": "anything",

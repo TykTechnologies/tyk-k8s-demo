@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: replace_name-amqp-svc
+  labels:
+    app: replace_name
+spec:
+  ports:
+    - name: http
+      port: replace_amqp_port
+      targetPort: 5672
+  selector:
+    app: replace_name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: replace_name-mqtt-svc
+  labels:
+    app: replace_name
+spec:
+  ports:
+    - name: http
+      port: replace_mqtt_port
+      targetPort: 1883
+  selector:
+    app: replace_name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: replace_name-ui-svc
+  labels:
+    app: replace_name
+spec:
+  ports:
+    - name: http
+      port: replace_ui_port
+      targetPort: replace_ui_port
+  selector:
+    app: replace_name
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: replace_name
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: replace_name
+  template:
+    metadata:
+      labels:
+        app: replace_name
+    spec:
+      containers:
+        - image: apache/activemq-artemis:2.39.0
+          imagePullPolicy: IfNotPresent
+          name: replace_name
+          ports:
+            - name: amqp
+              containerPort: 5672
+            - name: mqtt
+              containerPort: 1883
+            - name: ui
+              containerPort: replace_ui_port
+          env:
+            - name: ANONYMOUS_LOGIN
+              value: "true"

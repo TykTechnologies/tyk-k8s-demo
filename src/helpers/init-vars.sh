@@ -19,20 +19,24 @@ gatewayPrefix="TYK_GW_";
 dashboardPrefix="TYK_DB_";
 mdcbPrefix="TYK_MDCB_";
 pumpPrefix="TYK_PMP_";
+portalPrefix="PORTAL_";
 
 pumpBackendsCtr=0;
 gatewayExtraEnvsCtr=0;
 dashExtraEnvsCtr=0;
 mdcbExtraEnvsCtr=0;
 pumpExtraEnvsCtr=0;
+portalExtraEnvsCtr=0;
 gatewayExtraVolumesCtr=0;
 dashExtraVolumesCtr=0;
 mdcbExtraVolumesCtr=0;
 pumpExtraVolumesCtr=0;
+portalExtraVolumesCtr=0;
 gatewayExtraVolumeMountsCtr=0;
 dashExtraVolumeMountsCtr=0;
 mdcbExtraVolumeMountsCtr=0;
 pumpExtraVolumeMountsCtr=0;
+portalExtraVolumeMountsCtr=0;
 
 # Check for .env file, if found, load variables
 if [[ -f .env ]]; then
@@ -57,6 +61,10 @@ if [[ -f .env ]]; then
         extraEnvs+=(--set-string "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].name=${var[0]}" \
           --set-string "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].value=${var[1]}");
         pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 1));
+      elif [[ "${var[0]}" == "$portalPrefix"* ]]; then
+        extraEnvs+=(--set-string "tyk-dev-portal.extraEnvs[$portalExtraEnvsCtr].name=${var[0]}" \
+          --set-string "tyk-dev-portal.extraEnvs[$portalExtraEnvsCtr].value=${var[1]}");
+        portalExtraEnvsCtr=$((portalExtraEnvsCtr + 1));
       fi
     fi
   done < .env
@@ -76,10 +84,13 @@ if $isDebug; then
     --set "tyk-mdcb.mdcb.extraEnvs[$mdcbExtraEnvsCtr].name=TYK_LOGLEVEL" \
     --set "tyk-mdcb.mdcb.extraEnvs[$mdcbExtraEnvsCtr].value=DEBUG" \
     --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].name=TYK_LOGLEVEL" \
-    --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].value=DEBUG");
+    --set "tyk-pump.pump.extraEnvs[$pumpExtraEnvsCtr].value=DEBUG" \
+    --set "tyk-dev-portal.extraEnvs[$portalExtraEnvsCtr].name=TYK_LOGLEVEL" \
+    --set "tyk-dev-portal.extraEnvs[$portalExtraEnvsCtr].value=DEBUG");
 
   gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 1));
   dashExtraEnvsCtr=$((dashExtraEnvsCtr + 1));
   mdcbExtraEnvsCtr=$((mdcbExtraEnvsCtr + 1));
   pumpExtraEnvsCtr=$((pumpExtraEnvsCtr + 1));
+  portalExtraEnvsCtr=$((portalExtraEnvsCtr + 1));
 fi
