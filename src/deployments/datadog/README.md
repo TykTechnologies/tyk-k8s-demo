@@ -15,25 +15,3 @@ DATADOG_SITE=datadoghq.com
 ```
 ./up.sh --deployments datadog,k6-slo-traffic tyk-stack
 ```
-
-### Support
-|     Item     |       Status       |
-|:------------:|:------------------:|
-|  OpenShift   | :white_check_mark: |
-|   CI Tests   | :white_check_mark: |
-| Postman Test | :white_check_mark: |
-|     SSL      |        N/A         |
-
-### Supported Service Types with `--expose` flag
-|     Item      |       Status       |
-|:-------------:|:------------------:|
-| Port Forward  | :white_check_mark: |
-|    Ingress    |        N/A         |
-| Load Balancer |        N/A         |
-
-|        Icon        |        Description        |
-|:------------------:|:-------------------------:|
-| :white_check_mark: |   Supported and tested    |
-|     :warning:      |        Not tested         |
-|        :x:         |       Not supported       |
-|     :no_entry:     | Not supported by the tool |

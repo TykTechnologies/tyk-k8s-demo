@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: replace_name-amqp-svc
+  name: replace_name-amqp-internal-svc
   labels:
     app: replace_name
 spec:
@@ -12,6 +12,72 @@ spec:
       targetPort: 5672
   selector:
     app: replace_name
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: replace_name-amqp
+spec:
+  name: replace_name-amqp
+  protocol: tcp
+  listen_port: replace_amqp_port
+  active: true
+  proxy:
+    target_url: tcp://replace_name-amqp-internal-svc.replace_namespace.svc:replace_amqp_port
+    listen_path: /
+    strip_listen_path: true
+  use_keyless: true
+  auth_configs:
+    authToken:
+      auth_header_name: Authorization
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: replace_name-amqp-svc
+  labels:
+    app: gateway-replace_tyk_release_name-tyk-gateway
+    release: replace_tyk_release_name
+spec:
+  ports:
+    - name: http
+      port: replace_amqp_port
+      targetPort: replace_amqp_port
+  selector:
+    app: gateway-replace_tyk_release_name-tyk-gateway
+    release: replace_tyk_release_name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: replace_name-mqtt-internal-svc
+  labels:
+    app: replace_name
+spec:
+  ports:
+    - name: http
+      port: replace_mqtt_port
+      targetPort: 1883
+  selector:
+    app: replace_name
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: ApiDefinition
+metadata:
+  name: replace_name-mqtt
+spec:
+  name: replace_name-mqtt
+  protocol: tcp
+  listen_port: replace_mqtt_port
+  active: true
+  proxy:
+    target_url: tcp://replace_name-mqtt-internal-svc.replace_namespace.svc:replace_mqtt_port
+    listen_path: /
+    strip_listen_path: true
+  use_keyless: true
+  auth_configs:
+    authToken:
+      auth_header_name: Authorization
 ---
 apiVersion: v1
 kind: Service
@@ -23,7 +89,7 @@ spec:
   ports:
     - name: http
       port: replace_mqtt_port
-      targetPort: 1883
+      targetPort: replace_mqtt_port
   selector:
     app: replace_name
 ---

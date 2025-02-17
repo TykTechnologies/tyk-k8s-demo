@@ -10,10 +10,13 @@ args=(
   --set "global.remoteControlPlane.groupID=$TYK_DATA_PLANE_GROUPID" \
   --set "global.servicePorts.gateway=$TYK_DATA_PLANE_PORT" \
   --set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway" \
+  --set "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].name=TYK_GW_DISABLEPORTWHITELIST" \
+  --set-string "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].value=true" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.sharding.enabled=$TYK_DATA_PLANE_SHARDING_ENABLED" \
   --set "tyk-gateway.gateway.sharding.tags=$TYK_DATA_PLANE_SHARDING_TAGS" \
 );
+gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 1));
 
 if [ -z "$TYK_DATA_PLANE_SHARDING_TAGS" ]; then
       tykReleaseName="tyk-dp";

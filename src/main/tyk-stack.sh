@@ -11,11 +11,14 @@ args=(
   --set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway" \
   --set "tyk-gateway.gateway.image.tag=$GATEWAY_VERSION" \
   --set "tyk-gateway.gateway.service.port=8080" \
+  --set "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].name=TYK_GW_DISABLEPORTWHITELIST" \
+  --set-string "tyk-gateway.gateway.extraEnvs[$gatewayExtraEnvsCtr].value=true" \
   --set "tyk-dashboard.dashboard.image.tag=$DASHBOARD_VERSION" \
   --set "tyk-pump.pump.image.tag=$PUMP_VERSION" \
   --set "tyk-pump.pump.image.repository=tykio/tyk-pump-docker-pub" \
   --set "tyk-dashboard.tib.enabled=true" \
 );
+gatewayExtraEnvsCtr=$((gatewayExtraEnvsCtr + 1));
 
 addService "dashboard-svc-$tykReleaseName-tyk-dashboard";
 addService "gateway-svc-$tykReleaseName-tyk-gateway";

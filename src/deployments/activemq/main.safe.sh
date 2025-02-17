@@ -8,6 +8,7 @@ if [ -z "$activeMQRegistered" ]; then
   activeMQReleaseName="tyk-activemq";
   activeMQDeploymentPath="src/deployments/activemq";
 
+  source "src/deployments/operator/main.safe.sh";
   source "$activeMQDeploymentPath/checks.sh";
   source "$activeMQDeploymentPath/main.sh";
 fi

@@ -4,7 +4,9 @@ setVerbose;
 sed "s/replace_amqp_port/$ACTIVEMQ_AMQP_PORT/g" "$activeMQDeploymentPath/activemq-artemis-app-template.yaml" | \
   sed "s/replace_mqtt_port/$ACTIVEMQ_MQTT_PORT/g" | \
   sed "s/replace_ui_port/$ACTIVEMQ_UI_PORT/g" | \
+  sed "s/replace_namespace/$namespace/g" | \
   sed "s/replace_name/$activeMQReleaseName/g" | \
+  sed "s/replace_tyk_release_name/$tykReleaseName/g" | \
   kubectl apply --namespace "$namespace" -f - > /dev/null;
 unsetVerbose;
 
