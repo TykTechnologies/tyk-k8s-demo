@@ -7,7 +7,7 @@ spec:
   protocol: http
   active: true
   proxy:
-    target_url: httpbin-svc.replace_namespace.svc:8000
+    target_url: http://httpbin-svc.replace_namespace.svc:8000
     listen_path: /jwt-hmac
     strip_listen_path: true
   enable_jwt: true
