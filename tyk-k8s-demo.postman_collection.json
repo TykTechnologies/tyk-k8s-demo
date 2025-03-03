@@ -259,6 +259,7 @@
 									"listen": "test",
 									"script": {
 										"exec": [
+                      "require('atob')",
 											"pm.test(\"Fetching auth token using pass grant flow\", function () {",
 											"    var resp = pm.response.json();",
 											"    var valid = true;",
@@ -358,6 +359,7 @@
 									"listen": "test",
 									"script": {
 										"exec": [
+                      "require('atob')",
 											"pm.test(\"Fetching auth token using client creds flow\", function () {",
 											"    var resp = pm.response.json();",
 											"    var valid = true;",
