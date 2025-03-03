@@ -50,7 +50,7 @@ jobs:
           CLUSTER_LOCATION="${{ vars.AZURE_CLUSTER_LOCATION }}" \
           CLUSTER_MACHINE_TYPE="${{ vars.AZURE_CLUSTER_MACHINE_TYPE }}" \
           CLUSTER_NODE_COUNT="${{ vars.CLUSTER_NODE_COUNT }}" \
-          ./up.sh -v -c azure tyk-cp
+          ./up.sh -v -c azure -r redis tyk-cp
 
       - name: Sleep 1 minute
         run: sleep 60
@@ -64,7 +64,7 @@ jobs:
           TYK_DATA_PLANE_ORGID=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d) \
           TYK_DATA_PLANE_AUTHTOKEN=$(kubectl get secrets -n tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d) \
           TYK_DATA_PLANE_USESSL=false \
-          ./up.sh --namespace tyk-dp tyk-dp
+          ./up.sh --namespace tyk-dp -r redis tyk-dp
 
       - name: Sleep 1 minute
         run: sleep 60
