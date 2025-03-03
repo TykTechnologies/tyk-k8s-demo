@@ -26,9 +26,6 @@ spec:
   name: keycloak-jwt
   state: active
   active: true
-  partitions:
-    quota: true
-    rate_limit: true
   access_rights_array:
     - name: keycloak-jwt
       namespace: replace_namespace

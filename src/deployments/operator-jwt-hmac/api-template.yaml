@@ -26,9 +26,6 @@ spec:
   name: jwt-hmac
   state: active
   active: true
-  partitions:
-    quota: true
-    rate_limit: true
   access_rights_array:
     - name: jwt-hmac
       namespace: replace_namespace
