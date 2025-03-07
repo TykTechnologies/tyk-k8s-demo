@@ -44,48 +44,8 @@ jobs:
           MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
           OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
           GATEWAY_VERSION=${{ inputs.gateway_version }} \
+          TYK_MDCB_SYNCWORKER_ENABLED=true \
           ./up.sh --redis redis --namespace tyk --deployments operator-httpbin tyk-cp
-
-      - name: Test tyk-control-plane
-        run: newman run --folder gateway --env-var "deployment=tyk-cp" tyk-k8s-demo.postman_collection.json
-
-      - name: Deploy tyk-data-plane - ${{ env.PRIMARY }} - ${{ inputs.gateway_version }}
-        run: |
-          TYK_DATA_PLANE_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
-          TYK_DATA_PLANE_ORGID="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d)" \
-          TYK_DATA_PLANE_AUTHTOKEN="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d)" \
-          TYK_DATA_PLANE_USESSL=false \
-          TYK_DATA_PLANE_PORT=${{ env.PRIMARY_PORT }} \
-          TYK_DATA_PLANE_GROUPID=${{ env.PRIMARY }} \
-          TYK_DATA_PLANE_SHARDING_ENABLED=true \
-          TYK_DATA_PLANE_SHARDING_TAGS=${{ env.PRIMARY }} \
-          GATEWAY_VERSION=${{ inputs.gateway_version }} \
-          ./up.sh --redis redis --namespace tyk-dp-${{ env.PRIMARY }} tyk-dp
-
-      - name: Sleep 60 seconds
-        run: sleep 60
-
-      - name: Test tyk-data-plane deployment - ${{ env.PRIMARY }}
-        run: newman run --folder gateway --env-var "gateway.port=${{ env.PRIMARY_PORT }}" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
-
-      - name: Deploy tyk-data-plane - ${{ env.SECONDARY }} - ${{ inputs.gateway_version }}
-        run: |
-          TYK_DATA_PLANE_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
-          TYK_DATA_PLANE_ORGID="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d)" \
-          TYK_DATA_PLANE_AUTHTOKEN="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d)" \
-          TYK_DATA_PLANE_USESSL=false \
-          TYK_DATA_PLANE_PORT=${{ env.SECONDARY_PORT }} \
-          TYK_DATA_PLANE_GROUPID=${{ env.SECONDARY }} \
-          TYK_DATA_PLANE_SHARDING_ENABLED=true \
-          TYK_DATA_PLANE_SHARDING_TAGS=${{ env.SECONDARY }} \
-          GATEWAY_VERSION=${{ inputs.gateway_version }} \
-          ./up.sh --redis redis --namespace tyk-dp-${{ env.SECONDARY }} tyk-dp
-
-      - name: Sleep 60 seconds
-        run: sleep 60
-
-      - name: Test tyk-data-plane deployment - ${{ env.SECONDARY }}
-        run: newman run --folder gateway --env-var "gateway.port=${{ env.SECONDARY_PORT }}" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
 
       - name: Create APIs with 80/20 split of 1000 rate per 60
         run: |
@@ -103,9 +63,44 @@ jobs:
               -e "s/replace_namespace/tyk/g" \
               .github/use-case-tests/traffic-splitting/api.yml | kubectl apply -n tyk -f -
 
-      - name: Create Key
+      - name: Test tyk-control-plane
+        run: newman run --folder gateway --env-var "deployment=tyk-cp" tyk-k8s-demo.postman_collection.json
+
+      - name: Deploy tyk-data-plane - ${{ env.PRIMARY }} - ${{ inputs.gateway_version }}
         run: |
-          RESPONSE=$(curl -s -X POST "http://localhosthost:3000/apis/keys" \
+          TYK_DATA_PLANE_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
+          TYK_DATA_PLANE_ORGID="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d)" \
+          TYK_DATA_PLANE_AUTHTOKEN="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d)" \
+          TYK_DATA_PLANE_USESSL=false \
+          TYK_DATA_PLANE_PORT=${{ env.PRIMARY_PORT }} \
+          TYK_DATA_PLANE_GROUPID=${{ env.PRIMARY }} \
+          TYK_DATA_PLANE_SHARDING_ENABLED=true \
+          TYK_DATA_PLANE_SHARDING_TAGS=${{ env.PRIMARY }} \
+          TYK_GW_SLAVEOPTIONS_SYNCHRONISERENABLED=true \
+          GATEWAY_VERSION=${{ inputs.gateway_version }} \
+          ./up.sh --redis redis --namespace tyk-dp-${{ env.PRIMARY }} tyk-dp
+
+      - name: Deploy tyk-data-plane - ${{ env.SECONDARY }} - ${{ inputs.gateway_version }}
+        run: |
+          TYK_DATA_PLANE_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
+          TYK_DATA_PLANE_ORGID="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d)" \
+          TYK_DATA_PLANE_AUTHTOKEN="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d)" \
+          TYK_DATA_PLANE_USESSL=false \
+          TYK_DATA_PLANE_PORT=${{ env.SECONDARY_PORT }} \
+          TYK_DATA_PLANE_GROUPID=${{ env.SECONDARY }} \
+          TYK_DATA_PLANE_SHARDING_ENABLED=true \
+          TYK_DATA_PLANE_SHARDING_TAGS=${{ env.SECONDARY }} \
+          TYK_GW_SLAVEOPTIONS_SYNCHRONISERENABLED=true \
+          GATEWAY_VERSION=${{ inputs.gateway_version }} \
+          ./up.sh --redis redis --namespace tyk-dp-${{ env.SECONDARY }} tyk-dp
+
+      - name: Sleep 60 seconds
+        run: sleep 60
+
+      - name: Create Key
+        id: create_key
+        run: |
+          RESPONSE=$(curl -s -X POST "http://localhost:3000/api/keys" \
             -H "Authorization: $(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d)" \
             -H "Content-Type: application/json" \
             -d '{
@@ -116,7 +111,7 @@ jobs:
               "expires": -1,
               "hmac_enabled": false,
               "is_inactive": false,
-              "apply_policies": ["$(kubectl get securitypolicies httpbin-policy-${{ env.PRIMARY }} -o=jsonpath='{.spec.id}')", "$(kubectl get securitypolicies httpbin-policy-${{ env.SECONDARY }} -o=jsonpath='{.spec.id}')"],
+              "apply_policies": ["'"$(kubectl get securitypolicies --namespace tyk httpbin-policy-${{ env.PRIMARY }} -o=jsonpath='{.spec.id}')"'", "'"$(kubectl get securitypolicies --namespace tyk httpbin-policy-${{ env.SECONDARY }} -o=jsonpath='{.spec.id}')"'"],
               "alias": "split-test",
               "meta_data": {}
             }')
@@ -132,6 +127,15 @@ jobs:
 
           echo "✅ Tyk Key created: $KEY_ID"
           echo "key_id=$KEY_ID" >> $GITHUB_OUTPUT
+
+      - name: Sleep 60 seconds
+        run: sleep 60
+
+      - name: Test tyk-data-plane deployment - ${{ env.PRIMARY }}
+        run: newman run --folder gateway --env-var "gateway.port=${{ env.PRIMARY_PORT }}" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
+
+      - name: Test tyk-data-plane deployment - ${{ env.SECONDARY }}
+        run: newman run --folder gateway --env-var "gateway.port=${{ env.SECONDARY_PORT }}" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
 
       - name: Test ${{ env.PRIMARY }} API
         run: |
