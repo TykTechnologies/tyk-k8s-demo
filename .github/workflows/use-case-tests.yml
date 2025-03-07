@@ -64,54 +64,51 @@ jobs:
       - name: Sleep 60 seconds
         run: sleep 60
 
-      - name: View logs
-        run: kubectl logs -l app=gateway-tyk-dp-tyk-gateway -n tyk-dp --tail=100
+      - name: Test tyk-data-plane deployment
+        run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
 
-#      - name: Test tyk-data-plane deployment
-#        run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
-#
-#      - name: Test httpbin API
-#        run: newman run --folder operator-httpbin --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json
-#
-#      - name: Scale MDCB down
-#        run: kubectl scale deploy mdcb-tyk-cp-tyk-mdcb --replicas=0 --namespace tyk
-#
-#      - name: Sleep 60 seconds
-#        run: sleep 60
-#
-#      - name: Test httpbin API
-#        run: newman run --folder operator-httpbin --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json
-#
-#      - name: Restart gateway and to check if emergency mode triggers on cold start
-#        run: kubectl rollout restart deployment gateway-tyk-dp-tyk-gateway --namespace tyk-dp
-#
-#      - name: Sleep 60 seconds
-#        run: sleep 60
-#
-#      - name: Check if tyk-data-plane deployment continues to fail while MDCB is down and RPC is not returning a pass
-#        run: |
-#          set +e
-#          newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
-#          EXIT_CODE=$?
-#          if [ $EXIT_CODE -eq 0 ]; then
-#            echo "❌ RPC passed but we expected failure."
-#            exit 1
-#          else
-#            echo "✅ RPC failed as expected."
-#            exit 0
-#          fi
-#
-#      - name: Test httpbin API
-#        run: newman run --folder operator-httpbin --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json
-#
-#      - name: Scale MDCB back up
-#        run: kubectl scale deploy mdcb-tyk-cp-tyk-mdcb --replicas=1 --namespace tyk
-#
-#      - name: Sleep 60 seconds
-#        run: sleep 60
-#
-#      - name: Test tyk-data-plane deployment now that MDCB is back up
-#        run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
-#
-#      - name: Test httpbin API
-#        run: newman run --folder operator-httpbin --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json
+      - name: Test httpbin API
+        run: newman run --folder operator-classic-httpbin --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json
+
+      - name: Scale MDCB down
+        run: kubectl scale deploy mdcb-tyk-cp-tyk-mdcb --replicas=0 --namespace tyk
+
+      - name: Sleep 60 seconds
+        run: sleep 60
+
+      - name: Test httpbin API
+        run: newman run --folder operator-classic-httpbin --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json
+
+      - name: Restart gateway and to check if emergency mode triggers on cold start
+        run: kubectl rollout restart deployment gateway-tyk-dp-tyk-gateway --namespace tyk-dp
+
+      - name: Sleep 60 seconds
+        run: sleep 60
+
+      - name: Check if tyk-data-plane deployment continues to fail while MDCB is down and RPC is not returning a pass
+        run: |
+          set +e
+          newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
+          EXIT_CODE=$?
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "❌ RPC passed but we expected failure."
+            exit 1
+          else
+            echo "✅ RPC failed as expected."
+            exit 0
+          fi
+
+      - name: Test httpbin API
+        run: newman run --folder operator-classic-httpbin --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json
+
+      - name: Scale MDCB back up
+        run: kubectl scale deploy mdcb-tyk-cp-tyk-mdcb --replicas=1 --namespace tyk
+
+      - name: Sleep 60 seconds
+        run: sleep 60
+
+      - name: Test tyk-data-plane deployment now that MDCB is back up
+        run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
+
+      - name: Test httpbin API
+        run: newman run --folder operator-classic-httpbin --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json
