@@ -1,16 +1,18 @@
 name: Emergency Mode Test
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       dashboard_version:
         required: true
         type: string
         description: "Tyk Dashboard Version"
+        default: "v5.7"
       gateway_version:
         required: true
         type: string
         description: "Tyk Gateway Version"
+        default: "v5.7"
 
 jobs:
   emergency-mode:
