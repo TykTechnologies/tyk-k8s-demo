@@ -6,3 +6,8 @@ sed "s/replace_namespace/$namespace/g" "$operatorStreamsActiveMQMQTTDeploymentPa
   sed "s/replace_svc_port/$ACTIVEMQ_MQTT_PORT/g" | \
   kubectl apply -n "$namespace" -f - > /dev/null;
 unsetVerbose;
+
+args=(
+  --set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway-ee" \
+);
+addDeploymentArgs "${args[@]}";
