@@ -50,6 +50,7 @@ jobs:
           TYK_DATA_PLANE_AUTHTOKEN=$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d) \
           TYK_DATA_PLANE_USESSL=false \
           TYK_DATA_PLANE_PORT=8081 \
+          TYK_DATA_PLANE_GROUPID=Test \
           GATEWAY_VERSION=${{ inputs.gateway_version }} \
           ./up.sh --redis redis --namespace tyk-dp tyk-dp
 
@@ -84,6 +85,7 @@ jobs:
           TYK_DATA_PLANE_AUTHTOKEN=$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d) \
           TYK_DATA_PLANE_USESSL=false \
           TYK_DATA_PLANE_PORT=8081 \
+          TYK_DATA_PLANE_GROUPID=Test \
           GATEWAY_VERSION=${{ inputs.gateway_version }} \
           ./up.sh --redis redis --namespace tyk-dp tyk-dp
 
