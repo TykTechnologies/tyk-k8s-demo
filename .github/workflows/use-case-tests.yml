@@ -1,0 +1,25 @@
+name: Use Case Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      dashboard_version:
+        required: true
+        type: string
+        description: "Tyk Dashboard Version"
+        default: "v5.7"
+      gateway_version:
+        required: true
+        type: string
+        description: "Tyk Gateway Version"
+        default: "v5.7"
+
+jobs:
+  call-emergency-mode-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run workflow based on branch
+        uses: ./.github/use-case-tests/emergency-mode-test.yml@${{ github.ref_name }}
+        with:
+          dashboard_version: ${{ inputs.dashboard_version }}
+          gateway_version: ${{ inputs.gateway_version }}
