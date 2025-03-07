@@ -65,7 +65,7 @@ jobs:
         run: sleep 60
 
       - name: View logs
-        run: kubectl logs -l app=gateway-tyk-dp-tyk-gateway --tail=100
+        run: kubectl logs -l app=gateway-tyk-dp-tyk-gateway -n tyk-dp --tail=100
 
 #      - name: Test tyk-data-plane deployment
 #        run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
