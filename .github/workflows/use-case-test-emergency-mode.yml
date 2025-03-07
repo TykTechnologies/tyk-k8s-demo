@@ -1,13 +1,8 @@
-name: Use Case Tests
+name: Emergency Mode Test
 
 on:
   workflow_dispatch:
     inputs:
-      dashboard_version:
-        required: true
-        type: string
-        description: "Tyk Dashboard Version"
-        default: "v5.7"
       gateway_version:
         required: true
         type: string
@@ -17,8 +12,6 @@ on:
 jobs:
   emergency-mode:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
     steps:
       - uses: actions/checkout@v4
 
@@ -44,14 +37,13 @@ jobs:
           LICENSE="${{ secrets.DASH_LICENSE }}" \
           MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
           OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
-          DASHBOARD_VERSION=${{ inputs.dashboard_version }} \
           GATEWAY_VERSION=${{ inputs.gateway_version }} \
           ./up.sh --redis redis --namespace tyk --deployments operator-httpbin tyk-cp
 
       - name: Test tyk-control-plane
         run: newman run --folder gateway --env-var "deployment=tyk-cp" tyk-k8s-demo.postman_collection.json
 
-      - name: Deploy tyk-data-plane
+      - name: Deploy tyk-data-plane - ${{ inputs.gateway_version }}
         run: |
           TYK_DATA_PLANE_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
           TYK_DATA_PLANE_ORGID=$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d) \
@@ -96,17 +88,7 @@ jobs:
           ./up.sh --redis redis --namespace tyk-dp tyk-dp
 
       - name: Check if tyk-data-plane deployment continues to fail while MDCB is down and RPC is not returning a pass
-        run: |
-          set +e
-          newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
-          EXIT_CODE=$?
-          if [ $EXIT_CODE -eq 0 ]; then
-            echo "❌ RPC passed but we expected failure."
-            exit 1
-          else
-            echo "✅ RPC failed as expected."
-            exit 0
-          fi
+        run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane-rpc-down" tyk-k8s-demo.postman_collection.json
 
       - name: Test httpbin API
         run: newman run --folder operator-classic-httpbin --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json
