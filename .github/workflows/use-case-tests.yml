@@ -16,7 +16,7 @@ on:
 
 jobs:
   call-emergency-mode-test:
-    uses: ./.github/workflows/use-case-tests/emergency-mode-test.yml
+    uses: ./.github/use-case-tests/emergency-mode-test.yml
     with:
       dashboard_version: ${{ inputs.dashboard_version }}
       gateway_version: ${{ inputs.gateway_version }}
