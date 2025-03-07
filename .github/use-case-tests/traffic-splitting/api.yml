@@ -1,0 +1,107 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api_name
+  namespace: replace_namespace
+data:
+  api_name.json: |-
+    {
+      "info": {
+        "title": "api_name",
+        "version": "1.0.0"
+      },
+      "openapi": "3.0.3",
+      "security": [
+        {
+          "authToken": []
+        }
+      ],
+      "paths": {},
+      "components": {
+        "securitySchemes": {
+          "authToken": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "Authorization"
+          }
+        }
+      },
+      "x-tyk-api-gateway": {
+        "info": {
+          "name": "api_name",
+          "state": {
+            "active": true
+          }
+        },
+        "middleware": {
+          "global": {
+            "trafficLogs": {
+              "enabled": true
+            }
+          }
+        },
+        "server": {
+          "authentication": {
+            "enabled": true,
+            "securitySchemes": {
+              "authToken": {
+                "enabled": true
+              }
+            }
+          },
+          "detailedActivityLogs": {
+            "enabled": true
+          },
+          "detailedTracing": {
+            "enabled": true
+          },
+          "gatewayTags": {
+            "enabled": true,
+            "tags": [
+              "gateway_scope"
+            ]
+          },
+          "listenPath": {
+            "strip": true,
+            "value": "/api/"
+          }
+        },
+        "upstream": {
+          "url": "http://httpbin-svc.replace_namespace.svc:8000/"
+        }
+      }
+    }
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: TykOasApiDefinition
+metadata:
+  name: api_name
+  namespace: replace_namespace
+spec:
+  tykOAS:
+    configmapRef:
+      name: api_name
+      namespace: replace_namespace
+      keyName: api_name.json
+---
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: policy_name
+spec:
+  name: policy_name
+  state: active
+  active: true
+  partitions:
+    acl: true
+    quota: true
+    rate_limit: true
+  rate: 100
+  per: 60
+  access_rights_array:
+    - name: api_name
+      kind: TykOasApiDefinition
+      namespace: replace_namespace
+      versions:
+        - Default
