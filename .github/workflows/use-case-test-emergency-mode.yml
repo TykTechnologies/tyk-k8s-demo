@@ -51,8 +51,8 @@ jobs:
           GATEWAY_VERSION=${{ inputs.gateway_version }} \
           ./up.sh --redis redis --namespace tyk --deployments operator-httpbin tyk-cp
 
-      - name: Sleep 10 seconds
-        run: sleep 10
+      - name: Sleep 60 seconds
+        run: sleep 60
 
       - name: Test tyk-control-plane
         run: newman run --folder gateway --env-var "deployment=tyk-cp" tyk-k8s-demo.postman_collection.json
@@ -67,8 +67,8 @@ jobs:
           GATEWAY_VERSION=${{ inputs.gateway_version }} \
           ./up.sh --redis redis --namespace tyk-dp tyk-dp
 
-      - name: Sleep 10 seconds
-        run: sleep 10
+      - name: Sleep 60 seconds
+        run: sleep 60
 
       - name: Test tyk-data-plane deployment
         run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
@@ -79,8 +79,8 @@ jobs:
       - name: Scale MDCB down
         run: kubectl scale deploy mdcb-tyk-cp-tyk-mdcb --replicas=0 --namespace tyk
 
-      - name: Sleep 10 seconds
-        run: sleep 10
+      - name: Sleep 60 seconds
+        run: sleep 60
 
       - name: Check if tyk-data-plane deployment fails now that MDCB is down and RPC is not returning a pass
         run: |
@@ -101,8 +101,8 @@ jobs:
       - name: Restart gateway and to check if emergency mode triggers on cold start
         run: kubectl rollout restart deployment gateway-tyk-dp-tyk-gateway --namespace tyk-dp
 
-      - name: Sleep 10 seconds
-        run: sleep 10
+      - name: Sleep 60 seconds
+        run: sleep 60
 
       - name: Check if tyk-data-plane deployment continues to fail while MDCB is down and RPC is not returning a pass
         run: |
@@ -123,8 +123,8 @@ jobs:
       - name: Scale MDCB back up
         run: kubectl scale deploy mdcb-tyk-cp-tyk-mdcb --replicas=1 --namespace tyk
 
-      - name: Sleep 10 seconds
-        run: sleep 10
+      - name: Sleep 60 seconds
+        run: sleep 60
 
       - name: Test tyk-data-plane deployment now that MDCB is back up
         run: newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
