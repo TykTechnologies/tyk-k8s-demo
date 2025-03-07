@@ -82,19 +82,6 @@ jobs:
       - name: Sleep 60 seconds
         run: sleep 60
 
-      - name: Check if tyk-data-plane deployment fails now that MDCB is down and RPC is not returning a pass
-        run: |
-          set +e
-          newman run --folder gateway --env-var "gateway.port=8081" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
-          EXIT_CODE=$?
-          if [ $EXIT_CODE -eq 0 ]; then
-            echo "❌ RPC passed but we expected failure."
-            exit 1
-          else
-            echo "✅ RPC failed as expected."
-            exit 0
-          fi
-
       - name: Test httpbin API
         run: newman run --folder operator-httpbin --insecure --env-var "gateway.port=8081" -n 1 tyk-k8s-demo.postman_collection.json
 

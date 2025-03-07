@@ -13,3 +13,8 @@ sed "s/replace_namespace/$namespace/g" "$operatorStreamsKafkaAvroDeploymentPath/
   sed "s/replace_topic/avro/g" | \
   kubectl apply -n "$namespace" -f - > /dev/null;
 unsetVerbose;
+
+args=(
+  --set "tyk-gateway.gateway.image.repository=tykio/tyk-gateway-ee" \
+);
+addDeploymentArgs "${args[@]}";
