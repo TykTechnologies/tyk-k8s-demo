@@ -46,8 +46,8 @@ jobs:
       - name: Deploy tyk-data-plane - ${{ inputs.gateway_version }}
         run: |
           TYK_DATA_PLANE_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
-          TYK_DATA_PLANE_ORGID=$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d) \
-          TYK_DATA_PLANE_AUTHTOKEN=$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d) \
+          TYK_DATA_PLANE_ORGID="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d)" \
+          TYK_DATA_PLANE_AUTHTOKEN="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d)" \
           TYK_DATA_PLANE_USESSL=false \
           TYK_DATA_PLANE_PORT=8081 \
           TYK_DATA_PLANE_GROUPID=Test \
@@ -81,8 +81,8 @@ jobs:
       - name: Re-run up command to terminate and establish port-forward after restart
         run: |
           TYK_DATA_PLANE_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
-          TYK_DATA_PLANE_ORGID=$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d) \
-          TYK_DATA_PLANE_AUTHTOKEN=$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d) \
+          TYK_DATA_PLANE_ORGID="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d)" \
+          TYK_DATA_PLANE_AUTHTOKEN="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d)" \
           TYK_DATA_PLANE_USESSL=false \
           TYK_DATA_PLANE_PORT=8081 \
           TYK_DATA_PLANE_GROUPID=Test \

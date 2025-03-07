@@ -1,0 +1,144 @@
+name: Traffic Splitting Across DPs
+
+on:
+  workflow_dispatch:
+    inputs:
+      gateway_version:
+        required: true
+        type: string
+        description: "Tyk Gateway Version"
+        default: "v5.7"
+
+env:
+  PRIMARY: primary
+  PRIMARY_PORT: 8081
+  SECONDARY: secondary
+  SECONDARY_PORT: 8082
+
+jobs:
+  traffic-splitting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install helm
+        uses: Azure/setup-helm@v4
+
+      - name: Install newman
+        run: |
+          sudo apt update && \
+          sudo apt install nodejs npm -y && \
+          npm install -g newman
+
+      - name: Start Minikube
+        uses: medyagh/setup-minikube@latest
+        with:
+          addons: 'default-storageclass,storage-provisioner'
+
+      - name: Copy .env file
+        run: cp .env.example .env
+
+      - name: Deploy tyk-control-plane
+        run: |
+          LICENSE="${{ secrets.DASH_LICENSE }}" \
+          MDCB_LICENSE="${{ secrets.MDCB_LICENSE }}" \
+          OPERATOR_LICENSE="${{ secrets.DASH_LICENSE }}" \
+          GATEWAY_VERSION=${{ inputs.gateway_version }} \
+          ./up.sh --redis redis --namespace tyk --deployments operator-httpbin tyk-cp
+
+      - name: Test tyk-control-plane
+        run: newman run --folder gateway --env-var "deployment=tyk-cp" tyk-k8s-demo.postman_collection.json
+
+      - name: Deploy tyk-data-plane - ${{ env.PRIMARY }} - ${{ inputs.gateway_version }}
+        run: |
+          TYK_DATA_PLANE_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
+          TYK_DATA_PLANE_ORGID="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d)" \
+          TYK_DATA_PLANE_AUTHTOKEN="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d)" \
+          TYK_DATA_PLANE_USESSL=false \
+          TYK_DATA_PLANE_PORT=${{ env.PRIMARY_PORT }} \
+          TYK_DATA_PLANE_GROUPID=${{ env.PRIMARY }} \
+          TYK_DATA_PLANE_SHARDING_ENABLED=true \
+          TYK_DATA_PLANE_SHARDING_TAGS=${{ env.PRIMARY }} \
+          GATEWAY_VERSION=${{ inputs.gateway_version }} \
+          ./up.sh --redis redis --namespace tyk-dp tyk-dp-${{ env.PRIMARY }}
+
+      - name: Sleep 60 seconds
+        run: sleep 60
+
+      - name: Test tyk-data-plane deployment - ${{ env.PRIMARY }}
+        run: newman run --folder gateway --env-var "gateway.port=${{ env.PRIMARY_PORT }}" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
+
+      - name: Test httpbin API
+        run: newman run --folder operator-classic-httpbin --insecure --env-var "gateway.port=${{ env.PRIMARY_PORT }}" -n 1 tyk-k8s-demo.postman_collection.json
+
+      - name: Deploy tyk-data-plane - ${{ env.SECONDARY }} - ${{ inputs.gateway_version }}
+        run: |
+          TYK_DATA_PLANE_CONNECTIONSTRING=mdcb-svc-tyk-cp-tyk-mdcb.tyk.svc:9091 \
+          TYK_DATA_PLANE_ORGID="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_ORG}" | base64 -d)" \
+          TYK_DATA_PLANE_AUTHTOKEN="$(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d)" \
+          TYK_DATA_PLANE_USESSL=false \
+          TYK_DATA_PLANE_PORT=${{ env.SECONDARY_PORT }} \
+          TYK_DATA_PLANE_GROUPID=${{ env.SECONDARY }} \
+          TYK_DATA_PLANE_SHARDING_ENABLED=true \
+          TYK_DATA_PLANE_SHARDING_TAGS=${{ env.SECONDARY }} \
+          GATEWAY_VERSION=${{ inputs.gateway_version }} \
+          ./up.sh --redis redis --namespace tyk-dp tyk-dp-${{ env.SECONDARY }}
+
+      - name: Sleep 60 seconds
+        run: sleep 60
+
+      - name: Test tyk-data-plane deployment - ${{ env.SECONDARY }}
+        run: newman run --folder gateway --env-var "gateway.port=${{ env.SECONDARY_PORT }}" --env-var "deployment=data-plane" tyk-k8s-demo.postman_collection.json
+
+      - name: Test httpbin API
+        run: newman run --folder operator-classic-httpbin --insecure --env-var "gateway.port=${{ env.SECONDARY_PORT }}" -n 1 tyk-k8s-demo.postman_collection.json
+
+      - name: Create APIs with 80/20 split of 1000 rate per 60
+        run: |
+          sed -e "s/api_name/httpbin-api-${{ env.PRIMARY }}/g" \
+              -e "s/policy_name/httpbin-policy-${{ env.PRIMARY }}/g" \
+              -e "s/gateway_scope/${{ env.PRIMARY }}/g" \
+              -e "s/rate: RATE/rate: 800/g" \
+              -e "s/replace_namespace/tyk/g" \
+              .github/use-case-tests/traffic-splitting/api.yml | kubectl apply -f -n tyk -
+
+          sed -e "s/api_name/httpbin-api-${{ env.SECONDARY }}/g" \
+              -e "s/policy_name/httpbin-policy-${{ env.SECONDARY }}/g" \
+              -e "s/gateway_scope/${{ env.SECONDARY }}/g" \
+              -e "s/rate: RATE/rate: 200/g" \
+              -e "s/replace_namespace/tyk/g" \
+              .github/use-case-tests/traffic-splitting/api.yml | kubectl apply -f -n tyk -
+
+      - name: Create Key
+        run: |
+          RESPONSE=$(curl -s -X POST "http://localhosthost:3000/apis/keys" \
+            -H "Authorization: $(kubectl get secrets --namespace tyk tyk-operator-conf -o=jsonpath="{.data.TYK_AUTH}" | base64 -d)" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "allowance": -1,
+              "rate": -1,
+              "quota_max": -1,
+              "per": 60,
+              "expires": -1,
+              "hmac_enabled": false,
+              "is_inactive": false,
+              "apply_policies": ["$(kubectl get securitypolicies httpbin-policy-${{ env.PRIMARY }} -o=jsonpath='{.spec.id}')", "$(kubectl get securitypolicies httpbin-policy-${{ env.SECONDARY }} -o=jsonpath='{.spec.id}')"],
+              "alias": "split-test",
+              "meta_data": {}
+            }')
+
+          echo "Full response: $RESPONSE"
+
+          KEY_ID=$(echo "$RESPONSE" | jq -r '.key_id')
+
+          if [ "$KEY_ID" == "null" ] || [ -z "$KEY_ID" ]; then
+            echo "❌ Failed to retrieve key_id."
+            exit 1
+          fi
+
+          echo "✅ Tyk Key created: $KEY_ID"
+          echo "key_id=$KEY_ID" >> $GITHUB_OUTPUT
+
+#      - name: Use the generated key
+#        run: |
+#          echo "The generated Tyk key is: ${{ steps.create_key.outputs.key_id }}"
