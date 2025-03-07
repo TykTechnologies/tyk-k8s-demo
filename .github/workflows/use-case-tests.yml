@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run workflow based on branch
-        uses: ./.github/use-case-tests/emergency-mode-test.yml@${{ github.ref_name }}
+        uses: ./.github/use-case-tests/emergency-mode-test.yml
         with:
           dashboard_version: ${{ inputs.dashboard_version }}
           gateway_version: ${{ inputs.gateway_version }}
