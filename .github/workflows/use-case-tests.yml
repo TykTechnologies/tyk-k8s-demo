@@ -20,7 +20,6 @@ env:
 
 jobs:
   emergency-mode:
-    description: "Emergency Mode Test"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
