@@ -52,14 +52,14 @@ jobs:
           sed -e "s/api_name/httpbin-api-${{ env.PRIMARY }}/g" \
               -e "s/policy_name/httpbin-policy-${{ env.PRIMARY }}/g" \
               -e "s/gateway_scope/${{ env.PRIMARY }}/g" \
-              -e "s/rate: RATE/rate: 800/g" \
+              -e "s/rate: 1000/rate: 800/g" \
               -e "s/replace_namespace/tyk/g" \
               .github/use-case-tests/traffic-splitting/api.yml | kubectl apply -n tyk -f -
 
           sed -e "s/api_name/httpbin-api-${{ env.SECONDARY }}/g" \
               -e "s/policy_name/httpbin-policy-${{ env.SECONDARY }}/g" \
               -e "s/gateway_scope/${{ env.SECONDARY }}/g" \
-              -e "s/rate: RATE/rate: 200/g" \
+              -e "s/rate: 1000/rate: 200/g" \
               -e "s/replace_namespace/tyk/g" \
               .github/use-case-tests/traffic-splitting/api.yml | kubectl apply -n tyk -f -
 
