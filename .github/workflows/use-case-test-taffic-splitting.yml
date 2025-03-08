@@ -139,7 +139,7 @@ jobs:
 
       - name: Test ${{ env.PRIMARY }} API
         run: |
-          result=$(hey -n 1000 -H "Authorization: Bearer ${{ steps.create_key.outputs.key_id }}" "http://localhost:${{ env.PRIMARY_PORT }}/api/get")
+          result=$(hey -n 1000 -c 1 -H "Authorization: Bearer ${{ steps.create_key.outputs.key_id }}" "http://localhost:${{ env.PRIMARY_PORT }}/api/get")
           echo "$result"
 
           # Capture status code distribution (200s and 429s)
@@ -157,7 +157,7 @@ jobs:
 
       - name: Test ${{ env.SECONDARY }} API
         run: |
-          result=$(hey -n 1000 -H "Authorization: Bearer ${{ steps.create_key.outputs.key_id }}" "http://localhost:${{ env.SECONDARY_PORT }}/api/get")
+          result=$(hey -n 1000 -c 1 -H "Authorization: Bearer ${{ steps.create_key.outputs.key_id }}" "http://localhost:${{ env.SECONDARY_PORT }}/api/get")
           echo "$result"
 
           # Capture status code distribution (200s and 429s)
