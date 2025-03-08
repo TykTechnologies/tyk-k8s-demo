@@ -97,7 +97,7 @@ spec:
     acl: true
     quota: true
     rate_limit: true
-  rate: 100
+  rate: 1000
   per: 60
   access_rights_array:
     - name: api_name
