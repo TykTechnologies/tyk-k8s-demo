@@ -43,7 +43,7 @@
 									"        pm.expect(health.details[\"rpc\"].status).to.eql(\"pass\");",
 									"    });",
 									"} else if (\"data-plane-rpc-down\" == deployment) {",
-									"    pm.test(\"RPC status is pass\", function () {",
+									"    pm.test(\"RPC status is not a pass\", function () {",
 									"        var health = pm.response.json();",
 									"        pm.expect(health.details[\"rpc\"].status).to.not.eql(\"pass\");",
 									"    });",
